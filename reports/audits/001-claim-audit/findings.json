@@ -5,7 +5,7 @@
     "area": "T",
     "location": "docs/distillation_results.md:66-67; hf_readmes/README_sft-v1.md:93-94; hf_readmes/README_dpo-v1-scale.md:58,93; hf_readmes/README_distill-v1.md:123; hf_readmes/generate_cards.py:80,143,147; README.md:21",
     "claim": "UAR 70.0% and pra_lenient 15.30% are results of the DPO checkpoint (`dpo-v1-scale`), described as \"SFT+DPO+memory\".",
-    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:35, which loads HFEngine(\"outputs/sft/v1/merged\") — the SFT-only checkpoint, no DPO — and names the system E_sft_memory_v1 (line 95). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
+    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:35, which loads HFEngine(\"outputs/sft/v1/merged\") \u2014 the SFT-only checkpoint, no DPO \u2014 and names the system E_sft_memory_v1 (line 95). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
     "category": "MISATTRIBUTION",
     "pinned": "",
     "public": "yes"
@@ -70,7 +70,7 @@
     "severity": "MED",
     "area": "C",
     "location": "README.md (Experiments table, quantization row)",
-    "claim": "GGUF quantization preserves generation quality — \"Confirmed down to Q4_K_M by manual + automated checks\".",
+    "claim": "GGUF quantization preserves generation quality \u2014 \"Confirmed down to Q4_K_M by manual + automated checks\".",
     "actual": "docs/quantization_results.md verifies coherent, in-character output at Q3_K_S and Q3_K_M as well, and states \"Q3_K_S is the smallest verified-coherent level, for both\" checkpoints. The README understates its own result. The checks described are manual llama-cli / llama-mtmd-cli runs; no automated quality check is evidenced.",
     "category": "UNDERSTATEMENT",
     "pinned": "",
@@ -81,7 +81,7 @@
     "severity": "MED",
     "area": "C",
     "location": "docs/research_questions.md:198-207",
-    "claim": "Importance-matrix (imatrix) quantization \"used no imatrix calibration data — a real next step\".",
+    "claim": "Importance-matrix (imatrix) quantization \"used no imatrix calibration data \u2014 a real next step\".",
     "actual": "Contradicted by docs/quantization_results.md:119-143 of the same repository, which documents the imatrix calibration corpus, a llama-imatrix run, and 6 levels requantized with --imatrix and uploaded to a private repo. The stale bullet had no date stamp. What genuinely remains open is the imatrix-vs-non-imatrix generation-quality comparison, which was never finished.",
     "category": "STALE_STATE",
     "pinned": "",
@@ -93,7 +93,7 @@
     "area": "D",
     "location": "CITATION.cff:3,4,7,8",
     "claim": "title \"onebee-gf: Stretching a 1B Parameter LLM...\", version 0.0.0, author \"Arrochi\", url github.com/arrogance231/onebee-gf.",
-    "actual": "pyproject.toml:7 sets version 0.1.0. README.md:3 describes the model as ~2B effective-parameter and docs/quantization_results.md:45 reports 4.63B params — not 1B. The repository is github.com/arjhinety/small-mind-companion; there is no repo at the cited URL and README.md:154 documents the rename. The author string matched neither README.md's BibTeX (\"arrogance231\") nor the HF owner (arrochi112).",
+    "actual": "pyproject.toml:7 sets version 0.1.0. README.md:3 describes the model as ~2B effective-parameter and docs/quantization_results.md:45 reports 4.63B params \u2014 not 1B. The repository is github.com/arjhinety/small-mind-companion; there is no repo at the cited URL and README.md:154 documents the rename. The author string matched neither README.md's BibTeX (\"arrogance231\") nor the HF owner (arrochi112).",
     "category": "STALE_METADATA",
     "pinned": "",
     "public": "yes"
@@ -114,7 +114,7 @@
     "severity": "MED",
     "area": "P",
     "location": "README.md:78 (pre-fix) vs data/distill/v1/DATASHEET.md:9-11 vs docs/proper_scale_results.md:10, docs/day4_sft_v1_results.md:21, docs/dpo_results.md:123",
-    "claim": "Contamination-check status of the SFT v1 corpus, stated in both directions at once: \"not yet checked\" in the SFT datasheets, \"already contamination-checked clean\" in the distill datasheet — which cites data/sft/v1/DATASHEET.md, a file that said the opposite.",
+    "claim": "Contamination-check status of the SFT v1 corpus, stated in both directions at once: \"not yet checked\" in the SFT datasheets, \"already contamination-checked clean\" in the distill datasheet \u2014 which cites data/sft/v1/DATASHEET.md, a file that said the opposite.",
     "actual": "The check was actually run during this audit: `python scripts/check_contamination.py --train-glob \"data/sft/v1/train.jsonl\" --eval-glob \"data/benchmarks/pmb_v0_full/probes.jsonl\"` -> \"No contamination found.\" (exit 0). Same result for data/sft/v0/train.jsonl. The data is clean; the \"not yet checked\" datasheet text was stale, and the distill datasheet was citing a file that disagreed with it.",
     "category": "CONTRADICTION",
     "pinned": "",
@@ -291,7 +291,7 @@
     "area": "T",
     "location": "docs/quantization_results.md:131 (pre-fix)",
     "claim": "The imatrix calibration corpus is \"~11MB / 15k lines\".",
-    "actual": "data/imatrix_calibration.txt is 11,086,366 bytes (11 MB, correct) but 66,383 lines — roughly 4.4x the stated count.",
+    "actual": "data/imatrix_calibration.txt is 11,086,366 bytes (11 MB, correct) but 66,383 lines \u2014 roughly 4.4x the stated count.",
     "category": "WRONG_COUNT",
     "pinned": "",
     "public": "yes"
@@ -304,6 +304,17 @@
     "claim": "The document's headline results table, linked from README.md as \"current authoritative results\".",
     "actual": "The table reports the first v1_scale run, produced before the dedup fix and with a detector that did not recognise the model's correct abstention phrasing. Its UAR values (31.25%, 16.25%) are superseded by 25.0% and 70.0% later in the same document (line 182). The document disclosed this in a limitations bullet at line 217 but the README's \"current authoritative\" label did not.",
     "category": "SUPERSEDED_HEADLINE",
+    "pinned": "",
+    "public": "yes"
+  },
+  {
+    "id": 29,
+    "severity": "HIGH",
+    "area": "P",
+    "location": "data/benchmarks/{pmb_v0_full,sft_personas_v1,pmb_v0,sft_personas_v0}/hash.txt; README.md:220 (pre-fix); reports/ERRATA.md (first pass)",
+    "claim": "\"Every dataset directory has a hash.txt\" and, in the audit's first pass, \"all six hash.txt files match once CRLF is normalised to LF\".",
+    "actual": "The six split in two. The four SFT/DPO hashes (data/sft/v0, data/sft/v1, data/dpo/v0, data/dpo/v1_scale) DO match, under sha256 over concatenated LF-normalised sorted *.jsonl. The four benchmark hashes do NOT match under any of thirteen tested algorithms: path as str() vs as_posix(); data as raw bytes, text, or LF-normalised; sha256 over path+data, data-only, or probes.jsonl-only; walk order vs name order; DATASHEET.md included or excluded. The mismatch is present on a clean git worktree of ae75ca9, the commit that introduced the files, so it is not caused by the audit's edits. Cause undetermined. The first-pass sentence generalised from the four that passed to all six.",
+    "category": "BROKEN_INTEGRITY_PIN",
     "pinned": "",
     "public": "yes"
   }

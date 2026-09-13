@@ -223,14 +223,50 @@ unavailable rather than presenting a command that fails.
 | E27 | The imatrix calibration corpus was described as "~11MB / 15k lines"; it is 11,086,366 bytes and **66,383 lines** |
 | E28 | `docs/proper_scale_results.md`'s headline table reports the superseded pre-fix run, while the README linked to it as "current authoritative results". The table now carries superseded values inline; the corrected figures are 25.0% and 70.0% |
 
-## What was verified correct
+### E29 — Four benchmark `hash.txt` files do not verify, and never did (HIGH)
 
+**As written:** `README.md` stated "Every dataset directory has a `hash.txt` and `DATASHEET.md`",
+and this document's own first pass claimed that "all six `hash.txt` files match" once CRLF was
+normalised to LF.
+
+**Correction:** the six split into two groups, and that first sentence generalised from one of them.
+
+- **The four SFT/DPO hashes verify.** `data/sft/v0`, `data/sft/v1`, `data/dpo/v0`,
+  `data/dpo/v1_scale` all match `sha256` over the concatenated, LF-normalised, sorted `*.jsonl` —
+  the algorithm in `generate_sft_data.py` / `generate_dpo_data.py`. Normalising CRLF is required
+  because this repo has no `.gitattributes` and the hashes were computed on an LF checkout.
+  **The training data is intact.**
+- **The four benchmark hashes do not verify under any algorithm tested.**
+  `data/benchmarks/{pmb_v0_full,sft_personas_v1,pmb_v0,sft_personas_v0}` mismatch on **thirteen**
+  variants: path encoded as `str()` vs `as_posix()`; data read as raw bytes, as text, or
+  LF-normalised; `sha256` over path+data, data-only, or `probes.jsonl`-only; walk order vs name
+  order; and with `DATASHEET.md` included or excluded.
+
+This is not caused by the audit's edits. The mismatch is present on a clean `git worktree` of
+`ae75ca9` — the commit that introduced the files, where `hash.txt`, `probes.jsonl` and
+`DATASHEET.md` were committed together and the `DATASHEET` has not changed since. Whatever produced
+those four values is not the algorithm in `scripts/build_pmb.py` today, or the corpus was written
+by a different revision of the script than the one committed beside it. **The cause is not
+determined.**
+
+**Consequence:** for the four benchmark corpora, `hash.txt` is not a valid integrity pin and must
+not be cited as one. [`reports/data/study-001-freeze.json`](../data/study-001-freeze.json) is the
+authoritative pin instead — it covers all four corpora and was verified against a clean checkout at
+the `study-001` tag. `README.md` now says this.
+
+**Open:** regenerate the four benchmark `hash.txt` files from a clean checkout using the algorithm
+documented in `docs/reproduction.md`, and record when they were last verified.
+
+## What was verified correct
 So this file is not read as blanket scepticism:
 
 - **All seven evaluated runs' metrics** recomputed from their own saved `raw.jsonl` responses match
   `metrics.json` exactly (`uar`, `pra_lenient`, `pra_strict`).
-- **All six committed `hash.txt` files match**, once `\r\n` is normalised to `\n`. The two hashing
-  algorithms in use are undocumented in the files and are now recorded in `docs/reproduction.md`.
+- **The four SFT/DPO `hash.txt` files match**, under `sha256` over concatenated LF-normalised
+  `*.jsonl`. **The four benchmark `hash.txt` files do not match under any of thirteen tested
+  algorithms — see E29.** The original audit pass reported "all six match" from a partial check;
+  that sentence was wrong and is corrected here. The hashing algorithms in use are undocumented in
+  the files and are now recorded in `docs/reproduction.md`.
 - **The contamination check passes**: `No contamination found.` for both SFT corpora.
 - **Every dataset split and count** is exact: 202/23, 2232/248, 2049/228, 2008/224, 688 probes,
   3437 training-persona probes; `By kind` balances re-derived by template matching; 40 facts per
@@ -247,7 +283,8 @@ So this file is not read as blanket scepticism:
 
 - No full-PMB `pra_lenient`/UAR measurement exists for any DPO checkpoint.
 - No committed evidence for any quantization number.
-- `data/distill/v1/hash.txt` was never generated.
+- `data/distill/v1/hash.txt` was never generated, and the four benchmark `hash.txt` files do not
+  verify (E29) — so `hash.txt` is a usable pin only for the four SFT/DPO datasets.
 - The `acceptable_alternatives` field is unpopulated in all 688 probes.
 - The DPO v1_scale prompt-context divergence from SFT v1 was never root-caused.
 - No human evaluation exists anywhere; no reviewer log or teacher transcript was retained, so

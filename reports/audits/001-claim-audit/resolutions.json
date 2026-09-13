@@ -1,30 +1,176 @@
 [
-  { "id": 1, "status": "RESOLVED", "where": "README.md:21 (row split into SFT+memory and DPO-pairwise), docs/distillation_results.md:63-67, hf_readmes/README_sft-v1.md:91-94, hf_readmes/README_dpo-v1-scale.md:55-62,93, hf_readmes/README_distill-v1.md:121-124, hf_readmes/generate_cards.py:77-81,141-148", "note": "Corrected in the repository sources. The three affected model cards are already published to the Hub and still show the old figures until re-pushed; this errata is the authoritative record in the meantime." },
-  { "id": 2, "status": "RESOLVED", "where": "docs/distillation_results.md:63-67, hf_readmes/README_distill-v1.md:121-124", "note": "Table relabelled to SFT+memory and a confound note added pointing at the pairwise C-vs-F result (+7.6pp) as the distillation-specific measurement." },
-  { "id": 3, "status": "RESOLVED", "where": "README.md:77", "note": "Now \"688 adversarial probes across 8 personas (86 each)\". Repeated in reports/ERRATA.md." },
-  { "id": 4, "status": "RESOLVED", "where": "README.md:204", "note": "Claim narrowed to the SFT configs, with an explicit note that the DPO and distillation configs still reference \"main\" and must be pinned before a re-run counts as reproducible." },
-  { "id": 5, "status": "PARTIAL", "where": "docs/quantization_results.md:24", "note": "The F16 row now states both figures and why they differ. The README vs gguf_README.py two-set inconsistency is NOT yet resolved: one set must be chosen and the other corrected once a llama-bench artifact is committed." },
-  { "id": 6, "status": "OPEN", "where": "docs/quantization_results.md (evidence note added at the top) and README.md:179", "note": "A provenance note now states plainly that no llama-bench/llama-imatrix/GGUF artifact is committed and that the figures are restated from run logs. The underlying gap is not closable without re-running llama-bench against the (currently absent) GGUF files." },
-  { "id": 7, "status": "RESOLVED", "where": "README.md (Experiments table, quantization row)", "note": "Now \"Confirmed down to Q3_K_S by manual generation checks (Q2_K broken)\", matching the cited doc." },
-  { "id": 8, "status": "RESOLVED", "where": "docs/research_questions.md:198-216", "note": "Stale bullet struck through and marked DONE, with the genuinely-open part (imatrix vs non-imatrix quality comparison) called out separately." },
-  { "id": 9, "status": "RESOLVED", "where": "CITATION.cff (whole file); README.md BibTeX block", "note": "Title, version (0.1.0), author (Ty, Arjhine A.), and URL all corrected and reconciled between CITATION.cff and README." },
-  { "id": 10, "status": "RESOLVED", "where": "hf_readmes/checkpoint_README_template.py:32,71-73", "note": "Template front matter and license line now apache-2.0, matching the seven cards it generates. The \"inherited from google/gemma-4-E2B-it\" claim remains unverifiable from this repository and is flagged as such." },
-  { "id": 11, "status": "RESOLVED", "where": "data/sft/v0/DATASHEET.md, data/sft/v1/DATASHEET.md, data/distill/v1/DATASHEET.md", "note": "The check was run and recorded: \"No contamination found.\" for both SFT corpora. The stale \"not yet checked\" text is replaced with the actual result and command; the distill datasheet no longer cites a file that disagreed with it." },
-  { "id": 12, "status": "RESOLVED", "where": "data/sft/v0/DATASHEET.md, data/sft/v1/DATASHEET.md", "note": "Invented seeds removed and replaced with an accurate statement that the persona-generation seed is not recorded (build_pmb.py default is 1337)." },
-  { "id": 13, "status": "RESOLVED", "where": "data/dpo/v1_scale/DATASHEET.md", "note": "\"Same pipeline\" replaced with an explicit caveat: 2263/2277 user turns match but 0/2277 system texts do, cause not pinned down." },
-  { "id": 14, "status": "RESOLVED", "where": "README.md:5,191,199", "note": "473 tests (badge and structure block) and 27 bugs." },
-  { "id": 15, "status": "RESOLVED", "where": "README.md:171", "note": "Now separates LoRA training (single rented workstation GPU) from GGUF conversion/quantization (CPU-only on a box with no CUDA toolkit, and Modal for the distill-v1 pass)." },
-  { "id": 16, "status": "RESOLVED", "where": "Makefile (dead targets removed); docs/reproduction.md:57-64", "note": "The `figures` and `paper` targets are deleted and the reproduction doc states plainly that figure regeneration is unavailable rather than presenting a command that fails." },
-  { "id": 17, "status": "RESOLVED", "where": "README.md:179; docs/quantization_results.md:23", "note": "Now \"F16 reference plus 12 quant levels down to Q2_K\", consistent with 13 text files + mmproj = 14." },
-  { "id": 18, "status": "OPEN", "where": "hf_readmes/README_distill-v1-gguf.md", "note": "Not corrected in this pass. Q3_K_S and Q3_K_M must be reconciled to the doc's stated smallest-verified-coherent level (Q3_K_S) before the next re-push." },
-  { "id": 19, "status": "RESOLVED", "where": "scripts/build_pmb.py:760-780 (root cause); data/benchmarks/sft_personas_v0|v1|pmb_v0/DATASHEET.md", "note": "Generator no longer hardcodes the PMB title and now distinguishes evaluation corpora from training-persona corpora; the three affected datasheets retitled accordingly, and pmb_v0_full gained a note that its siblings are not benchmarks." },
-  { "id": 20, "status": "RESOLVED", "where": "data/benchmarks/pmb_v0_full/DATASHEET.md", "note": "Self-contradicting line removed; the datasheet now states the composition (86/persona, 64/64 persona x category cells, 608/80 answerable split)." },
-  { "id": 21, "status": "RESOLVED", "where": "data/distill/v1/DATASHEET.md; README.md:205", "note": "Dataset datasheet now records the missing hash.txt; the README reproducibility bullet no longer claims every dataset directory has one." },
-  { "id": 22, "status": "RESOLVED", "where": "README.md:77; data/benchmarks/pmb_v0_full/DATASHEET.md", "note": "The claim that probes carry acceptable alternatives is removed; both files now state the field is unpopulated in 688/688 and that pra_lenient is the metric as a consequence. Populating or dropping the field remains an open task." },
-  { "id": 23, "status": "PARTIAL", "where": "Makefile (install-dev target added)", "note": "A documented `install-dev` target now exists. .github/workflows/ci.yml still uses the bare sync and was not modified." },
-  { "id": 24, "status": "RESOLVED", "where": "hf_readmes/checkpoint_README_template.py:50", "note": "Anchor corrected to #results--analysis, matching the current README heading." },
-  { "id": 25, "status": "RESOLVED", "where": "hf_readmes/checkpoint_README_template.py:26,68; docs/quantization_results.md:3-7", "note": "distill-v1 named as current-best; the dpo-v1-scale description marked superseded. hf_readmes/generate_cards.py:135 was not part of this edit and should be re-checked on the next regeneration." },
-  { "id": 26, "status": "RESOLVED", "where": "docs/quantization_results.md:152-160", "note": "No longer hedged with \"if it exists\": the doc now states the outcome file was never produced and the imatrix quants remain unproven on quality." },
-  { "id": 27, "status": "RESOLVED", "where": "docs/quantization_results.md:132", "note": "Now 66,383 lines." },
-  { "id": 28, "status": "RESOLVED", "where": "docs/proper_scale_results.md:15-36, README.md:24", "note": "The headline table now carries an inline superseded-values warning and the missing full-PMB measurement for any DPO checkpoint is stated explicitly; the README label no longer calls the document current-authoritative." }
+  {
+    "id": 1,
+    "status": "RESOLVED",
+    "where": "README.md:21 (row split into SFT+memory and DPO-pairwise), docs/distillation_results.md:63-67, hf_readmes/README_sft-v1.md:91-94, hf_readmes/README_dpo-v1-scale.md:55-62,93, hf_readmes/README_distill-v1.md:121-124, hf_readmes/generate_cards.py:77-81,141-148",
+    "note": "Corrected in the repository sources. The three affected model cards are already published to the Hub and still show the old figures until re-pushed; this errata is the authoritative record in the meantime."
+  },
+  {
+    "id": 2,
+    "status": "RESOLVED",
+    "where": "docs/distillation_results.md:63-67, hf_readmes/README_distill-v1.md:121-124",
+    "note": "Table relabelled to SFT+memory and a confound note added pointing at the pairwise C-vs-F result (+7.6pp) as the distillation-specific measurement."
+  },
+  {
+    "id": 3,
+    "status": "RESOLVED",
+    "where": "README.md:77",
+    "note": "Now \"688 adversarial probes across 8 personas (86 each)\". Repeated in reports/ERRATA.md."
+  },
+  {
+    "id": 4,
+    "status": "RESOLVED",
+    "where": "README.md:204",
+    "note": "Claim narrowed to the SFT configs, with an explicit note that the DPO and distillation configs still reference \"main\" and must be pinned before a re-run counts as reproducible."
+  },
+  {
+    "id": 5,
+    "status": "PARTIAL",
+    "where": "docs/quantization_results.md:24",
+    "note": "The F16 row now states both figures and why they differ. The README vs gguf_README.py two-set inconsistency is NOT yet resolved: one set must be chosen and the other corrected once a llama-bench artifact is committed."
+  },
+  {
+    "id": 6,
+    "status": "OPEN",
+    "where": "docs/quantization_results.md (evidence note added at the top) and README.md:179",
+    "note": "A provenance note now states plainly that no llama-bench/llama-imatrix/GGUF artifact is committed and that the figures are restated from run logs. The underlying gap is not closable without re-running llama-bench against the (currently absent) GGUF files."
+  },
+  {
+    "id": 7,
+    "status": "RESOLVED",
+    "where": "README.md (Experiments table, quantization row)",
+    "note": "Now \"Confirmed down to Q3_K_S by manual generation checks (Q2_K broken)\", matching the cited doc."
+  },
+  {
+    "id": 8,
+    "status": "RESOLVED",
+    "where": "docs/research_questions.md:198-216",
+    "note": "Stale bullet struck through and marked DONE, with the genuinely-open part (imatrix vs non-imatrix quality comparison) called out separately."
+  },
+  {
+    "id": 9,
+    "status": "RESOLVED",
+    "where": "CITATION.cff (whole file); README.md BibTeX block",
+    "note": "Title, version (0.1.0), author (Ty, Arjhine A.), and URL all corrected and reconciled between CITATION.cff and README."
+  },
+  {
+    "id": 10,
+    "status": "RESOLVED",
+    "where": "hf_readmes/checkpoint_README_template.py:32,71-73",
+    "note": "Template front matter and license line now apache-2.0, matching the seven cards it generates. The \"inherited from google/gemma-4-E2B-it\" claim remains unverifiable from this repository and is flagged as such."
+  },
+  {
+    "id": 11,
+    "status": "RESOLVED",
+    "where": "data/sft/v0/DATASHEET.md, data/sft/v1/DATASHEET.md, data/distill/v1/DATASHEET.md",
+    "note": "The check was run and recorded: \"No contamination found.\" for both SFT corpora. The stale \"not yet checked\" text is replaced with the actual result and command; the distill datasheet no longer cites a file that disagreed with it."
+  },
+  {
+    "id": 12,
+    "status": "RESOLVED",
+    "where": "data/sft/v0/DATASHEET.md, data/sft/v1/DATASHEET.md",
+    "note": "Invented seeds removed and replaced with an accurate statement that the persona-generation seed is not recorded (build_pmb.py default is 1337)."
+  },
+  {
+    "id": 13,
+    "status": "RESOLVED",
+    "where": "data/dpo/v1_scale/DATASHEET.md",
+    "note": "\"Same pipeline\" replaced with an explicit caveat: 2263/2277 user turns match but 0/2277 system texts do, cause not pinned down."
+  },
+  {
+    "id": 14,
+    "status": "RESOLVED",
+    "where": "README.md:5,191,199",
+    "note": "473 tests (badge and structure block) and 27 bugs."
+  },
+  {
+    "id": 15,
+    "status": "RESOLVED",
+    "where": "README.md:171",
+    "note": "Now separates LoRA training (single rented workstation GPU) from GGUF conversion/quantization (CPU-only on a box with no CUDA toolkit, and Modal for the distill-v1 pass)."
+  },
+  {
+    "id": 16,
+    "status": "RESOLVED",
+    "where": "Makefile (dead targets removed); docs/reproduction.md:57-64",
+    "note": "The `figures` and `paper` targets are deleted and the reproduction doc states plainly that figure regeneration is unavailable rather than presenting a command that fails."
+  },
+  {
+    "id": 17,
+    "status": "RESOLVED",
+    "where": "README.md:179; docs/quantization_results.md:23",
+    "note": "Now \"F16 reference plus 12 quant levels down to Q2_K\", consistent with 13 text files + mmproj = 14."
+  },
+  {
+    "id": 18,
+    "status": "OPEN",
+    "where": "hf_readmes/README_distill-v1-gguf.md",
+    "note": "Not corrected in this pass. Q3_K_S and Q3_K_M must be reconciled to the doc's stated smallest-verified-coherent level (Q3_K_S) before the next re-push."
+  },
+  {
+    "id": 19,
+    "status": "RESOLVED",
+    "where": "scripts/build_pmb.py:760-780 (root cause); data/benchmarks/sft_personas_v0|v1|pmb_v0/DATASHEET.md",
+    "note": "Generator no longer hardcodes the PMB title and now distinguishes evaluation corpora from training-persona corpora; the three affected datasheets retitled accordingly, and pmb_v0_full gained a note that its siblings are not benchmarks."
+  },
+  {
+    "id": 20,
+    "status": "RESOLVED",
+    "where": "data/benchmarks/pmb_v0_full/DATASHEET.md",
+    "note": "Self-contradicting line removed; the datasheet now states the composition (86/persona, 64/64 persona x category cells, 608/80 answerable split)."
+  },
+  {
+    "id": 21,
+    "status": "RESOLVED",
+    "where": "data/distill/v1/DATASHEET.md; README.md:205",
+    "note": "Dataset datasheet now records the missing hash.txt; the README reproducibility bullet no longer claims every dataset directory has one."
+  },
+  {
+    "id": 22,
+    "status": "RESOLVED",
+    "where": "README.md:77; data/benchmarks/pmb_v0_full/DATASHEET.md",
+    "note": "The claim that probes carry acceptable alternatives is removed; both files now state the field is unpopulated in 688/688 and that pra_lenient is the metric as a consequence. Populating or dropping the field remains an open task."
+  },
+  {
+    "id": 23,
+    "status": "PARTIAL",
+    "where": "Makefile (install-dev target added)",
+    "note": "A documented `install-dev` target now exists. .github/workflows/ci.yml still uses the bare sync and was not modified."
+  },
+  {
+    "id": 24,
+    "status": "RESOLVED",
+    "where": "hf_readmes/checkpoint_README_template.py:50",
+    "note": "Anchor corrected to #results--analysis, matching the current README heading."
+  },
+  {
+    "id": 25,
+    "status": "RESOLVED",
+    "where": "hf_readmes/checkpoint_README_template.py:26,68; docs/quantization_results.md:3-7",
+    "note": "distill-v1 named as current-best; the dpo-v1-scale description marked superseded. hf_readmes/generate_cards.py:135 was not part of this edit and should be re-checked on the next regeneration."
+  },
+  {
+    "id": 26,
+    "status": "RESOLVED",
+    "where": "docs/quantization_results.md:152-160",
+    "note": "No longer hedged with \"if it exists\": the doc now states the outcome file was never produced and the imatrix quants remain unproven on quality."
+  },
+  {
+    "id": 27,
+    "status": "RESOLVED",
+    "where": "docs/quantization_results.md:132",
+    "note": "Now 66,383 lines."
+  },
+  {
+    "id": 28,
+    "status": "RESOLVED",
+    "where": "docs/proper_scale_results.md:15-36, README.md:24",
+    "note": "The headline table now carries an inline superseded-values warning and the missing full-PMB measurement for any DPO checkpoint is stated explicitly; the README label no longer calls the document current-authoritative."
+  },
+  {
+    "id": 29,
+    "status": "PARTIAL",
+    "where": "README.md:220, docs/GUARDRAILS.md G9/G9b, reports/ERRATA.md E29",
+    "note": "The claim that all six hashes verify is corrected, and README now states which four verify and names reports/data/study-001-freeze.json as the authoritative pin for the benchmark corpora. The four benchmark hash.txt files are NOT regenerated in this pass \u2014 they must be rebuilt from a clean checkout before hash.txt can be cited as a pin for them."
+  }
 ]

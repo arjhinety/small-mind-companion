@@ -17,7 +17,7 @@ evidence is hash-pinned and its write-ups stop changing. Work after the freeze i
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — 76 artifacts pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 28 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 29 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 
 ```
@@ -87,7 +87,7 @@ For the full memory-retrieval-augmented pipeline (not just a raw checkpoint), se
 
 ## Dataset
 
-Two data families, both versioned and hash-pinned in `data/`:
+Two data families, both versioned in `data/` and pinned by [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json):
 
 - **PMB (evaluation)**: `data/benchmarks/pmb_v0_full/` — 688 adversarial probes across 8 personas (86 each), each probe categorized (factual/episodic/temporal/preference/continuity/outdated-fact/distractor/unanswerable) with a gold answer and supporting-memory IDs. Note: the `acceptable_alternatives` field exists in every record but is currently unpopulated, which is why `pra_strict` is ~0 throughout and `pra_lenient` (judge-scored) is the reported metric.
 - **SFT / DPO / distillation (training)**: `data/sft/v1/`, `data/dpo/v1_scale/`, `data/distill/v1/` — each with a `DATASHEET.md` describing generation methodology, class balance, and known caveats (e.g. not human-reviewed, not yet contamination-checked against PMB at generation time — verify with `scripts/check_contamination.py` before reusing).
@@ -217,7 +217,8 @@ tests/                   473 unit tests, run in CI
 
 - All training seeds are pinned in their respective config files (e.g. `seed: 1337` in `configs/training/sft_v1.yaml`).
 - Base model revision is pinned by commit SHA in the SFT configs (`base_model_revision`). The DPO and distillation configs still reference `"main"` and should be pinned to a SHA before any re-run is treated as reproducible.
-- Every dataset directory has a `hash.txt` and `DATASHEET.md` documenting exact generation methodology and known caveats.
+- Dataset directories carry a `DATASHEET.md` documenting generation methodology and known caveats, and most carry a `hash.txt`. **`data/distill/v1/` has none.**
+- Integrity pinning: the four SFT/DPO `hash.txt` files verify under `sha256` over concatenated LF-normalised `*.jsonl`. The four **benchmark** `hash.txt` files do **not** verify under any algorithm tested — see [`reports/ERRATA.md`](reports/ERRATA.md) E29. For the benchmark corpora, [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) is the authoritative pin, not `hash.txt`.
 - `uv.lock` pins every dependency version.
 - Hypotheses and eval design are committed to git *before* results — git history itself is the pre-registration record.
 

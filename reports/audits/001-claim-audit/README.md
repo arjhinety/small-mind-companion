@@ -5,7 +5,7 @@ documentation that the committed artifacts did not support — and how each was 
 
 | File | Contents |
 |---|---|
-| `findings.json` | The 28 findings of the audit of commit `ae75ca9` (2026-09-04). Fields: `id`, `severity`, `area`, `location`, `claim` (as written), `actual` (what the artifacts show), `category`, `pinned`, `public` |
+| `findings.json` | The 29 findings of the audit of commit `ae75ca9` (2026-09-13). Fields: `id`, `severity`, `area`, `location`, `claim` (as written), `actual` (what the artifacts show), `category`, `pinned`, `public` |
 | `resolutions.json` | One resolution per finding: `status`, `where` it was fixed, and a note where the fix needed one. Statuses are `RESOLVED`, `PARTIAL` or `OPEN` |
 
 The rules derived from these findings are in [`docs/GUARDRAILS.md`](../../../docs/GUARDRAILS.md).
@@ -43,10 +43,13 @@ committed artifacts rather than reading prose:
 3. **Provenance check.** The script that produced each artifact was read to confirm *which
    checkpoint* a result describes, rather than trusting the label in the write-up. This is what
    surfaced findings 1 and 2 — the highest-severity items in this audit.
-4. **Integrity check.** All six committed `hash.txt` files were recomputed. **All six match**
-   once `\r\n` is normalised to `\n` (this clone sets `core.autocrlf=true`; the hashes were
-   computed over LF bytes). The two hashing algorithms in use are undocumented in the files
-   themselves and are now recorded in `docs/reproduction.md`.
+4. **Integrity check.** All six committed `hash.txt` files were recomputed. **Four verify and four
+   do not.** The four SFT/DPO hashes match under `sha256` over concatenated, LF-normalised,
+   sorted `*.jsonl`. The four benchmark hashes match under **none of thirteen tested algorithms**,
+   on a clean checkout of the commit that introduced them (finding #29). The two hashing
+   algorithms in use are undocumented in the files themselves and are now recorded in
+   `docs/reproduction.md`. The first pass of this audit reported "all six match" from the four
+   that passed — that sentence is itself corrected in `reports/ERRATA.md`.
 5. **Contamination check.** `scripts/check_contamination.py` was actually run against both SFT
    corpora: `No contamination found.` (exit 0). The "not yet checked" datasheet text was stale,
    not the data.

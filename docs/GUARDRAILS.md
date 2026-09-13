@@ -67,11 +67,21 @@ claim.
 *Check:* every path and command in a doc is executed or resolved during the same pass that writes
 it.
 
-**G9. A hash is recomputed before it is trusted.** All six `hash.txt` files verify — but only after
-normalising CRLF to LF, because the working tree is CRLF and the hashes were computed over LF
-bytes. A naive `sha256sum` fails on all six and looks like corruption.
-*Check:* record the algorithm and the line-ending assumption alongside the hash. Both hashing
-algorithms in this repo are now documented in `docs/reproduction.md`.
+**G9. A hash is recomputed from a clean checkout before it is trusted.** This rule was written
+wrong the first time. It originally said "all six `hash.txt` files verify, once CRLF is normalised
+to LF". Four of them do — the SFT/DPO datasets — and **four do not, under any algorithm**, which
+was only established by testing them against a clean checkout of the commit that introduced them
+(finding #29). The original claim came from a partial check that was generalised to all six.
+*Check:* recompute every hash, from a clean checkout, before writing that they verify. Record the
+algorithm and the line-ending assumption next to the hash; this repo had two undocumented and
+incompatible algorithms in use. Where a hash cannot be reproduced, name the artifact that
+supersedes it rather than leaving a broken pin in place, and remove the claim that it is a pin.
+
+**G9b. A partial verification is not a verification.** The specific failure above: four hashes were
+confirmed and the sentence was written about six. Nothing about the four that passed said anything
+about the other two.
+*Check:* a claim about "all N" is backed by a check that covered N, and the check's coverage is
+stated.
 
 ## Public surfaces
 

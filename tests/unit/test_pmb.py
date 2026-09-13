@@ -266,6 +266,13 @@ class TestBuildPmbMain:
             with open(out / "hash.txt") as f:
                 stored_hash = f.read().strip()
 
+            # Independent recomputation of the corpus digest. Kept as its own implementation rather
+            # than importing _compute_hash, so a change in the script's logic is caught here. Both
+            # must normalise line endings to LF, otherwise the digest depends on the platform's
+            # checkout convention rather than on the content (`core.autocrlf=true` on Windows).
+            def _lf(text: str) -> bytes:
+                return text.replace("\r\n", "\n").encode("utf-8")
+
             hasher = hashlib.sha256()
             for root, dirs, files in sorted(os.walk(out)):
                 for fname in sorted(files):
@@ -273,8 +280,8 @@ class TestBuildPmbMain:
                         continue
                     fpath = Path(root) / fname
                     rel = fpath.relative_to(out)
-                    hasher.update(str(rel).encode("utf-8"))
-                    hasher.update(fpath.read_bytes())
+                    hasher.update(_lf(rel.as_posix()))
+                    hasher.update(_lf(fpath.read_text(encoding="utf-8")))
             computed_hash = hasher.hexdigest()
             assert stored_hash == computed_hash
 

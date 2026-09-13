@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "e013f4f95a20e2479dc1d641e5a1f384f0144bcd",
+  "git_commit": "99a501abffebea844969bbbf9184c7def0de40fb",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -301,8 +301,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 17190,
-        "sha256": "0996f16becf5684d0f9af69956fe790a322697470a9903e0943c0a1b9171662b"
+        "bytes": 17705,
+        "sha256": "5a2a4fbf938bb7b25eadfd6258cfde3d402baa353d3ac10ab100d0f75d9fef9a"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7494,
@@ -328,28 +328,28 @@
   },
   "living_documents": {
     "docs/GUARDRAILS.md": {
-      "bytes": 7346,
-      "sha256": "673e519c383678eba0b1a27ed289598e3097dcd456e4c7e0ea9513c04c028865"
+      "bytes": 8103,
+      "sha256": "abc4f02d907534a8ca95387d5385a38afd0a9f67b7267cc36d165cfa26676ca7"
     },
     "docs/STUDIES.md": {
       "bytes": 6099,
-      "sha256": "66c215fc82c1b689102a8b47ce972d9e7d33ccf372fef171b8336bfaa3c4532a"
+      "sha256": "7b40e6e8ce77d6f77b2018651412c07cffc888fd72b9f8a41d97fcd87eb4efb9"
     },
     "reports/ERRATA.md": {
-      "bytes": 15594,
-      "sha256": "0de195ed446db6dd560f41af8d8f348f973b9657173d9aad6fde1ca887f043f7"
+      "bytes": 18201,
+      "sha256": "04a69a62db7876831ffb58b52503d8390c0412433f7c1869aef1663d4c14ee5a"
     },
     "reports/audits/001-claim-audit/README.md": {
-      "bytes": 3925,
-      "sha256": "4f22162585a73c699e30cc39da020822be260337ffecf6b85eb2074fbe219366"
+      "bytes": 4222,
+      "sha256": "afe77d64e6930305a5a711f0cfca651e890747c040ce40df10f0bdad5c28a930"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 18647,
-      "sha256": "388e6820dc1ecc8eaabb36894efb5d2b0b462b0441c25ef020252433503b14c1"
+      "bytes": 19815,
+      "sha256": "5dde839eb9a751d74abfa0913882c2aa0572f7f2fb91dce8213971207fa352be"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 7545,
-      "sha256": "2f778db766740f21f4c5e24a5a582af0408f2624ceb3736845597e7989c40859"
+      "bytes": 8544,
+      "sha256": "69c515703f7d579ba9b764c330abc5879669d96cb3f2b7e41ee4cd72d5679a72"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",
