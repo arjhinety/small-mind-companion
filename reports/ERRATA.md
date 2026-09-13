@@ -268,7 +268,7 @@ the `study-001` tag. `README.md` now says this.
 `docs/reproduction.md`. All nine corpora verify:
 `uv run python scripts/recompute_hashes.py` reports `9/9 corpora hash-clean`. A regression test
 (`tests/unit/test_dataset_hashes.py`) now recomputes every hash on each test run, which is the
-check whose absence let this go unnoticed — guardrail G13 is the rule, that test is its
+check whose absence let this go unnoticed — guardrail G9c is the rule, that test is its
 enforcement. The *cause* of the four original values remains undetermined and is not needed:
 the corpora were edited during this audit anyway (datasheet corrections, findings #19–#22), so the
 old values were stale regardless of what produced them.

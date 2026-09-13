@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Recompute every dataset ``hash.txt`` from a clean, platform-independent encode.
 
-Why this exists (see ``reports/ERRATA.md`` E29 and ``docs/GUARDRAILS.md`` G13): the four benchmark
+Why this exists (see ``reports/ERRATA.md`` E29 and ``docs/GUARDRAILS.md`` G9c): the four benchmark
 ``hash.txt`` files committed with Study 001 do not match their corpora under any algorithm tested,
 including thirteen variants of path encoding, byte/text reading, ordering, and DATASHEET inclusion.
 They may never have matched. ``data/distill/v1/`` never had a hash at all. The four SFT/DPO hashes

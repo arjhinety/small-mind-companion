@@ -3,7 +3,8 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "d8b5a327d8e0a22795776c02b54fb6ce0e474159",
+  "git_commit": "113225a969872e2ccab4a4be7fdc310f22600fc9",
+  "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -351,8 +352,8 @@
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
   "living_documents": {
     "docs/GUARDRAILS.md": {
-      "bytes": 8293,
-      "sha256": "872766e3311d9a54a6e9003d42f31bdd56c12cb93d99f85390029f03169693dd"
+      "bytes": 9212,
+      "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
     },
     "docs/STUDIES.md": {
       "bytes": 6466,
@@ -360,7 +361,7 @@
     },
     "reports/ERRATA.md": {
       "bytes": 20724,
-      "sha256": "f980f7337bcc47920fcd8a731df4934ac14dfb9788d26396a722ff9016782924"
+      "sha256": "a77583eb99f51396c0f219cd1b240f74509cdea3b7891bbc6d6da4cfdece3e3f"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
@@ -379,9 +380,22 @@
   "not_claimed": [
     "No full-PMB pra_lenient or UAR measurement exists for any DPO checkpoint; dpo-v1-scale appears only in pairwise comparisons.",
     "No quantization figure in this repository is backed by a committed artifact (*.gguf is gitignored and results/ holds no quantization output).",
-    "data/distill/v1/ has no hash.txt, so its contents are not integrity-pinned here.",
+    "All 9 corpora carry a hash.txt that verifies, but the four benchmark hashes are a 2026-09-13 repair: before that they matched under no tested algorithm and data/distill/v1/ had none (reports/ERRATA.md E29).",
     "The acceptable_alternatives field is unpopulated in 688/688 PMB probes, which is why pra_strict is ~0 throughout and pra_lenient is the reported metric.",
     "Every result is a single seed and a single run. Nothing here is replicated.",
     "No human evaluation exists; no reviewer log or teacher transcript was retained, so the teacher identity is self-reported and unverifiable from this repository."
-  ]
+  ],
+  "tree_facts": {
+    "corpora_total": 9,
+    "corpora_with_hash_file": 9,
+    "corpora_without_hash_file": [],
+    "unpinned_revision_configs": [
+      "distill_v1.yaml:base_model_revision=main",
+      "distill_v1.yaml:teacher_model_revision=main",
+      "dpo.yaml:base_model_revision=main",
+      "dpo_v1_more_epochs.yaml:base_model_revision=main",
+      "dpo_v1_scale.yaml:base_model_revision=main"
+    ]
+  },
+  "tree_facts_note": "Derived from the tree on every run and compared by --check. The not_claimed item about hashes is generated from these rather than typed, because the typed version went stale the moment a missing hash.txt was added."
 }

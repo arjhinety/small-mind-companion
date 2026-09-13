@@ -1,6 +1,6 @@
 """Every dataset ``hash.txt`` must match its corpus.
 
-This is guardrail G13 in executable form: a hash that has never been verified from a clean
+This is guardrail G9c in executable form: a hash that has never been verified from a clean
 checkout is not a pin. Study 001 shipped four benchmark hashes that matched under none of thirteen
 tested algorithms, and one dataset with no hash at all — both went unnoticed because nothing ever
 recomputed them (``reports/ERRATA.md`` E29).

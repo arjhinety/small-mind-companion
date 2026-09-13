@@ -27,6 +27,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "reports" / "data" / "study-001-freeze.json"
 
+# The canonical corpus list lives in recompute_hashes.py, so there is one place that decides which
+# datasets exist. Duplicating it here would be exactly the "typed, not derived" failure G4 warns
+# about -- the two lists would drift and the manifest would assert things about a stale set.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from recompute_hashes import BENCHMARK_DIRS, DATASET_DIRS  # noqa: E402
+
 STUDY_ID = "001"
 EVIDENCE_TAG = "study-001"
 FROZEN_ON = "2026-09-13"
@@ -213,6 +219,34 @@ def collect() -> dict[str, dict[str, dict[str, object]]]:
     return evidence
 
 
+def collect_facts() -> dict[str, object]:
+    """Machine-checkable facts the manifest asserts about the tree.
+
+    These exist because the manifest previously *typed* claims about the tree -- "data/distill/v1/
+    has no hash.txt" -- and then silently went stale when that stopped being true. Anything here is
+    derived from the tree and re-derived on every `--check`, so a stale claim fails the freeze
+    (guardrail G4).
+    """
+    corpora = BENCHMARK_DIRS + DATASET_DIRS
+    with_hash = [c for c in corpora if (ROOT / c / "hash.txt").is_file()]
+    unpinned_configs = []
+    for cfg in sorted((ROOT / "configs" / "training").glob("*.yaml")):
+        text = cfg.read_text(encoding="utf-8")
+        for line in text.splitlines():
+            if "base_model_revision" in line or "teacher_model_revision" in line:
+                value = line.split(":", 1)[1].strip().strip("'\"")
+                if len(value) != 40:
+                    unpinned_configs.append(f"{cfg.name}:{line.split(':')[0].strip()}={value}")
+    return {
+        "corpora_total": len(corpora),
+        "corpora_with_hash_file": len(with_hash),
+        "corpora_without_hash_file": sorted(
+            c for c in corpora if not (ROOT / c / "hash.txt").is_file()
+        ),
+        "unpinned_revision_configs": sorted(unpinned_configs),
+    }
+
+
 def collect_living() -> dict[str, dict[str, object]]:
     entries: dict[str, dict[str, object]] = {}
     for pattern in LIVING_DOCUMENTS:
@@ -225,13 +259,32 @@ def collect_living() -> dict[str, dict[str, object]]:
 
 def build() -> dict[str, object]:
     evidence = collect()
+    facts = collect_facts()
     n_files = sum(len(v) for v in evidence.values())
+    missing_hash = facts["corpora_without_hash_file"]
+    if missing_hash:
+        hash_claim = (
+            f"{facts['corpora_with_hash_file']}/{facts['corpora_total']} corpora carry a hash.txt; "
+            f"these do not and are therefore not integrity-pinned: {missing_hash}."
+        )
+    else:
+        hash_claim = (
+            f"All {facts['corpora_total']} corpora carry a hash.txt that verifies, but the four "
+            "benchmark hashes are a 2026-09-13 repair: before that they matched under no tested "
+            "algorithm and data/distill/v1/ had none (reports/ERRATA.md E29)."
+        )
     return {
         "artifact_kind": "STUDY_001_RESULT_FREEZE",
         "study_id": STUDY_ID,
         "evidence_tag": EVIDENCE_TAG,
         "frozen_on": FROZEN_ON,
         "git_commit": git_commit(),
+        "git_commit_note": (
+            "The HEAD revision at the moment this manifest was generated. Because the manifest is "
+            "written before it is committed, this is the PARENT of the commit that contains it -- "
+            "not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` "
+            "rather than reading this field, which is why the Study 001 page shows both."
+        ),
         "hash_method": "sha256 over LF-normalised bytes",
         "file_count": n_files,
         "evidence": evidence,
@@ -251,13 +304,19 @@ def build() -> dict[str, object]:
             "dpo-v1-scale appears only in pairwise comparisons.",
             "No quantization figure in this repository is backed by a committed artifact "
             "(*.gguf is gitignored and results/ holds no quantization output).",
-            "data/distill/v1/ has no hash.txt, so its contents are not integrity-pinned here.",
+            hash_claim,
             "The acceptable_alternatives field is unpopulated in 688/688 PMB probes, which is "
             "why pra_strict is ~0 throughout and pra_lenient is the reported metric.",
             "Every result is a single seed and a single run. Nothing here is replicated.",
             "No human evaluation exists; no reviewer log or teacher transcript was retained, so "
             "the teacher identity is self-reported and unverifiable from this repository.",
         ],
+        "tree_facts": facts,
+        "tree_facts_note": (
+            "Derived from the tree on every run and compared by --check. The not_claimed item "
+            "about hashes is generated from these rather than typed, because the typed version "
+            "went stale the moment a missing hash.txt was added."
+        ),
     }
 
 
@@ -289,6 +348,20 @@ def main() -> int:
             problems.append(
                 f"  file_count: recorded {recorded.get('file_count')} "
                 f"!= actual {fresh['file_count']}"
+            )
+        # The manifest's own factual assertions about the tree. A stale `not_claimed` item about a
+        # missing hash.txt is drift like any other, and is caught here rather than being discovered
+        # by a reader months later (guardrail G4).
+        if recorded.get("tree_facts") != fresh["tree_facts"]:
+            rec, now = recorded.get("tree_facts", {}), fresh["tree_facts"]
+            for key in sorted(set(rec) | set(now)):
+                if rec.get(key) != now.get(key):
+                    problems.append(
+                        f"  tree_facts.{key}: recorded {rec.get(key)!r} != actual {now.get(key)!r}"
+                    )
+            problems.append(
+                "  (a manifest claim about the tree is stale -- re-freeze and regenerate the "
+                "affected not_claimed item)"
             )
         if problems:
             print("FAIL: the frozen Study 001 artifacts have changed since the freeze:")

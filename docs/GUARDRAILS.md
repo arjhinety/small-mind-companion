@@ -84,6 +84,18 @@ about the other two.
 *Check:* a claim about "all N" is backed by a check that covered N, and the check's coverage is
 stated.
 
+**G9c. An unverified hash is not a pin, and it must not be cited as one.** Distinct from G9, which
+is about how to *check* a hash; this is about what may be *claimed* from one. `README.md` described
+the datasets as "hash-pinned" while four of the nine hashes matched their corpora under no tested
+algorithm — a pin nobody had ever turned the key on. The remedy is two-part: verify it, or say
+plainly that it does not verify and name the artifact that supersedes it (here,
+`reports/data/study-001-freeze.json`).
+*Check:* before the word "pinned" or "hash-verified" appears in a document, every hash it refers to
+has been recomputed and the claim narrowed to the ones that passed. `scripts/recompute_hashes.py`
+and `tests/unit/test_dataset_hashes.py` are this rule's enforcement.
+*Numbering note:* G9b and G9c were both derived from the same finding (E29), so they are lettered
+off G9 rather than appended at the end.
+
 ## Public surfaces
 
 **G10. Published cards are corrected by re-push, and errata in the meantime.** Six model cards were
