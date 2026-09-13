@@ -729,14 +729,13 @@ def _write_output(
     n_personas = len(corpora)
     if teacher_name == "openai":
         limitations = (
-            f"- This corpus was generated with a **live teacher model** "
-            f"(OpenAI-compatible endpoint), not a deterministic fixture. It is "
-            f"**not yet human-reviewed** — conversations and probes should be "
-            f"spot-checked by a human before being treated as production-quality "
-            f"reference data.\n"
+            "- This corpus was generated with a **live teacher model** "
+            "(OpenAI-compatible endpoint), not a deterministic fixture. It is "
+            "**not yet human-reviewed** — conversations and probes should be "
+            "spot-checked by a human before being treated as production-quality "
+            "reference data.\n"
             + (
-                f"- This run ({n_personas} personas) is below the target scale of 8 "
-                f"personas.\n"
+                f"- This run ({n_personas} personas) is below the target scale of 8 " f"personas.\n"
                 if n_personas < 8
                 else ""
             )

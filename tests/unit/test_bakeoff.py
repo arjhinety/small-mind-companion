@@ -82,7 +82,9 @@ class TestOpenAIJudgeConstruction:
 
         class FakeResponse:
             def __init__(self, content):
-                self.choices = [types.SimpleNamespace(message=types.SimpleNamespace(content=content))]
+                self.choices = [
+                    types.SimpleNamespace(message=types.SimpleNamespace(content=content))
+                ]
 
         class FakeCompletions:
             def create(self, **kwargs):
@@ -190,8 +192,7 @@ class TestWriteAdr:
         assert "TBD" not in new_text
         assert (
             "| Model | instruction | en_dialogue | ja_dialogue | structured_context "
-            "| vision | Overall |"
-            in new_text
+            "| vision | Overall |" in new_text
         )
         assert "| model-a | 3.00 | — | — | 3.00 | — | 3.00 |" in new_text
         assert "| model-b | 1.50 | — | — | 5.00 | — | 3.25 |" in new_text

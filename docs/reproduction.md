@@ -60,20 +60,32 @@ Not available. `scripts/make_figures.py` and the `make figures` target do not ex
 `results/figures/` and `assets/` were produced ad hoc outside the repo. Either implement the script
 or drop this step — see `README.md`'s reproducibility list, which does not claim it.
 
-## Generating a `hash.txt`
+## Verifying and regenerating `hash.txt`
 
-`hash.txt` files pin dataset integrity, but the two algorithms in use are different and
-undocumented in the files themselves:
+Verify every dataset hash in one step:
 
-- **SFT / DPO datasets**: `sha256` over the concatenated contents of all `*.jsonl` in sorted order
-  (`generate_sft_data.py`, `generate_dpo_data.py`).
+```bash
+uv run python scripts/recompute_hashes.py          # report drift, change nothing
+uv run python scripts/recompute_hashes.py --write  # rewrite the hash.txt files
+```
+
+Two algorithms are in use, and they were undocumented in the files themselves:
+
+- **SFT / DPO / distillation datasets**: `sha256` over the concatenated contents of every `*.jsonl`
+  in sorted order (`generate_sft_data.py`, `generate_dpo_data.py`).
 - **Benchmark corpora**: sorted directory walk, hashing each file's forward-slash relative path
   followed by its bytes, skipping `hash.txt` itself (`scripts/build_pmb.py`).
 
-Both assume **LF line endings**. This repo sets `core.autocrlf=true`, so a working tree on Windows
-is CRLF and a naive `sha256sum` will not match — normalise `\r\n` → `\n` before hashing.
+Both hash **LF-normalised** bytes. This repo sets `core.autocrlf=true` and has no `.gitattributes`,
+so a Windows working tree is CRLF while the committed hashes were computed on LF — a naive
+`sha256sum` will not match, and the hash would otherwise depend on the checkout platform rather
+than on the content.
 
-`data/distill/v1/` has no `hash.txt`.
+**History.** The four benchmark `hash.txt` files committed with Study 001 matched their corpora
+under none of thirteen tested algorithms and may never have matched; `data/distill/v1/` had no hash
+at all. All nine were recomputed on 2026-09-13 with the algorithm above and now verify. The
+benchmark corpora were also edited (datasheets corrected), so the old values were stale regardless.
+See `reports/ERRATA.md` E29.
 
 Every command above should be run from a clean clone, in order, to earn the reproducibility
 claim. If a step breaks, that is a bug in this file or the code — file it.

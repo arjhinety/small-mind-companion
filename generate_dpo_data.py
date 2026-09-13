@@ -96,9 +96,13 @@ for corpus in corpora:
                 continue
 
             system_text, _ = builder.build(
-                turn_id=turn.turn_id, persona=COMPANION_PERSONA, profile={},
-                boundaries=[], retrieved_memories=retrieved_records,
-                recent_turns=recent_turns[-6:], user_turn="",
+                turn_id=turn.turn_id,
+                persona=COMPANION_PERSONA,
+                profile={},
+                boundaries=[],
+                retrieved_memories=retrieved_records,
+                recent_turns=recent_turns[-6:],
+                user_turn="",
             )
             system_text = system_text.strip()
 
@@ -113,11 +117,13 @@ for corpus in corpora:
 
             if chosen and chosen != rejected:
                 full_prompt = f"{system_text}\n\nUser: {turn.text}"
-                pairs.append({
-                    "prompt": full_prompt,
-                    "chosen": chosen,
-                    "rejected": rejected,
-                })
+                pairs.append(
+                    {
+                        "prompt": full_prompt,
+                        "chosen": chosen,
+                        "rejected": rejected,
+                    }
+                )
 
             recent_turns.append({"role": turn.role, "text": turn.text})
 
@@ -156,6 +162,7 @@ personas as data/sft/v1/ (disjoint from the PMB-v0 eval set).
 (out_dir / "DATASHEET.md").write_text(datasheet)
 
 import hashlib
+
 h = hashlib.sha256()
 for p in sorted(out_dir.glob("*.jsonl")):
     h.update(p.read_bytes())

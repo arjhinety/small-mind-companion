@@ -62,7 +62,6 @@ UAR = unanswerable-abstention rate.
 quantization figure is backed by a committed artifact. The `acceptable_alternatives` field is
 unpopulated in all 688 probes, which is why `pra_strict` is ~0 and `pra_lenient` is reported
 instead. Everything is a single seed and a single run. There is no human evaluation.
-
 **Freeze.** `scripts/freeze_study_001.py` pins 76 artifacts across 7 groups by SHA-256 over
 LF-normalised bytes. `--check` fails if any of them changes:
 

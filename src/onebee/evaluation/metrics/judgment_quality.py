@@ -82,9 +82,7 @@ def compliance_verdict(probe: JudgmentProbe, response: str, judge: Judge) -> boo
 
 def quality_verdict(probe: JudgmentProbe, response: str, judge: Judge) -> float:
     """Judgment-quality score for `response`, in [0, 1] (judge score / 5, floor 0)."""
-    rubric = _QUALITY_RUBRIC_TEMPLATE.format(
-        prompt=probe.prompt, good_shape=probe.good_shape
-    )
+    rubric = _QUALITY_RUBRIC_TEMPLATE.format(prompt=probe.prompt, good_shape=probe.good_shape)
     verdict = judge.score_response(probe.prompt, response, rubric)
     return max(0.0, min(1.0, verdict.score / 5.0))
 

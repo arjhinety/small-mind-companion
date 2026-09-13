@@ -74,8 +74,13 @@ def build_messages(probe: Probe):
     candidates = retriever.retrieve(probe.question, query_embedding=query_emb, k=K)
     records = [c.record for c in candidates]
     system_text, _ = builder.build(
-        turn_id=probe.probe_id, persona=COMPANION_PERSONA, profile={},
-        boundaries=[], retrieved_memories=records, recent_turns=[], user_turn="",
+        turn_id=probe.probe_id,
+        persona=COMPANION_PERSONA,
+        profile={},
+        boundaries=[],
+        retrieved_memories=records,
+        recent_turns=[],
+        user_turn="",
     )
     system_text = system_text.strip()
     messages = []
@@ -99,7 +104,9 @@ for i, p in enumerate(subsample):
 
 del engine_e
 import gc
+
 import torch
+
 gc.collect()
 torch.cuda.empty_cache()
 
@@ -135,20 +142,35 @@ for p in subsample:
         e_wins += 1
     else:
         ties += 1
-    results.append({
-        "probe_id": p.probe_id, "category": p.category, "question": p.question,
-        "response_e": resp_e, "response_c": resp_c, "dual_order_score": score,
-    })
+    results.append(
+        {
+            "probe_id": p.probe_id,
+            "category": p.category,
+            "question": p.question,
+            "response_e": resp_e,
+            "response_c": resp_c,
+            "dual_order_score": score,
+        }
+    )
 
-print(f"C (SFT+DPO, v1_scale) wins: {c_wins}, E (SFT v1 only) wins: {e_wins}, ties: {ties}", file=sys.stderr)
+print(
+    f"C (SFT+DPO, v1_scale) wins: {c_wins}, E (SFT v1 only) wins: {e_wins}, ties: {ties}",
+    file=sys.stderr,
+)
 
 out_dir = Path("results/v1_scale/C_vs_E_pairwise")
 out_dir.mkdir(parents=True, exist_ok=True)
 with open(out_dir / "raw.jsonl", "w") as f:
     for r in results:
         f.write(json.dumps(r) + "\n")
-summary = {"n": len(subsample), "c_wins": c_wins, "e_wins": e_wins, "ties": ties,
-           "c_win_rate": c_wins / len(subsample), "e_win_rate": e_wins / len(subsample)}
+summary = {
+    "n": len(subsample),
+    "c_wins": c_wins,
+    "e_wins": e_wins,
+    "ties": ties,
+    "c_win_rate": c_wins / len(subsample),
+    "e_win_rate": e_wins / len(subsample),
+}
 with open(out_dir / "summary.json", "w") as f:
     json.dump(summary, f, indent=2)
 print(json.dumps(summary, indent=2))

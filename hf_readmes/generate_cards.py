@@ -117,7 +117,9 @@ CHECKPOINTS = {
         ),
         dataset_link="",
         intended_use="Studying DPO overfitting behavior on small preference datasets. Not recommended for deployment or as a training base.",
-        capabilities=["Same base capabilities as dpo-v0, with observed overfitting artifacts from extended training"],
+        capabilities=[
+            "Same base capabilities as dpo-v0, with observed overfitting artifacts from extended training"
+        ],
         eval_table="See `docs/dpo_results.md` for the overfitting-experiment comparison against dpo-v0.",
         results_doc="docs/dpo_results.md",
         limitations="Explicitly overfit by design — do not use this checkpoint as a general-purpose companion model.",

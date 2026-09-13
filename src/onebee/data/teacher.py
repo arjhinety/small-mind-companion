@@ -391,7 +391,7 @@ class OpenAITeacherClient:
             "form:\n"
             '{"turns": [{"role": "user" | "assistant", "text": "...", '
             '"revealed_fact_ids": ["fact_id", ...]}]}\n'
-            'Every user turn that reveals one or more of the listed facts must list '
+            "Every user turn that reveals one or more of the listed facts must list "
             'those facts\' "fact_id" values in "revealed_fact_ids"; user turns that '
             "reveal nothing get an empty list, and assistant turns always have an "
             f"empty list. Aim for approximately {target_turns} total turns (user and "
@@ -411,8 +411,7 @@ class OpenAITeacherClient:
         raw_turns = data.get("turns")
         if not isinstance(raw_turns, list):
             raise RuntimeError(
-                "OpenAITeacherClient: conversation JSON missing 'turns' array: "
-                f"{data!r}"
+                "OpenAITeacherClient: conversation JSON missing 'turns' array: " f"{data!r}"
             )
 
         session_id = f"{persona.persona_id}_s{session_index:03d}"
@@ -430,9 +429,7 @@ class OpenAITeacherClient:
                 raise RuntimeError(
                     f"OpenAITeacherClient: malformed turn in conversation JSON: {raw!r}"
                 )
-            if not isinstance(revealed, list) or not all(
-                isinstance(r, str) for r in revealed
-            ):
+            if not isinstance(revealed, list) or not all(isinstance(r, str) for r in revealed):
                 raise RuntimeError(
                     "OpenAITeacherClient: malformed 'revealed_fact_ids' in "
                     f"conversation JSON: {raw!r}"

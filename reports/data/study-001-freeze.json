@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "99a501abffebea844969bbbf9184c7def0de40fb",
+  "git_commit": "f2735aa11f89fdd6b3646b9a8cc7d38fb03d8ae9",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -14,7 +14,7 @@
       },
       "data/benchmarks/pmb_v0_full/hash.txt": {
         "bytes": 65,
-        "sha256": "6bdd554badce1271fc932fa50cd67760f9dc483db49382f2b58641b13d55a35f"
+        "sha256": "56bf82d641ef1ea32312eadc22e0132d89dde18a87569d8ff0534f3fd0522849"
       },
       "data/benchmarks/pmb_v0_full/personas/p000.json": {
         "bytes": 47053,
@@ -261,8 +261,8 @@
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 2608,
-        "sha256": "5a37ebd23fc5472c75729c2aff43fd0fca9f2f0c6be1e0cf05942ae9ce17fe26"
+        "bytes": 3304,
+        "sha256": "0cc7fe50b0caa0439142a637099577ae688d5a352c9755c6e6605d091dad484e"
       },
       "docs/research_questions.md": {
         "bytes": 25893,
@@ -301,8 +301,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 17705,
-        "sha256": "5a2a4fbf938bb7b25eadfd6258cfde3d402baa353d3ac10ab100d0f75d9fef9a"
+        "bytes": 17563,
+        "sha256": "4ce19605823af7ad752136289bcb98086e286b70e054bcd0d6630cef29a8d78f"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7494,
@@ -317,8 +317,8 @@
         "sha256": "49fcb85500e65215df5bdb3f01bdd861176168cb83eac64b4c183bfc911a95ba"
       },
       "hf_readmes/generate_cards.py": {
-        "bytes": 12902,
-        "sha256": "72c17d145d34cc75a7c88b9a88d84334d33267c6e8aa8208e2facc3ece6c3774"
+        "bytes": 12924,
+        "sha256": "fc58114801aaf2f32413c374948bec684416971a2f0ba75b3bb02b105de4aae1"
       },
       "hf_readmes/gguf_README.md": {
         "bytes": 8422,
@@ -326,18 +326,31 @@
       }
     }
   },
+  "refreeze_log": [
+    {
+      "on": "2026-09-13",
+      "artifact": "hf_readmes/generate_cards.py",
+      "reason": "Formatting only (one long line wrapped by black to satisfy E501; no values touched). Verified after the change that the generator still emits the corrected card content: no '70.0%' UAR on the DPO card, 'not measured' in the DPO eval table, and '15.30% / 70.0%' attributed to SFT+memory. No Study 001 finding depends on this file's byte content, only on the cards it produces."
+    },
+    {
+      "on": "2026-09-13",
+      "artifact": "README.md",
+      "reason": "Corrected to name the four hash.txt files that verify and to point at this manifest as the authoritative pin for the benchmark corpora (finding #29). A correction to a claim about the artifacts, not a change to any artifact."
+    }
+  ],
+  "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
   "living_documents": {
     "docs/GUARDRAILS.md": {
       "bytes": 8103,
       "sha256": "abc4f02d907534a8ca95387d5385a38afd0a9f67b7267cc36d165cfa26676ca7"
     },
     "docs/STUDIES.md": {
-      "bytes": 6099,
-      "sha256": "7b40e6e8ce77d6f77b2018651412c07cffc888fd72b9f8a41d97fcd87eb4efb9"
+      "bytes": 6098,
+      "sha256": "356bd17453caf8e1da1d2f7c2327a4574081397469f3914fb28e3afda82e8939"
     },
     "reports/ERRATA.md": {
-      "bytes": 18201,
-      "sha256": "04a69a62db7876831ffb58b52503d8390c0412433f7c1869aef1663d4c14ee5a"
+      "bytes": 18769,
+      "sha256": "a83189eec931186397c07a56f425da85533f4af7d4b516be3c640b06dd249513"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
@@ -348,8 +361,8 @@
       "sha256": "5dde839eb9a751d74abfa0913882c2aa0572f7f2fb91dce8213971207fa352be"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 8544,
-      "sha256": "69c515703f7d579ba9b764c330abc5879669d96cb3f2b7e41ee4cd72d5679a72"
+      "bytes": 8856,
+      "sha256": "9ef540b3c206af7c961d26048c2c6a3d7175905fe91a0c3d8fea55926599a443"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

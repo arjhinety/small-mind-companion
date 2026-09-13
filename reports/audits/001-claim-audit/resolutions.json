@@ -169,8 +169,8 @@
   },
   {
     "id": 29,
-    "status": "PARTIAL",
-    "where": "README.md:220, docs/GUARDRAILS.md G9/G9b, reports/ERRATA.md E29",
-    "note": "The claim that all six hashes verify is corrected, and README now states which four verify and names reports/data/study-001-freeze.json as the authoritative pin for the benchmark corpora. The four benchmark hash.txt files are NOT regenerated in this pass \u2014 they must be rebuilt from a clean checkout before hash.txt can be cited as a pin for them."
+    "status": "RESOLVED",
+    "where": "scripts/recompute_hashes.py (new), tests/unit/test_dataset_hashes.py (new), docs/reproduction.md, README.md, docs/GUARDRAILS.md G9/G9b, reports/ERRATA.md E29",
+    "note": "All nine dataset hashes were recomputed on 2026-09-13 with the algorithm now documented in docs/reproduction.md, and all nine verify. The four benchmark corpora and the four SFT/DPO corpora use their respective generators' algorithms; data/distill/v1/ gained the hash.txt it never had. A regression test (test_dataset_hashes.py) now recomputes every hash on each CI run, so this cannot rot silently again -- which is the failure mode that let it go unnoticed. The original cause of the four mismatched values is still undetermined and is recorded as such in ERRATA E29."
   }
 ]

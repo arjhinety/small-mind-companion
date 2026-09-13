@@ -128,10 +128,7 @@ def graph_progression() -> None:
     bars_uar = ax.bar(x - width / 2, uar, width, label="UAR", color=TEAL, zorder=3)
     bars_pra = ax.bar(x + width / 2, pra, width, label="pra_lenient", color=CORAL, zorder=3)
     ax.set_title(
-        "Small-Mind: Closing the Gap\nWithout Scaling Parameters",
-        loc="left",
-        fontsize=25,
-        pad=28
+        "Small-Mind: Closing the Gap\nWithout Scaling Parameters", loc="left", fontsize=25, pad=28
     )
     ax.text(
         0,

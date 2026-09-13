@@ -32,7 +32,11 @@ for cat, plist in by_category.items():
     rng.shuffle(plist)
     subsample.extend(plist[:PER_CATEGORY])
 
-print(f"Subsample: {len(subsample)} probes ({ {c: min(PER_CATEGORY, len(v)) for c, v in by_category.items()} })", file=sys.stderr)
+print(
+    f"Subsample: {len(subsample)} probes "
+    f"({ {c: min(PER_CATEGORY, len(v)) for c, v in by_category.items()} })",
+    file=sys.stderr,
+)
 
 stores_dir = Path("data/stores/pmb_v0_full")
 retrievers: dict[str, HybridRetriever] = {}
@@ -81,8 +85,12 @@ for k in K_VALUES:
             retrieved_records = [c.record for c in candidates]
             retrieved_ids = [c.memory_id for c in candidates]
             system_text, _ = builder.build(
-                turn_id=probe.probe_id, persona=COMPANION_PERSONA, profile={},
-                boundaries=[], retrieved_memories=retrieved_records, recent_turns=[],
+                turn_id=probe.probe_id,
+                persona=COMPANION_PERSONA,
+                profile={},
+                boundaries=[],
+                retrieved_memories=retrieved_records,
+                recent_turns=[],
                 user_turn="",
             )
             system_text = system_text.strip()
@@ -91,8 +99,13 @@ for k in K_VALUES:
             # injected memories, to isolate the effect of memory COUNT specifically
             # rather than conflating it with the presence/absence of the companion framing.
             system_text, _ = builder.build(
-                turn_id=probe.probe_id, persona=COMPANION_PERSONA, profile={},
-                boundaries=[], retrieved_memories=[], recent_turns=[], user_turn="",
+                turn_id=probe.probe_id,
+                persona=COMPANION_PERSONA,
+                profile={},
+                boundaries=[],
+                retrieved_memories=[],
+                recent_turns=[],
+                user_turn="",
             )
             system_text = system_text.strip()
 

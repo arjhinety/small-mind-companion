@@ -217,8 +217,7 @@ tests/                   473 unit tests, run in CI
 
 - All training seeds are pinned in their respective config files (e.g. `seed: 1337` in `configs/training/sft_v1.yaml`).
 - Base model revision is pinned by commit SHA in the SFT configs (`base_model_revision`). The DPO and distillation configs still reference `"main"` and should be pinned to a SHA before any re-run is treated as reproducible.
-- Dataset directories carry a `DATASHEET.md` documenting generation methodology and known caveats, and most carry a `hash.txt`. **`data/distill/v1/` has none.**
-- Integrity pinning: the four SFT/DPO `hash.txt` files verify under `sha256` over concatenated LF-normalised `*.jsonl`. The four **benchmark** `hash.txt` files do **not** verify under any algorithm tested — see [`reports/ERRATA.md`](reports/ERRATA.md) E29. For the benchmark corpora, [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) is the authoritative pin, not `hash.txt`.
+- Dataset directories carry a `DATASHEET.md` documenting generation methodology and known caveats, and a `hash.txt`. **All nine corpora verify** as of 2026-09-13 — the four benchmark hashes did not match under any algorithm tested before this audit (see [`reports/ERRATA.md`](reports/ERRATA.md) E29), so all nine were recomputed. `uv run python scripts/recompute_hashes.py` re-checks them, and a test enforces it in CI.
 - `uv.lock` pins every dependency version.
 - Hypotheses and eval design are committed to git *before* results — git history itself is the pre-registration record.
 

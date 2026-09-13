@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import time
-from importlib.util import find_spec
 
 import pytest
 
@@ -12,7 +11,33 @@ from onebee.memory.store import (
     TurnRecord,
 )
 
-_HAS_SQLITE_VEC = find_spec("sqlite_vec") is not None
+
+def _sqlite_vec_loads() -> bool:
+    """Whether sqlite-vec can actually be *loaded into a connection*, not merely imported.
+
+    `find_spec("sqlite_vec") is not None` is the obvious check and the wrong one: the package can
+    be installed and importable while `sqlite_vec.load()` fails at runtime (extension unavailable
+    for the platform's SQLite build, `enable_load_extension` disabled, wrong ABI). When that
+    happens the store silently takes its no-vec path — correct behaviour — but a test that only
+    checked `find_spec` would still assert vec behaviour that never ran, and fail. Probing by
+    loading is what the store itself does, so this is the honest capability check.
+    """
+    try:
+        import sqlite3
+
+        import sqlite_vec
+
+        conn = sqlite3.connect(":memory:")
+        try:
+            sqlite_vec.load(conn)
+        finally:
+            conn.close()
+        return True
+    except Exception:
+        return False
+
+
+_HAS_SQLITE_VEC = _sqlite_vec_loads()
 
 
 def _make_record(

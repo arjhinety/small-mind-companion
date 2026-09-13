@@ -62,7 +62,9 @@ def test_every_frozen_artifact_is_unchanged(manifest: dict) -> None:
         for path, recorded in entries.items():
             actual = sha256_lf_normalised(ROOT / path)
             if actual != recorded["sha256"]:
-                changed.append(f"{group}/{path}: recorded {recorded['sha256'][:12]}… != actual {actual[:12]}…")
+                changed.append(
+                    f"{group}/{path}: recorded {recorded['sha256'][:12]}… != actual {actual[:12]}…"
+                )
     assert not changed, (
         "Frozen Study 001 artifacts have changed:\n  "
         + "\n  ".join(changed)
@@ -93,11 +95,23 @@ def test_eval_metrics_match_the_raw_responses(manifest: dict) -> None:
         metrics_path = ROOT / run / "metrics.json"
         if not raw_path.is_file() or not metrics_path.is_file():
             continue
-        responses = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        responses = [
+            json.loads(line)
+            for line in raw_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
         claimed = json.loads(metrics_path.read_text(encoding="utf-8")).get("metrics", {})
 
-        unanswerable = [r for r in responses if probes.get(r["probe"]["probe_id"], {}).get("category") == "unanswerable"]
-        answerable = [r for r in responses if probes.get(r["probe"]["probe_id"], {}).get("category") != "unanswerable"]
+        unanswerable = [
+            r
+            for r in responses
+            if probes.get(r["probe"]["probe_id"], {}).get("category") == "unanswerable"
+        ]
+        answerable = [
+            r
+            for r in responses
+            if probes.get(r["probe"]["probe_id"], {}).get("category") != "unanswerable"
+        ]
 
         uar = sum(1 for r in unanswerable if r.get("abstained")) / len(unanswerable)
         pra = sum(1 for r in answerable if r.get("lenient_correct")) / len(answerable)
@@ -105,9 +119,13 @@ def test_eval_metrics_match_the_raw_responses(manifest: dict) -> None:
         if abs(uar - claimed.get("uar", -1)) > 1e-9:
             mismatches.append(f"{run}: recomputed uar {uar} != metrics.json {claimed.get('uar')}")
         if abs(pra - claimed.get("pra_lenient", -1)) > 1e-9:
-            mismatches.append(f"{run}: recomputed pra_lenient {pra} != metrics.json {claimed.get('pra_lenient')}")
+            mismatches.append(
+                f"{run}: recomputed pra_lenient {pra} != metrics.json {claimed.get('pra_lenient')}"
+            )
 
-    assert not mismatches, "Headline metrics are not derivable from the saved responses:\n  " + "\n  ".join(mismatches)
+    assert (
+        not mismatches
+    ), "Headline metrics are not derivable from the saved responses:\n  " + "\n  ".join(mismatches)
 
 
 def test_freeze_check_script_agrees(manifest: dict) -> None:
@@ -124,7 +142,9 @@ def test_freeze_check_script_agrees(manifest: dict) -> None:
 
 def test_living_documents_are_recorded_but_not_enforced(manifest: dict) -> None:
     """Errata, guardrails and the audit ledger are expected to keep changing."""
-    assert manifest.get("living_documents"), "expected living documents to be recorded for provenance"
+    assert manifest.get(
+        "living_documents"
+    ), "expected living documents to be recorded for provenance"
     overlap = set(manifest["living_documents"]) & {
         path for group in manifest["evidence"].values() for path in group
     }

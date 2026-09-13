@@ -254,8 +254,15 @@ not be cited as one. [`reports/data/study-001-freeze.json`](../data/study-001-fr
 authoritative pin instead — it covers all four corpora and was verified against a clean checkout at
 the `study-001` tag. `README.md` now says this.
 
-**Open:** regenerate the four benchmark `hash.txt` files from a clean checkout using the algorithm
-documented in `docs/reproduction.md`, and record when they were last verified.
+**Resolved (2026-09-13).** All four benchmark hashes were regenerated, and
+`data/distill/v1/hash.txt` was created for the first time, using the algorithm now documented in
+`docs/reproduction.md`. All nine corpora verify:
+`uv run python scripts/recompute_hashes.py` reports `9/9 corpora hash-clean`. A regression test
+(`tests/unit/test_dataset_hashes.py`) now recomputes every hash on each test run, which is the
+check whose absence let this go unnoticed — guardrail G13 is the rule, that test is its
+enforcement. The *cause* of the four original values remains undetermined and is not needed:
+the corpora were edited during this audit anyway (datasheet corrections, findings #19–#22), so the
+old values were stale regardless of what produced them.
 
 ## What was verified correct
 So this file is not read as blanket scepticism:
@@ -283,8 +290,8 @@ So this file is not read as blanket scepticism:
 
 - No full-PMB `pra_lenient`/UAR measurement exists for any DPO checkpoint.
 - No committed evidence for any quantization number.
-- `data/distill/v1/hash.txt` was never generated, and the four benchmark `hash.txt` files do not
-  verify (E29) — so `hash.txt` is a usable pin only for the four SFT/DPO datasets.
+- `data/distill/v1/hash.txt` was never generated, and the four benchmark `hash.txt` files did not
+  verify (E29) — **both resolved 2026-09-13**: all nine corpora now verify.
 - The `acceptable_alternatives` field is unpopulated in all 688 probes.
 - The DPO v1_scale prompt-context divergence from SFT v1 was never root-caused.
 - No human evaluation exists anywhere; no reviewer log or teacher transcript was retained, so

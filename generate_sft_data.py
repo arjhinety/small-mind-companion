@@ -77,9 +77,13 @@ for corpus in corpora:
             retrieved_records = [c.record for c in candidates]
 
             system_text, _ = builder.build(
-                turn_id=turn.turn_id, persona=COMPANION_PERSONA, profile={},
-                boundaries=[], retrieved_memories=retrieved_records,
-                recent_turns=recent_turns[-6:], user_turn="",
+                turn_id=turn.turn_id,
+                persona=COMPANION_PERSONA,
+                profile={},
+                boundaries=[],
+                retrieved_memories=retrieved_records,
+                recent_turns=recent_turns[-6:],
+                user_turn="",
             )
             system_text = system_text.strip()
 
@@ -91,14 +95,20 @@ for corpus in corpora:
                 continue
 
             if target:
-                examples.append({
-                    "messages": [
-                        {"role": "system", "content": system_text},
-                        {"role": "user", "content": turn.text},
-                        {"role": "assistant", "content": target},
-                    ],
-                    "meta": {"kind": "memory_relevant", "persona_id": persona.persona_id, "turn_id": turn.turn_id},
-                })
+                examples.append(
+                    {
+                        "messages": [
+                            {"role": "system", "content": system_text},
+                            {"role": "user", "content": turn.text},
+                            {"role": "assistant", "content": target},
+                        ],
+                        "meta": {
+                            "kind": "memory_relevant",
+                            "persona_id": persona.persona_id,
+                            "turn_id": turn.turn_id,
+                        },
+                    }
+                )
 
             recent_turns.append({"role": turn.role, "text": turn.text})
 
@@ -132,18 +142,25 @@ for _ in range(min(n_irrelevant, len(base_pool))):
     candidates = wrong_retriever.retrieve(user_text, query_embedding=query_emb, k=K)
     wrong_records = [c.record for c in candidates]
     system_text, _ = builder.build(
-        turn_id=f"irrelevant_{src['meta']['turn_id']}", persona=COMPANION_PERSONA, profile={},
-        boundaries=[], retrieved_memories=wrong_records, recent_turns=[], user_turn="",
+        turn_id=f"irrelevant_{src['meta']['turn_id']}",
+        persona=COMPANION_PERSONA,
+        profile={},
+        boundaries=[],
+        retrieved_memories=wrong_records,
+        recent_turns=[],
+        user_turn="",
     )
     target = rng.choice(IRRELEVANT_RESPONSES)
-    irrelevant_examples.append({
-        "messages": [
-            {"role": "system", "content": system_text.strip()},
-            {"role": "user", "content": user_text},
-            {"role": "assistant", "content": target},
-        ],
-        "meta": {"kind": "irrelevant_retrieval"},
-    })
+    irrelevant_examples.append(
+        {
+            "messages": [
+                {"role": "system", "content": system_text.strip()},
+                {"role": "user", "content": user_text},
+                {"role": "assistant", "content": target},
+            ],
+            "meta": {"kind": "irrelevant_retrieval"},
+        }
+    )
 
 print(f"Generated {len(irrelevant_examples)} irrelevant-retrieval examples", file=sys.stderr)
 
@@ -173,18 +190,25 @@ for _ in range(min(n_abstain, len(base_pool))):
     candidates = retriever.retrieve(q, query_embedding=query_emb, k=K)
     records = [c.record for c in candidates]
     system_text, _ = builder.build(
-        turn_id=f"abstain_{pid}", persona=COMPANION_PERSONA, profile={},
-        boundaries=[], retrieved_memories=records, recent_turns=[], user_turn="",
+        turn_id=f"abstain_{pid}",
+        persona=COMPANION_PERSONA,
+        profile={},
+        boundaries=[],
+        retrieved_memories=records,
+        recent_turns=[],
+        user_turn="",
     )
     target = rng.choice(ABSTAIN_RESPONSES)
-    abstain_examples.append({
-        "messages": [
-            {"role": "system", "content": system_text.strip()},
-            {"role": "user", "content": q},
-            {"role": "assistant", "content": target},
-        ],
-        "meta": {"kind": "abstention"},
-    })
+    abstain_examples.append(
+        {
+            "messages": [
+                {"role": "system", "content": system_text.strip()},
+                {"role": "user", "content": q},
+                {"role": "assistant", "content": target},
+            ],
+            "meta": {"kind": "abstention"},
+        }
+    )
 
 print(f"Generated {len(abstain_examples)} abstention examples", file=sys.stderr)
 
@@ -258,6 +282,7 @@ a live teacher model (gpt-5.6-luna).
 (out_dir / "DATASHEET.md").write_text(datasheet)
 
 import hashlib
+
 h = hashlib.sha256()
 for p in sorted(out_dir.glob("*.jsonl")):
     h.update(p.read_bytes())

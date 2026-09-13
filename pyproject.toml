@@ -77,6 +77,16 @@ select = [
 [tool.ruff.lint.isort]
 known-first-party = ["onebee"]
 
+[tool.ruff.lint.per-file-ignores]
+# Research driver scripts import *after* load_dotenv(), or after freeing a model to reclaim VRAM.
+# The import order is load-bearing, not accidental, so E402 does not apply to them.
+"compare_*.py" = ["E402"]
+"generate_*.py" = ["E402"]
+"run_*.py" = ["E402"]
+# Model cards and the card generators embed long markdown lines verbatim. Wrapping them would
+# change the published card text, and the template manipulates sys.path before importing.
+"hf_readmes/*" = ["E501", "E402"]
+
 [tool.black]
 line-length = 100
 target-version = ["py310"]

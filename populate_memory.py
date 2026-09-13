@@ -108,4 +108,7 @@ for pf in persona_files:
     stats = store.stats()
     print(f"{persona.persona_id} ({persona.name}): {stats}", file=sys.stderr)
 
-print(f"DONE. total user turns={total_turns_processed} total_claims={total_claims} accepted={total_accepted}")
+print(
+    f"DONE. total user turns={total_turns_processed} total_claims={total_claims} "
+    f"accepted={total_accepted}"
+)

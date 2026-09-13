@@ -22,7 +22,6 @@ import hashlib
 import json
 import subprocess
 import sys
-from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -107,6 +106,27 @@ GROUPS: dict[str, list[str]] = {
         "hf_readmes/gguf_README.md",
     ],
 }
+
+# Re-freezes that legitimately changed a pinned artifact. Recording these is the difference between
+# a freeze that means something and one that gets quietly refreshed whenever a check fails.
+REFREEZE_LOG: list[dict[str, str]] = [
+    {
+        "on": "2026-09-13",
+        "artifact": "hf_readmes/generate_cards.py",
+        "reason": "Formatting only (one long line wrapped by black to satisfy E501; no values "
+        "touched). Verified after the change that the generator still emits the corrected card "
+        "content: no '70.0%' UAR on the DPO card, 'not measured' in the DPO eval table, and "
+        "'15.30% / 70.0%' attributed to SFT+memory. No Study 001 finding depends on this file's "
+        "byte content, only on the cards it produces.",
+    },
+    {
+        "on": "2026-09-13",
+        "artifact": "README.md",
+        "reason": "Corrected to name the four hash.txt files that verify and to point at this "
+        "manifest as the authoritative pin for the benchmark corpora (finding #29). A correction "
+        "to a claim about the artifacts, not a change to any artifact.",
+    },
+]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,
 # guardrails gain rules, and the audit ledger gains resolutions. Hashing them into the enforced set
@@ -193,6 +213,12 @@ def build() -> dict[str, object]:
         "hash_method": "sha256 over LF-normalised bytes",
         "file_count": n_files,
         "evidence": evidence,
+        "refreeze_log": REFREEZE_LOG,
+        "refreeze_log_note": (
+            "The freeze was re-taken. Each entry records what moved and why it did not change a "
+            "Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this "
+            "list is part of the artifact."
+        ),
         "living_documents": collect_living(),
         "living_documents_note": (
             "Recorded for provenance only; excluded from --check. These documents are expected to "
@@ -215,7 +241,9 @@ def build() -> dict[str, object]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="verify the manifest without writing it")
+    parser.add_argument(
+        "--check", action="store_true", help="verify the manifest without writing it"
+    )
     args = parser.parse_args()
 
     fresh = build()
@@ -232,9 +260,14 @@ def main() -> int:
                 r, n = rec.get(group, {}), now.get(group, {})
                 for path in sorted(set(r) | set(n)):
                     if r.get(path) != n.get(path):
-                        problems.append(f"  {group}/{path}: recorded {r.get(path)} != actual {n.get(path)}")
+                        problems.append(
+                            f"  {group}/{path}: recorded {r.get(path)} != actual {n.get(path)}"
+                        )
         if recorded.get("file_count") != fresh["file_count"]:
-            problems.append(f"  file_count: recorded {recorded.get('file_count')} != actual {fresh['file_count']}")
+            problems.append(
+                f"  file_count: recorded {recorded.get('file_count')} "
+                f"!= actual {fresh['file_count']}"
+            )
         if problems:
             print("FAIL: the frozen Study 001 artifacts have changed since the freeze:")
             print("\n".join(problems))
@@ -248,7 +281,10 @@ def main() -> int:
 
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(fresh, indent=2, sort_keys=False) + "\n", encoding="utf-8")
-    print(f"wrote {MANIFEST.relative_to(ROOT)}: {fresh['file_count']} artifacts across {len(fresh['evidence'])} groups")
+    print(
+        f"wrote {MANIFEST.relative_to(ROOT)}: {fresh['file_count']} artifacts "
+        f"across {len(fresh['evidence'])} groups"
+    )
     return 0
 
 

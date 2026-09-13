@@ -72,12 +72,8 @@ class TestRunDistillation:
     def test_dry_run_with_fakes_completes(self, tmp_path):
         train_path = tmp_path / "train.jsonl"
         val_path = tmp_path / "val.jsonl"
-        train_path.write_text(
-            json.dumps({"prompt": [{"role": "user", "content": "hi"}]}) + "\n"
-        )
-        val_path.write_text(
-            json.dumps({"prompt": [{"role": "user", "content": "hello"}]}) + "\n"
-        )
+        train_path.write_text(json.dumps({"prompt": [{"role": "user", "content": "hi"}]}) + "\n")
+        val_path.write_text(json.dumps({"prompt": [{"role": "user", "content": "hello"}]}) + "\n")
 
         cfg = DistillationTrainingConfig(
             base_model="student-model",

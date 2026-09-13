@@ -105,12 +105,8 @@ class HFEngine:
         self._processor = None
         self._is_multimodal = False
         try:
-            self._processor = AutoProcessor.from_pretrained(
-                self.model_name, revision=self.revision
-            )
-            self._is_multimodal = (
-                getattr(self._processor, "image_processor", None) is not None
-            )
+            self._processor = AutoProcessor.from_pretrained(self.model_name, revision=self.revision)
+            self._is_multimodal = getattr(self._processor, "image_processor", None) is not None
         except Exception as exc:
             # Falling back to text-only silently would be actively wrong for a model
             # that genuinely is multimodal but failed to load its processor for some
@@ -128,9 +124,7 @@ class HFEngine:
         if self._processor is not None:
             self._tokenizer = getattr(self._processor, "tokenizer", None)
         if self._tokenizer is None:
-            self._tokenizer = AutoTokenizer.from_pretrained(
-                self.model_name, revision=self.revision
-            )
+            self._tokenizer = AutoTokenizer.from_pretrained(self.model_name, revision=self.revision)
 
         torch_dtype_name = _DTYPE_ALIASES.get(self.dtype, self.dtype)
         model_cls = AutoModelForCausalLM

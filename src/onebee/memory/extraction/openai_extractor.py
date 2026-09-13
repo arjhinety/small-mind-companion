@@ -135,17 +135,17 @@ class OpenAITeacherExtractor:
             '- "verbatim_span": the exact verbatim substring of the turn text that '
             "supports the claim (see the rule above).\n"
             '- "subject"/"predicate"/"object": the claim components when the claim is '
-            "triple-shaped (e.g. subject \"I\", predicate \"work as\", object "
+            'triple-shaped (e.g. subject "I", predicate "work as", object '
             '"engineer"); set each to null when not applicable.\n'
             '- "entities": a list of proper-noun entities mentioned in the claim '
             "(people, places, organizations, brands). Empty list when none.\n"
             '- "topics": a list of general topic keywords for the claim (e.g. '
             '"work", "health", "travel", "family"). At least one recommended.\n'
             '- "assertion_strength": one of "definite", "moderate", or "uncertain", '
-            "based on lexical hedging in the turn (\"I think\", \"maybe\", \"kind "
+            'based on lexical hedging in the turn ("I think", "maybe", "kind '
             'of" -> weaker; direct statements -> "definite").\n'
             '- "source_reliability": almost always "user_statement" here (the claim '
-            "comes straight from what the user said). Use \"agent_inferred\" or "
+            'comes straight from what the user said). Use "agent_inferred" or '
             '"reflection_derived" only when the claim is inferred rather than stated.\n'
             '- "attribution": one of "user", "agent", or "third_party" — is the claim '
             "about the speaker themselves, the AI companion, or someone else they "
@@ -155,7 +155,7 @@ class OpenAITeacherExtractor:
             '- "extractor_confidence": a float from 0.0 to 1.0 expressing your own '
             "confidence that this is a genuine, useful claim.\n\n"
             "confidence that this is a genuine, useful claim.\n\n"
-            'You MUST respond with exactly one JSON object and no other text, of the '
+            "You MUST respond with exactly one JSON object and no other text, of the "
             'form: {"claims": [{ ...fields above per claim... }]}. An empty "claims" '
             "array is valid."
         )
@@ -180,8 +180,7 @@ class OpenAITeacherExtractor:
         raw_claims = data.get("claims")
         if not isinstance(raw_claims, list):
             raise RuntimeError(
-                "OpenAITeacherExtractor: extraction JSON missing 'claims' array: "
-                f"{data!r}"
+                "OpenAITeacherExtractor: extraction JSON missing 'claims' array: " f"{data!r}"
             )
 
         claims: list[ExtractedClaim] = []

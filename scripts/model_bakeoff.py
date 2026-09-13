@@ -46,9 +46,7 @@ CANDIDATE_MODELS: dict[str, str] = {
     "smolvlm2-2.2b": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
 }
 
-Category = Literal[
-    "instruction", "en_dialogue", "ja_dialogue", "structured_context", "vision"
-]
+Category = Literal["instruction", "en_dialogue", "ja_dialogue", "structured_context", "vision"]
 
 CATEGORIES: list[Category] = [
     "instruction",
@@ -229,9 +227,7 @@ def build_smoke_prompts() -> list[dict]:
                 "category": "vision",
                 "prompt": question,
                 "context": None,
-                "image_path": str(
-                    REPO_ROOT / "data" / "fixtures" / "bakeoff_images" / filename
-                ),
+                "image_path": str(REPO_ROOT / "data" / "fixtures" / "bakeoff_images" / filename),
             }
         )
 

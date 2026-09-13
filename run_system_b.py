@@ -21,12 +21,15 @@ config = GenerationConfig(max_new_tokens=64)
 
 judge = OpenAIJudge(model="gpt-5.6-luna")
 
+
 def response_fn(probe: Probe):
     messages = [{"role": "user", "content": probe.question}]
     result = engine.generate(messages, config)
     return result.text, []
 
+
 n_done = 0
+
 
 def response_fn_logged(probe: Probe):
     global n_done
@@ -35,6 +38,7 @@ def response_fn_logged(probe: Probe):
     if n_done % 25 == 0:
         print(f"  ...{n_done}/{len(probes)}", file=sys.stderr)
     return r
+
 
 result = run_harness(
     probes,

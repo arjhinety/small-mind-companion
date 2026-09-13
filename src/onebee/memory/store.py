@@ -29,6 +29,7 @@ def _sanitize_fts_query(query: str) -> str:
         return ""
     return " OR ".join(f'"{t}"' for t in tokens)
 
+
 _FILTERABLE_COLUMNS = {
     "id",
     "tier",
