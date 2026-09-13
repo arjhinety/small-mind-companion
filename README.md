@@ -25,7 +25,7 @@ charts, and limitations.
 
 ```
 make freeze-check     # fails if any frozen Study 001 artifact has changed
-make validate         # freeze + hashes + recomputed metrics + claims matrix
+uv run python scripts/recompute_hashes.py   # re-checks all nine dataset hashes
 ```
 
 ## Results
