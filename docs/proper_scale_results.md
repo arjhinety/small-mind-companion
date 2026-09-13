@@ -5,8 +5,10 @@ runs (`docs/day4_sft_results.md`, `docs/dpo_results.md`). Raw data in `results/v
 
 ## What changed vs the v0 pass
 
-Scaled from 4 to 40 personas, generating a 2242-example SFT dataset (`data/sft/v1/`, up from
-225) and a 2277-pair DPO preference dataset (`data/dpo/v1_scale/`, up from 223). The SFT v1
+Scaled from 4 to 40 personas, generating a 2242-example SFT dataset (that first v1 generation was
+later regenerated twice — dedup fix, then ratio rebalance — and the committed `data/sft/v1/` is
+**2480 examples, 2232 train / 248 val**) and a 2277-pair DPO preference dataset
+(`data/dpo/v1_scale/`, up from 223). The SFT v1
 corpus is contamination-checked clean against the fixed `pmb_v0_full` eval set (unchanged
 throughout); the DPO pairs were generated *before* SFT v1's dedup fix and ratio rebalance, so the
 two do not share identical prompt contexts — see `data/dpo/v1_scale/DATASHEET.md`.
@@ -35,7 +37,7 @@ are unchanged and reused directly.
 |---|---|---|---|
 | A | raw, no memory | 0.16% | 13.75% |
 | B (v0) | SFT v0 (225 ex), no memory | 0.16% | 16.25% |
-| **B (v1)** | **SFT v1 (2242 ex), no memory** | **0.16%** | **31.25%** ← superseded: 25.0% |
+| **B (v1)** | **SFT v1, original 2242-example generation, no memory** | **0.16%** | **31.25%** ← superseded: 25.0% |
 | D | raw + memory (k=8) | 15.10% | 8.75% |
 | E (v0) | SFT v0 + memory | 17.76% | 33.75% |
 | **E (v1)** | **SFT v1 + memory** | **18.42%** | **16.25%** ← superseded: 70.0% |

@@ -317,5 +317,16 @@
     "category": "BROKEN_INTEGRITY_PIN",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 30,
+    "severity": "MED",
+    "area": "T",
+    "location": "docs/day4_sft_v1_results.md:12; docs/dpo_results.md:121; docs/proper_scale_results.md:8,38",
+    "claim": "The SFT v1 dataset is 2242 examples (2017 train / 225 val).",
+    "actual": "The committed data/sft/v1/ is 2480 examples (2232 train / 248 val). 2242 was the FIRST v1 generation; it was regenerated twice the same day (dedup fix, then ratio rebalance) and the count changed each time. docs/sft/v1/DATASHEET.md and README.md had the correct 2232/248; three result docs still quoted the superseded number as current.",
+    "category": "STALE_COUNT",
+    "pinned": "",
+    "public": "yes"
   }
 ]

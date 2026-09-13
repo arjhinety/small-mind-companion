@@ -15,13 +15,17 @@ Every result below links to a doc with full methodology and honest limitations, 
 This project is organised into studies. **Study 001 is frozen** (2026-09-13, tag `study-001`): its
 evidence is hash-pinned and its write-ups stop changing. Work after the freeze is Study 002.
 
+**→ [Read Study 001 at small-mind.arjhinety.com](https://small-mind.arjhinety.com)** — the write-up,
+charts, and limitations.
+
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
-- [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — 76 artifacts pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 29 claims the committed artifacts did not support, and their corrections
+- [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 30 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 
 ```
 make freeze-check     # fails if any frozen Study 001 artifact has changed
+make validate         # freeze + hashes + recomputed metrics + claims matrix
 ```
 
 ## Results

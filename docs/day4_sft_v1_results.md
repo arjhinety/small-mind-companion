@@ -9,7 +9,7 @@ after DPO v1 also completes, so both checkpoints get evaluated together).
 | | v0 (Day 4) | v1 (this run) |
 |---|---|---|
 | Personas | 4 | 40 |
-| SFT examples | 225 (202 train / 23 val) | 2242 (2017 train / 225 val) |
+| SFT examples | 225 (202 train / 23 val) | 2242 generated (2017 train / 225 val) — **superseded**; the committed `data/sft/v1/` is the rebalanced 2480 (2232 train / 248 val) |
 | `per_device_train_batch_size` | 4 | 8 (doc-recommended) |
 | `gradient_accumulation_steps` | 2 | 4 (doc-recommended) |
 | Effective batch size | 8 | 32 |

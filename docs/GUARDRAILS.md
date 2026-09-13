@@ -34,12 +34,13 @@ number carried over from a neighbouring row.
 
 ## Counts and state
 
-**G4. Counts are generated, not typed.** Every stale count in this audit (#3, #14, #17, #21, #27)
-was a hand-written number that drifted: 40 personas vs 8, 451 tests vs 473, 21 bugs vs 27,
-"15k lines" vs 66,383, two GGUF size sets in one file.
+**G4. Counts are generated, not typed.** Every stale count in this audit (#3, #14, #17, #21, #27,
+#30) was a hand-written number that drifted: 40 personas vs 8, 451 tests vs 473, 21 bugs vs 27,
+"15k lines" vs 66,383, two GGUF size sets in one file, and 2242 SFT examples vs the committed 2480.
 *Check:* where a count can be derived from an artifact, generate it or say when it was last
 verified. Datasheets are generated — fix the generator, not the generated file (finding #19 was
-caused by a hardcoded title in `scripts/build_pmb.py`).
+caused by a hardcoded title in `scripts/build_pmb.py`). **When a dataset is regenerated, grep for
+its old size and row count** — the number changes in the data, not in the prose that quotes it.
 
 **G5. "Done" and "not done" live in one place.** Finding #8: `docs/research_questions.md` still
 described imatrix quantization as an undone next step while `docs/quantization_results.md`

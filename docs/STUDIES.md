@@ -5,7 +5,7 @@ evidence is hash-pinned, its write-ups stop changing, and its repository links r
 tag. Work done after a freeze belongs to the next study.
 
 The rule exists because the alternative — a repository whose numbers quietly drift as the
-interesting result changes — is exactly what the audit found 29 instances of. See
+interesting result changes — is exactly what the audit found 30 instances of. See
 [`reports/ERRATA.md`](../reports/ERRATA.md) for what went wrong, and
 [`docs/GUARDRAILS.md`](GUARDRAILS.md) for the rules derived from it.
 
@@ -15,6 +15,11 @@ interesting result changes — is exactly what the audit found 29 instances of. 
 
 **Status: FROZEN** · Frozen on **2026-09-13** · Evidence tag **`study-001`**
 · Freeze manifest: [`reports/data/study-001-freeze.json`](../reports/data/study-001-freeze.json)
+· Write-up: **[small-mind.arjhinety.com](https://small-mind.arjhinety.com)**
+
+**Frozen artifact.** [`reports/data/study-001-freeze.json`](../reports/data/study-001-freeze.json)
+pins 76 artifacts across 7 groups. The write-up above is generated from the same committed
+artifacts; if the two ever disagree, the artifacts and this document win, and the site is the bug.
 
 **Question.** How much of the long-horizon memory gap can a ~2B vision-capable model close without
 scaling parameters — by pairing it with an external memory system and LoRA post-training — and how

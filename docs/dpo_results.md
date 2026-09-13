@@ -119,7 +119,9 @@ hundreds) to properly test H6.
 ## Follow-up: proper scale (v1_scale, 2026-08-14, "train properly" pass)
 
 To validate results at proper scale, generated 40 personas (vs v0's 4), a 2242-example SFT
-dataset (`data/sft/v1/`, see `docs/day4_sft_v1_results.md`) and a 2277-pair DPO preference
+dataset (that first v1 generation was later regenerated twice — dedup fix, then ratio rebalance;
+the committed `data/sft/v1/` is 2480 examples, 2232 train / 248 val, see
+`docs/day4_sft_v1_results.md`) and a 2277-pair DPO preference
 dataset (`data/dpo/v1_scale/`, 2049 train / 228 val) — both contamination-checked clean against
 `pmb_v0_full`. Retrained SFT on the v1 data (loss 4.23→0.79, token accuracy 51%→80%), then DPO
 on top of that new SFT checkpoint (`configs/training/dpo_v1_scale.yaml`, 1 epoch, 257 steps,

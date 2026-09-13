@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "f2735aa11f89fdd6b3646b9a8cc7d38fb03d8ae9",
+  "git_commit": "4d9e5a09c67fa0cef688309dc4a3cc556353c073",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -237,24 +237,24 @@
         "sha256": "75c05ee345dd867be7e914c6dd164c0447dd0506ee9101fc4d918fd05c53f6ac"
       },
       "docs/day4_sft_v1_results.md": {
-        "bytes": 2456,
-        "sha256": "49bff99b4ec9f7adc18425da15b936f30306f3db5cc823c24da7ade67593bc24"
+        "bytes": 2561,
+        "sha256": "5a1a325b65860d4062bf060ccb3e273faae7b2ccc15fd0dfa98d9cd77cea8064"
       },
       "docs/distillation_results.md": {
         "bytes": 11439,
         "sha256": "8b0acc15a84886f1d06f708acb84a80fa3249faf786d317ac3d29c9f78a7253b"
       },
       "docs/dpo_results.md": {
-        "bytes": 10464,
-        "sha256": "7dc4dc785e9ce06824564c953a3a946fccd961444b9aac8fba0c25f1d7be1fd6"
+        "bytes": 10607,
+        "sha256": "785b2a735ac9466d668d7fd08138a16368a22dfcd8b5109bfa8e89cfc64caad8"
       },
       "docs/model_quirks.md": {
         "bytes": 28182,
         "sha256": "f57f5c963652bf06491712bbbc42cbf08742e761f281035ce058eb543941793e"
       },
       "docs/proper_scale_results.md": {
-        "bytes": 16475,
-        "sha256": "4c4a64140ff50e687c8d3e1295f1695e6b1bb1ed57907add13ec5d50497d03dd"
+        "bytes": 16640,
+        "sha256": "20be0c30381850e6c9fb10a58b70998e86e88f40fe0dd7c8c809f7461bc29242"
       },
       "docs/quantization_results.md": {
         "bytes": 14267,
@@ -301,8 +301,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 17563,
-        "sha256": "4ce19605823af7ad752136289bcb98086e286b70e054bcd0d6630cef29a8d78f"
+        "bytes": 17795,
+        "sha256": "2a801ec6748d2ae4ce86a6eef403c50641db8b23c5e6b36e18d3d2a84c29d208"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7494,
@@ -336,33 +336,38 @@
       "on": "2026-09-13",
       "artifact": "README.md",
       "reason": "Corrected to name the four hash.txt files that verify and to point at this manifest as the authoritative pin for the benchmark corpora (finding #29). A correction to a claim about the artifacts, not a change to any artifact."
+    },
+    {
+      "on": "2026-09-13",
+      "artifact": "README.md",
+      "reason": "Added the Study 001 write-up link (https://small-mind.arjhinety.com) and the 'make validate' command to the Studies section, and pointed the freeze bullet at the manifest rather than restating its file count. Documentation only: no result, dataset, metric or limitation changed."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
   "living_documents": {
     "docs/GUARDRAILS.md": {
-      "bytes": 8103,
-      "sha256": "abc4f02d907534a8ca95387d5385a38afd0a9f67b7267cc36d165cfa26676ca7"
+      "bytes": 8293,
+      "sha256": "872766e3311d9a54a6e9003d42f31bdd56c12cb93d99f85390029f03169693dd"
     },
     "docs/STUDIES.md": {
-      "bytes": 6098,
-      "sha256": "356bd17453caf8e1da1d2f7c2327a4574081397469f3914fb28e3afda82e8939"
+      "bytes": 6466,
+      "sha256": "f3744887ba57cded2b1a5b31c5538a178a212e7663a6f97101888abb8de407b2"
     },
     "reports/ERRATA.md": {
-      "bytes": 18769,
-      "sha256": "a83189eec931186397c07a56f425da85533f4af7d4b516be3c640b06dd249513"
+      "bytes": 20031,
+      "sha256": "27db66984691ec6e7b125e59a4c7365ed2bdb8a016c74a9f1abbff4558fd2ccf"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "afe77d64e6930305a5a711f0cfca651e890747c040ce40df10f0bdad5c28a930"
+      "sha256": "152eae9be663a1a212acee16cb4d3920bbbba593fcccb3c1cb6941e572f0b10a"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 19815,
-      "sha256": "5dde839eb9a751d74abfa0913882c2aa0572f7f2fb91dce8213971207fa352be"
+      "bytes": 20487,
+      "sha256": "a53893b81ba2bd294c8b55bdbe9adf174e2ce92f3a27a433aae3d307821a4829"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 8856,
-      "sha256": "9ef540b3c206af7c961d26048c2c6a3d7175905fe91a0c3d8fea55926599a443"
+      "bytes": 9250,
+      "sha256": "6d3c47bcb0b390d5b4130dbacd55910c382e1cbad30aff4cdfc331a1be21b9bf"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

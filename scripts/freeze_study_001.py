@@ -126,6 +126,14 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "manifest as the authoritative pin for the benchmark corpora (finding #29). A correction "
         "to a claim about the artifacts, not a change to any artifact.",
     },
+    {
+        "on": "2026-09-13",
+        "artifact": "README.md",
+        "reason": "Added the Study 001 write-up link (https://small-mind.arjhinety.com) and the "
+        "'make validate' command to the Studies section, and pointed the freeze bullet at the "
+        "manifest rather than restating its file count. Documentation only: no result, dataset, "
+        "metric or limitation changed.",
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

@@ -172,5 +172,11 @@
     "status": "RESOLVED",
     "where": "scripts/recompute_hashes.py (new), tests/unit/test_dataset_hashes.py (new), docs/reproduction.md, README.md, docs/GUARDRAILS.md G9/G9b, reports/ERRATA.md E29",
     "note": "All nine dataset hashes were recomputed on 2026-09-13 with the algorithm now documented in docs/reproduction.md, and all nine verify. The four benchmark corpora and the four SFT/DPO corpora use their respective generators' algorithms; data/distill/v1/ gained the hash.txt it never had. A regression test (test_dataset_hashes.py) now recomputes every hash on each CI run, so this cannot rot silently again -- which is the failure mode that let it go unnoticed. The original cause of the four mismatched values is still undetermined and is recorded as such in ERRATA E29."
+  },
+  {
+    "id": 30,
+    "status": "RESOLVED",
+    "where": "docs/day4_sft_v1_results.md:12, docs/dpo_results.md:121, docs/proper_scale_results.md:8,38",
+    "note": "All four now state that 2242 was the first generation and that the committed corpus is 2480 (2232/248). Historical run rows keep the 2242 label but are marked as the original generation, so the count is not read as current."
   }
 ]

@@ -264,6 +264,26 @@ enforcement. The *cause* of the four original values remains undetermined and is
 the corpora were edited during this audit anyway (datasheet corrections, findings #19–#22), so the
 old values were stale regardless of what produced them.
 
+### E30 — Three docs quoted a superseded SFT v1 size as current (MED)
+
+**As written:** `docs/day4_sft_v1_results.md`, `docs/dpo_results.md` and
+`docs/proper_scale_results.md` all described the SFT v1 dataset as **2242 examples (2017 train /
+225 val)**.
+
+**Correction:** 2242 was the **first** v1 generation. That corpus was regenerated twice the same
+day — once to fix the dedup collapse (E11), once to rebalance the abstention ratios — and the
+committed `data/sft/v1/` is **2480 examples (2232 train / 248 val)**. `README.md` and
+`data/sft/v1/DATASHEET.md` already had the correct figure; the three result docs still quoted the
+superseded one. This is the same failure mode as E14 (a hand-typed count drifting) recurring in a
+different file after the count changed.
+
+All four occurrences now state that 2242 was the original generation and that the committed corpus
+is 2480. The historical run rows keep the 2242 label, marked as the original generation, because
+that *is* what those runs trained on — silently overwriting it would misrepresent the experiment.
+
+**Lesson, folded into [`docs/GUARDRAILS.md`](GUARDRAILS.md) G4:** when a dataset is regenerated,
+grep for its old size. A count that changes in the data does not change itself in the prose.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 
