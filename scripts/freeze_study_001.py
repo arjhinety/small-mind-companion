@@ -123,10 +123,15 @@ LIVING_DOCUMENTS: list[str] = [
 
 
 def sha256_lf_normalised(path: Path) -> tuple[str, int]:
-    """SHA-256 over the file's bytes with CRLF collapsed to LF, so the hash matches a fresh clone."""
-    raw = path.read_bytes()
-    normalised = raw.replace(b"\r\n", b"\n")
-    return hashlib.sha256(normalised).hexdigest(), len(raw)
+    """Hash the file's **LF-normalised** bytes, and report that same normalised size.
+
+    Both values come from the normalised stream on purpose. This repo sets
+    `core.autocrlf=true`, so a Windows working tree is CRLF while a fresh clone is LF — reporting
+    the raw working-tree size against a hash of the normalised bytes produces a manifest that
+    disagrees with itself on checkout, which is exactly what a freeze check must never do.
+    """
+    normalised = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(normalised).hexdigest(), len(normalised)
 
 
 def git_commit() -> str:

@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "ae75ca90c33ecd331299d09a6bb86dcd029f1084",
+  "git_commit": "e013f4f95a20e2479dc1d641e5a1f384f0144bcd",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -13,285 +13,285 @@
         "sha256": "0e146da27050fb0c1339eb7b255d4426d4150024e64afb642e32e06a4aaddab4"
       },
       "data/benchmarks/pmb_v0_full/hash.txt": {
-        "bytes": 66,
+        "bytes": 65,
         "sha256": "6bdd554badce1271fc932fa50cd67760f9dc483db49382f2b58641b13d55a35f"
       },
       "data/benchmarks/pmb_v0_full/personas/p000.json": {
-        "bytes": 48313,
+        "bytes": 47053,
         "sha256": "1f6a5d86599716ef82599f619897a778afa4bfd16af68a64b7d00ddb58bad90f"
       },
       "data/benchmarks/pmb_v0_full/personas/p001.json": {
-        "bytes": 48277,
+        "bytes": 47025,
         "sha256": "9898e98b18b4b1cc77d03141ccdd49afc2f6a051d46ad3b2003053e046a255aa"
       },
       "data/benchmarks/pmb_v0_full/personas/p002.json": {
-        "bytes": 50016,
+        "bytes": 48739,
         "sha256": "3e89a92d393228457661bfcaf0aeae2e1aba01750d6a43e20c84b6ff3245eee2"
       },
       "data/benchmarks/pmb_v0_full/personas/p003.json": {
-        "bytes": 49717,
+        "bytes": 48449,
         "sha256": "0e07236b86858eb0cf67bc85d8edadefb2e4deae7fe79e29db18e43b057112f7"
       },
       "data/benchmarks/pmb_v0_full/personas/p004.json": {
-        "bytes": 49553,
+        "bytes": 48284,
         "sha256": "a8855aa9b786724aadaeadb3d40d0ed7c723ef1fafb8d6946b24e878918c264c"
       },
       "data/benchmarks/pmb_v0_full/personas/p005.json": {
-        "bytes": 47932,
+        "bytes": 46702,
         "sha256": "46ace937dd7bef9a0d009283cb276f862fca22e2404cdf843f7c7165138cf77d"
       },
       "data/benchmarks/pmb_v0_full/personas/p006.json": {
-        "bytes": 47463,
+        "bytes": 46229,
         "sha256": "b6ee5e3f73556ff26e830fa73a9622b816d57855a4888db0609f9b4d65948496"
       },
       "data/benchmarks/pmb_v0_full/personas/p007.json": {
-        "bytes": 47356,
+        "bytes": 46127,
         "sha256": "01ffec8466462153b80b88d7b58cc3f99ca04272bc9c5e93805ad6e3b3f90850"
       },
       "data/benchmarks/pmb_v0_full/probes.jsonl": {
-        "bytes": 171241,
+        "bytes": 170553,
         "sha256": "ee1aadd5a7f62d8f8f4dd3284e9ee06a222c41d1dcd10e37872a42152fe6a6c0"
       }
     },
     "training_data": {
       "data/distill/v1/DATASHEET.md": {
-        "bytes": 865,
+        "bytes": 851,
         "sha256": "ff0f561c59ade675b86ac60836370c44ce46e24e3080da4378410912ba0d2564"
       },
       "data/distill/v1/train.jsonl": {
-        "bytes": 4695826,
+        "bytes": 4693818,
         "sha256": "95183e4851395381b5640ff09f70b6d5c5bb0782a5de7f8909976e93aa41079d"
       },
       "data/distill/v1/val.jsonl": {
-        "bytes": 531421,
+        "bytes": 531197,
         "sha256": "c2f06b3cdfb1c85dadf53a8cebe51744b02681855c1a921a0baad83a560cd128"
       },
       "data/dpo/v0/train.jsonl": {
-        "bytes": 542223,
+        "bytes": 542023,
         "sha256": "cd21376090db3a11e890cacc97715dc35a94ea954a9ecc85d715892daf7052a6"
       },
       "data/dpo/v0/val.jsonl": {
-        "bytes": 61987,
+        "bytes": 61964,
         "sha256": "83394ec63ba9e11644eefdd1418b8fec95449fd7bdc139ca32ba2f85d77883bc"
       },
       "data/dpo/v1_scale/DATASHEET.md": {
-        "bytes": 1743,
+        "bytes": 1719,
         "sha256": "f396e7dca12dfd9d099a68959a00ea16044d3c6659f148016d22052dce4db103"
       },
       "data/dpo/v1_scale/train.jsonl": {
-        "bytes": 5639379,
+        "bytes": 5637330,
         "sha256": "c5f7e488a1499595385175a7108b39e2fe29fbd4c75aa52e0c42c4d6271ad19a"
       },
       "data/dpo/v1_scale/val.jsonl": {
-        "bytes": 634484,
+        "bytes": 634256,
         "sha256": "aba878674a7b7994b8d5dfa57a067c7ac1f2fe8138080c106a1e04534c363277"
       },
       "data/sft/v0/DATASHEET.md": {
-        "bytes": 1321,
+        "bytes": 1301,
         "sha256": "8340ce5297bfbfadf849c0b89d1754f56cb253b42efede08d405787b26a5e796"
       },
       "data/sft/v0/train.jsonl": {
-        "bytes": 546346,
+        "bytes": 546144,
         "sha256": "123e950b60710734781aab5584f40b424028d465a8acd570b2947b13672955d7"
       },
       "data/sft/v0/val.jsonl": {
-        "bytes": 63529,
+        "bytes": 63506,
         "sha256": "ed728fe22f888a4802dfe7e9a127570dc1b6c6fc39d854f92529ea5ae2e892bf"
       },
       "data/sft/v1/DATASHEET.md": {
-        "bytes": 1410,
+        "bytes": 1389,
         "sha256": "f8bd75d9fe6c60486fb1a3a770c9ea46aaff29ca625dfca2b0e3d26767716e41"
       },
       "data/sft/v1/train.jsonl": {
-        "bytes": 5951241,
+        "bytes": 5949009,
         "sha256": "150174de97eb8053acb12bbaf95bf9275bd1e34c9c4f6af5634a76f6cdbeb005"
       },
       "data/sft/v1/val.jsonl": {
-        "bytes": 661395,
+        "bytes": 661147,
         "sha256": "41c5ca59d7e2ff5a3a5f5951115056c51ca51c25d9d4a90a60570f77ebf40be7"
       }
     },
     "eval_results": {
       "results/v0.0/bakeoff_scores.json": {
-        "bytes": 654,
+        "bytes": 625,
         "sha256": "8c49d954ffcb70fac9d60752878c7802ac9517a370050ed66e7f50616a15dd63"
       },
       "results/v0.0/latency_baseline.json": {
-        "bytes": 1001,
+        "bytes": 965,
         "sha256": "27d4831525c9343ece64840ff177e62e18f10a3ca057960f81c897582612f60f"
       },
       "results/v0.1/A_raw/metrics.json": {
-        "bytes": 980,
+        "bytes": 926,
         "sha256": "c10b33ef07a0702bdfca41c91d97b18a86f313ebf72e0f3e336d973e2cbcc732"
       },
       "results/v0.1/B_sft/metrics.json": {
-        "bytes": 978,
+        "bytes": 924,
         "sha256": "f838672650f9bcb9177ad6dd064fafc8059963315a3796691d5968c22d9b401e"
       },
       "results/v0.1/C1_vs_E_pairwise_small/summary.json": {
-        "bytes": 137,
+        "bytes": 130,
         "sha256": "7b329e70744aebee88024ed9997bf5de2b4c799c9cdf40c124bcfe55836add05"
       },
       "results/v0.1/C_vs_E_pairwise/summary.json": {
-        "bytes": 141,
+        "bytes": 134,
         "sha256": "c3ccade124350d284ff2f72b1d3e2aaaaca1bb041a6761a31c6eda0942899a67"
       },
       "results/v0.1/D_memory/metrics.json": {
-        "bytes": 1062,
+        "bytes": 1008,
         "sha256": "4e8d81014c5d657fb74987238aac6c6596efc61e836612ef7385b2a843dd0108"
       },
       "results/v0.1/E_sft_memory/metrics.json": {
-        "bytes": 1163,
+        "bytes": 1109,
         "sha256": "efa8c9f2931cd780ce3a18ba050b60c5784c90bcafb93ff65fd6caf9b8db7e32"
       },
       "results/v0.1/ksweep/k0/metrics.json": {
-        "bytes": 936,
+        "bytes": 882,
         "sha256": "7d2a0cfb4f029a07a16b87aba5ebbf3b86dd2efe9b7951a235290ffb7fab8477"
       },
       "results/v0.1/ksweep/k16/metrics.json": {
-        "bytes": 1080,
+        "bytes": 1026,
         "sha256": "8be70cdfeca259236c2dc9202efda65bfc0125dce538c64b4c2d5e1b4c11ed47"
       },
       "results/v0.1/ksweep/k2/metrics.json": {
-        "bytes": 969,
+        "bytes": 915,
         "sha256": "d43a6b7ff3f4e11f4d24994c5119684fcf5c48370de8870fcbffbb117c9b344e"
       },
       "results/v0.1/ksweep/k4/metrics.json": {
-        "bytes": 1063,
+        "bytes": 1009,
         "sha256": "e6a0549b1c6921094ea0a46f7d347337d7d700cb5b57b67fa3daec6e7ab8b80f"
       },
       "results/v0.1/ksweep/k8/metrics.json": {
-        "bytes": 1015,
+        "bytes": 961,
         "sha256": "90cce830ddcbb32ad6972211361b66fe19020248ce403b6602d3a3358e2166f1"
       },
       "results/v0.1/ksweep/summary.json": {
-        "bytes": 590,
+        "bytes": 559,
         "sha256": "85a3879a245522be08aa6163380ab23b158e8aa55fcbb303488ef30070ddb918"
       },
       "results/v1_scale/B_sft/metrics.json": {
-        "bytes": 979,
+        "bytes": 925,
         "sha256": "4fb64e7e7218a99bbf4d1b9400e9033d03685e356391aed205c18f210507c77a"
       },
       "results/v1_scale/C_vs_E_pairwise/summary.json": {
-        "bytes": 141,
+        "bytes": 134,
         "sha256": "d5f5255b94823fe28a16657cd6833e1729989c8c211fffda12226b9f35a41a51"
       },
       "results/v1_scale/C_vs_F_distill_pairwise/summary.json": {
-        "bytes": 140,
+        "bytes": 133,
         "sha256": "64237007980a6bfe135a102007ff0192c7a6d0247c6f4a12d32f78e6285a9189"
       },
       "results/v1_scale/E_distill/metrics.json": {
-        "bytes": 1053,
+        "bytes": 999,
         "sha256": "99852ed973780afcb438a48d73f872d0b00d49808b36a2bbff1992f4decddd2d"
       },
       "results/v1_scale/E_sft_memory/metrics.json": {
-        "bytes": 1057,
+        "bytes": 1003,
         "sha256": "94e24345feffc2ca776e03fe56e7265e0882596e50ab439613ff95fd42dba7eb"
       },
       "results/v1_scale/pcs_judge_analysis/summary.json": {
-        "bytes": 355,
+        "bytes": 339,
         "sha256": "18185b1393d995f447c7a8d9e5944ac9beb822d6580d3854106a338935d529f7"
       },
       "results/v1_scale/pcs_stylometric_analysis/summary.json": {
-        "bytes": 1075,
+        "bytes": 1025,
         "sha256": "9a67ce94aee064ed6068e5ae616b9d57071d87deeb36ce0c05a11c0fb1bde6fe"
       }
     },
     "eval_raw": {
       "results/v0.1/A_raw/raw.jsonl": {
-        "bytes": 370571,
+        "bytes": 369883,
         "sha256": "b26fad4b665f1ae3b2b76f7547a67d6fe5d5b08779080602444ae04134dd8e57"
       },
       "results/v0.1/B_sft/raw.jsonl": {
-        "bytes": 369937,
+        "bytes": 369249,
         "sha256": "2a24418ed3d5928d181f2b42c19f00a8b9a466a27d1b8275050b4e26f615c434"
       },
       "results/v0.1/D_memory/raw.jsonl": {
-        "bytes": 482477,
+        "bytes": 481789,
         "sha256": "1e2cb38259f3d961cc7383e8d65a448bd7b6de82d99890946c2367b062072c79"
       },
       "results/v0.1/E_sft_memory/raw.jsonl": {
-        "bytes": 481159,
+        "bytes": 480471,
         "sha256": "bafd29b287b62a58b3c94b0186f8b3b7326e19eee33d1b94e57bef3c8c174c89"
       },
       "results/v1_scale/B_sft/raw.jsonl": {
-        "bytes": 346233,
+        "bytes": 345545,
         "sha256": "3230924480dd94078a58d97ebf5c6ec3c40b497ab2583dc00fcba9dd532e1aaf"
       },
       "results/v1_scale/E_distill/raw.jsonl": {
-        "bytes": 489226,
+        "bytes": 488538,
         "sha256": "d617eeb709149cbf8950225ea81873cc9d5cf210655ef6af9a932a794b0b1fbb"
       },
       "results/v1_scale/E_sft_memory/raw.jsonl": {
-        "bytes": 472827,
+        "bytes": 472139,
         "sha256": "0969eb81bf84212d48c154c6ee606d4abde065f7836f3d49a70302b53b0a22fa"
       }
     },
     "report": {
       "docs/day3_memory_results.md": {
-        "bytes": 5697,
+        "bytes": 5602,
         "sha256": "05ee627fa60d0dba604261b19e51dd3a4c352cd7e179d2956aa76b9e3c5ac9bc"
       },
       "docs/day4_sft_results.md": {
-        "bytes": 5667,
+        "bytes": 5580,
         "sha256": "75c05ee345dd867be7e914c6dd164c0447dd0506ee9101fc4d918fd05c53f6ac"
       },
       "docs/day4_sft_v1_results.md": {
-        "bytes": 2511,
+        "bytes": 2456,
         "sha256": "49bff99b4ec9f7adc18425da15b936f30306f3db5cc823c24da7ade67593bc24"
       },
       "docs/distillation_results.md": {
-        "bytes": 11626,
+        "bytes": 11439,
         "sha256": "8b0acc15a84886f1d06f708acb84a80fa3249faf786d317ac3d29c9f78a7253b"
       },
       "docs/dpo_results.md": {
-        "bytes": 10636,
+        "bytes": 10464,
         "sha256": "7dc4dc785e9ce06824564c953a3a946fccd961444b9aac8fba0c25f1d7be1fd6"
       },
       "docs/model_quirks.md": {
-        "bytes": 28543,
+        "bytes": 28182,
         "sha256": "f57f5c963652bf06491712bbbc42cbf08742e761f281035ce058eb543941793e"
       },
       "docs/proper_scale_results.md": {
-        "bytes": 16719,
+        "bytes": 16475,
         "sha256": "4c4a64140ff50e687c8d3e1295f1695e6b1bb1ed57907add13ec5d50497d03dd"
       },
       "docs/quantization_results.md": {
-        "bytes": 14466,
+        "bytes": 14267,
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 2687,
+        "bytes": 2608,
         "sha256": "5a37ebd23fc5472c75729c2aff43fd0fca9f2f0c6be1e0cf05942ae9ce17fe26"
       },
       "docs/research_questions.md": {
-        "bytes": 26176,
+        "bytes": 25893,
         "sha256": "6b96d2821cf9b1cf3083d19a68163d3d2d527b9cab2066e079b6a3559811c7a1"
       }
     },
     "config": {
       "configs/training/distill_v1.yaml": {
-        "bytes": 929,
+        "bytes": 909,
         "sha256": "337f7ec3c110c759550a75ac443e00e7447b2a868478f94e7908800462dd3eeb"
       },
       "configs/training/dpo.yaml": {
-        "bytes": 343,
+        "bytes": 335,
         "sha256": "9124c5ff7c37c6cb3fb09fd4d46a28ebea346601e453f817a2268178d13c7c78"
       },
       "configs/training/dpo_v1_more_epochs.yaml": {
-        "bytes": 681,
+        "bytes": 669,
         "sha256": "c5191dce51a00b935d75ae12d46bd21ccbb329ff4178a0164e06b537788b8f8c"
       },
       "configs/training/dpo_v1_scale.yaml": {
-        "bytes": 639,
+        "bytes": 629,
         "sha256": "2e56ed306379e2e7706bf0a2abbeb315b6c38af6a57e690eb32d2fde62ef04aa"
       },
       "configs/training/sft.yaml": {
-        "bytes": 999,
+        "bytes": 972,
         "sha256": "4e30e00a4af970ac8cbe37f89d7c10e18c1ad2a39ce4ec57a4d36a061d30c271"
       },
       "configs/training/sft_v1.yaml": {
-        "bytes": 926,
+        "bytes": 900,
         "sha256": "486b4dedc36131b191d24f53e46c0facd50af92191af633b49ad773fe011293d"
       }
     },
@@ -301,27 +301,27 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 17427,
+        "bytes": 17190,
         "sha256": "0996f16becf5684d0f9af69956fe790a322697470a9903e0943c0a1b9171662b"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
-        "bytes": 7662,
+        "bytes": 7494,
         "sha256": "7e7721f40da59174e957b7d42a70d47213f9527e37074aafffcf29b0d1cd6cdb"
       },
       "hf_readmes/README_distill-v1.md": {
-        "bytes": 8416,
+        "bytes": 8244,
         "sha256": "7afbd77c6664b0f762a121fb36995ebfd63183d8118f16a2eb493ee998b6da0c"
       },
       "hf_readmes/checkpoint_README_template.py": {
-        "bytes": 3850,
+        "bytes": 3770,
         "sha256": "49fcb85500e65215df5bdb3f01bdd861176168cb83eac64b4c183bfc911a95ba"
       },
       "hf_readmes/generate_cards.py": {
-        "bytes": 13202,
+        "bytes": 12902,
         "sha256": "72c17d145d34cc75a7c88b9a88d84334d33267c6e8aa8208e2facc3ece6c3774"
       },
       "hf_readmes/gguf_README.md": {
-        "bytes": 8603,
+        "bytes": 8422,
         "sha256": "708c0f1ce2c28c508676bafb02d7e0db505c4c7007fa491cc5eb490bfa45bf18"
       }
     }
