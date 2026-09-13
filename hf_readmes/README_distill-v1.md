@@ -18,7 +18,7 @@ tags:
 
 > Post-trained companion LLM: LoRA SFT → DPO → on-policy distillation from an 8B-class teacher, on top of Gemma 4 E2B — current best checkpoint in this project.
 
-[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arrogance231/small-mind-companion)
+[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arjhinety/small-mind-companion)
 
 ## Model Overview
 
@@ -43,7 +43,7 @@ memory, rather than raw parameter scale.
 - **Training method**: LoRA SFT (2232 examples) → LoRA DPO (2049 preference pairs) → on-policy
   distillation (2008 prompts, 125 steps), each stage chained off the previous checkpoint.
 
-> **GGUF quantizations available**: [12-level GGUF quantizations of this checkpoint](https://huggingface.co/arrochi112/onebee-gf-distill-v1-gguf) (F16 through Q2_K, plus vision projector) for `llama.cpp`-based on-device inference. **Note: Q2_K was found broken on real generation testing — use Q3_K_S or above.**
+> **GGUF quantizations available**: [GGUF quantizations of this checkpoint (F16 reference plus 12 quant levels)](https://huggingface.co/arjhinety/onebee-gf-distill-v1-gguf) ((F16 reference plus 12 quant levels down to Q2_K, plus vision projector)) for `llama.cpp`-based on-device inference. **Note: Q2_K was found broken on real generation testing — use Q3_K_S or above.**
 
 ## Model Details
 
@@ -65,7 +65,7 @@ memory, rather than raw parameter scale.
 
 As a companion-persona conversational model within a memory/retrieval pipeline (this checkpoint
 does not carry its own memory — pair it with the retrieval system in the
-[project repo](https://github.com/arrogance231/small-mind-companion) for the evaluated
+[project repo](https://github.com/arjhinety/small-mind-companion) for the evaluated
 configuration). Suitable as a reference point for further post-training research (additional
 distillation passes, quantization, abliteration research) given the honest limitations below.
 
@@ -74,7 +74,7 @@ distillation passes, quantization, abliteration research) given the honest limit
 Not evaluated or intended for: safety-critical decisions, medical/legal/financial advice, or any
 deployment where a wrong or overconfident answer causes real harm. This is a research artifact
 from an open-source project studying post-training and memory architecture on small models — see
-[the project README](https://github.com/arrogance231/small-mind-companion) for the full research
+[the project README](https://github.com/arjhinety/small-mind-companion) for the full research
 framing before using it in any production context.
 
 ## Capabilities
@@ -100,8 +100,8 @@ pip install transformers torch
 ```python
 from transformers import AutoModelForCausalLM, AutoProcessor
 
-model = AutoModelForCausalLM.from_pretrained("arrochi112/onebee-gf-distill-v1")
-processor = AutoProcessor.from_pretrained("arrochi112/onebee-gf-distill-v1")
+model = AutoModelForCausalLM.from_pretrained("arjhinety/onebee-gf-distill-v1")
+processor = AutoProcessor.from_pretrained("arjhinety/onebee-gf-distill-v1")
 
 messages = [
     {"role": "system", "content": "You are a warm AI companion who remembers this user."},
@@ -132,7 +132,7 @@ pre-distillation predecessor (33 ties, 105 probes, dual-order judge).
 
 Full methodology, training-time anomalies (and why they didn't predict the real-eval outcome),
 and honest limitations:
-[`docs/distillation_results.md`](https://github.com/arrogance231/small-mind-companion/blob/main/docs/distillation_results.md).
+[`docs/distillation_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/distillation_results.md).
 
 ## Limitations
 
@@ -147,23 +147,23 @@ before assuming any number here is a clean win.
 
 | Repo | Description |
 |---|---|
-| [onebee-gf-sft-v0](https://huggingface.co/arrochi112/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
-| [onebee-gf-sft-v1](https://huggingface.co/arrochi112/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
-| [onebee-gf-dpo-v0](https://huggingface.co/arrochi112/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
-| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
-| [onebee-gf-dpo-v1-scale](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
-| [onebee-gf-distill-v1](https://huggingface.co/arrochi112/onebee-gf-distill-v1) | **This repo** — current best overall |
-| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations (of the pre-distillation checkpoint) |
-| [onebee-gf-distill-v1-gguf](https://huggingface.co/arrochi112/onebee-gf-distill-v1-gguf) | GGUF quantizations of **this checkpoint** |
+| [onebee-gf-sft-v0](https://huggingface.co/arjhinety/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
+| [onebee-gf-sft-v1](https://huggingface.co/arjhinety/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
+| [onebee-gf-dpo-v0](https://huggingface.co/arjhinety/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
+| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
+| [onebee-gf-dpo-v1-scale](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
+| [onebee-gf-distill-v1](https://huggingface.co/arjhinety/onebee-gf-distill-v1) | **This repo** — current best overall |
+| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations (of the pre-distillation checkpoint) |
+| [onebee-gf-distill-v1-gguf](https://huggingface.co/arjhinety/onebee-gf-distill-v1-gguf) | GGUF quantizations of **this checkpoint** |
 
 ## Citation
 
 ```bibtex
 @software{small_mind_companion,
   title  = {small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM},
-  author = {arrogance231},
+  author = {arjhinety},
   year   = {2026},
-  url    = {https://github.com/arrogance231/small-mind-companion}
+  url    = {https://github.com/arjhinety/small-mind-companion}
 }
 ```
 

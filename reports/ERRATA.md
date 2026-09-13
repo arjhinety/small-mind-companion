@@ -26,20 +26,29 @@ independently recomputed from their own saved `raw.jsonl` responses and matched 
 evaluation numbers in this repository are sound. Everything below is about the claims made
 *around* those numbers.
 
-## Published artifacts requiring re-push
+## Published artifacts — re-pushed
 
-The following corrections are in the repository sources but **not yet on the Hugging Face Hub**.
-The cards were published before this audit and still show the superseded figures.
+All corrections below are now live on the Hugging Face Hub. The cards were published before this
+audit and carried the superseded figures until 2026-09-13.
 
-| Card | Corrected claim | Superseded text on the Hub |
+| Card | Corrected claim | Superseded text that was live |
 |---|---|---|
 | `onebee-gf-sft-v1` | SFT v1 + memory is **15.30% / 70.0%**; DPO is evaluated pairwise only | Table showed DPO as 70.0% UAR |
 | `onebee-gf-dpo-v1-scale` | Preference alignment **45.7% vs 21.0% (24.7pp gap)**; no UAR measurement exists | Capability line and eval table claimed **70.0% UAR** |
 | `onebee-gf-distill-v1` | Pre-distillation row is **SFT + memory**, not `dpo-v1-scale`; the +3.3pp spans two stages | Row labelled `dpo-v1-scale (pre-distillation)` |
 | `onebee-gf-dpo-v1-scale-gguf`, `onebee-gf-distill-v1-gguf` | Q3_K_S is the smallest verified-coherent level | One card called Q3_K_M the recommended smallest |
+| all eight cards | Owner references normalised to `arjhinety` | 99 links to `arrochi112`, 44 to `arghance231`-era URLs |
+| both GGUF cards | "F16 reference plus 12 quant levels" | "12 levels, F16 through Q2_K" (ambiguous count) |
 
-Regenerate with `hf_readmes/generate_cards.py` (corrected) and re-push, or edit the cards directly
-on the Hub. Until then, treat the Hub copies as superseded.
+Re-push commits: `onebee-gf-dpo-v1-scale` `e152aa7`, `onebee-gf-sft-v1` `4025a09`,
+`onebee-gf-distill-v1` `da4a14f`, `onebee-gf-dpo-v1-scale-gguf` `ba48df0`,
+`onebee-gf-distill-v1-gguf` `368f83a`, `onebee-gf-sft-v0` `9c4f607`, `onebee-gf-dpo-v0` `663123e`,
+`onebee-gf-dpo-v1-4epoch` `36e21cd`. Verified by fetching each card back from
+`huggingface.co/arjhinety/<repo>/raw/main/README.md` and asserting the superseded strings are gone
+and the corrected ones present.
+
+The cards still restate quantization figures that no committed artifact backs (E6); each GGUF card
+now says so explicitly rather than presenting them as independently checkable.
 
 ## Corrections by finding
 

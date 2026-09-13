@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "4d9e5a09c67fa0cef688309dc4a3cc556353c073",
+  "git_commit": "d8b5a327d8e0a22795776c02b54fb6ce0e474159",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
   "evidence": {
@@ -305,24 +305,24 @@
         "sha256": "2a801ec6748d2ae4ce86a6eef403c50641db8b23c5e6b36e18d3d2a84c29d208"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
-        "bytes": 7494,
-        "sha256": "7e7721f40da59174e957b7d42a70d47213f9527e37074aafffcf29b0d1cd6cdb"
+        "bytes": 7490,
+        "sha256": "12e12c982bcf9d04404dd8c664b925401e3e9719c25b55f9cd8dd8e94c4f5da1"
       },
       "hf_readmes/README_distill-v1.md": {
-        "bytes": 8244,
-        "sha256": "7afbd77c6664b0f762a121fb36995ebfd63183d8118f16a2eb493ee998b6da0c"
+        "bytes": 8276,
+        "sha256": "1bda8b8e3a4fa74ebf2e44a9022acbe10e209e5d3e50ed4cb548481e53720429"
       },
       "hf_readmes/checkpoint_README_template.py": {
-        "bytes": 3770,
-        "sha256": "49fcb85500e65215df5bdb3f01bdd861176168cb83eac64b4c183bfc911a95ba"
+        "bytes": 3762,
+        "sha256": "b14df59e3f4ecc725a8d1bd86d04efd5e41958f7bb1dcc7d1dd7bacd872e8ced"
       },
       "hf_readmes/generate_cards.py": {
-        "bytes": 12924,
-        "sha256": "fc58114801aaf2f32413c374948bec684416971a2f0ba75b3bb02b105de4aae1"
+        "bytes": 12909,
+        "sha256": "f7520bd6c61a093d612424184682c050c504f291a23141db5ae15f5fe5730cb5"
       },
       "hf_readmes/gguf_README.md": {
-        "bytes": 8422,
-        "sha256": "708c0f1ce2c28c508676bafb02d7e0db505c4c7007fa491cc5eb490bfa45bf18"
+        "bytes": 8782,
+        "sha256": "18b2a8a5d083c1a41a1c3820db828b758df7e02c767d46aa925d92466c56a7ea"
       }
     }
   },
@@ -341,6 +341,11 @@
       "on": "2026-09-13",
       "artifact": "README.md",
       "reason": "Added the Study 001 write-up link (https://small-mind.arjhinety.com) and the 'make validate' command to the Studies section, and pointed the freeze bullet at the manifest rather than restating its file count. Documentation only: no result, dataset, metric or limitation changed."
+    },
+    {
+      "on": "2026-09-13",
+      "artifact": "hf_readmes/ (8 files: README_distill-v1-gguf.md, README_distill-v1.md, checkpoint_README_template.py, generate_cards.py, gguf_README.md, README_dpo-v1-scale.md, README_sft-v1.md, README_sft-v0.md, README_dpo-v0.md, README_dpo-v1-4epoch.md)",
+      "reason": "Corrected the published model cards and re-pushed them to the Hub (ERRATA E1, E10, E18). The dpo-v1-scale card credited this checkpoint with a 70.0% UAR it was never measured on; the sft-v1 card showed DPO rather than SFT+memory as the 70.0% row; the distill-v1 card labelled its pre-distillation row dpo-v1-scale when it is SFT+memory and the +3.3pp gap spans two stages. Also normalised owner references to arjhinety and made the 'F16 reference plus 12 quant levels' count unambiguous. These are corrections to claims about the frozen results, made against the same frozen artifacts -- no result, metric, dataset or limitation changed."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
@@ -354,8 +359,8 @@
       "sha256": "f3744887ba57cded2b1a5b31c5538a178a212e7663a6f97101888abb8de407b2"
     },
     "reports/ERRATA.md": {
-      "bytes": 20031,
-      "sha256": "27db66984691ec6e7b125e59a4c7365ed2bdb8a016c74a9f1abbff4558fd2ccf"
+      "bytes": 20724,
+      "sha256": "f980f7337bcc47920fcd8a731df4934ac14dfb9788d26396a722ff9016782924"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,

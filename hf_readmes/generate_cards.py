@@ -6,19 +6,19 @@ from __future__ import annotations
 
 from pathlib import Path
 
-GITHUB = "https://github.com/arrogance231/small-mind-companion"
+GITHUB = "https://github.com/arjhinety/small-mind-companion"
 BASE_MODEL = "google/gemma-4-E2B-it"
 
 OTHER_CHECKPOINTS_TABLE = """
 | Repo | Description |
 |---|---|
-| [onebee-gf-sft-v0](https://huggingface.co/arrochi112/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
-| [onebee-gf-sft-v1](https://huggingface.co/arrochi112/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
-| [onebee-gf-dpo-v0](https://huggingface.co/arrochi112/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
-| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
-| [onebee-gf-dpo-v1-scale](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
-| [onebee-gf-distill-v1](https://huggingface.co/arrochi112/onebee-gf-distill-v1) | SFT+DPO+distillation — current best overall |
-| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations |
+| [onebee-gf-sft-v0](https://huggingface.co/arjhinety/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
+| [onebee-gf-sft-v1](https://huggingface.co/arjhinety/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
+| [onebee-gf-dpo-v0](https://huggingface.co/arjhinety/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
+| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
+| [onebee-gf-dpo-v1-scale](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
+| [onebee-gf-distill-v1](https://huggingface.co/arjhinety/onebee-gf-distill-v1) | SFT+DPO+distillation — current best overall |
+| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations |
 """.strip()
 
 CHECKPOINTS = {
@@ -222,8 +222,8 @@ pip install transformers torch
 ```python
 from transformers import AutoModelForCausalLM, AutoProcessor
 
-model = AutoModelForCausalLM.from_pretrained("arrochi112/{repo}")
-processor = AutoProcessor.from_pretrained("arrochi112/{repo}")
+model = AutoModelForCausalLM.from_pretrained("arjhinety/{repo}")
+processor = AutoProcessor.from_pretrained("arjhinety/{repo}")
 
 messages = [
     {{"role": "system", "content": "You are a warm AI companion who remembers this user."}},
@@ -261,7 +261,7 @@ linked docs before assuming any number here is a clean win.
 ```bibtex
 @software{{small_mind_companion,
   title  = {{small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM}},
-  author = {{arrogance231}},
+  author = {{arjhinety}},
   year   = {{2026}},
   url    = {{{github}}}
 }}

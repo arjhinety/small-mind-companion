@@ -17,13 +17,13 @@ tags:
 
 > LoRA SFT checkpoint on gemma-4-E2B-it, Day-4 v0 scale (4 personas, 202 examples) — early-stage baseline, superseded by sft-v1.
 
-[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arrogance231/small-mind-companion)
+[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arjhinety/small-mind-companion)
 
 ## Model Overview
 
 Early-scale LoRA SFT checkpoint on top of `gemma-4-E2B-it`, trained on 202 examples generated from 4 personas. This was the Day-4 baseline before the project scaled up data 10x for `sft-v1` — kept published for reproducibility of the v0-scale results, not recommended as a starting point for new work.
 
-> **GGUF quantizations available**: this project's current-best checkpoint is also published as [12-level GGUF quantizations](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) for `llama.cpp`-based on-device inference (quantized from `dpo-v1-scale`, not this checkpoint).
+> **GGUF quantizations available**: this project's current-best checkpoint is also published as [quantizations (F16 reference plus 12 quant levels)\](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) for `llama.cpp`-based on-device inference (quantized from `dpo-v1-scale`, not this checkpoint).
 
 ## Model Details
 
@@ -49,7 +49,7 @@ Reproducing this project's v0-scale results (`docs/day4_sft_results.md`). Not re
 Not evaluated or intended for: safety-critical decisions, medical/legal/financial advice, or any
 deployment where a wrong or overconfident answer causes real harm. This is a research artifact
 from an open-source project studying post-training and memory architecture on small models — see
-[the project README](https://github.com/arrogance231/small-mind-companion) for the full research framing before using it in any
+[the project README](https://github.com/arjhinety/small-mind-companion) for the full research framing before using it in any
 production context.
 
 ## Capabilities
@@ -70,8 +70,8 @@ pip install transformers torch
 ```python
 from transformers import AutoModelForCausalLM, AutoProcessor
 
-model = AutoModelForCausalLM.from_pretrained("arrochi112/onebee-gf-sft-v0")
-processor = AutoProcessor.from_pretrained("arrochi112/onebee-gf-sft-v0")
+model = AutoModelForCausalLM.from_pretrained("arjhinety/onebee-gf-sft-v0")
+processor = AutoProcessor.from_pretrained("arjhinety/onebee-gf-sft-v0")
 
 messages = [
     {"role": "system", "content": "You are a warm AI companion who remembers this user."},
@@ -94,7 +94,7 @@ rule-based abstention detector.
 | E (SFT v0 + memory) | 17.76% | 33.75% |
 
 Full methodology, all numbers, and honest limitations:
-[`docs/day4_sft_results.md`](https://github.com/arrogance231/small-mind-companion/blob/main/docs/day4_sft_results.md).
+[`docs/day4_sft_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/day4_sft_results.md).
 
 ## Limitations
 
@@ -107,22 +107,22 @@ linked docs before assuming any number here is a clean win.
 
 | Repo | Description |
 |---|---|
-| [onebee-gf-sft-v0](https://huggingface.co/arrochi112/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
-| [onebee-gf-sft-v1](https://huggingface.co/arrochi112/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
-| [onebee-gf-dpo-v0](https://huggingface.co/arrochi112/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
-| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
-| [onebee-gf-dpo-v1-scale](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
-| [onebee-gf-distill-v1](https://huggingface.co/arrochi112/onebee-gf-distill-v1) | SFT+DPO+distillation — current best overall |
-| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations |
+| [onebee-gf-sft-v0](https://huggingface.co/arjhinety/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
+| [onebee-gf-sft-v1](https://huggingface.co/arjhinety/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
+| [onebee-gf-dpo-v0](https://huggingface.co/arjhinety/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
+| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
+| [onebee-gf-dpo-v1-scale](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
+| [onebee-gf-distill-v1](https://huggingface.co/arjhinety/onebee-gf-distill-v1) | SFT+DPO+distillation — current best overall |
+| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations |
 
 ## Citation
 
 ```bibtex
 @software{small_mind_companion,
   title  = {small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM},
-  author = {arrogance231},
+  author = {arjhinety},
   year   = {2026},
-  url    = {https://github.com/arrogance231/small-mind-companion}
+  url    = {https://github.com/arjhinety/small-mind-companion}
 }
 ```
 

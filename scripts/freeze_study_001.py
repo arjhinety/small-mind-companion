@@ -134,6 +134,20 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "manifest rather than restating its file count. Documentation only: no result, dataset, "
         "metric or limitation changed.",
     },
+    {
+        "on": "2026-09-13",
+        "artifact": "hf_readmes/ (8 files: README_distill-v1-gguf.md, README_distill-v1.md, "
+        "checkpoint_README_template.py, generate_cards.py, gguf_README.md, README_dpo-v1-scale.md, "
+        "README_sft-v1.md, README_sft-v0.md, README_dpo-v0.md, README_dpo-v1-4epoch.md)",
+        "reason": "Corrected the published model cards and re-pushed them to the Hub (ERRATA E1, "
+        "E10, E18). The dpo-v1-scale card credited this checkpoint with a 70.0% UAR it was never "
+        "measured on; the sft-v1 card showed DPO rather than SFT+memory as the 70.0% row; the "
+        "distill-v1 card labelled its pre-distillation row dpo-v1-scale when it is SFT+memory and "
+        "the +3.3pp gap spans two stages. Also normalised owner references to arjhinety and made "
+        "the 'F16 reference plus 12 quant levels' count unambiguous. These are corrections to "
+        "claims about the frozen results, made against the same frozen artifacts -- no result, "
+        "metric, dataset or limitation changed.",
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

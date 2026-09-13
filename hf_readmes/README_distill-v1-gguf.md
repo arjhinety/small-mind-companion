@@ -16,21 +16,21 @@ tags:
 
 # onebee-gf-distill-v1-gguf
 
-> GGUF quantizations (12 levels, F16 through Q2_K, plus vision projector) of the current-best post-distillation companion checkpoint, for `llama.cpp`-based on-device inference.
+> GGUF quantizations (F16 reference plus 12 quant levels down to Q2_K, plus vision projector) of the current-best post-distillation companion checkpoint, for `llama.cpp`-based on-device inference.
 
-[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arrogance231/small-mind-companion)
+[![Project](https://img.shields.io/badge/GitHub-small--mind--companion-blue)](https://github.com/arjhinety/small-mind-companion)
 
 ## Model Overview
 
 GGUF conversion and quantization of
-[`onebee-gf-distill-v1`](https://huggingface.co/arrochi112/onebee-gf-distill-v1) — the current
+[`onebee-gf-distill-v1`](https://huggingface.co/arjhinety/onebee-gf-distill-v1) — the current
 best checkpoint from **small-mind-companion** (LoRA SFT → DPO → on-policy distillation from an
 8B-class teacher, on top of `gemma-4-E2B-it`) — for `llama.cpp`-based local/on-device inference.
 
 - **What it is**: the same weights as `onebee-gf-distill-v1`, converted to GGUF.
 - **What it does**: runs the current-best companion checkpoint on-device without a Python/
   `transformers` runtime.
-- **What makes it different from [`onebee-gf-dpo-v1-scale-gguf`](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf)**:
+- **What makes it different from [`onebee-gf-dpo-v1-scale-gguf`](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf)**:
   quantized from the *post-distillation* checkpoint, not the pre-distillation one — this is the
   checkpoint the project's headline H23 results are actually about.
 - **Real generation testing found Q2_K broken for this checkpoint** — garbled special-token
@@ -46,7 +46,7 @@ best checkpoint from **small-mind-companion** (LoRA SFT → DPO → on-policy di
 | Parameters | ~2B effective (base) + merged LoRA rank 16 adapter |
 | Architecture | Gemma4 (multimodal, text + vision), GGUF format |
 | Base Model | [`google/gemma-4-E2B-it`](https://huggingface.co/google/gemma-4-E2B-it) |
-| Source checkpoint | [`onebee-gf-distill-v1`](https://huggingface.co/arrochi112/onebee-gf-distill-v1) |
+| Source checkpoint | [`onebee-gf-distill-v1`](https://huggingface.co/arjhinety/onebee-gf-distill-v1) |
 | Language | English |
 | Context Length | 131,072 tokens (inherited from base model) |
 | Training Method | LoRA SFT → LoRA DPO → on-policy distillation (see source checkpoint) |
@@ -65,7 +65,7 @@ testing for this checkpoint (see Limitations).
 Not evaluated or intended for: safety-critical decisions, medical/legal/financial advice, or any
 deployment where a wrong or overconfident answer causes real harm. This is a research artifact
 from an open-source project studying post-training and memory architecture on small models — see
-[the project README](https://github.com/arrogance231/small-mind-companion) for the full research
+[the project README](https://github.com/arjhinety/small-mind-companion) for the full research
 framing before using it in any production context.
 
 ## Capabilities
@@ -88,8 +88,8 @@ framing before using it in any production context.
 | `distill-v1-Q4_K_S.gguf` | Q4_K_S | 3.35 GB | Verified coherent, in-character |
 | `distill-v1-Q4_0.gguf` | Q4_0 | 3.35 GB | |
 | `distill-v1-Q3_K_L.gguf` | Q3_K_L | 3.27 GB | |
-| `distill-v1-Q3_K_M.gguf` | Q3_K_M | 3.19 GB | Verified coherent, in-character — **recommended smallest safe level** |
-| `distill-v1-Q3_K_S.gguf` | Q3_K_S | 3.10 GB | Verified coherent, in-character |
+| `distill-v1-Q3_K_M.gguf` | Q3_K_M | 3.19 GB | Verified coherent, in-character |
+| `distill-v1-Q3_K_S.gguf` | Q3_K_S | 3.10 GB | Verified coherent, in-character — **smallest verified-coherent level** |
 | `distill-v1-Q2_K.gguf` | Q2_K | 2.98 GB | **Broken — do not use, see Limitations** |
 | `mmproj-distill-v1-f16.gguf` | F16 | 0.99 GB | Vision projector — needed for image input, use with any of the above |
 
@@ -126,7 +126,7 @@ Real generation quality checks (companion system prompt, "What is your favorite 
 | Q3_K_S | Coherent, in-character: *"emerald... like the color of moss after a spring rain"* |
 | Q2_K | Broken: garbled special tokens followed by a non-terminating repetition loop |
 
-Full methodology: [`docs/quantization_results.md`](https://github.com/arrogance231/small-mind-companion/blob/main/docs/quantization_results.md).
+Full methodology: [`docs/quantization_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/quantization_results.md).
 
 ## Limitations
 
@@ -144,22 +144,22 @@ Full methodology: [`docs/quantization_results.md`](https://github.com/arrogance2
 
 | Repo | Description |
 |---|---|
-| [onebee-gf-sft-v0](https://huggingface.co/arrochi112/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
-| [onebee-gf-sft-v1](https://huggingface.co/arrochi112/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
-| [onebee-gf-dpo-v0](https://huggingface.co/arrochi112/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
-| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
-| [onebee-gf-dpo-v1-scale](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
-| [onebee-gf-distill-v1](https://huggingface.co/arrochi112/onebee-gf-distill-v1) | Source checkpoint for this repo — current best overall |
-| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) | GGUF quants of the pre-distillation checkpoint |
+| [onebee-gf-sft-v0](https://huggingface.co/arjhinety/onebee-gf-sft-v0) | Day 4 v0 SFT (202 examples) |
+| [onebee-gf-sft-v1](https://huggingface.co/arjhinety/onebee-gf-sft-v1) | Proper-scale SFT (2232 examples) |
+| [onebee-gf-dpo-v0](https://huggingface.co/arjhinety/onebee-gf-dpo-v0) | Week 2 DPO v0 (200 pairs) |
+| [onebee-gf-dpo-v1-4epoch](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-4epoch) | DPO overfitting experiment |
+| [onebee-gf-dpo-v1-scale](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
+| [onebee-gf-distill-v1](https://huggingface.co/arjhinety/onebee-gf-distill-v1) | Source checkpoint for this repo — current best overall |
+| [onebee-gf-dpo-v1-scale-gguf](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) | GGUF quants of the pre-distillation checkpoint |
 
 ## Citation
 
 ```bibtex
 @software{small_mind_companion,
   title  = {small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM},
-  author = {arrogance231},
+  author = {arjhinety},
   year   = {2026},
-  url    = {https://github.com/arrogance231/small-mind-companion}
+  url    = {https://github.com/arjhinety/small-mind-companion}
 }
 ```
 
