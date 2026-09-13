@@ -2,13 +2,27 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-451%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-473%20passing-brightgreen)
 
 ## Overview
 
 Small on-device language models generally can't sustain a persona across years of conversation the way a much larger model with a huge context window can — they either forget, hallucinate memories, or answer confidently when they shouldn't. This project asks how much of that gap can be closed without scaling parameters: by pairing a ~2B-parameter vision-capable model with an external memory/retrieval system, LoRA post-training (SFT → DPO → on-policy distillation), and quantization for on-device inference, then measuring the result against an adversarial benchmark built specifically to catch abstention failures and false memories, not just recall accuracy.
 
 Every result below links to a doc with full methodology and honest limitations, including negative/inconclusive findings reported as such. Full research-question hierarchy and hypotheses: [`docs/research_questions.md`](docs/research_questions.md).
+
+## Studies
+
+This project is organised into studies. **Study 001 is frozen** (2026-09-13, tag `study-001`): its
+evidence is hash-pinned and its write-ups stop changing. Work after the freeze is Study 002.
+
+- [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
+- [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — 76 artifacts pinned by SHA-256
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 28 claims the committed artifacts did not support, and their corrections
+- [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
+
+```
+make freeze-check     # fails if any frozen Study 001 artifact has changed
+```
 
 ## Results
 
@@ -18,10 +32,11 @@ Every result below links to a doc with full methodology and honest limitations, 
 | `gemma-4-E2B-it` | SFT v0 (202 ex) | LoRA SFT, no memory | 0.16% | 16.25% |
 | `gemma-4-E2B-it` | — | + hybrid retrieval memory (k=8), no SFT | 15.10% | 8.75% |
 | `gemma-4-E2B-it` | SFT v0 + memory | LoRA SFT + memory | 17.76% | 33.75% |
-| `gemma-4-E2B-it` | SFT v1 (2232 ex) + DPO v1 (2049 pairs) | proper-scale LoRA SFT → DPO + memory | — | 70.0% |
+| `gemma-4-E2B-it` | SFT v1 (2232 ex) | proper-scale LoRA SFT + memory | 15.30% | 70.0% |
+| `gemma-4-E2B-it` | SFT v1 + DPO v1 (2049 pairs) | + LoRA DPO. Evaluated pairwise only (24.7pp C-vs-E) — no full-PMB metrics for this checkpoint | — | — |
 | `gemma-4-E2B-it` | + distill v1 (2008 prompts) | + on-policy distillation from `gemma-4-E4B-it` | 18.59% | 71.25% |
 
-`pra_lenient` and UAR are measured against **PMB** (Personalized Memory Benchmark), 688 adversarial probes across 8 categories (factual, episodic, temporal, preference, continuity, outdated-fact, distractor, unanswerable). Full writeups: [`docs/proper_scale_results.md`](docs/proper_scale_results.md) (current authoritative results), [`docs/day3_memory_results.md`](docs/day3_memory_results.md), [`docs/day4_sft_results.md`](docs/day4_sft_results.md), [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/distillation_results.md`](docs/distillation_results.md).
+`pra_lenient` and UAR are measured against **PMB** (Personalized Memory Benchmark), 688 adversarial probes across 8 categories (factual, episodic, temporal, preference, continuity, outdated-fact, distractor, unanswerable). Full writeups: [`docs/proper_scale_results.md`](docs/proper_scale_results.md) (its headline table predates the bug fixes below — see its "Rebalancing fix" section for the final numbers), [`docs/day3_memory_results.md`](docs/day3_memory_results.md), [`docs/day4_sft_results.md`](docs/day4_sft_results.md), [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/distillation_results.md`](docs/distillation_results.md).
 
 ## Architecture
 
@@ -74,7 +89,7 @@ For the full memory-retrieval-augmented pipeline (not just a raw checkpoint), se
 
 Two data families, both versioned and hash-pinned in `data/`:
 
-- **PMB (evaluation)**: `data/benchmarks/pmb_v0_full/` — 688 adversarial probes across 40 personas, each probe categorized (factual/episodic/temporal/preference/continuity/outdated-fact/distractor/unanswerable) with a gold answer, supporting-memory IDs, and acceptable alternatives.
+- **PMB (evaluation)**: `data/benchmarks/pmb_v0_full/` — 688 adversarial probes across 8 personas (86 each), each probe categorized (factual/episodic/temporal/preference/continuity/outdated-fact/distractor/unanswerable) with a gold answer and supporting-memory IDs. Note: the `acceptable_alternatives` field exists in every record but is currently unpopulated, which is why `pra_strict` is ~0 throughout and `pra_lenient` (judge-scored) is the reported metric.
 - **SFT / DPO / distillation (training)**: `data/sft/v1/`, `data/dpo/v1_scale/`, `data/distill/v1/` — each with a `DATASHEET.md` describing generation methodology, class balance, and known caveats (e.g. not human-reviewed, not yet contamination-checked against PMB at generation time — verify with `scripts/check_contamination.py` before reusing).
 
 Splits: SFT v1 is 2232 train / 248 val; DPO v1_scale is 2049 train / 228 val; distillation v1 is 2008 train / 224 val prompts (prompt-only — the student generates its own completions on-policy).
@@ -162,13 +177,13 @@ Repo names still carry the project's earlier `onebee-gf` name (predates a repo r
 | H6, H7 | DPO improves preference alignment over SFT alone | Confirmed — 24.7pp pairwise win-rate gap at proper scale | [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
 | H16/H17-adjacent | 10x data scale improves calibration (UAR) | Confirmed after fixing 2 real bugs that initially masked the improvement | [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
 | H23 | On-policy distillation from a larger teacher improves quality without degrading persona consistency | Confirmed — `pra_lenient` +3.3pp, UAR flat, persona-consistency favored the distilled model | [`docs/distillation_results.md`](docs/distillation_results.md) |
-| — | GGUF quantization preserves generation quality | Confirmed down to Q4_K_M by manual + automated checks | [`docs/quantization_results.md`](docs/quantization_results.md) |
+| — | GGUF quantization preserves generation quality | Confirmed down to Q3_K_S by manual generation checks (Q2_K broken) | [`docs/quantization_results.md`](docs/quantization_results.md) |
 | H22 | Abliteration increases compliance at the cost of judgment quality | Eval harness built, not yet run | [`docs/research_questions.md`](docs/research_questions.md) |
 | — | ORPO as an alternative to DPO | Blocked — not supported by the pinned `trl` version | [`docs/model_quirks.md`](docs/model_quirks.md) #15 |
 
 ## Hardware
 
-All training and quantization runs were done on a single rented workstation GPU (NVIDIA RTX PRO 6000 Blackwell class, ~96GB VRAM) — sufficient headroom for LoRA fine-tuning and on-policy distillation of a ~2B/8B student/teacher pair without offloading. Quantization benchmarks (generation speed table below) were run CPU-only, since the deployment target is on-device/mobile inference, not GPU-served inference.
+All LoRA training and on-policy distillation runs were done on a single rented workstation GPU (NVIDIA RTX PRO 6000 Blackwell class, ~96GB VRAM) — sufficient headroom for LoRA fine-tuning and on-policy distillation of a ~2B/8B student/teacher pair without offloading. GGUF conversion and quantization were built separately: CPU-only on a box with no system-wide CUDA toolkit, and on Modal (`RTX-PRO-6000`) for the distill-v1 pass. Quantization benchmarks (generation speed table below) were run CPU-only, since the deployment target is on-device/mobile inference, not GPU-served inference.
 
 | Quant | Size | Generation speed (CPU, 30 threads) |
 |---|---|---|
@@ -176,7 +191,7 @@ All training and quantization runs were done on a single rented workstation GPU 
 | Q8_0 | 4.61 GiB | 43.07 t/s |
 | **Q4_K_M** | **3.18 GiB** | **58.00 t/s** (recommended default) |
 
-Full quantization spread (F16 through Q2_K, 12 levels) and methodology: [`docs/quantization_results.md`](docs/quantization_results.md).
+Full quantization spread (F16 reference plus 12 quant levels down to Q2_K) and methodology: [`docs/quantization_results.md`](docs/quantization_results.md) — note that no `llama-bench`/`llama-imatrix` output is committed to this repo, so the sizes and speeds below are restated from the original run logs rather than re-derivable from a tracked artifact.
 
 ## Project Structure
 
@@ -188,7 +203,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   451 unit tests, run in CI
+tests/                   473 unit tests, run in CI
 ```
 
 ## Results & Analysis
@@ -196,12 +211,12 @@ tests/                   451 unit tests, run in CI
 - **Root-caused a calibration regression to two independent bugs, then fixed both and re-verified end-to-end.** Scaling the training data 10x initially appeared to make the model *worse* at abstaining on unanswerable questions. Investigation found: (1) a naive text-based dedup step in the data-generation script was silently collapsing ~227 intended abstention training examples down to 1; (2) after fixing that, the eval harness's own abstention detector didn't recognize the model's newly-correct phrasing, making a genuine improvement look like a further regression. Fixing both exposed a real third issue — over-correction into excessive hedging — resolved by rebalancing training-data ratios. Full trail: [`docs/proper_scale_results.md`](docs/proper_scale_results.md), [`docs/model_quirks.md`](docs/model_quirks.md) #16-17.
 - **Found and fixed a rubric-construction bug that inflated a zero-context baseline to ~94% accuracy** — an operator-precedence bug in a string-concatenation expression silently dropped the gold answer from the judge's rubric whenever a probe had no listed alternatives. Caught because a model with no memory access scoring 94% on personalized-recall is *definitionally* impossible. [`docs/model_quirks.md`](docs/model_quirks.md).
 - **Distillation's training-time metrics looked unhealthy (flat loss, unstable grad norm, ~95-98% completion clipping) but real evaluation showed a clean positive result** — a case where trusting the eval harness over the training curve mattered. [`docs/distillation_results.md`](docs/distillation_results.md).
-- **21 real environment/API/tooling bugs found, fixed, and documented** across the stack, each with a root cause and fix, not just "it broke": [`docs/model_quirks.md`](docs/model_quirks.md).
+- **27 real environment/API/tooling bugs found, fixed, and documented** across the stack, each with a root cause and fix, not just "it broke": [`docs/model_quirks.md`](docs/model_quirks.md).
 
 ## Reproducibility
 
 - All training seeds are pinned in their respective config files (e.g. `seed: 1337` in `configs/training/sft_v1.yaml`).
-- Base model revision is pinned by commit SHA, not a moving tag (`base_model_revision` in each config).
+- Base model revision is pinned by commit SHA in the SFT configs (`base_model_revision`). The DPO and distillation configs still reference `"main"` and should be pinned to a SHA before any re-run is treated as reproducible.
 - Every dataset directory has a `hash.txt` and `DATASHEET.md` documenting exact generation methodology and known caveats.
 - `uv.lock` pins every dependency version.
 - Hypotheses and eval design are committed to git *before* results — git history itself is the pre-registration record.
@@ -211,9 +226,9 @@ tests/                   451 unit tests, run in CI
 ```bibtex
 @software{small_mind_companion,
   title  = {small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM},
-  author = {arrogance231},
+  author = {Ty, Arjhine A.},
   year   = {2026},
-  url    = {https://github.com/arrogance231/small-mind-companion}
+  url    = {https://github.com/arjhinety/small-mind-companion}
 }
 ```
 

@@ -6,6 +6,9 @@ training, scored against the teacher's token distribution -- no assistant turns 
 used from the source data).
 
 - Total: 2232 (2008 train / 224 val)
-- Source: `data/sft/v1/train.jsonl` (already contamination-checked clean against
-  `pmb_v0_full`, see `data/sft/v1/DATASHEET.md` -- since this is a strict subset with no new
-  content, no new contamination check was run).
+- Source: `data/sft/v1/train.jsonl`. This is a strict subset (2008/2232 train and 224/248 val
+  prompts match exactly) with no new content, so no separate contamination check was run; the
+  parent corpus is contamination-checked clean against `pmb_v0_full` — see
+  `data/sft/v1/DATASHEET.md`.
+- **No `hash.txt` is committed for this directory** (unlike the SFT/DPO datasets), so its
+  contents are not integrity-pinned. Generate one before relying on the subset-equality claim.

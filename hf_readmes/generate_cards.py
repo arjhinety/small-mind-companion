@@ -76,8 +76,8 @@ CHECKPOINTS = {
         ],
         eval_table=(
             "| System | pra_lenient | UAR |\n|---|---|---|\n"
-            "| SFT v1 + memory (pre-DPO) | — | — (see full writeup; DPO adds the measured gain) |\n"
-            "| + DPO (dpo-v1-scale) | — | 70.0% |"
+            "| SFT v1 + memory | 15.30% | 70.0% |\n"
+            "| + DPO (dpo-v1-scale) | — | — (evaluated pairwise only: 45.7% vs 21.0%, 24.7pp gap) |"
         ),
         results_doc="docs/proper_scale_results.md",
         limitations=(
@@ -140,11 +140,11 @@ CHECKPOINTS = {
         intended_use="As a base for distillation or quantization; as a strong standalone companion checkpoint if distillation-specific behavior is not desired.",
         capabilities=[
             "Companion-persona conversational responses with strong preference alignment",
-            "UAR (unanswerable-question calibration): 70.0%",
+            "Preference alignment: 45.7% vs 21.0% pairwise win-rate over SFT-only (24.7pp gap)",
         ],
         eval_table=(
             "| System | pairwise win-rate | UAR |\n|---|---|---|\n"
-            "| dpo-v1-scale | 45.7% vs 21.0% (24.7pp gap) | 70.0% |"
+            "| dpo-v1-scale | 45.7% vs 21.0% (24.7pp gap) | not measured |"
         ),
         results_doc="docs/proper_scale_results.md",
         limitations="Single seed/run at this data scale. See `onebee-gf-distill-v1` for the further-improved current-best checkpoint.",

@@ -1,9 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software or its associated benchmark/data, please cite it as below."
-title: "onebee-gf: Stretching a 1B Parameter LLM Through Post-Training and External Cognitive Architecture"
-version: 0.0.0
+title: "small-mind-companion: Post-training and cognitive architecture for a small multimodal companion LLM"
+version: 0.1.0
 date-released: 2026-08-12
 authors:
-  - family-names: Arrochi
-url: "https://github.com/arrogance231/onebee-gf"
+  - family-names: Ty
+    given-names: Arjhine A.
+    alias: arjhinety
+url: "https://github.com/arjhinety/small-mind-companion"
+repository-code: "https://github.com/arjhinety/small-mind-companion"
 license: Apache-2.0

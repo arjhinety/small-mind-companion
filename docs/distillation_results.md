@@ -63,8 +63,18 @@ loss curve.
 | System | Description | pra_lenient | uar |
 |---|---|---|---|
 | B (v1, rebalanced) | SFT alone, no memory | 0.16% | 25.0% |
-| E (v1, rebalanced) | SFT+DPO+memory (pre-distillation) | 15.30% | 70.0% |
-| **E-distill (H23)** | **SFT+DPO+distill+memory (post-distillation)** | **18.59%** | **71.25%** |
+| E (v1, rebalanced) | SFT + memory (pre-distillation) | 15.30% | 70.0% |
+| **E-distill (H23)** | **SFT+DPO+distill + memory (post-distillation)** | **18.59%** | **71.25%** |
+
+> **These two rows are not a clean isolation of distillation.** E is `outputs/sft/v1/merged` and
+> E-distill is `outputs/distill/v1/merged`, which was trained *from the DPO output* — so the
+> +3.3pp `pra_lenient` delta in this table spans both the DPO stage and the distillation stage.
+> The distillation-specific comparison is the **pairwise C-vs-F** run (C = DPO+memory, F =
+> distill+memory), which holds the DPO stage fixed on both sides: F wins 38.1% vs C's 30.5%, a
+> +7.6pp gap. Cite that number for H23, not this table.
+>
+> Neither figure is measured on a DPO checkpoint's full-PMB metrics — no such run exists in
+> `results/`; `dpo-v1-scale` appears only in pairwise comparisons.
 
 `pra_lenient` improved by 3.3 percentage points (15.30%→18.59%) and UAR held essentially flat
 (70.0%→71.25%, within noise) — the distilled model answers more answerable questions correctly

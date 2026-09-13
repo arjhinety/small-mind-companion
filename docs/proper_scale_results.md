@@ -6,13 +6,27 @@ runs (`docs/day4_sft_results.md`, `docs/dpo_results.md`). Raw data in `results/v
 ## What changed vs the v0 pass
 
 Scaled from 4 to 40 personas, generating a 2242-example SFT dataset (`data/sft/v1/`, up from
-225) and a 2277-pair DPO preference dataset (`data/dpo/v1_scale/`, up from 223), both
-contamination-checked clean against the fixed `pmb_v0_full` eval set (unchanged throughout).
+225) and a 2277-pair DPO preference dataset (`data/dpo/v1_scale/`, up from 223). The SFT v1
+corpus is contamination-checked clean against the fixed `pmb_v0_full` eval set (unchanged
+throughout); the DPO pairs were generated *before* SFT v1's dedup fix and ratio rebalance, so the
+two do not share identical prompt contexts — see `data/dpo/v1_scale/DATASHEET.md`.
 Trained SFT with the doc-recommended batch size (8, grad-accum 4, vs v0's 4/2) for 2 epochs,
 then DPO on top for 1 epoch (257 steps, vs v0's 25). Full training details:
 `docs/day4_sft_v1_results.md`, `docs/dpo_results.md`'s "Follow-up: proper scale" section.
 
 ## Headline numbers
+
+> **Read this table as history, not as current results.** It reflects the *first* v1_scale run,
+> which was produced with a dedup bug that silently collapsed almost all abstention training
+> examples to 1, and scored with a detector that did not recognize the model's correct abstention
+> phrasing. Both were fixed later the same day; the final numbers are in
+> ["The full three-point trajectory"](#the-full-three-point-trajectory-all-rescored-with-the-fixed-detector)
+> below. In particular, **the 31.25% and 16.25% UAR figures here are wrong** — the corrected
+> values are 25.0% and 70.0%.
+>
+> **Attribution note:** systems B, D and E all run against `outputs/sft/v1/merged`. There is no
+> full-PMB measurement of the DPO checkpoint (`dpo-v1-scale`) anywhere in `results/` — it is
+> evaluated pairwise only (C vs E). Do not cite the 70.0% / 15.30% figures as DPO results.
 
 Systems A (raw) and D (raw + memory) don't depend on trained checkpoints, so their v0.1 numbers
 are unchanged and reused directly.
@@ -21,10 +35,10 @@ are unchanged and reused directly.
 |---|---|---|---|
 | A | raw, no memory | 0.16% | 13.75% |
 | B (v0) | SFT v0 (225 ex), no memory | 0.16% | 16.25% |
-| **B (v1)** | **SFT v1 (2242 ex), no memory** | **0.16%** | **31.25%** |
+| **B (v1)** | **SFT v1 (2242 ex), no memory** | **0.16%** | **31.25%** ← superseded: 25.0% |
 | D | raw + memory (k=8) | 15.10% | 8.75% |
 | E (v0) | SFT v0 + memory | 17.76% | 33.75% |
-| **E (v1)** | **SFT v1 + memory** | **18.42%** | **16.25%** |
+| **E (v1)** | **SFT v1 + memory** | **18.42%** | **16.25%** ← superseded: 70.0% |
 
 Pairwise C(SFT+DPO) vs E(SFT only), dual-order judge, 105 answerable probes (same sampling
 seed/stratification as v0 for direct comparability):
@@ -216,7 +230,11 @@ adjustment) is a reasonable next step but not pursued further in this pass — t
   reasonable first attempt, not a tuned optimum.
 - The headline `pra_lenient`/`uar` table near the top of this doc and its DPO pairwise numbers
   reflect the *original* (bugged) run, not the final rebalanced one — kept for historical
-  continuity with the initial writeup; the corrected/final numbers are in this section.
+  continuity with the initial writeup, with superseded values flagged inline; the corrected/final
+  numbers are in this section.
+- **No full-PMB run exists for the DPO checkpoint.** Systems A–E all evaluate `outputs/sft/v1/`
+  or `outputs/distill/v1/`; `dpo-v1-scale` appears only in the pairwise comparison. Any claim
+  attributing a `pra_lenient` or UAR figure to DPO is unsupported by `results/`.
 - C-vs-E pairwise still uses a 105-probe subsample (same size as v0, for comparability), not
   the full 688-probe set — a full-scale pairwise run would tighten the confidence further but
   wasn't run here to keep evaluation cost proportionate.

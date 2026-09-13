@@ -55,7 +55,11 @@ production context.
 ## Capabilities
 
 - Companion-persona conversational responses with strong preference alignment
-- UAR (unanswerable-question calibration): 70.0%
+- Preference alignment: 45.7% vs 21.0% pairwise win-rate over SFT-only (24.7pp gap, 105 probes)
+
+> No full-PMB `pra_lenient`/UAR measurement exists for this checkpoint — it is evaluated pairwise
+> only. The 70.0% UAR figure that appeared here in earlier revisions belongs to the SFT-v1+memory
+> system, not to DPO. See `reports/ERRATA.md`.
 
 ## Quick Start
 

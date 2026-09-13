@@ -1,0 +1,256 @@
+# Errata
+
+Corrections to claims in this repository, its Hugging Face model cards, and its published
+results that the committed artifacts did not support.
+
+## How to read this file
+
+Two classes of correction:
+
+- **Adopted in the repository.** The file is not published or hash-pinned, so it was corrected
+  in place. The audit ledger (`reports/audits/001-claim-audit/resolutions.json`) records where.
+- **Errata only.** The artifact is already published (the Hugging Face model cards) or is a
+  committed measurement record that must not be rewritten (`results/**/metrics.json`). Those are
+  **not** edited here; this document supersedes them until they are re-published.
+
+**If a number on a Hugging Face model card disagrees with this file, this file is correct.**
+
+The full findings ledger is `reports/audits/001-claim-audit/findings.json`. The rules derived from
+these mistakes are `docs/GUARDRAILS.md`.
+
+## Provenance
+
+Audited at commit `ae75ca9` (2026-09-04). Method and verification results are in
+`reports/audits/001-claim-audit/README.md`. All seven evaluated runs' `metrics.json` files were
+independently recomputed from their own saved `raw.jsonl` responses and matched exactly — the
+evaluation numbers in this repository are sound. Everything below is about the claims made
+*around* those numbers.
+
+## Published artifacts requiring re-push
+
+The following corrections are in the repository sources but **not yet on the Hugging Face Hub**.
+The cards were published before this audit and still show the superseded figures.
+
+| Card | Corrected claim | Superseded text on the Hub |
+|---|---|---|
+| `onebee-gf-sft-v1` | SFT v1 + memory is **15.30% / 70.0%**; DPO is evaluated pairwise only | Table showed DPO as 70.0% UAR |
+| `onebee-gf-dpo-v1-scale` | Preference alignment **45.7% vs 21.0% (24.7pp gap)**; no UAR measurement exists | Capability line and eval table claimed **70.0% UAR** |
+| `onebee-gf-distill-v1` | Pre-distillation row is **SFT + memory**, not `dpo-v1-scale`; the +3.3pp spans two stages | Row labelled `dpo-v1-scale (pre-distillation)` |
+| `onebee-gf-dpo-v1-scale-gguf`, `onebee-gf-distill-v1-gguf` | Q3_K_S is the smallest verified-coherent level | One card called Q3_K_M the recommended smallest |
+
+Regenerate with `hf_readmes/generate_cards.py` (corrected) and re-push, or edit the cards directly
+on the Hub. Until then, treat the Hub copies as superseded.
+
+## Corrections by finding
+
+### E1 — UAR 70.0% and pra_lenient 15.30% were attributed to the DPO checkpoint (HIGH)
+
+**As written:** `docs/distillation_results.md` and four model cards described the system achieving
+70.0% UAR / 15.30% `pra_lenient` as "SFT+DPO+memory" or as `dpo-v1-scale`.
+
+**Correction:** those figures belong to **SFT-v1 + memory**. The tracked artifact
+`results/v1_scale/E_sft_memory/metrics.json` was produced by `run_system_e_v1.py`, which loads
+`HFEngine("outputs/sft/v1/merged")` — the SFT-only checkpoint — and names the system
+`E_sft_memory_v1`. `docs/proper_scale_results.md` defines E as "SFT v1 + memory".
+
+**No full-PMB measurement of the DPO checkpoint exists anywhere in `results/`.** `dpo-v1-scale`
+appears only in the pairwise C-vs-E comparison. Do not cite any `pra_lenient` or UAR figure as a
+DPO result.
+
+### E2 — The distillation gain was measured across two training stages (HIGH)
+
+**As written:** on-policy distillation improved `pra_lenient` by 3.3pp (15.30% → 18.59%).
+
+**Correction:** the two compared systems are `outputs/sft/v1/merged` and
+`outputs/distill/v1/merged`, and the latter was trained *from the DPO output*. The +3.3pp
+therefore spans the DPO stage as well as distillation.
+
+The distillation-specific measurement is the pairwise **C-vs-F** run (`C` = DPO+memory,
+`F` = distill+memory), which holds the DPO stage constant on both sides: **F wins 38.1% vs C's
+30.5%, a +7.6pp gap**. Cite that for H23.
+
+### E3 — PMB has 8 personas, not 40 (HIGH)
+
+**As written:** "688 adversarial probes across 40 personas".
+
+**Correction:** 8 personas (`p000`–`p007`), 86 probes each. 40 is the count of SFT *training*
+personas in `data/benchmarks/sft_personas_v1/`. The same README correctly said "8 categories"
+two sections earlier.
+
+### E4 — Revision pinning was claimed for configs that use `"main"` (HIGH)
+
+**As written:** "Base model revision is pinned by commit SHA, not a moving tag
+(`base_model_revision` in each config)."
+
+**Correction:** only `sft.yaml` and `sft_v1.yaml` pin a SHA. `dpo.yaml`, `dpo_v1_scale.yaml`,
+`dpo_v1_more_epochs.yaml` and `distill_v1.yaml` all use `base_model_revision: "main"`, and
+`distill_v1.yaml` also uses `teacher_model_revision: "main"`. Runs launched from those configs are
+**not** revision-pinned and should not be described as reproducible until the SHAs are recorded.
+
+### E5 — Two mutually inconsistent GGUF size sets are published (MED)
+
+**As written:** `README.md` and the GGUF cards' files tables state F16 8.64 GiB / Q8_0 4.61 GiB /
+Q4_K_M 3.18 GiB.
+
+**Correction:** `hf_readmes/gguf_README.md` contains *both* this set and 8.62 / 4.59 / 3.17 GiB in
+its own evaluation table; `docs/quantization_results.md` states the F16 file as "9.27GB"
+(8.63 GiB) while its table says 8.62 GiB. **No `llama-bench` output or GGUF file is committed**
+(`*.gguf` is gitignored, `results/` holds no quantization artifact), so neither set is
+re-derivable from a tracked artifact. One set must be chosen and the other corrected once a
+benchmark artifact is committed.
+
+### E6 — All quantization numbers lack committed evidence (MED)
+
+Every size, throughput and perplexity figure in `docs/quantization_results.md` and both GGUF cards
+is restated from run logs that are not in this repository: `llama-bench` throughput
+(585.07/492.33/633.00 pp512, 26.15/43.07/58.00 tg128), the imatrix run (5,328 chunks, n_ctx=512,
+PPL 2.7258 ± 0.0046), "model reports as 4.63B params", and every per-file size. There are no
+`llama-*` outputs in `git ls-files`, and `results/` contains no quantization directory.
+
+These are reported measurements, not independently verifiable ones. `docs/quantization_results.md`
+and `README.md` now say so explicitly. Re-run `llama-bench` if you need to rely on them.
+
+### E7 — The reported quantization floor understated the verified result (MED)
+
+**As written:** "Confirmed down to Q4_K_M by manual + automated checks".
+
+**Correction:** `docs/quantization_results.md` verifies coherent, in-character output at Q3_K_S and
+Q3_K_M, and names **Q3_K_S as the smallest verified-coherent level** for both checkpoints. The
+checks described are manual `llama-cli` / `llama-mtmd-cli` runs; no automated quality check is
+evidenced.
+
+### E8 — imatrix quantization was described as undone after it was done (MED)
+
+**As written:** `docs/research_questions.md` stated the GGUF quants "used no imatrix calibration
+data — a real next step".
+
+**Correction:** `docs/quantization_results.md` in the same repository documents the calibration
+corpus, the `llama-imatrix` run, and 6 levels requantized with `--imatrix`. What genuinely remains
+open is the **imatrix-vs-non-imatrix generation-quality comparison** — that was never completed,
+and `results/imatrix_perplexity_comparison.md` does not exist.
+
+### E9 — `CITATION.cff` was stale on four of its fields (MED)
+
+**As written:** title "onebee-gf: Stretching a 1B Parameter LLM…", version 0.0.0, author
+"Arrochi", url `github.com/arrogance231/onebee-gf`.
+
+**Correction:** the project is `small-mind-companion`, version 0.1.0 (`pyproject.toml`), the model
+is ~2B effective-parameter (4.63B as reported by `llama-bench`), the repository is
+`github.com/arjhinety/small-mind-companion` (the cited URL does not exist), and the author string
+matched neither the README's BibTeX entry nor the Hugging Face owner.
+
+### E10 — The card template contradicted every card it produced (MED)
+
+`hf_readmes/checkpoint_README_template.py` declared `license: gemma` and "Inherits Gemma's license
+terms", while all seven cards it generates declare `license: apache-2.0` and "Apache-2.0, inherited
+from the base model". `CITATION.cff` and the README also say Apache-2.0. The template was wrong.
+Note that the underlying claim — that Apache-2.0 is inherited from `google/gemma-4-E2B-it` — is
+not verifiable from this repository.
+
+### E11 — Contamination status was asserted in both directions at once (MED)
+
+The SFT datasheets said the corpora were **not** checked; `data/distill/v1/DATASHEET.md` said they
+**were** checked clean, citing `data/sft/v1/DATASHEET.md` — a file that said the opposite.
+
+**Correction:** the check was actually run:
+
+```
+python scripts/check_contamination.py \
+  --train-glob "data/sft/v1/train.jsonl" \
+  --eval-glob "data/benchmarks/pmb_v0_full/probes.jsonl"
+→ No contamination found.   (exit 0)
+```
+
+Same result for `data/sft/v0/train.jsonl`. **The data is clean**; the "not yet checked" text was
+stale. Both SFT datasheets and the distill datasheet now record the command and its result.
+
+### E12 — The SFT datasheets cited seeds that do not exist (MED)
+
+`data/sft/v0/DATASHEET.md` cited "seed 9999" and `data/sft/v1/DATASHEET.md` cited "seed 31415".
+Neither number appears anywhere in the repository. The persona corpora were generated by
+`scripts/build_pmb.py`, whose `--seed` default is 1337; `generate_sft_data.py` uses
+`random.Random(4242)`. As documented, persona generation was not reproducible. Both datasheets now
+state that the seed is not recorded.
+
+### E13 — DPO v1_scale was not built from the final SFT v1 (MED)
+
+`data/dpo/v1_scale/DATASHEET.md` said the pairs used "the same pipeline as `data/sft/v1`".
+Measured against the current `data/sft/v1/train.jsonl`: **2263/2277 user turns match but 0/2277
+system texts match.** Both datasets call `ContextBuilder.build(..., recent_turns[-6:])`, so
+identical inputs would produce identical system text — the retrieval contexts diverged. Git
+timestamps show the DPO set predates SFT v1's dedup fix and ratio rebalance. The cause was not
+pinned down. "Same pipeline" holds as generator *code*, not as prompt construction.
+
+### E14 — Stale counts in the README (MED)
+
+- "451 passing" tests → **473** `def test_` functions in `tests/**`; `docs/research_questions.md`
+  already said 473.
+- "21 real environment/API/tooling bugs" → `docs/model_quirks.md` numbers **1 through 27**.
+
+### E15 — The hardware claim conflated two machines (MED)
+
+**As written:** "All training and quantization runs were done on a single rented workstation GPU
+(NVIDIA RTX PRO 6000 Blackwell class, ~96GB VRAM)".
+
+**Correction:** `docs/quantization_results.md` records that the quantization box had **no
+system-wide CUDA toolkit**, that `llama.cpp` was built CPU-only, that conversion and quantization
+are CPU-only tools regardless, and that the source checkpoint was downloaded because "the previous
+GPU box was deleted". The distill-v1 GGUF build ran on **Modal**. The README now separates LoRA
+training from GGUF conversion/quantization.
+
+### E16 — The reproducibility chain contained commands that cannot run (MED)
+
+`docs/reproduction.md` presented `make figures` as a step in the chain that "should be run from a
+clean clone, in order, to earn the reproducibility claim". `scripts/make_figures.py` does not
+exist, so the target always failed. The `paper` target referenced a non-existent `paper/build.sh`.
+Both dead targets are removed and the reproduction doc now states that figure regeneration is
+unavailable rather than presenting a command that fails.
+
+### E17–E28 — Lower-severity corrections
+
+| # | Correction |
+|---|---|
+| E17 | "12 levels (F16 → Q2_K)" was ambiguous — it is the F16 reference **plus** 12 quant levels (13 text files; 14 with the vision projector) |
+| E18 | One GGUF card called **Q3_K_M** the "recommended smallest safe level" while its own table and `docs/quantization_results.md` name **Q3_K_S** |
+| E19 | `sft_personas_v0`, `sft_personas_v1` and `pmb_v0` datasheets were all titled "PMB v0 — Personalised Memory Benchmark". Only `pmb_v0_full` is the benchmark; the others are training-persona corpora and a fixture smoke test. Root cause was a hardcoded title in `scripts/build_pmb.py` |
+| E20 | `pmb_v0_full/DATASHEET.md` said "This run (8 personas) may not be the full v0 benchmark (target: 8 personas)" — self-contradictory, and stale relative to the generator that was fixed 65 s earlier |
+| E21 | `data/distill/v1/` has **no `hash.txt`**, contradicting "Every dataset directory has a hash.txt" |
+| E22 | Probes were said to ship "acceptable alternatives"; the field is present on all 688 probes and **empty in 688/688**, which is why `pra_strict` is ~0 throughout and `pra_lenient` is the reported metric |
+| E23 | `make lint` / `make typecheck` assume the `dev` extra that the documented bare `uv sync` does not install |
+| E24 | A card template linked to `README.md#engineering-highlights`; that heading does not exist (it is now "Results & Analysis") |
+| E25 | `dpo-v1-scale` was still called "current best checkpoint overall" in the card template, the card generator and the quantization doc header, contradicting `distill-v1`'s status in those same files |
+| E26 | `results/imatrix_perplexity_comparison.md` was referenced as a possible outcome file; **it does not exist** |
+| E27 | The imatrix calibration corpus was described as "~11MB / 15k lines"; it is 11,086,366 bytes and **66,383 lines** |
+| E28 | `docs/proper_scale_results.md`'s headline table reports the superseded pre-fix run, while the README linked to it as "current authoritative results". The table now carries superseded values inline; the corrected figures are 25.0% and 70.0% |
+
+## What was verified correct
+
+So this file is not read as blanket scepticism:
+
+- **All seven evaluated runs' metrics** recomputed from their own saved `raw.jsonl` responses match
+  `metrics.json` exactly (`uar`, `pra_lenient`, `pra_strict`).
+- **All six committed `hash.txt` files match**, once `\r\n` is normalised to `\n`. The two hashing
+  algorithms in use are undocumented in the files and are now recorded in `docs/reproduction.md`.
+- **The contamination check passes**: `No contamination found.` for both SFT corpora.
+- **Every dataset split and count** is exact: 202/23, 2232/248, 2049/228, 2008/224, 688 probes,
+  3437 training-persona probes; `By kind` balances re-derived by template matching; 40 facts per
+  persona everywhere; the DPO rejected pool is exactly 5 distinct sentences; `distill/v1` is a
+  genuine strict subset of `sft/v1/train.jsonl`.
+- **PMB's design is sound**: 86 probes per persona × 8 personas × 8 categories = a fully populated
+  64/64 cell grid, 608 answerable / 80 unanswerable, and all 80 unanswerable correctly carry no
+  gold answer.
+- The v0 result rows (0.16%/13.75%, 15.10%/8.75%, 17.76%/33.75%), the 24.7pp C-vs-E gap, the
+  38.1%/30.5% distillation win rates, the 0.524/0.509 stylometric figures, and the Q2_K-breakage
+  narrative (which matches git history) all reconcile with committed artifacts.
+
+## What remains open
+
+- No full-PMB `pra_lenient`/UAR measurement exists for any DPO checkpoint.
+- No committed evidence for any quantization number.
+- `data/distill/v1/hash.txt` was never generated.
+- The `acceptable_alternatives` field is unpopulated in all 688 probes.
+- The DPO v1_scale prompt-context divergence from SFT v1 was never root-caused.
+- No human evaluation exists anywhere; no reviewer log or teacher transcript was retained, so
+  "not human-reviewed" and the `gpt-5.6-luna` teacher identity are self-reported and unverifiable
+  from the repository.
+- Single seed throughout. Every headline number in this project is one run.

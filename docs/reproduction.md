@@ -56,9 +56,24 @@ python -m onebee.training.sft --config configs/training/sft.yaml
 
 ## Regenerate figures
 
-```bash
-make figures
-```
+Not available. `scripts/make_figures.py` and the `make figures` target do not exist; the figures in
+`results/figures/` and `assets/` were produced ad hoc outside the repo. Either implement the script
+or drop this step — see `README.md`'s reproducibility list, which does not claim it.
+
+## Generating a `hash.txt`
+
+`hash.txt` files pin dataset integrity, but the two algorithms in use are different and
+undocumented in the files themselves:
+
+- **SFT / DPO datasets**: `sha256` over the concatenated contents of all `*.jsonl` in sorted order
+  (`generate_sft_data.py`, `generate_dpo_data.py`).
+- **Benchmark corpora**: sorted directory walk, hashing each file's forward-slash relative path
+  followed by its bytes, skipping `hash.txt` itself (`scripts/build_pmb.py`).
+
+Both assume **LF line endings**. This repo sets `core.autocrlf=true`, so a working tree on Windows
+is CRLF and a naive `sha256sum` will not match — normalise `\r\n` → `\n` before hashing.
+
+`data/distill/v1/` has no `hash.txt`.
 
 Every command above should be run from a clean clone, in order, to earn the reproducibility
 claim. If a step breaks, that is a bug in this file or the code — file it.

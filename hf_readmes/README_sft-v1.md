@@ -90,8 +90,8 @@ rule-based abstention detector.
 
 | System | pra_lenient | UAR |
 |---|---|---|
-| SFT v1 + memory (pre-DPO) | — | — (see full writeup; DPO adds the measured gain) |
-| + DPO (dpo-v1-scale) | — | 70.0% |
+| SFT v1 + memory | 15.30% | 70.0% |
+| + DPO (dpo-v1-scale) | — | — (evaluated pairwise only: 45.7% vs 21.0%, 24.7pp gap) |
 
 Full methodology, all numbers, and honest limitations:
 [`docs/proper_scale_results.md`](https://github.com/arrogance231/small-mind-companion/blob/main/docs/proper_scale_results.md).

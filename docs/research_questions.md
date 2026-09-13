@@ -195,7 +195,17 @@ so results can be traced back to the question they answer.
   populated with real field values — the schema and renderer exist, but no persona using the
   new fields has been built and evaluated against yet.
 
-- **Importance-matrix (imatrix) quantization.** The GGUF quants produced in
+- **Importance-matrix (imatrix) quantization — DONE (2026-08-15), quality effect still unproven.**
+  Superseding the original note below (which is kept only to show the prior state): a calibration
+  corpus was built from the project's own SFT/DPO data and `llama-imatrix` was run, and 6 levels
+  were requantized with `--imatrix` — see `docs/quantization_results.md`
+  §"Follow-up: imatrix-calibrated requantization". **What remains open** is the actual question
+  this note asked: comparing imatrix vs non-imatrix quants on real generation quality at matched
+  levels. That comparison was started but not finished, and
+  `results/imatrix_perplexity_comparison.md` does not exist. The imatrix quants currently rest on
+  a perplexity estimate and a qualitative check, not on the generation-quality evidence the
+  non-imatrix quants got.
+- ~~**Importance-matrix (imatrix) quantization.** The GGUF quants produced in
   `docs/quantization_results.md` used no imatrix calibration data — a real next step, not a
   minor detail: imatrix-guided quantization (computing per-tensor importance weights from a
   real calibration corpus, then biasing the quantizer to preserve precision on high-importance
@@ -204,7 +214,7 @@ so results can be traced back to the question they answer.
   distribution text — the SFT/DPO data already generated is a natural candidate) and
   `llama-imatrix` to compute it, then re-quantize with `--imatrix`. Compare against the
   existing non-imatrix quants on the same real generation-quality checks used in
-  `quantization_results.md`, not just file size.
+  `quantization_results.md`, not just file size.~~
 - **Abliteration, as a real research experiment (H22, added 2026-08-15).** Not a "ship this"
   feature — an explicit, pre-registered research question about the relationship between
   refusal capability and judgment quality, in the same spirit as this project's other

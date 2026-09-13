@@ -8,10 +8,13 @@ a live teacher model (gpt-5.6-luna).
 
 - Total examples: 225 (202 train / 23 val)
 - By kind: {"irrelevant_retrieval": 1, "memory_relevant": 223, "abstention": 1}
-- Not yet checked against PMB-v0-full for contamination — run
-  `scripts/check_contamination.py --train-glob "data/sft/v0/train.jsonl"
-  --eval-glob "data/benchmarks/pmb_v0_full/probes.jsonl"` before training if this matters to you.
-- Personas are disjoint from the PMB-v0 eval set by construction (separate generation run,
-  seed 9999, output to a separate directory) but persona NAMES may coincidentally overlap
-  (shared name pool) — this does not constitute data leakage since facts/conversations differ.
+- **Contamination-checked clean** against the PMB-v0 evaluation benchmark:
+  `python scripts/check_contamination.py --train-glob "data/sft/v0/train.jsonl"
+  --eval-glob "data/benchmarks/pmb_v0_full/probes.jsonl"` → `No contamination found.`
+- Personas are disjoint from the PMB-v0 eval set by construction: a separate generation run via
+  `scripts/build_pmb.py` written to a separate output directory. The exact `--seed` used for the
+  training-persona corpus is **not recorded** (the script default is 1337) — earlier revisions of
+  this file cited "seed 9999", which appears nowhere in the code.
+- Persona NAMES may coincidentally overlap with the eval set (shared name pool); IDs and facts
+  differ, so this is not data leakage.
 - Not human-reviewed.

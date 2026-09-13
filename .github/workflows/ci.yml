@@ -20,7 +20,9 @@ jobs:
         run: uv python install 3.11
 
       - name: Install dependencies
-        run: uv sync
+        # ruff, black, mypy and pytest live in the `dev` extra; a bare `uv sync` does not install
+        # them and every later step would fail. See docs/GUARDRAILS.md G8.
+        run: uv sync --extra dev
 
       - name: Ruff check
         run: uv run ruff check
@@ -33,3 +35,9 @@ jobs:
 
       - name: Pytest
         run: uv run pytest
+
+      # Study 001 is frozen: fail the build if a hash-pinned artifact has changed. A changed byte
+      # means either a correction (belongs in reports/ERRATA.md) or a new result (belongs to
+      # Study 002) — see docs/STUDIES.md.
+      - name: Study 001 freeze check
+        run: uv run python scripts/freeze_study_001.py --check

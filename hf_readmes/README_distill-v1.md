@@ -120,8 +120,12 @@ rule-based abstention detector.
 
 | System | pra_lenient | UAR |
 |---|---|---|
-| dpo-v1-scale (pre-distillation) | 15.30% | 70.0% |
+| SFT + memory (pre-distillation) | 15.30% | 70.0% |
 | **distill-v1 (this checkpoint)** | **18.59%** | **71.25%** |
+
+> This table spans two changes, not one: `distill-v1` was trained *from the DPO output*, so the
+> +3.3pp `pra_lenient` gap includes the DPO stage as well as distillation. The distillation-specific
+> number is the pairwise comparison below. See `reports/ERRATA.md`.
 
 Pairwise persona-consistency: 38.1% wins for this checkpoint vs. 30.5% for its
 pre-distillation predecessor (33 ties, 105 probes, dual-order judge).

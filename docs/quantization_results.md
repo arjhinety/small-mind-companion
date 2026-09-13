@@ -1,10 +1,16 @@
 # GGUF quantization results (2026-08-15)
 
-**Status:** real, working GGUF quantization of the current-best checkpoint
-(`arrochi112/onebee-gf-dpo-v1-scale`, the rebalanced proper-scale SFT+DPO checkpoint — see
-`docs/proper_scale_results.md`). Both text and vision (multimodal) capability verified to
-survive conversion and quantization. Four real bugs found and fixed along the way —
-`docs/model_quirks.md` #18-21.
+**Status:** real, working GGUF quantization of `arrochi112/onebee-gf-dpo-v1-scale` — the
+rebalanced proper-scale SFT+DPO checkpoint at the time of this pass; `distill-v1` superseded it as
+current-best later (see §"Follow-up" and `docs/proper_scale_results.md`). Both text and vision
+(multimodal) capability verified to survive conversion and quantization. Four real bugs found and
+fixed along the way — `docs/model_quirks.md` #18-21.
+
+> **Evidence note.** No `llama-bench`, `llama-imatrix`, `llama-quantize` or GGUF file is committed
+> to this repository (`*.gguf` is gitignored, and `results/` contains no quantization artifacts).
+> Every size, throughput and perplexity figure below is restated from the original run logs on the
+> GPU box, not re-derivable from a tracked artifact in a fresh clone. Treat them as reported
+> measurements, and re-run `llama-bench` if you need to rely on them.
 
 ## What was done
 
@@ -15,17 +21,18 @@ survive conversion and quantization. Four real bugs found and fixed along the wa
 2. Downloaded `arrochi112/onebee-gf-dpo-v1-scale` from HF Hub (the checkpoint uploaded before
    the previous GPU box was deleted).
 3. Converted to GGUF F16 in two passes (`convert_hf_to_gguf.py`, see model_quirks #18):
-   - Main language model: `onebee-dpo-v1-scale-f16.gguf` (9.27GB)
+   - Main language model: `onebee-dpo-v1-scale-f16.gguf` (9.27GB / 8.64 GiB — the benchmark table
+     below reports llama-bench's own 8.62 GiB; the two differ by filesystem size reporting)
    - Vision projector: `mmproj-onebee-dpo-v1-scale-f16.gguf` (986MB)
    - Required patching a copy of `tokenizer_config.json` first (model_quirks #19) — llama.cpp's
      own pinned `transformers==4.57.6` and our training environment's `transformers==5.15.0`
      disagree on the `extra_special_tokens` field format.
-4. Quantized the main model to the full standard spread with `llama-quantize` (12 levels: F16
-   through Q2_K — the common K-quant + legacy set the GGUF community typically ships, e.g.
-   Q8_0/Q6_K/Q5_K_M/Q5_K_S/Q5_0/Q4_K_M/Q4_K_S/Q4_0/Q3_K_L/Q3_K_M/Q3_K_S/Q2_K — deliberately
-   excluding the exotic IQ*/TQ*/MXFP4_MOE types, which need imatrix calibration data to be
-   worthwhile and would quantize poorly without it; imatrix-calibrated requantization is a
-   separate, not-yet-done next step, see `docs/research_questions.md`).
+4. Quantized the main model to the full standard spread with `llama-quantize` (F16 reference plus
+   12 quant levels down to Q2_K — the common K-quant + legacy set the GGUF community typically
+   ships, e.g. Q8_0/Q6_K/Q5_K_M/Q5_K_S/Q5_0/Q4_K_M/Q4_K_S/Q4_0/Q3_K_L/Q3_K_M/Q3_K_S/Q2_K —
+   deliberately excluding the exotic IQ*/TQ*/MXFP4_MOE types, which need imatrix calibration data
+   to be worthwhile and would quantize poorly without it. The imatrix-calibrated requantization
+   that note referred to was subsequently done, see §"Follow-up" below).
    - The mmproj (vision projector) was NOT separately quantized — used as F16 with every
      text-model quant level, which is llama.cpp's standard pattern (the projector is small
      relative to the LLM, and is more precision-sensitive).
@@ -122,7 +129,7 @@ cleanly on the first successful attempt once the tooling issues were resolved.
 matrix was computed from **this project's own data** — real companion conversations and
 persona-consistent preference responses (`data/imatrix_calibration.txt`, built by
 `build_imatrix_calibration.py` from `data/sft/v1/train.jsonl` + `data/dpo/v1_scale/train.jsonl`
-chosen responses, ~11MB / 15k lines) — so the quantizer preserves precision on what this model
+chosen responses, ~11MB / 66,383 lines) — so the quantizer preserves precision on what this model
 is actually used for, not generic language modeling. Rejected DPO responses (the
 disclaimer-breaking behavior being trained away) were deliberately excluded from calibration.
 
@@ -147,10 +154,11 @@ budget with a real risk of the instance disappearing mid-work, so verification d
 deliberately traded for getting real artifacts saved): a full quantitative perplexity
 comparison between imatrix and non-imatrix versions at matching quant levels was started
 (`llama-perplexity` on a held-out slice of `data/sft/v1/val.jsonl`, explicitly NOT the
-calibration corpus) but not confirmed complete before this doc was written — check
-`results/imatrix_perplexity_comparison.md` if it exists for the outcome, or treat the imatrix
-quants as "real, uploaded, sanity-checked for coherence, not yet numerically proven better"
-until that follow-up lands. This is reported honestly rather than claiming a clean win that
+calibration corpus) but not confirmed complete before this doc was written. **Confirmed later: the
+outcome file was never produced** — `results/imatrix_perplexity_comparison.md` does not exist in
+this repository. Treat the imatrix quants as "real, uploaded, sanity-checked for coherence, not yet
+numerically proven better" until that follow-up lands. This is reported honestly rather than
+claiming a clean win that
 wasn't actually measured — consistent with this project's discipline throughout.
 
 ## Follow-up: distill-v1 (current-best checkpoint) GGUF quantization (2026-08-17)
