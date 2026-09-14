@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "e30f8704ee491e1e093ef5a0315855a44f7d26fc",
+  "git_commit": "ae78268dfc5ff4c10b8c0cf31e21accd6b391412",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -366,12 +366,12 @@
       "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
     },
     "docs/STUDIES.md": {
-      "bytes": 6466,
-      "sha256": "b9c749fec73520ae88a666164adde4d522e48a6f9b5a0956d5ce03560b21771e"
+      "bytes": 9279,
+      "sha256": "f78c2e42b89f906df925d8545e377463b0e582ea33b2087964e7e5503781738c"
     },
     "reports/ERRATA.md": {
-      "bytes": 25996,
-      "sha256": "4924a9055fc60a453aa65e33968460ae2af7b71f29a033af7b15484c95c89138"
+      "bytes": 26037,
+      "sha256": "ec434dc4e12256eb0848b4737b6bbc7eaf9551995342ace44c8a7796d1d8c808"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
@@ -382,8 +382,8 @@
       "sha256": "01a5e77292c1892ab98f1fd1ea6ea0c66609d05cfecc44cd2af80f27fe1e0bb1"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 11217,
-      "sha256": "5d1184eea05ee8a10fda432de2c1452831b0298713df2e7e0593aef667d3aa3f"
+      "bytes": 11471,
+      "sha256": "7ed111aa2e0f272900fec17411d0f957f6a01083efb15c69ded6767418f26320"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

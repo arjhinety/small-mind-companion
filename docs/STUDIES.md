@@ -87,27 +87,63 @@ found.
 Everything after the Study 001 freeze. Each experiment is pre-registered before it runs, and
 reported against the frozen Study 001 checkpoints rather than in place of them.
 
-Candidates, in rough order of how much of Study 001 they unblock:
+Study 002 also inherits the audit items Study 001 could not close. `reports/ERRATA.md` records what
+was corrected; these are the ones that need new work rather than a correction, and each names the
+finding it came from.
+
+### Needs a GPU
 
 1. **The crossover experiment (H16/H17).** `run_crossover_baseline.py` is written and unrun: 2B +
    scaffold vs the 8B `gemma-4-E4B-it` with no memory. This is Study 001's own thesis question and
-   the one experiment that answers it. Needs a GPU.
-2. **Multi-seed replication.** Every Study 001 number is one seed. Finding 1 in particular (the
-   −5pp UAR drop from adding memory) is the kind of claim that needs ≥3 seeds and a paired
-   bootstrap before it should be relied on.
-3. **Populate `acceptable_alternatives`, or drop the field.** This is what makes `pra_strict`
-   meaningful and removes the need to explain it away.
-4. **Score the quantized models on PMB.** The quantization work was `llama-bench` plus a
-   coherence check; no quality benchmark was ever run against a quantized checkpoint.
-5. **Fix the DPO lineage.** No full-PMB measurement of the DPO checkpoint exists, and the DPO
-   preference pairs were generated *before* SFT v1's final regeneration (0/2277 system texts
-   match). Regenerate the pairs and measure the stage properly.
-6. **H22 abliteration** (24 probes built, unrun) and **H24 emotional range** (27 probes across 9
+   the one experiment that answers it.
+2. **Multi-seed replication.** Every Study 001 number is a single seed and a single run. The
+   retrieval finding in particular — recall up 0.16% → 15.13%, abstention *down* 13.75% → 8.75% —
+   is the kind of claim that needs ≥3 seeds and a paired bootstrap before it should be relied on.
+   The repo already has `bootstrap_ci`, `paired_bootstrap_diff`, `holm_bonferroni` and
+   `minimum_detectable_effect`; nothing new is needed but compute.
+3. **A full-PMB measurement of the DPO stage** (E1). No `pra_lenient` or UAR figure exists for any
+   DPO checkpoint; `dpo-v1-scale` appears only in pairwise comparisons.
+4. **Fix the DPO lineage before measuring it** (E13). The preference pairs were generated *before*
+   SFT v1's dedup fix and ratio rebalance: 2263/2277 user turns match the current `sft/v1/train.jsonl`
+   but **0/2277 system texts** do, so the retrieval context differs from the corpus the SFT stage
+   trained on. Regenerate the pairs, then measure the stage. The cause of the divergence was never
+   pinned down and should be.
+5. **H22 abliteration** (24 probes built, unrun) and **H24 emotional range** (27 probes across 9
    registers, unrun).
-7. **Image-derived memory tiers** (RQ13, second half) — the base model is a VLM but nothing in the
+6. **Image-derived memory tiers** (RQ13, second half) — the base model is a VLM, but nothing in the
    memory tier comes from an image.
-8. **Pin `base_model_revision` in the DPO and distillation configs** before any re-run is described
-   as reproducible.
+7. **Score the quantized models on PMB** (E6). The quantization work was `llama-bench` plus a
+   coherence check; no quality benchmark was ever run against a quantized checkpoint, so "Q3_K_S is
+   the smallest verified-coherent level" rests on manual generation inspection.
+8. **Resolve the two GGUF size sets** (E5). `README.md` and the cards' files tables say 8.64 / 4.61
+   / 3.18 GiB; `hf_readmes/gguf_README.md`'s own evaluation table says 8.62 / 4.59 / 3.17 GiB. No
+   artifact backs either. Re-run `llama-bench` against the GGUF files, commit the output, and
+   correct whichever set is wrong.
 
-**Not Study 002:** correcting a Study 001 claim. Those go in `reports/ERRATA.md` against the
-frozen artifact. If a *result* changes, it is a Study 002 result and is reported as one.
+### No GPU needed
+
+9. **Commit the quantization evidence** (E6). No `llama-bench`, `llama-imatrix` or `llama-quantize`
+   output is committed (`*.gguf` is gitignored and `results/` holds no quantization directory), so
+   every size, throughput and perplexity figure is restated from run logs a reader cannot check.
+   Even without re-running the benchmarks, a `results/quantization/` directory holding the original
+   stdout would close most of this.
+10. **Populate `acceptable_alternatives`, or drop the field** (E22). It is present on all 688 probes
+    and empty in 688/688, which is why `pra_strict` is ~0 throughout and `pra_lenient` is the
+    reported metric. Populating it makes `pra_strict` meaningful; dropping it removes the need to
+    explain it away.
+11. **Widen the k-sweep.** It covers 120 of 688 probes (15 per category, seed 1337) and is reported
+    as an inverted U peaking at k=8. At n=120 the curve's shoulders are not distinguishable from
+    noise; a full-688 run costs inference, not training.
+12. **Measure `mur`.** It is defined and implemented in the harness and is **0.0 in every saved
+    run** — because it is computed but not called, not because the models score zero. Either wire it
+    up or remove it from the reported metric set.
+13. **Pin `base_model_revision` in the DPO and distillation configs** (E4). `distill_v1.yaml`
+    (base and teacher), `dpo.yaml`, `dpo_v1_more_epochs.yaml` and `dpo_v1_scale.yaml` all reference
+    `"main"`. Until they pin a SHA, no run launched from them can be called reproducible.
+14. **A small blinded human evaluation.** No human review exists anywhere: every datasheet says "not
+    human-reviewed", and no reviewer log or teacher transcript was retained, so the
+    `gpt-5.6-luna` teacher identity is self-reported and unverifiable from the repository. A
+    few dozen probes scored by a human would bound how much the judge-based metric can be trusted.
+
+**Not Study 002:** correcting a Study 001 claim. Those go in `reports/ERRATA.md` against the frozen
+artifact. If a *result* changes, it is a Study 002 result and is reported as one.

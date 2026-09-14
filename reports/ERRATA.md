@@ -220,7 +220,7 @@ unavailable rather than presenting a command that fails.
 | # | Correction |
 |---|---|
 | E17 | "12 levels (F16 → Q2_K)" was ambiguous — it is the F16 reference **plus** 12 quant levels (13 text files; 14 with the vision projector) |
-| E18 | One GGUF card called **Q3_K_M** the "recommended smallest safe level" while its own table and `docs/quantization_results.md` name **Q3_K_S** |
+| E18 | One GGUF card called **Q3_K_M** the "recommended smallest safe level" while its own table and `docs/quantization_results.md` name **Q3_K_S**. **Corrected and re-pushed** (`368f83a`) |
 | E19 | `sft_personas_v0`, `sft_personas_v1` and `pmb_v0` datasheets were all titled "PMB v0 — Personalised Memory Benchmark". Only `pmb_v0_full` is the benchmark; the others are training-persona corpora and a fixture smoke test. Root cause was a hardcoded title in `scripts/build_pmb.py` |
 | E20 | `pmb_v0_full/DATASHEET.md` said "This run (8 personas) may not be the full v0 benchmark (target: 8 personas)" — self-contradictory, and stale relative to the generator that was fixed 65 s earlier |
 | E21 | `data/distill/v1/` has **no `hash.txt`**, contradicting "Every dataset directory has a hash.txt" |

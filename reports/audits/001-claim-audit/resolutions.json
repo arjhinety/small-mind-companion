@@ -103,9 +103,9 @@
   },
   {
     "id": 18,
-    "status": "OPEN",
-    "where": "hf_readmes/README_distill-v1-gguf.md",
-    "note": "Not corrected in this pass. Q3_K_S and Q3_K_M must be reconciled to the doc's stated smallest-verified-coherent level (Q3_K_S) before the next re-push."
+    "status": "RESOLVED",
+    "where": "hf_readmes/README_distill-v1-gguf.md, re-pushed to the Hub (commit 368f83a)",
+    "note": "Q3_K_S is now marked 'smallest verified-coherent level' and Q3_K_M carries a plain 'Verified coherent, in-character'. Corrected in the source and re-pushed to huggingface.co/arjhinety/onebee-gf-distill-v1-gguf; verified by fetching the card back."
   },
   {
     "id": 19,
@@ -133,9 +133,9 @@
   },
   {
     "id": 23,
-    "status": "PARTIAL",
-    "where": "Makefile (install-dev target added)",
-    "note": "A documented `install-dev` target now exists. .github/workflows/ci.yml still uses the bare sync and was not modified."
+    "status": "RESOLVED",
+    "where": ".github/workflows/ci.yml, Makefile",
+    "note": "CI now runs `uv sync --extra dev`, and the Makefile has an install-dev target. Confirmed by CI run on ae78268, whose Ruff/Black/Mypy/Pytest steps all succeed -- they previously failed at install or would have failed on missing tools."
   },
   {
     "id": 24,
