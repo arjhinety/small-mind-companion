@@ -1,0 +1,207 @@
+schema_version: 1
+# What counts as a benchmark in this repository, and what does not.
+#
+# The single most expensive mistake in Study 001's audit was a count borrowed from the wrong
+# corpus: `data/benchmarks/sft_personas_v1/` holds 40 *training* personas, and an earlier README
+# reported PMB as having "688 probes across 40 personas" (reports/ERRATA.md E3). The directory
+# name `benchmarks/` caused it -- `scripts/build_pmb.py` writes every generated corpus to one
+# output root. `is_benchmark: false` below is the machine-readable form of that correction, and
+# `scripts/validate.py` fails if a corpus under data/benchmarks/ is reported with a metric.
+#
+# `results_available` records whether a metric has actually been computed against the corpus.
+# A benchmark with `results_available: false` is not a result, however many probes it has.
+status: PMB_SCORED_TRAINING_CORPORA_NOT_BENCHMARKS
+benchmarks:
+  - id: pmb_v0_full
+    name: PMB v0 -- Personalized Memory Benchmark
+    is_benchmark: true
+    path: data/benchmarks/pmb_v0_full
+    probes: 688
+    probe_count_source: data/benchmarks/pmb_v0_full/probes.jsonl
+    personas: 8
+    persona_ids: [p000, p001, p002, p003, p004, p005, p006, p007]
+    categories: 8
+    category_names:
+      - factual
+      - episodic
+      - temporal
+      - preference
+      - continuity
+      - outdated_fact
+      - distractor
+      - unanswerable
+    probes_per_persona: 86
+    populated_cells: 64
+    total_cells: 64
+    answerable: 608
+    unanswerable: 80
+    acceptable_alternatives_populated: 0
+    probes_per_category:
+      factual: 98
+      continuity: 96
+      distractor: 96
+      outdated_fact: 96
+      preference: 91
+      unanswerable: 80
+      episodic: 69
+      temporal: 62
+    probe_fields:
+      - probe_id
+      - persona_id
+      - question
+      - gold_answer
+      - gold_supporting_memory_ids
+      - category
+      - answerable
+      - acceptable_alternatives
+    metrics:
+      - pra_lenient
+      - pra_strict
+      - uar
+      - mur
+    metric_definitions:
+      pra_lenient: Judge-scored recall on the 608 answerable probes (threshold >= 3/5).
+      pra_strict: Exact-match recall on the answerable probes; ~0 by construction here.
+      uar: Unanswerable-abstention rate over the 80 unanswerable probes.
+      mur: Misattribution rate; 0.0 in every evaluated run.
+    known_gaps:
+      - >-
+        acceptable_alternatives is present on all 688 probes and populated on 0 of them, which is
+        why pra_strict is ~0 throughout and pra_lenient is the reported metric
+        (reports/ERRATA.md E22, docs/GUARDRAILS.md G12).
+      - Not human-reviewed (data/benchmarks/pmb_v0_full/DATASHEET.md:30).
+      - No score for any DPO checkpoint, quantized checkpoint, or image-input path.
+    freeze_pinned: true
+    scored_systems:
+      - results/v0.1/A_raw/metrics.json
+      - results/v0.1/B_sft/metrics.json
+      - results/v0.1/D_memory/metrics.json
+      - results/v0.1/E_sft_memory/metrics.json
+      - results/v1_scale/B_sft/metrics.json
+      - results/v1_scale/E_sft_memory/metrics.json
+      - results/v1_scale/E_distill/metrics.json
+    notes: >-
+      The only corpus any reported pra_lenient/uar number is measured on. Freeze manifest
+      reports/data/study-001-freeze.json is the authoritative integrity pin; hash.txt is not a
+      valid pin for the benchmark corpora before the 2026-09-13 regeneration
+      (reports/ERRATA.md E29).
+
+  - id: pmb_v0
+    name: PMB v0 fixture-scale smoke test
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      Deterministic fixture teacher, 2 personas and 36 probes -- enough to prove the pipeline
+      wires up, nowhere near enough to measure anything.
+    path: data/benchmarks/pmb_v0
+    probes: 36
+    personas: 2
+    categories: 8
+    results_available: false
+    scored_systems: []
+
+  - id: sft_personas_v1
+    name: SFT v1 training-persona probe set
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      40 training personas generated to build data/sft/v1. Evaluating a trained checkpoint
+      against them would measure performance on personas the model was trained on.
+    path: data/benchmarks/sft_personas_v1
+    probes: 3437
+    personas: 40
+    facts_per_persona: 40
+    results_available: false
+    scored_systems: []
+    used_by:
+      - data/sft/v1
+      - data/dpo/v1_scale
+    # Measured, not assumed. "Disjoint by construction" is true of the generation runs and of the
+    # persona identities, but the two corpora draw their fact values and probe question templates
+    # from one shared pool, so the text-level overlap is large. These numbers are recomputed by
+    # scripts/validate.py; the 13-gram check (also run by the validator) finds no shared 13-gram,
+    # which is the leakage test that matters. See docs/AUDIT.md.
+    overlap_with_pmb:
+      fact_triples_shared: 138
+      fact_triples_pmb_total: 266
+      fact_triples_sft_total: 234
+      probe_question_rows_shared: 3041
+      shared_13grams: 0
+
+  - id: sft_personas_v0
+    name: SFT v0 training-persona probe set
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      4 training personas generated to build data/sft/v0; same reason as sft_personas_v1.
+    path: data/benchmarks/sft_personas_v0
+    probes: 344
+    personas: 4
+    facts_per_persona: 40
+    results_available: false
+    scored_systems: []
+    used_by:
+      - data/sft/v0
+      - data/dpo/v0
+
+  - id: h22_judgment
+    name: H22 abliteration judgment-quality probes
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      A study-specific probe set for one unrun experiment (H22). It is an instrument, not a
+      capability benchmark, and it has no score.
+    path: data/benchmarks/h22_judgment
+    probes: 24
+    categories: 6
+    results_available: false
+    scored_systems: []
+
+  - id: emotional_range
+    name: H24 emotional-range probes
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      A study-specific probe set for one unrun experiment (H24). 27 probes across 9 registers,
+      no score.
+    path: data/benchmarks/emotional_range
+    probes: 27
+    registers: 9
+    results_available: false
+    scored_systems: []
+
+  - id: model_bakeoff_v0
+    name: Day-1 model bake-off (candidate model selection)
+    is_benchmark: false
+    not_a_benchmark_because: >-
+      An internal 5-dimension judge rubric used once to pick the base model from four
+      candidates. It has scores (results/v0.0/bakeoff_scores.json) but is not a public
+      capability benchmark and is not reported as one.
+    path: results/v0.0/bakeoff_scores.json
+    results_available: true
+    scored_systems:
+      - results/v0.0/bakeoff_scores.json
+    notes: >-
+      Judge-scored, single pass, not human-reviewed. Recorded here so the "is this a benchmark"
+      question has one answer per corpus.
+
+# Training corpora, listed here so that "is this a benchmark?" has one answer per corpus and
+# `registry/datasets.yaml`'s `kind:` field is not the only place the answer lives.
+not_benchmarks:
+  - id: sft-v0
+    registry: registry/datasets.yaml
+    reason: SFT training examples. Model-visible during training; cannot measure anything.
+  - id: sft-v1
+    registry: registry/datasets.yaml
+    reason: SFT training examples. Model-visible during training; cannot measure anything.
+  - id: dpo-v0
+    registry: registry/datasets.yaml
+    reason: DPO preference pairs; the chosen responses are the training target.
+  - id: dpo-v1-scale
+    registry: registry/datasets.yaml
+    reason: DPO preference pairs; the chosen responses are the training target.
+  - id: distill-v1
+    registry: registry/datasets.yaml
+    reason: On-policy distillation prompts carved from the SFT v1 train split.
+    prohibit_training: false
+
+unreferenced_non_benchmark_note: >-
+  Any corpus under data/benchmarks/ that is not listed above, or that appears under
+  `benchmarks:` with is_benchmark: false, must not appear as the source of a headline metric.
+  scripts/validate.py enforces this by resolving every eval-source claim to a corpus with
+  is_benchmark: true.

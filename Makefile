@@ -1,4 +1,4 @@
-.PHONY: install install-gpu install-dev lint format typecheck test test-unit baseline eval freeze-check
+.PHONY: install install-gpu install-dev lint format typecheck test test-unit baseline eval freeze-check validate result-registry
 
 install:
 	uv sync
@@ -13,6 +13,17 @@ install-dev:
 # Study 001 is frozen. Fails if any hash-pinned artifact changed — see docs/STUDIES.md.
 freeze-check:
 	uv run python scripts/freeze_study_001.py --check
+
+# The whole audit: the freeze, every dataset hash, every metric recomputed from its own raw.jsonl,
+# the claims matrix (registry/claims.jsonl), registry counts against the data files,
+# cross-document consistency, and the 13-gram contamination check. CPU-only and offline. This is
+# the same command the CI workflow runs as its last step — see docs/AUDIT.md.
+validate:
+	uv run python scripts/validate.py
+
+# Regenerate the derived index of evaluated runs. `make validate` fails if it is stale.
+result-registry:
+	uv run python scripts/build_result_registry.py
 
 lint:
 	uv run ruff check

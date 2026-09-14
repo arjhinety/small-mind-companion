@@ -1,0 +1,140 @@
+schema_version: 1
+# Machine-readable study registry. Every count and hash below is verified by
+# `uv run python scripts/validate.py` against the artifact named in `evidence`. A value that
+# cannot be verified from a committed artifact is not a value here -- it is prose, or it is
+# marked `reported` with the reason.
+status: STUDY_001_FROZEN_STUDY_002_IN_PROGRESS
+studies:
+  - id: "001"
+    title: Post-training a small multimodal model for long-horizon personalised memory
+    status: FROZEN
+    frozen_on: "2026-09-13"
+    evidence_tag: study-001
+    site: https://small-mind.arjhinety.com
+    freeze_manifest: reports/data/study-001-freeze.json
+    freeze_manifest_field: file_count
+    frozen_artifact_count: 76
+    freeze_group_count: 7
+    write_up: docs/STUDIES.md
+    audit_doc: docs/AUDIT.md
+    errata: reports/ERRATA.md
+    guardrails: docs/GUARDRAILS.md
+    claims_matrix: registry/claims.jsonl
+    base_model:
+      id: google/gemma-4-E2B-it
+      revision: 3e22461f65e89153144f8adb70e3b8c2cc9845a7
+      revision_pinned_in:
+        - configs/training/sft.yaml
+        - configs/training/sft_v1.yaml
+      reported_parameters: 4.63B
+      reported_parameters_source: llama-bench run log (not committed; reports/ERRATA.md E6)
+    benchmark: pmb_v0_full
+    results:
+      # One row per headline eval-ladder number. `artifact` is the machine-readable source;
+      # `quoted_as` is what the write-up says, which `scripts/validate.py` rounds to the same
+      # precision and compares (see registry/claims.jsonl for the per-claim checks).
+      - system: A_raw
+        label: raw model, no memory
+        artifact: results/v0.1/A_raw/metrics.json
+        pra_lenient: 0.001644736842105263
+        uar: 0.1375
+        pra_strict: 0.0
+      - system: B_sft
+        label: LoRA SFT v0, no memory
+        artifact: results/v0.1/B_sft/metrics.json
+        pra_lenient: 0.001644736842105263
+        uar: 0.1625
+        pra_strict: 0.0
+      - system: D_memory
+        label: raw + hybrid retrieval memory (k=8)
+        artifact: results/v0.1/D_memory/metrics.json
+        pra_lenient: 0.1513157894736842
+        uar: 0.0875
+        pra_strict: 0.0
+        quoted_pra_lenient_pct: 15.10
+        acknowledged_drift: >-
+          README.md and the v0 result docs quote pra_lenient as 15.10%. The frozen artifact
+          says 15.13% (92/608). Recorded as acknowledged drift, not silently corrected: the
+          quoting documents are Study 001 frozen artifacts. See docs/AUDIT.md.
+      - system: E_sft_memory
+        label: LoRA SFT v0 + memory
+        artifact: results/v0.1/E_sft_memory/metrics.json
+        pra_lenient: 0.17763157894736842
+        uar: 0.3375
+        pra_strict: 0.004934210526315789
+      - system: E_sft_memory_v1
+        label: proper-scale LoRA SFT v1 + memory
+        artifact: results/v1_scale/E_sft_memory/metrics.json
+        pra_lenient: 0.15296052631578946
+        uar: 0.7
+        pra_strict: 0.0
+      - system: E_distill_v1
+        label: SFT + DPO + on-policy distillation + memory
+        artifact: results/v1_scale/E_distill/metrics.json
+        pra_lenient: 0.18585526315789475
+        uar: 0.7125
+        pra_strict: 0.0
+    pairwise:
+      # No full-PMB pra_lenient/uar measurement exists for any DPO checkpoint. These are the
+      # only measurements that exist for DPO-lineage systems.
+      - id: C_vs_E_pairwise
+        artifact: results/v1_scale/C_vs_E_pairwise/summary.json
+        note: C (DPO v1_scale + memory) vs E (SFT v1 + memory), 105 probes
+      - id: C_vs_F_distill_pairwise
+        artifact: results/v1_scale/C_vs_F_distill_pairwise/summary.json
+        note: >-
+          C (DPO v1_scale + memory) vs F (distill v1 + memory). The isolating measurement for
+          H23: the DPO stage is held constant on both sides.
+    not_claimed:
+      - No full-PMB pra_lenient or uar measurement exists for any DPO checkpoint.
+      - No quantization figure in this repository is backed by a committed artifact.
+      - The acceptable_alternatives field is unpopulated in 688/688 PMB probes.
+      - Every result is a single seed and a single run. Nothing is replicated.
+      - No human evaluation exists; the teacher identity is self-reported and unverifiable.
+  - id: "002"
+    title: Post-freeze replication and the crossover experiment
+    status: IN_PROGRESS
+    started_after: "2026-09-13"
+    results: []
+    result_count: 0
+    pre_registration_required: true
+    write_up: docs/STUDIES.md
+    notes: >-
+      Everything after the Study 001 freeze. Every experiment is pre-registered before it runs
+      and is reported against the frozen Study 001 checkpoints rather than in place of them.
+      Correcting a Study 001 claim is an errata entry, not a Study 002 result.
+    candidates:
+      - id: H16-H17
+        title: crossover experiment (2B + scaffold vs 8B, no memory)
+        artifact: run_crossover_baseline.py
+        status: WRITTEN_NOT_RUN
+        requires_gpu: true
+      - id: multi-seed-replication
+        title: "multi-seed replication: at least 3 seeds per Study 001 arm with a paired bootstrap"
+        status: NOT_STARTED
+      - id: acceptable-alternatives
+        title: populate acceptable_alternatives so pra_strict is meaningful, or drop the field
+        status: NOT_STARTED
+      - id: quantized-pmb-scoring
+        title: score quantized checkpoints on PMB
+        status: NOT_STARTED
+      - id: dpo-lineage
+        title: regenerate the DPO pairs from the final SFT v1 and measure the stage properly
+        status: NOT_STARTED
+      - id: H22
+        title: abliteration judgment-quality eval
+        probes: 24
+        artifact: data/benchmarks/h22_judgment/probes.jsonl
+        status: BUILT_NOT_RUN
+      - id: H24
+        title: emotional-range register probe set
+        probes: 27
+        registers: 9
+        artifact: data/benchmarks/emotional_range/probes.jsonl
+        status: BUILT_NOT_RUN
+      - id: image-derived-memory
+        title: image-derived memory tiers (RQ13, second half)
+        status: NOT_STARTED
+      - id: pin-dpo-distill-revisions
+        title: pin base_model_revision in the DPO and distillation configs
+        status: NOT_STARTED

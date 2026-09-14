@@ -339,5 +339,16 @@
     "category": "WRONG_ROUNDING",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 32,
+    "severity": "MED",
+    "area": "P",
+    "location": "data/benchmarks/h22_judgment, data/benchmarks/emotional_range",
+    "claim": "Every dataset directory carries a hash.txt, and the integrity-pinning story covers the committed corpora.",
+    "actual": "Two committed probe sets -- data/benchmarks/h22_judgment (H22 abliteration judgment quality, 24 probes) and data/benchmarks/emotional_range (H24, 10 registers) -- appeared in neither scripts/recompute_hashes.py nor scripts/validate.py, so neither had a hash.txt and neither was covered by the freeze or any integrity check. Found by validate.py hygiene check unpinned-probe-sets, not by reading. The corpus count is 11, not the nine every document claimed.",
+    "category": "UNPINNED_CORPUS",
+    "pinned": "",
+    "public": "yes"
   }
 ]

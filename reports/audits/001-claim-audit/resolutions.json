@@ -171,7 +171,7 @@
     "id": 29,
     "status": "RESOLVED",
     "where": "scripts/recompute_hashes.py (new), tests/unit/test_dataset_hashes.py (new), docs/reproduction.md, README.md, docs/GUARDRAILS.md G9/G9b, reports/ERRATA.md E29",
-    "note": "All nine dataset hashes were recomputed on 2026-09-13 with the algorithm now documented in docs/reproduction.md, and all nine verify. The four benchmark corpora and the four SFT/DPO corpora use their respective generators' algorithms; data/distill/v1/ gained the hash.txt it never had. A regression test (test_dataset_hashes.py) now recomputes every hash on each CI run, so this cannot rot silently again -- which is the failure mode that let it go unnoticed. The original cause of the four mismatched values is still undetermined and is recorded as such in ERRATA E29."
+    "note": "All 11 dataset hashes were recomputed on 2026-09-13 with the algorithm now documented in docs/reproduction.md, and all 11 verify. The four benchmark corpora and the four SFT/DPO corpora use their respective generators' algorithms; data/distill/v1/ gained the hash.txt it never had, and the two H22/H24 probe sets were added to the corpus list and hashed for the first time. A regression test (test_dataset_hashes.py) now recomputes every hash on each CI run, so this cannot rot silently again -- which is the failure mode that let it go unnoticed. The original cause of the four mismatched values is still undetermined and is recorded as such in ERRATA E29."
   },
   {
     "id": 30,
@@ -184,5 +184,11 @@
     "status": "RESOLVED",
     "where": "README.md:37, docs/STUDIES.md:37,50, docs/proper_scale_results.md:41,105, docs/day4_sft_results.md:24,33, data/distill/v1/DATASHEET.md",
     "note": "All seven occurrences corrected to 15.13% and the two derived deltas to +15.0pp / +2.6pp. Data/distill/v1/DATASHEET.md separately corrected: it described the 224 val prompts as matching sft/v1/val.jsonl when all 2008 train and all 224 val prompts are drawn from sft/v1/train.jsonl (0 appear in val). Both were found by scripts/validate.py, not by reading."
+  },
+  {
+    "id": 32,
+    "status": "RESOLVED",
+    "where": "scripts/recompute_hashes.py, scripts/validate.py, README.md, docs/reproduction.md, reports/ERRATA.md, registry/claims.jsonl",
+    "note": "Both corpora added to the hash-recompute list and to validate.py mirrored list (whose sync assertion is what forced both edits at once), and hashed for the first time -- 11/11 corpora hash-clean. Every nine-corpora reference updated to 11, and the two claims-matrix entries renamed readme-eleven-corpora-* with exprs == 11. Logged here rather than silently fixed."
   }
 ]

@@ -142,6 +142,17 @@ REFREEZE_LOG: list[dict[str, str]] = [
     },
     {
         "on": "2026-09-13",
+        "artifact": "README.md, docs/reproduction.md, reports/ERRATA.md",
+        "reason": "The corpus count went from nine to 11: scripts/validate.py's hygiene check "
+        "found two committed probe sets (data/benchmarks/h22_judgment and "
+        "data/benchmarks/emotional_range) that were absent from scripts/recompute_hashes.py and "
+        "therefore had no hash.txt. Both were added, hashed for the first time, and added to "
+        "validate.py's mirrored list -- whose cross-check assertion is what failed until both "
+        "files were updated, which is the behaviour that check exists for. Every 'nine corpora' "
+        "reference updated to 11. No result, metric, dataset or limitation changed.",
+    },
+    {
+        "on": "2026-09-13",
         "artifact": "hf_readmes/ (8 files: README_distill-v1-gguf.md, README_distill-v1.md, "
         "checkpoint_README_template.py, generate_cards.py, gguf_README.md, README_dpo-v1-scale.md, "
         "README_sft-v1.md, README_sft-v0.md, README_dpo-v0.md, README_dpo-v1-4epoch.md)",
@@ -153,6 +164,17 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "the 'F16 reference plus 12 quant levels' count unambiguous. These are corrections to "
         "claims about the frozen results, made against the same frozen artifacts -- no result, "
         "metric, dataset or limitation changed.",
+    },
+    {
+        "on": "2026-09-13",
+        "artifact": "README.md",
+        "reason": "Restored 'make validate' to the Studies code block (it was removed by the "
+        "'document only commands that exist' pass because the target did not exist yet), corrected "
+        "the test count from 473 to 504, and linked docs/AUDIT.md. The target now exists and runs "
+        "the same command CI runs, and 504 is the number of def test_ functions in tests/** after "
+        "tests/unit/test_validator.py (22) was added -- the 473 was already stale by 8 tests "
+        "before that, which the claims matrix records. No result, dataset, metric or limitation "
+        "changed; the README's own numbers and pointers are the only thing that moved.",
     },
 ]
 

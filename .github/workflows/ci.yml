@@ -41,3 +41,10 @@ jobs:
       # Study 002) — see docs/STUDIES.md.
       - name: Study 001 freeze check
         run: uv run python scripts/freeze_study_001.py --check
+
+      # The whole audit in one step: the freeze, every dataset hash, every metric recomputed from
+      # its own raw.jsonl, the claims matrix in registry/claims.jsonl, registry counts against the
+      # data files, cross-document consistency, and the 13-gram contamination check. CPU-only and
+      # offline. Identical to `make validate`. See docs/AUDIT.md.
+      - name: Validate (claims matrix, registries, recomputed metrics)
+        run: uv run python scripts/validate.py

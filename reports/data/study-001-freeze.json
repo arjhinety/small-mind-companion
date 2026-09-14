@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "1ee789e6905c277db992a96ccd80d4d291caa360",
+  "git_commit": "05cf6371dbee50f9843800215f1f81b689864e45",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -262,8 +262,8 @@
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 3304,
-        "sha256": "0cc7fe50b0caa0439142a637099577ae688d5a352c9755c6e6605d091dad484e"
+        "bytes": 3372,
+        "sha256": "bb3e341352b571a6db7556e4c7d8f3e6ca12f05db968e05f00f75535fd09344a"
       },
       "docs/research_questions.md": {
         "bytes": 25894,
@@ -302,8 +302,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 17798,
-        "sha256": "94a81eb4d9d162cfc85c5180586d6bab7a1e9fbf14552814b186abf4a63cc6c1"
+        "bytes": 18103,
+        "sha256": "161d47246b4d27afec73e2316eaab82e00929482b7099e990bf682aead060002"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -345,8 +345,18 @@
     },
     {
       "on": "2026-09-13",
+      "artifact": "README.md, docs/reproduction.md, reports/ERRATA.md",
+      "reason": "The corpus count went from nine to 11: scripts/validate.py's hygiene check found two committed probe sets (data/benchmarks/h22_judgment and data/benchmarks/emotional_range) that were absent from scripts/recompute_hashes.py and therefore had no hash.txt. Both were added, hashed for the first time, and added to validate.py's mirrored list -- whose cross-check assertion is what failed until both files were updated, which is the behaviour that check exists for. Every 'nine corpora' reference updated to 11. No result, metric, dataset or limitation changed."
+    },
+    {
+      "on": "2026-09-13",
       "artifact": "hf_readmes/ (8 files: README_distill-v1-gguf.md, README_distill-v1.md, checkpoint_README_template.py, generate_cards.py, gguf_README.md, README_dpo-v1-scale.md, README_sft-v1.md, README_sft-v0.md, README_dpo-v0.md, README_dpo-v1-4epoch.md)",
       "reason": "Corrected the published model cards and re-pushed them to the Hub (ERRATA E1, E10, E18). The dpo-v1-scale card credited this checkpoint with a 70.0% UAR it was never measured on; the sft-v1 card showed DPO rather than SFT+memory as the 70.0% row; the distill-v1 card labelled its pre-distillation row dpo-v1-scale when it is SFT+memory and the +3.3pp gap spans two stages. Also normalised owner references to arjhinety and made the 'F16 reference plus 12 quant levels' count unambiguous. These are corrections to claims about the frozen results, made against the same frozen artifacts -- no result, metric, dataset or limitation changed."
+    },
+    {
+      "on": "2026-09-13",
+      "artifact": "README.md",
+      "reason": "Restored 'make validate' to the Studies code block (it was removed by the 'document only commands that exist' pass because the target did not exist yet), corrected the test count from 473 to 504, and linked docs/AUDIT.md. The target now exists and runs the same command CI runs, and 504 is the number of def test_ functions in tests/** after tests/unit/test_validator.py (22) was added -- the 473 was already stale by 8 tests before that, which the claims matrix records. No result, dataset, metric or limitation changed; the README's own numbers and pointers are the only thing that moved."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
@@ -357,37 +367,37 @@
     },
     "docs/STUDIES.md": {
       "bytes": 6466,
-      "sha256": "43740150885fcf11516ba9a50e01a6d266744267709186d723fb40ba694c5f5f"
+      "sha256": "c1a11954fae021068d16fe1f1588833d3adf8cec25ad99dab3a9679ac5249793"
     },
     "reports/ERRATA.md": {
-      "bytes": 21021,
-      "sha256": "26c655e34377f2c67e80a45433635335c9697282b1969922799185826672fb67"
+      "bytes": 24099,
+      "sha256": "f3687a255464775c320369771f2a04f722bfc9461be7012a31b3abf7a317d7c4"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "3255e5d95451dd4abaf38352687bc885b69ef49e8d79771e1bd6c57748d03195"
+      "sha256": "0f55c8441c99b86210fe5dbbfe5fea67584a30cea491919bcc2c7f7d19634ce5"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 21331,
-      "sha256": "c81d48a76e36801f7cbda2c3c733994d6cc66c4999d4b16baa1e8b3733e985ea"
+      "bytes": 22144,
+      "sha256": "e8e35bc51e890dd4aee829ed142fd73331a4251f9dae6790b340b89dda052120"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 9820,
-      "sha256": "6b0af5c132bded40e6504b596bd4e97e03342b2b58c785be0a761f1a17dfb88e"
+      "bytes": 10475,
+      "sha256": "ba9fe6f598afd3f7f0c5e7369b312a0df17bfb49acb95863c5d7c99492c9fe50"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",
   "not_claimed": [
     "No full-PMB pra_lenient or UAR measurement exists for any DPO checkpoint; dpo-v1-scale appears only in pairwise comparisons.",
     "No quantization figure in this repository is backed by a committed artifact (*.gguf is gitignored and results/ holds no quantization output).",
-    "All 9 corpora carry a hash.txt that verifies, but the four benchmark hashes are a 2026-09-13 repair: before that they matched under no tested algorithm and data/distill/v1/ had none (reports/ERRATA.md E29).",
+    "All 11 corpora carry a hash.txt that verifies, but the four benchmark hashes are a 2026-09-13 repair: before that they matched under no tested algorithm and data/distill/v1/ had none (reports/ERRATA.md E29).",
     "The acceptable_alternatives field is unpopulated in 688/688 PMB probes, which is why pra_strict is ~0 throughout and pra_lenient is the reported metric.",
     "Every result is a single seed and a single run. Nothing here is replicated.",
     "No human evaluation exists; no reviewer log or teacher transcript was retained, so the teacher identity is self-reported and unverifiable from this repository."
   ],
   "tree_facts": {
-    "corpora_total": 9,
-    "corpora_with_hash_file": 9,
+    "corpora_total": 11,
+    "corpora_with_hash_file": 11,
     "corpora_without_hash_file": [],
     "unpinned_revision_configs": [
       "distill_v1.yaml:base_model_revision=main",

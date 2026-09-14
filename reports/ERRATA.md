@@ -265,8 +265,8 @@ the `study-001` tag. `README.md` now says this.
 
 **Resolved (2026-09-13).** All four benchmark hashes were regenerated, and
 `data/distill/v1/hash.txt` was created for the first time, using the algorithm now documented in
-`docs/reproduction.md`. All nine corpora verify:
-`uv run python scripts/recompute_hashes.py` reports `9/9 corpora hash-clean`. A regression test
+`docs/reproduction.md`. All 11 corpora verify:
+`uv run scripts/recompute_hashes.py` reports `11/11 corpora hash-clean`. A regression test
 (`tests/unit/test_dataset_hashes.py`) now recomputes every hash on each test run, which is the
 check whose absence let this go unnoticed — guardrail G9c is the rule, that test is its
 enforcement. The *cause* of the four original values remains undetermined and is not needed:
@@ -292,6 +292,53 @@ that *is* what those runs trained on — silently overwriting it would misrepres
 
 **Lesson, folded into [`docs/GUARDRAILS.md`](GUARDRAILS.md) G4:** when a dataset is regenerated,
 grep for its old size. A count that changes in the data does not change itself in the prose.
+
+### E31 — `pra_lenient` for System D was quoted off by 0.03pp (LOW)
+
+**As written:** `README.md`, `docs/STUDIES.md`, `docs/proper_scale_results.md` and
+`docs/day4_sft_results.md` all reported System D (raw model + hybrid retrieval memory, k=8) as
+`pra_lenient` **15.10%**, and derived two deltas from it — "+14.9pp" for the retrieval effect and
+"+2.7pp" for the D→E gap at v0 scale.
+
+**Correction:** `results/v0.1/D_memory/metrics.json` holds `0.1513157894736842`, i.e. 92/608 =
+**15.13%**. 15.10% is that value rounded to one decimal and then written with two. Corrected in all
+seven places, and the deltas follow: the retrieval effect is **+15.0pp** (0.16% → 15.13%) and the
+D→E gap is **+2.6pp**.
+
+**Why it survived the original audit.** The first pass checked that the documents agreed *with each
+other* and that the v0 rows were backed by committed artifacts — both true — rather than that each
+quoted figure rounded from its artifact. A self-consistent set of documents can all be wrong
+together. `scripts/validate.py` now recomputes each quoted percentage from the artifact and compares
+it at the document's own precision, which is what caught this.
+
+**Lesson, folded into [`docs/GUARDRAILS.md`](GUARDRAILS.md) G9b and the claims matrix:** a
+cross-document agreement check is not an artifact check. Both are needed, and
+`registry/claims.jsonl` carries them as separate entry types (`cross_doc` and `json_field`).
+
+### E32 — Two committed probe sets had no hash and were outside every integrity check (MED)
+
+**As written:** `README.md` stated that dataset directories carry a `hash.txt`, and every document
+described the integrity-pinning story as covering the committed corpora.
+
+**Correction:** `data/benchmarks/h22_judgment` (the H22 abliteration judgment-quality probes) and
+`data/benchmarks/emotional_range` (H24, nine registers) appeared in **neither**
+`scripts/recompute_hashes.py` nor `scripts/validate.py`. Neither had a `hash.txt`, neither was
+covered by the Study 001 freeze, and neither would have been touched by any consistency check in
+this repository. They are committed research corpora — the H22 and H24 probes that Study 002 is
+meant to run — and they were the only two unpinned probe sets in the tree.
+
+Found by `scripts/validate.py`'s hygiene check (`unpinned-probe-sets`), not by reading. The corpus
+count is **11, not the nine** that every document claimed.
+
+**Fix:** both added to the hash-recompute list and hashed for the first time, and added to
+`validate.py`'s mirrored list — whose sync assertion is what forced both files to be edited at once
+rather than one silently drifting from the other. All "nine corpora" references updated to 11, and
+the two claims-matrix entries renamed `readme-eleven-corpora-*` with `== 11` expressions.
+`11/11 corpora hash-clean`.
+
+**Lesson, folded into G9c:** a corpus that no list mentions is not covered by a check that iterates
+a list. The hygiene check exists precisely to find corpora that the *other* checks do not know
+about, and it should be run against the tree, not against the registry.
 
 ## What was verified correct
 So this file is not read as blanket scepticism:
@@ -323,7 +370,7 @@ So this file is not read as blanket scepticism:
 - No full-PMB `pra_lenient`/UAR measurement exists for any DPO checkpoint.
 - No committed evidence for any quantization number.
 - `data/distill/v1/hash.txt` was never generated, and the four benchmark `hash.txt` files did not
-  verify (E29) — **both resolved 2026-09-13**: all nine corpora now verify.
+  verify (E29) — **both resolved 2026-09-13**: all 11 corpora now verify.
 - The `acceptable_alternatives` field is unpopulated in all 688 probes.
 - The DPO v1_scale prompt-context divergence from SFT v1 was never root-caused.
 - No human evaluation exists anywhere; no reviewer log or teacher transcript was retained, so

@@ -1,0 +1,433 @@
+schema_version: 1
+# Every corpus committed under `data/`, with record counts and hash provenance read from the
+# corpus itself rather than from a document. `uv run python scripts/validate.py` recomputes every
+# count and every hash listed here and fails on any drift.
+#
+# `hash_algorithm` is one of:
+#   sha256_tree_lf       sha256 over a sorted directory walk; for each file, the LF-normalised
+#                        relative POSIX path bytes then the LF-normalised file bytes, skipping
+#                        hash.txt itself (scripts/build_pmb.py).
+#   sha256_concat_jsonl  sha256 over the concatenated LF-normalised *.jsonl of each split, in
+#                        sorted filename order (generate_sft_data.py / generate_dpo_data.py).
+#   null                 no hash.txt is committed; the corpus is not integrity-pinned.
+#
+# `contamination_status` is one of:
+#   CLEAN_VERIFIED        scripts/check_contamination.py reported "No contamination found."
+#                         against data/benchmarks/pmb_v0_full/probes.jsonl.
+#   INHERITED_CLEAN       a strict subset of a CLEAN_VERIFIED parent; not separately checked.
+#   EVAL_REFERENCE        the evaluation set itself -- the corpus others are checked against.
+#   TRAINING_CORPUS       training data; leak-checked against EVAL_REFERENCE, not "a benchmark".
+#   NOT_ASSESSED          no contamination check has been run.
+#   NOT_APPLICABLE        derived or fixture data with no text-distribution claim.
+#
+# `freeze_pinned` records whether the Study 001 freeze manifest pins this corpus's bytes
+# (reports/data/study-001-freeze.json). A corpus may be tracked in git and still not be pinned.
+#
+# `evidence` maps a registry assertion to the exact `file:line` in the corpus's own documentation
+# that makes it, and `evidence_text` maps the same key to a literal string that line must contain.
+# This is what stops the registry's documentary claims ("this corpus was contamination-checked")
+# from being taken on trust: `scripts/validate.py` resolves every anchor and matches every string.
+status: VERIFIED_AGAINST_ARTIFACTS
+contamination_reference: data/benchmarks/pmb_v0_full/probes.jsonl
+contamination_command: >-
+  uv run python scripts/check_contamination.py
+  --train-glob <corpus>/train.jsonl
+  --eval-glob data/benchmarks/pmb_v0_full/probes.jsonl
+contamination_verified_on: "2026-09-13"
+datasets:
+  - id: pmb-v0-full
+    display_name: PMB v0 -- Personalized Memory Benchmark (evaluation)
+    kind: benchmark
+    path: data/benchmarks/pmb_v0_full
+    datasetsheet: data/benchmarks/pmb_v0_full/DATASHEET.md
+    records: 688
+    record_unit: probe
+    extra_counts:
+      personas: 8
+      categories: 8
+      probes_per_persona: 86
+      answerable: 608
+      unanswerable: 80
+      acceptable_alternatives_populated: 0
+    splits:
+      - name: all
+        path: data/benchmarks/pmb_v0_full/probes.jsonl
+        records: 688
+    hash_file: data/benchmarks/pmb_v0_full/hash.txt
+    hash_algorithm: sha256_tree_lf
+    freeze_pinned: true
+    contamination_status: EVAL_REFERENCE
+    notes: >-
+      The only corpus any reported pra_lenient/uar number is measured on. 64/64 populated
+      (persona x category) cells.
+    evidence:
+      human_review: "data/benchmarks/pmb_v0_full/DATASHEET.md:30"
+      personas_and_cells: "data/benchmarks/pmb_v0_full/DATASHEET.md:17"
+      probes: "data/benchmarks/pmb_v0_full/DATASHEET.md:17"
+      unpopulated_field: "data/benchmarks/pmb_v0_full/DATASHEET.md:32"
+    evidence_text:
+      human_review: "not yet human-reviewed"
+      personas_and_cells: "64/64 cells"
+      probes: "Total probes**: 688"
+      unpopulated_field: "unpopulated"
+
+  - id: pmb-v0
+    display_name: PMB v0 fixture-scale smoke test
+    kind: fixture
+    path: data/benchmarks/pmb_v0
+    datasetsheet: data/benchmarks/pmb_v0/DATASHEET.md
+    records: 36
+    record_unit: probe
+    extra_counts:
+      personas: 2
+      facts_per_persona: 8
+    splits:
+      - name: all
+        path: data/benchmarks/pmb_v0/probes.jsonl
+        records: 36
+    hash_file: data/benchmarks/pmb_v0/hash.txt
+    hash_algorithm: sha256_tree_lf
+    freeze_pinned: true
+    contamination_status: NOT_APPLICABLE
+    notes: >-
+      Deterministic fixture teacher, no live LLM. Exists to exercise scripts/build_pmb.py and
+      the eval harness. Not the benchmark; do not report metrics from it.
+    evidence:
+      not_a_benchmark: "data/benchmarks/pmb_v0/DATASHEET.md:5"
+      probes: "data/benchmarks/pmb_v0/DATASHEET.md:18"
+    evidence_text:
+      not_a_benchmark: "fixture-scale smoke test"
+      probes: "Total probes**: 36"
+
+  - id: sft-personas-v1
+    display_name: SFT v1 training-persona probe set (NOT a benchmark)
+    kind: training_persona_corpus
+    path: data/benchmarks/sft_personas_v1
+    datasetsheet: data/benchmarks/sft_personas_v1/DATASHEET.md
+    records: 3437
+    record_unit: probe
+    extra_counts:
+      personas: 40
+      facts_per_persona: 40
+    splits:
+      - name: all
+        path: data/benchmarks/sft_personas_v1/probes.jsonl
+        records: 3437
+    hash_file: data/benchmarks/sft_personas_v1/hash.txt
+    hash_algorithm: sha256_tree_lf
+    freeze_pinned: true
+    contamination_status: TRAINING_CORPUS
+    is_benchmark: false
+    notes: >-
+      Generated to build data/sft/v1. Personas are disjoint by construction from pmb_v0_full.
+      Must never be reported as a benchmark result.
+    evidence:
+      human_review: "data/benchmarks/sft_personas_v1/DATASHEET.md:31"
+      not_a_benchmark: "data/benchmarks/sft_personas_v1/DATASHEET.md:5"
+      probes: "data/benchmarks/sft_personas_v1/DATASHEET.md:21"
+    evidence_text:
+      human_review: "not yet human-reviewed"
+      not_a_benchmark: "not a benchmark"
+      probes: "Total probes**: 3437"
+
+  - id: sft-personas-v0
+    display_name: SFT v0 training-persona probe set (NOT a benchmark)
+    kind: training_persona_corpus
+    path: data/benchmarks/sft_personas_v0
+    datasetsheet: data/benchmarks/sft_personas_v0/DATASHEET.md
+    records: 344
+    record_unit: probe
+    extra_counts:
+      personas: 4
+      facts_per_persona: 40
+    splits:
+      - name: all
+        path: data/benchmarks/sft_personas_v0/probes.jsonl
+        records: 344
+    hash_file: data/benchmarks/sft_personas_v0/hash.txt
+    hash_algorithm: sha256_tree_lf
+    freeze_pinned: true
+    contamination_status: TRAINING_CORPUS
+    is_benchmark: false
+    evidence:
+      human_review: "data/benchmarks/sft_personas_v0/DATASHEET.md:32"
+      not_a_benchmark: "data/benchmarks/sft_personas_v0/DATASHEET.md:5"
+      probes: "data/benchmarks/sft_personas_v0/DATASHEET.md:22"
+    evidence_text:
+      human_review: "not yet human-reviewed"
+      not_a_benchmark: "not a benchmark"
+      probes: "Total probes**: 344"
+
+  - id: sft-v0
+    display_name: SFT v0 (Day 4, 4 personas)
+    kind: training
+    path: data/sft/v0
+    datasetsheet: data/sft/v0/DATASHEET.md
+    records: 225
+    record_unit: example
+    splits:
+      - name: train
+        path: data/sft/v0/train.jsonl
+        records: 202
+      - name: val
+        path: data/sft/v0/val.jsonl
+        records: 23
+    hash_file: data/sft/v0/hash.txt
+    hash_algorithm: sha256_concat_jsonl
+    freeze_pinned: true
+    contamination_status: CLEAN_VERIFIED
+    contamination_evidence: data/sft/v0/DATASHEET.md:11-13
+    evidence:
+      contamination: "data/sft/v0/DATASHEET.md:11"
+      human_review: "data/sft/v0/DATASHEET.md:20"
+      total_and_split: "data/sft/v0/DATASHEET.md:9"
+    evidence_text:
+      contamination: "Contamination-checked clean"
+      human_review: "Not human-reviewed."
+      total_and_split: "225 (202 train / 23 val)"
+
+  - id: sft-v1
+    display_name: SFT v1 (proper scale, 40 personas)
+    kind: training
+    path: data/sft/v1
+    datasetsheet: data/sft/v1/DATASHEET.md
+    records: 2480
+    record_unit: example
+    splits:
+      - name: train
+        path: data/sft/v1/train.jsonl
+        records: 2232
+      - name: val
+        path: data/sft/v1/val.jsonl
+        records: 248
+    hash_file: data/sft/v1/hash.txt
+    hash_algorithm: sha256_concat_jsonl
+    freeze_pinned: true
+    contamination_status: CLEAN_VERIFIED
+    contamination_evidence: data/sft/v1/DATASHEET.md:11-14
+    extra_counts:
+      by_kind:
+        irrelevant_retrieval: 136
+        memory_relevant: 2239
+        abstention: 105
+    evidence:
+      contamination: "data/sft/v1/DATASHEET.md:11"
+      human_review: "data/sft/v1/DATASHEET.md:21"
+      total_and_split: "data/sft/v1/DATASHEET.md:9"
+    evidence_text:
+      contamination: "Contamination-checked clean"
+      human_review: "Not human-reviewed."
+      total_and_split: "2480 (2232 train / 248 val)"
+
+  - id: dpo-v0
+    display_name: DPO v0 preference pairs
+    kind: training
+    path: data/dpo/v0
+    datasetsheet: data/dpo/v0/DATASHEET.md
+    records: 223
+    record_unit: preference_pair
+    splits:
+      - name: train
+        path: data/dpo/v0/train.jsonl
+        records: 200
+      - name: val
+        path: data/dpo/v0/val.jsonl
+        records: 23
+    hash_file: data/dpo/v0/hash.txt
+    hash_algorithm: sha256_concat_jsonl
+    freeze_pinned: true
+    contamination_status: CLEAN_VERIFIED
+    contamination_evidence: docs/dpo_results.md:17
+    evidence:
+      contamination: "docs/dpo_results.md:17"
+      human_review: "data/dpo/v0/DATASHEET.md:15"
+      total_and_split: "data/dpo/v0/DATASHEET.md:9"
+    evidence_text:
+      contamination: "Contamination-checked clean"
+      human_review: "Not human-reviewed."
+      total_and_split: "223 (200 train / 23 val)"
+
+  - id: dpo-v1-scale
+    display_name: DPO v1_scale preference pairs (proper scale)
+    kind: training
+    path: data/dpo/v1_scale
+    datasetsheet: data/dpo/v1_scale/DATASHEET.md
+    records: 2277
+    record_unit: preference_pair
+    splits:
+      - name: train
+        path: data/dpo/v1_scale/train.jsonl
+        records: 2049
+      - name: val
+        path: data/dpo/v1_scale/val.jsonl
+        records: 228
+    hash_file: data/dpo/v1_scale/hash.txt
+    hash_algorithm: sha256_concat_jsonl
+    freeze_pinned: true
+    contamination_status: CLEAN_VERIFIED
+    contamination_evidence: docs/dpo_results.md:125
+    notes: >-
+      Generated before SFT v1's dedup fix and ratio rebalance: 0 of its 2277 prompts appear
+      verbatim among the SFT v1 system texts. See reports/ERRATA.md E13.
+    evidence:
+      contamination: "docs/dpo_results.md:125"
+      human_review: "data/dpo/v1_scale/DATASHEET.md:24"
+      lineage_divergence: "data/dpo/v1_scale/DATASHEET.md:11"
+      total_and_split: "data/dpo/v1_scale/DATASHEET.md:18"
+    evidence_text:
+      contamination: "contamination-checked clean"
+      human_review: "Not human-reviewed."
+      lineage_divergence: "0/2277 system"
+      total_and_split: "2277 (2049 train / 228 val)"
+
+  - id: distill-v1
+    display_name: Distillation v1 prompt set (H23)
+    kind: training
+    path: data/distill/v1
+    datasetsheet: data/distill/v1/DATASHEET.md
+    records: 2232
+    record_unit: prompt
+    splits:
+      - name: train
+        path: data/distill/v1/train.jsonl
+        records: 2008
+      - name: val
+        path: data/distill/v1/val.jsonl
+        records: 224
+    hash_file: data/distill/v1/hash.txt
+    hash_algorithm: sha256_concat_jsonl
+    freeze_pinned: false
+    freeze_pinned_note: >-
+      train.jsonl, val.jsonl and DATASHEET.md are pinned by the freeze; hash.txt is not in the
+      freeze groups, so the digest itself is only checked by scripts/validate.py.
+    contamination_status: INHERITED_CLEAN
+    contamination_evidence: data/distill/v1/DATASHEET.md:9-12
+    notes: >-
+      Prompt-only, carved from data/sft/v1/train.jsonl (2008 train / 224 val). Its train+val
+      prompt set is exactly the SFT v1 train prompt set.
+    evidence:
+      human_review: "data/distill/v1/DATASHEET.md:18"
+      parent_contamination: "data/distill/v1/DATASHEET.md:9"
+      source_and_subset: "data/distill/v1/DATASHEET.md:9"
+      total_and_split: "data/distill/v1/DATASHEET.md:8"
+    evidence_text:
+      human_review: "Not human-reviewed."
+      parent_contamination: "data/sft/v1/train.jsonl"
+      source_and_subset: "All 2008 train and all 224 val prompts are present in the SFT"
+      total_and_split: "2232 (2008 train / 224 val)"
+
+  - id: emotional-range
+    display_name: H24 emotional-range probes
+    kind: probe_set
+    path: data/benchmarks/emotional_range
+    datasetsheet: null
+    records: 27
+    record_unit: probe
+    extra_counts:
+      registers: 9
+      probes_per_register: 3
+    splits:
+      - name: all
+        path: data/benchmarks/emotional_range/probes.jsonl
+        records: 27
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_ASSESSED
+    is_benchmark: false
+    notes: Built for H24, never run. Not referenced by any headline number.
+
+  - id: h22-judgment
+    display_name: H22 abliteration judgment-quality probes
+    kind: probe_set
+    path: data/benchmarks/h22_judgment
+    datasetsheet: null
+    records: 24
+    record_unit: probe
+    extra_counts:
+      categories: 6
+      probes_per_category: 4
+    splits:
+      - name: all
+        path: data/benchmarks/h22_judgment/probes.jsonl
+        records: 24
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_ASSESSED
+    is_benchmark: false
+    notes: Built for H22, never run. Not referenced by any headline number.
+
+  - id: imatrix-calibration
+    display_name: llama-imatrix calibration corpus
+    kind: calibration
+    path: data/imatrix_calibration.txt
+    datasetsheet: null
+    records: 66383
+    record_unit: line
+    extra_counts:
+      bytes: 11086366
+    splits:
+      - name: all
+        path: data/imatrix_calibration.txt
+        records: 66383
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_ASSESSED
+    input_to: scripts/build_imatrix_calibration.py
+    notes: Consumed by a llama-imatrix run whose output is not committed (reports/ERRATA.md E6).
+
+  - id: imatrix-heldout
+    display_name: llama-imatrix held-out perplexity corpus
+    kind: calibration
+    path: data/imatrix_heldout.txt
+    datasetsheet: null
+    records: 3806
+    record_unit: line
+    extra_counts:
+      bytes: 631662
+    splits:
+      - name: all
+        path: data/imatrix_heldout.txt
+        records: 3806
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_ASSESSED
+    notes: Held-out split for the imatrix perplexity comparison that was never completed.
+
+  - id: pmb-v0-full-stores
+    display_name: PMB v0_full populated memory stores
+    kind: derived_store
+    path: data/stores/pmb_v0_full
+    datasetsheet: null
+    records: 8
+    record_unit: sqlite_store
+    splits:
+      - name: all
+        path: data/stores/pmb_v0_full
+        records: 8
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_APPLICABLE
+    derived_from: data/benchmarks/pmb_v0_full/personas
+    notes: '*.db are gitignored except under data/stores (see .gitignore).'
+
+  - id: sft-personas-v1-stores
+    display_name: SFT v1 training-persona populated memory stores
+    kind: derived_store
+    path: data/stores/sft_personas_v1
+    datasetsheet: null
+    records: 40
+    record_unit: sqlite_store
+    splits:
+      - name: all
+        path: data/stores/sft_personas_v1
+        records: 40
+    hash_file: null
+    hash_algorithm: null
+    freeze_pinned: false
+    contamination_status: NOT_APPLICABLE
+    derived_from: data/benchmarks/sft_personas_v1/personas

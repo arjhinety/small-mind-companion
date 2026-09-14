@@ -34,6 +34,11 @@ BENCHMARK_DIRS = [
     "data/benchmarks/sft_personas_v1",
     "data/benchmarks/pmb_v0",
     "data/benchmarks/sft_personas_v0",
+    # H22 (abliteration judgment quality) and H24 (emotional range) probe sets. They are committed
+    # corpora but were never in this list, so they had no hash.txt and were the only unpinned probe
+    # sets in the tree -- found by scripts/validate.py's hygiene check, not by reading.
+    "data/benchmarks/h22_judgment",
+    "data/benchmarks/emotional_range",
 ]
 
 # Corpora hashed by generate_sft_data.py / generate_dpo_data.py: sha256 over the concatenated

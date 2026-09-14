@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-481%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-504%20passing-brightgreen)
 
 ## Overview
 
@@ -20,12 +20,14 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 31 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 32 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
+- [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
 ```
 make freeze-check     # fails if any frozen Study 001 artifact has changed
-uv run python scripts/recompute_hashes.py   # re-checks all nine dataset hashes
+make validate         # freeze + hashes + recomputed metrics + claims matrix
+uv run python scripts/recompute_hashes.py   # re-checks all 11 dataset hashes
 ```
 
 ## Results
@@ -202,12 +204,12 @@ Full quantization spread (F16 reference plus 12 quant levels down to Q2_K) and m
 ```
 src/onebee/           installable package: memory, retrieval, context, state, inference, training, evaluation
 configs/training/      composed YAML configs, one per experiment
-scripts/                bake-off, benchmark construction, contamination checking
+scripts/                bake-off, benchmark construction, contamination checking, the Study 001 freeze and the audit validator
 data/                    versioned benchmarks + SFT/DPO/distillation datasets, each with a DATASHEET.md
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   481 unit tests, run in CI
+tests/                   504 unit tests, run in CI
 ```
 
 ## Results & Analysis
@@ -221,7 +223,7 @@ tests/                   481 unit tests, run in CI
 
 - All training seeds are pinned in their respective config files (e.g. `seed: 1337` in `configs/training/sft_v1.yaml`).
 - Base model revision is pinned by commit SHA in the SFT configs (`base_model_revision`). The DPO and distillation configs still reference `"main"` and should be pinned to a SHA before any re-run is treated as reproducible.
-- Dataset directories carry a `DATASHEET.md` documenting generation methodology and known caveats, and a `hash.txt`. **All nine corpora verify** as of 2026-09-13 — the four benchmark hashes did not match under any algorithm tested before this audit (see [`reports/ERRATA.md`](reports/ERRATA.md) E29), so all nine were recomputed. `uv run python scripts/recompute_hashes.py` re-checks them, and a test enforces it in CI.
+- Dataset directories carry a `DATASHEET.md` documenting generation methodology and known caveats, and a `hash.txt`. **All 11 corpora verify** as of 2026-09-13 — the four benchmark hashes did not match under any algorithm tested before this audit (see [`reports/ERRATA.md`](reports/ERRATA.md) E29), and two H22/H24 probe sets had no hash at all, so every hash was recomputed. `uv run python scripts/recompute_hashes.py` re-checks them, and a test enforces it in CI.
 - `uv.lock` pins every dependency version.
 - Hypotheses and eval design are committed to git *before* results — git history itself is the pre-registration record.
 

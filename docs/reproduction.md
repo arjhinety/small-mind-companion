@@ -83,7 +83,8 @@ than on the content.
 
 **History.** The four benchmark `hash.txt` files committed with Study 001 matched their corpora
 under none of thirteen tested algorithms and may never have matched; `data/distill/v1/` had no hash
-at all. All nine were recomputed on 2026-09-13 with the algorithm above and now verify. The
+at all, and the H22/H24 probe sets were not in this list so they had no hash. All 11 were
+recomputed on 2026-09-13 with the algorithm above and now verify. The
 benchmark corpora were also edited (datasheets corrected), so the old values were stale regardless.
 See `reports/ERRATA.md` E29.
 
