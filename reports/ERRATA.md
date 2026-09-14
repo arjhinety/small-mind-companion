@@ -370,6 +370,27 @@ normalising at the single point where files are hashed rather than at each call 
 check that has only ever run on one platform has not been tested against the thing it is
 vulnerable to; the CI run was the first real test, and it is why the CI gate exists.
 
+### E34 — System B's UAR was quoted from the wrong run in the distillation table (MED)
+
+**As written:** `docs/distillation_results.md`'s results table listed
+`B (v1, rebalanced) | SFT alone, no memory | 0.16% | 25.0%`.
+
+**Correction:** `results/v1_scale/B_sft/metrics.json` holds `uar = 0.2125` = **21.25%** (17/80).
+**25.0%** (20/80) belongs to the *fixed-dedup, pre-rebalance* run — which
+`docs/proper_scale_results.md` labels correctly as "B (SFT-v1 alone, fixed data)". The distillation
+table labelled the row "rebalanced" while quoting the pre-rebalance figure, so the one document
+presenting B next to the distillation result attributed the wrong calibration number to B.
+
+**This is the third occurrence of one failure mode.** E2 quoted a confounded comparison; E31
+mis-rounded D's `pra_lenient`; this quotes the right *family* of runs but the wrong *member*. In
+each case the number was plausible, internally consistent with its neighbours, and drawn from a
+real measurement — just not the one the label named. The general form is that "which run" is part
+of the claim, not a detail behind it.
+
+**Found while regenerating the site's discrepancy table**, not by `scripts/validate.py`, which
+does not track this metric. It is now listed as a live discrepancy that the page would surface if
+it recurred.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 

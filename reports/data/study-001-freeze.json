@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "ae78268dfc5ff4c10b8c0cf31e21accd6b391412",
+  "git_commit": "a11e0c4312f649c3d3bd272799df2d3258ff6562",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -242,8 +242,8 @@
         "sha256": "5a1a325b65860d4062bf060ccb3e273faae7b2ccc15fd0dfa98d9cd77cea8064"
       },
       "docs/distillation_results.md": {
-        "bytes": 11439,
-        "sha256": "8b0acc15a84886f1d06f708acb84a80fa3249faf786d317ac3d29c9f78a7253b"
+        "bytes": 11816,
+        "sha256": "b4ea4ea0fc45942ab3a6367ddc83fc7214a755afe0f3203422196d76394887e3"
       },
       "docs/dpo_results.md": {
         "bytes": 10607,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 18103,
-        "sha256": "47f834a5bda41815820455818fa8586ae5f3f8c796c86d04c2635bcd577a986b"
+        "sha256": "332b7153fd60fd52d7e18fa320d66d934fe429d9754f13fdc388b33d70451df5"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -367,23 +367,23 @@
     },
     "docs/STUDIES.md": {
       "bytes": 9279,
-      "sha256": "f78c2e42b89f906df925d8545e377463b0e582ea33b2087964e7e5503781738c"
+      "sha256": "3e82e7ed7b78e3815584940e6cd79ff0eb5c31eae635590c24b22d3a547721c3"
     },
     "reports/ERRATA.md": {
-      "bytes": 26037,
-      "sha256": "ec434dc4e12256eb0848b4737b6bbc7eaf9551995342ace44c8a7796d1d8c808"
+      "bytes": 27352,
+      "sha256": "34ad96313a0834713beede974ee5bf0b6ab12dee21cb999db616b2fcc1254cdd"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "ff68f8ec391c47c0776f5f4e00d1a0b3d6783bdb4e6b1634593d6cc9634f8990"
+      "sha256": "6e16b1a661324cf292b5bc8e6dde32e22a54ec1dd6a5f99bc012cc7be253b453"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 23171,
-      "sha256": "01a5e77292c1892ab98f1fd1ea6ea0c66609d05cfecc44cd2af80f27fe1e0bb1"
+      "bytes": 24094,
+      "sha256": "b402e7d4cd0ab85ebda2e2a4c7cef3d3ea0ab50a769fc9a8d267d9eea7f24372"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 11471,
-      "sha256": "7ed111aa2e0f272900fec17411d0f957f6a01083efb15c69ded6767418f26320"
+      "bytes": 11780,
+      "sha256": "9739d69068cc141c2caa49c1bf83012774473afe76529bdca9e77520addbf727"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

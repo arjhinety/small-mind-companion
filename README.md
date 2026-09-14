@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 33 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 34 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 

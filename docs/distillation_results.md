@@ -62,10 +62,16 @@ loss curve.
 
 | System | Description | pra_lenient | uar |
 |---|---|---|---|
-| B (v1, rebalanced) | SFT alone, no memory | 0.16% | 25.0% |
+| B (v1, rebalanced) | SFT alone, no memory | 0.16% | 21.25% |
 | E (v1, rebalanced) | SFT + memory (pre-distillation) | 15.30% | 70.0% |
 | **E-distill (H23)** | **SFT+DPO+distill + memory (post-distillation)** | **18.59%** | **71.25%** |
 
+> **B's UAR was 25.0% here until E34.** That is the *fixed-dedup, pre-rebalance* run
+> (`docs/proper_scale_results.md`'s "B (SFT-v1 alone, fixed data) | 25.0% (20/80)"); the
+> rebalanced checkpoint these rows are drawn from scores
+> `results/v1_scale/B_sft/metrics.json` UAR = 0.2125 = **21.25%**. The row was labelled
+> "rebalanced" while quoting the pre-rebalance number.
+>
 > **These two rows are not a clean isolation of distillation.** E is `outputs/sft/v1/merged` and
 > E-distill is `outputs/distill/v1/merged`, which was trained *from the DPO output* — so the
 > +3.3pp `pra_lenient` delta in this table spans both the DPO stage and the distillation stage.

@@ -361,5 +361,16 @@
     "category": "PLATFORM_DEPENDENT_CHECK",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 34,
+    "severity": "MED",
+    "area": "T",
+    "location": "docs/distillation_results.md:65",
+    "claim": "System B (v1, rebalanced) scores UAR 25.0%.",
+    "actual": "results/v1_scale/B_sft/metrics.json holds uar = 0.2125 = 21.25% (17/80). 25.0% (20/80) belongs to the fixed-dedup, PRE-rebalance run, which docs/proper_scale_results.md:147 labels correctly as 'B (SFT-v1 alone, fixed data)'. The distillation result table labelled the row 'rebalanced' while quoting the pre-rebalance number, so the one document that presents B alongside the distillation result attributed the wrong calibration figure to B. Same failure mode as E2 and E31: a number quoted from the right family of runs but the wrong member of it. Found while regenerating the site's discrepancy table, not by the validator, which does not track this metric.",
+    "category": "MISLABELLED_RUN",
+    "pinned": "",
+    "public": "yes"
   }
 ]
