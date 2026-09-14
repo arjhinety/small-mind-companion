@@ -350,5 +350,16 @@
     "category": "UNPINNED_CORPUS",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 33,
+    "severity": "MED",
+    "area": "D",
+    "location": "scripts/validate.py:result_registry_hashes_match, imatrix_calibration_shape; scripts/build_result_registry.py:sha256_file",
+    "claim": "The validator, the result registry it checks, and the CI gate that runs them, pass.",
+    "actual": "They passed on Windows and failed in CI. Three checks compared raw bytes: sha256 over un-normalised file bytes in result_registry_hashes_match and build_result_registry.sha256_file, and path.stat().st_size == 11086366 for the imatrix calibration corpus. This repo has no .gitattributes and sets core.autocrlf=true, so the Windows working tree is CRLF (11086366 bytes; 81998 more than the LF form) while GitHub Actions checks out LF. Four tests failed in CI while 510 passed locally: registry-results-index-fresh, registry-result-registry-metrics, datasheet-imatrix-calibration-not-11mb-15k, and the two that aggregate them.",
+    "category": "PLATFORM_DEPENDENT_CHECK",
+    "pinned": "",
+    "public": "yes"
   }
 ]

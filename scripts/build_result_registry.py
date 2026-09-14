@@ -224,7 +224,14 @@ RUN_KINDS = {
 
 
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """SHA-256 over LF-normalised bytes.
+
+    The digests this writes are verified on a different machine from the one that generated them,
+    and this repo has no `.gitattributes` while setting `core.autocrlf=true`. Hashing raw bytes
+    produces an index that is fresh on the platform that built it and stale on every other -- which
+    is exactly how this check passed locally and failed in CI.
+    """
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:

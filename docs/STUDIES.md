@@ -5,7 +5,7 @@ evidence is hash-pinned, its write-ups stop changing, and its repository links r
 tag. Work done after a freeze belongs to the next study.
 
 The rule exists because the alternative — a repository whose numbers quietly drift as the
-interesting result changes — is exactly what the audit found 32 instances of. See
+interesting result changes — is exactly what the audit found 33 instances of. See
 [`reports/ERRATA.md`](../reports/ERRATA.md) for what went wrong, and
 [`docs/GUARDRAILS.md`](GUARDRAILS.md) for the rules derived from it.
 

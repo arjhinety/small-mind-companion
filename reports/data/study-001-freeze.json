@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "05cf6371dbee50f9843800215f1f81b689864e45",
+  "git_commit": "e30f8704ee491e1e093ef5a0315855a44f7d26fc",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 18103,
-        "sha256": "161d47246b4d27afec73e2316eaab82e00929482b7099e990bf682aead060002"
+        "sha256": "47f834a5bda41815820455818fa8586ae5f3f8c796c86d04c2635bcd577a986b"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -367,23 +367,23 @@
     },
     "docs/STUDIES.md": {
       "bytes": 6466,
-      "sha256": "c1a11954fae021068d16fe1f1588833d3adf8cec25ad99dab3a9679ac5249793"
+      "sha256": "b9c749fec73520ae88a666164adde4d522e48a6f9b5a0956d5ce03560b21771e"
     },
     "reports/ERRATA.md": {
-      "bytes": 24099,
-      "sha256": "f3687a255464775c320369771f2a04f722bfc9461be7012a31b3abf7a317d7c4"
+      "bytes": 25996,
+      "sha256": "4924a9055fc60a453aa65e33968460ae2af7b71f29a033af7b15484c95c89138"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "0f55c8441c99b86210fe5dbbfe5fea67584a30cea491919bcc2c7f7d19634ce5"
+      "sha256": "ff68f8ec391c47c0776f5f4e00d1a0b3d6783bdb4e6b1634593d6cc9634f8990"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 22144,
-      "sha256": "e8e35bc51e890dd4aee829ed142fd73331a4251f9dae6790b340b89dda052120"
+      "bytes": 23171,
+      "sha256": "01a5e77292c1892ab98f1fd1ea6ea0c66609d05cfecc44cd2af80f27fe1e0bb1"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 10475,
-      "sha256": "ba9fe6f598afd3f7f0c5e7369b312a0df17bfb49acb95863c5d7c99492c9fe50"
+      "bytes": 11217,
+      "sha256": "5d1184eea05ee8a10fda432de2c1452831b0298713df2e7e0593aef667d3aa3f"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

@@ -190,5 +190,11 @@
     "status": "RESOLVED",
     "where": "scripts/recompute_hashes.py, scripts/validate.py, README.md, docs/reproduction.md, reports/ERRATA.md, registry/claims.jsonl",
     "note": "Both corpora added to the hash-recompute list and to validate.py mirrored list (whose sync assertion is what forced both edits at once), and hashed for the first time -- 11/11 corpora hash-clean. Every nine-corpora reference updated to 11, and the two claims-matrix entries renamed readme-eleven-corpora-* with exprs == 11. Logged here rather than silently fixed."
+  },
+  {
+    "id": 33,
+    "status": "RESOLVED",
+    "where": "scripts/validate.py (imatrix_calibration_shape, result_registry_hashes_match), scripts/build_result_registry.py (sha256_file), results/registry.jsonl regenerated",
+    "note": "All three now compare LF-normalised bytes, matching what freeze_study_001.py and recompute_hashes.py already did. results/registry.jsonl regenerated with normalised digests. Verified on both a CRLF working tree and a simulated LF checkout (CR stripped across jsonl/json/txt/md/py): 143 checks, 0 failed, on both. This is the fourth distinct instance of the same root cause in this repository -- E29's benchmark hashes, the freeze manifest's byte counts, the imatrix size, and now the result registry."
   }
 ]

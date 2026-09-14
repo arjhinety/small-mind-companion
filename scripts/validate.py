@@ -1034,7 +1034,12 @@ def build_pmb_default_seed() -> int:
 
 def imatrix_calibration_shape() -> bool:
     path = ROOT / "data/imatrix_calibration.txt"
-    return path.stat().st_size == 11086366 and nonempty_line_count(path) == 66383
+    # Compared over LF-normalised bytes, not raw st_size. This repo has no .gitattributes and sets
+    # core.autocrlf=true, so the raw size differs by one byte per CRLF line between a Windows and a
+    # Linux checkout (81,998 bytes here) -- the raw check passed locally and failed in CI. The line
+    # count is platform-independent either way.
+    normalised_size = len(path.read_bytes().replace(b"\r\n", b"\n"))
+    return normalised_size == 11004368 and nonempty_line_count(path) == 66383
 
 
 def license_files_exist() -> bool:
@@ -1401,7 +1406,9 @@ def result_registry_hashes_match() -> bool:
             if not artifact:
                 continue
             path = ROOT / artifact["path"]
-            if not path.is_file() or sha256_file(path) != artifact["sha256"]:
+            # LF-normalised, for the same cross-platform reason as imatrix_calibration_shape: the
+            # registry digests are generated on one platform and verified on another.
+            if not path.is_file() or sha256_lf_normalised(path) != artifact["sha256"]:
                 return False
         # The index must not claim a metric it cannot recompute.
         if row.get("metrics") and not row.get("recomputed_matches_recorded"):

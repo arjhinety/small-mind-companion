@@ -340,6 +340,36 @@ the two claims-matrix entries renamed `readme-eleven-corpora-*` with `== 11` exp
 a list. The hygiene check exists precisely to find corpora that the *other* checks do not know
 about, and it should be run against the tree, not against the registry.
 
+### E33 — Three validator checks compared raw bytes and failed only in CI (MED)
+
+**As written:** `scripts/validate.py` reported 143 checks and 0 failures, and the result registry it
+verifies was described as current.
+
+**Correction:** it passed on Windows and failed on GitHub Actions — **4 tests failed in CI while 510
+passed locally.** Three checks compared platform-dependent bytes:
+
+- `result_registry_hashes_match()` used `sha256_file()`, hashing un-normalised bytes.
+- `build_result_registry.sha256_file()` did the same when generating the index.
+- `imatrix_calibration_shape()` compared `path.stat().st_size == 11086366`.
+
+This repository has no `.gitattributes` and sets `core.autocrlf=true`, so a Windows working tree is
+CRLF while the CI checkout is LF. The imatrix corpus is 11,086,366 bytes on Windows and 11,004,368
+on Linux — the check was measuring the checkout, not the corpus.
+
+**Fix:** all three now compare LF-normalised bytes, matching what `scripts/freeze_study_001.py` and
+`scripts/recompute_hashes.py` already did, and `results/registry.jsonl` was regenerated. Verified on
+both a CRLF tree and a simulated LF checkout (CR stripped across `.jsonl`, `.json`, `.txt`, `.md`,
+`.py`): 143 checks, 0 failed, on both.
+
+**This is the fourth instance of one root cause in this repository** — E29's four benchmark hashes,
+the freeze manifest's recorded byte counts, the imatrix size, and now the result registry. Each was
+found separately, each by a different check, and each had the same fix. That is the argument for
+normalising at the single point where files are hashed rather than at each call site.
+
+**Why local verification did not catch it.** Every check passed on the machine that wrote it. A
+check that has only ever run on one platform has not been tested against the thing it is
+vulnerable to; the CI run was the first real test, and it is why the CI gate exists.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 
