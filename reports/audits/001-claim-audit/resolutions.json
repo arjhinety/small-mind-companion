@@ -178,5 +178,11 @@
     "status": "RESOLVED",
     "where": "docs/day4_sft_v1_results.md:12, docs/dpo_results.md:121, docs/proper_scale_results.md:8,38",
     "note": "All four now state that 2242 was the first generation and that the committed corpus is 2480 (2232/248). Historical run rows keep the 2242 label but are marked as the original generation, so the count is not read as current."
+  },
+  {
+    "id": 31,
+    "status": "RESOLVED",
+    "where": "README.md:37, docs/STUDIES.md:37,50, docs/proper_scale_results.md:41,105, docs/day4_sft_results.md:24,33, data/distill/v1/DATASHEET.md",
+    "note": "All seven occurrences corrected to 15.13% and the two derived deltas to +15.0pp / +2.6pp. Data/distill/v1/DATASHEET.md separately corrected: it described the 224 val prompts as matching sft/v1/val.jsonl when all 2008 train and all 224 val prompts are drawn from sft/v1/train.jsonl (0 appear in val). Both were found by scripts/validate.py, not by reading."
   }
 ]

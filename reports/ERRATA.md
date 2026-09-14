@@ -311,9 +311,12 @@ So this file is not read as blanket scepticism:
 - **PMB's design is sound**: 86 probes per persona × 8 personas × 8 categories = a fully populated
   64/64 cell grid, 608 answerable / 80 unanswerable, and all 80 unanswerable correctly carry no
   gold answer.
-- The v0 result rows (0.16%/13.75%, 15.10%/8.75%, 17.76%/33.75%), the 24.7pp C-vs-E gap, the
+- The v0 result rows (0.16%/13.75%, **15.13%**/8.75%, 17.76%/33.75%), the 24.7pp C-vs-E gap, the
   38.1%/30.5% distillation win rates, the 0.524/0.509 stylometric figures, and the Q2_K-breakage
   narrative (which matches git history) all reconcile with committed artifacts.
+  *(System D's `pra_lenient` was quoted as 15.10% until E31 — the artifact rounds to 15.13%. The
+  first audit pass missed it by checking that the documents agreed with each other rather than that
+  they matched the artifact; `scripts/validate.py` recomputes it and caught the difference.)*
 
 ## What remains open
 

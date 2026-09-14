@@ -21,7 +21,7 @@
 |---|---|---|---|---|
 | A | raw, no memory | 0.0% | 0.16% | 13.75% |
 | B | SFT, no memory | 0.0% | 0.16% | 16.25% |
-| D | raw + memory (k=8) | 0.0% | 15.10% | 8.75% |
+| D | raw + memory (k=8) | 0.0% | 15.13% | 8.75% |
 | **E** | **SFT + memory (k=8)** | **0.49%** | **17.76%** | **33.75%** |
 
 ## Interpretation against pre-registered hypotheses
@@ -30,7 +30,7 @@
   A→B: `pra_lenient` essentially unchanged (0.16%→0.16%) — SFT alone cannot grant knowledge of
   facts the model was never given. UAR improved slightly (13.75%→16.25%).
 - **H5** (memory-aware SFT beats generic SFT when evaluated with memory): **confirmed.** D→E:
-  +2.7pp `pra_lenient` (15.10%→17.76%). This is the core hypothesis motivating Day 4's entire
+  +2.6pp `pra_lenient` (15.13%→17.76%). This is the core hypothesis motivating Day 4's entire
   design — training on examples where retrieved memories are actually in context, in the same
   format the eval-time pipeline produces, measurably helps beyond what raw retrieval alone gets.
 - **Unplanned but striking finding: SFT dramatically improved calibration with memory present.**

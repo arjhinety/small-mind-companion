@@ -181,8 +181,8 @@ so results can be traced back to the question they answer.
   always-injected (like Tier 5 user-profile memory) rather than retrieved.
   `render.py::render_persona_card` extended to render all new fields when present, strictly
   backward-compatible (a plain `{name, description, traits}` dict renders identically to before
-  — verified by a dedicated test). 9 new tests (`test_companion_persona.py`, plus additions to
-  `test_context.py`), 473 total passing.
+  — verified by a dedicated test). 4 new tests in `test_companion_persona.py`, plus additions to
+  `test_context.py`; 481 total passing.
 
   **Critically, this can't be a card that's merely present in context — the system must be
   measured against actually staying consistent with it.** That's not a new concept: it's

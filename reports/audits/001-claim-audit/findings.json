@@ -328,5 +328,16 @@
     "category": "STALE_COUNT",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 31,
+    "severity": "MED",
+    "area": "T",
+    "location": "README.md:37; docs/STUDIES.md:37,50; docs/proper_scale_results.md:41,105; docs/day4_sft_results.md:24,33",
+    "claim": "System D (raw + retrieval memory) scores 15.10% pra_lenient, a +14.9pp / +2.7pp gain over the no-memory baseline.",
+    "actual": "results/v0.1/D_memory/metrics.json holds pra_lenient = 0.1513157894736842 (92/608), which is 15.13%, not 15.10%. Six documents quoted the wrong rounding, and two derived deltas repeated it (+14.9pp and +2.7pp; correct: +15.0pp and +2.6pp). Missed by the first audit pass, which checked that the documents agreed with each other rather than that they matched the artifact; found by the claims-matrix validator, which recomputes the value.",
+    "category": "WRONG_ROUNDING",
+    "pinned": "",
+    "public": "yes"
   }
 ]

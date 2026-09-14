@@ -5,7 +5,7 @@ documentation that the committed artifacts did not support — and how each was 
 
 | File | Contents |
 |---|---|
-| `findings.json` | The 30 findings of the audit of commit `ae75ca9` (2026-09-13). Fields: `id`, `severity`, `area`, `location`, `claim` (as written), `actual` (what the artifacts show), `category`, `pinned`, `public` |
+| `findings.json` | The 31 findings of the audit of commit `ae75ca9` (2026-09-13). Fields: `id`, `severity`, `area`, `location`, `claim` (as written), `actual` (what the artifacts show), `category`, `pinned`, `public` |
 | `resolutions.json` | One resolution per finding: `status`, `where` it was fixed, and a note where the fix needed one. Statuses are `RESOLVED`, `PARTIAL` or `OPEN` |
 
 The rules derived from these findings are in [`docs/GUARDRAILS.md`](../../../docs/GUARDRAILS.md).

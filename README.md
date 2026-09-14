@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-473%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-481%20passing-brightgreen)
 
 ## Overview
 
@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 30 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 31 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 
 ```
@@ -34,7 +34,7 @@ uv run python scripts/recompute_hashes.py   # re-checks all nine dataset hashes
 |---|---|---|---|---|
 | `gemma-4-E2B-it` | — | raw model, no memory | 0.16% | 13.75% |
 | `gemma-4-E2B-it` | SFT v0 (202 ex) | LoRA SFT, no memory | 0.16% | 16.25% |
-| `gemma-4-E2B-it` | — | + hybrid retrieval memory (k=8), no SFT | 15.10% | 8.75% |
+| `gemma-4-E2B-it` | — | + hybrid retrieval memory (k=8), no SFT | 15.13% | 8.75% |
 | `gemma-4-E2B-it` | SFT v0 + memory | LoRA SFT + memory | 17.76% | 33.75% |
 | `gemma-4-E2B-it` | SFT v1 (2232 ex) | proper-scale LoRA SFT + memory | 15.30% | 70.0% |
 | `gemma-4-E2B-it` | SFT v1 + DPO v1 (2049 pairs) | + LoRA DPO. Evaluated pairwise only (24.7pp C-vs-E) — no full-PMB metrics for this checkpoint | — | — |
@@ -207,7 +207,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   473 unit tests, run in CI
+tests/                   481 unit tests, run in CI
 ```
 
 ## Results & Analysis

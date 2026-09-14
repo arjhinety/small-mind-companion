@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "c2dc5bb1ad865fd139a7049534289b59c8943c99",
+  "git_commit": "1ee789e6905c277db992a96ccd80d4d291caa360",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -56,8 +56,8 @@
     },
     "training_data": {
       "data/distill/v1/DATASHEET.md": {
-        "bytes": 851,
-        "sha256": "ff0f561c59ade675b86ac60836370c44ce46e24e3080da4378410912ba0d2564"
+        "bytes": 1221,
+        "sha256": "ef8369654497fc4a30367dafe9e5644630bee3cc31428ddb496a15d2c9f05428"
       },
       "data/distill/v1/train.jsonl": {
         "bytes": 4693818,
@@ -235,7 +235,7 @@
       },
       "docs/day4_sft_results.md": {
         "bytes": 5580,
-        "sha256": "75c05ee345dd867be7e914c6dd164c0447dd0506ee9101fc4d918fd05c53f6ac"
+        "sha256": "0b07d2ecd15d575080008e2236f864bb85ae5eb527630e73fda11aba54924270"
       },
       "docs/day4_sft_v1_results.md": {
         "bytes": 2561,
@@ -255,7 +255,7 @@
       },
       "docs/proper_scale_results.md": {
         "bytes": 16640,
-        "sha256": "20be0c30381850e6c9fb10a58b70998e86e88f40fe0dd7c8c809f7461bc29242"
+        "sha256": "53a1391ffcbf34f5fe4e535ae3f3ed95aa2e6486d84691925976ef218012ea61"
       },
       "docs/quantization_results.md": {
         "bytes": 14267,
@@ -266,8 +266,8 @@
         "sha256": "0cc7fe50b0caa0439142a637099577ae688d5a352c9755c6e6605d091dad484e"
       },
       "docs/research_questions.md": {
-        "bytes": 25893,
-        "sha256": "6b96d2821cf9b1cf3083d19a68163d3d2d527b9cab2066e079b6a3559811c7a1"
+        "bytes": 25894,
+        "sha256": "60ff41b46587eae837ab3ec9fcef0b22aac7b75217826f722ddfe5f32d90e184"
       }
     },
     "config": {
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 17798,
-        "sha256": "7ed85b759abdd9c72f9a9aac6140e0749a962d18189fa1f3f61ca86473158819"
+        "sha256": "94a81eb4d9d162cfc85c5180586d6bab7a1e9fbf14552814b186abf4a63cc6c1"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -357,23 +357,23 @@
     },
     "docs/STUDIES.md": {
       "bytes": 6466,
-      "sha256": "f3744887ba57cded2b1a5b31c5538a178a212e7663a6f97101888abb8de407b2"
+      "sha256": "43740150885fcf11516ba9a50e01a6d266744267709186d723fb40ba694c5f5f"
     },
     "reports/ERRATA.md": {
-      "bytes": 20724,
-      "sha256": "a77583eb99f51396c0f219cd1b240f74509cdea3b7891bbc6d6da4cfdece3e3f"
+      "bytes": 21021,
+      "sha256": "26c655e34377f2c67e80a45433635335c9697282b1969922799185826672fb67"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "152eae9be663a1a212acee16cb4d3920bbbba593fcccb3c1cb6941e572f0b10a"
+      "sha256": "3255e5d95451dd4abaf38352687bc885b69ef49e8d79771e1bd6c57748d03195"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 20487,
-      "sha256": "a53893b81ba2bd294c8b55bdbe9adf174e2ce92f3a27a433aae3d307821a4829"
+      "bytes": 21331,
+      "sha256": "c81d48a76e36801f7cbda2c3c733994d6cc66c4999d4b16baa1e8b3733e985ea"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 9250,
-      "sha256": "6d3c47bcb0b390d5b4130dbacd55910c382e1cbad30aff4cdfc331a1be21b9bf"
+      "bytes": 9820,
+      "sha256": "6b0af5c132bded40e6504b596bd4e97e03342b2b58c785be0a761f1a17dfb88e"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

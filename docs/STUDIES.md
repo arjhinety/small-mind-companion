@@ -5,7 +5,7 @@ evidence is hash-pinned, its write-ups stop changing, and its repository links r
 tag. Work done after a freeze belongs to the next study.
 
 The rule exists because the alternative — a repository whose numbers quietly drift as the
-interesting result changes — is exactly what the audit found 30 instances of. See
+interesting result changes — is exactly what the audit found 31 instances of. See
 [`reports/ERRATA.md`](../reports/ERRATA.md) for what went wrong, and
 [`docs/GUARDRAILS.md`](GUARDRAILS.md) for the rules derived from it.
 
@@ -34,7 +34,7 @@ does that interact with knowing when *not* to answer?
 |---|---|---|---|
 | A | raw model, no memory | — | pra_lenient 0.16% / UAR 13.75% |
 | B (v0) | LoRA SFT, no memory | 225 ex | 0.16% / 16.25% |
-| D | raw + hybrid retrieval memory (k=8) | — | 15.10% / **8.75%** |
+| D | raw + hybrid retrieval memory (k=8) | — | 15.13% / **8.75%** |
 | E (v0) | LoRA SFT + memory | 225 ex | 17.76% / 33.75% |
 | E (v1) | LoRA SFT + memory, rebalanced | 2,480 ex | 15.30% / 70.0% |
 | E-distill | + on-policy distillation | 2,008 prompts | **18.59% / 71.25%** |
@@ -47,7 +47,7 @@ UAR = unanswerable-abstention rate.
 **Headline findings.**
 
 1. **Retrieval augmentation alone made abstention worse.** Adding memory moved `pra_lenient` from
-   0.16% to 15.10% (+14.9pp) while UAR fell from 13.75% to **8.75%** (−5pp). Better recall and more
+   0.16% to 15.13% (+15.0pp) while UAR fell from 13.75% to **8.75%** (−5pp). Better recall and more
    confident fabrication arrived together.
 2. **Abstention had to be supervised explicitly, and the ratio had to be tuned.** Restoring the
    abstention training signal took UAR from 16.25% to **96.25%** — and drove false-abstention on

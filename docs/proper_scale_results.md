@@ -38,7 +38,7 @@ are unchanged and reused directly.
 | A | raw, no memory | 0.16% | 13.75% |
 | B (v0) | SFT v0 (225 ex), no memory | 0.16% | 16.25% |
 | **B (v1)** | **SFT v1, original 2242-example generation, no memory** | **0.16%** | **31.25%** ← superseded: 25.0% |
-| D | raw + memory (k=8) | 15.10% | 8.75% |
+| D | raw + memory (k=8) | 15.13% | 8.75% |
 | E (v0) | SFT v0 + memory | 17.76% | 33.75% |
 | **E (v1)** | **SFT v1 + memory** | **18.42%** | **16.25%** ← superseded: 70.0% |
 
@@ -102,7 +102,7 @@ scales cleanly).
 ## Interpretation against pre-registered hypotheses
 
 - **H5** (memory-aware SFT beats generic SFT when evaluated with memory): still holds directionally
-  at v1 scale (`pra_lenient` D→E: 15.10%→18.42%, a smaller gap than v0's but still positive) —
+  at v1 scale (`pra_lenient` D→E: 15.13%→18.42%, a smaller gap than v0's but still positive) —
   not overturned, but the calibration side of H5's story (the "unplanned but striking" UAR
   finding from Day 4) does **not** replicate at this scale; if anything it partially reverses.
   This is worth flagging clearly: the Day-4 v0 write-up's framing that "SFT dramatically
