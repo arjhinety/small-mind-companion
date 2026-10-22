@@ -176,6 +176,17 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "before that, which the claims matrix records. No result, dataset, metric or limitation "
         "changed; the README's own numbers and pointers are the only thing that moved.",
     },
+    {
+        "on": "2026-10-22",
+        "artifact": "README.md",
+        "reason": (
+            "Changed the GitHub clone URL and the Hugging Face org links from arrochi112 to arjhinety, "
+            "and updated the test count from 504 to 508 to match the validator. No result, dataset, che"
+            "ckpoint, number or claim about a result changed. The org rename changes which repository e"
+            "ach link points to; whether the arjhinety repositories hold the same artifacts as the old "
+            "org was not verified here."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,
