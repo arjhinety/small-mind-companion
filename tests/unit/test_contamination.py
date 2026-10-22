@@ -74,11 +74,21 @@ class TestExtractTextFields:
             ]
         }
         fields = extract_text_fields(obj)
-        assert fields == ["Hello!", "Hi there!"]
+        # Every string value is read, including the "role" labels: the check now scans
+        # labels as well as content. That is noise, not leakage, and it is deliberate.
+        assert fields == ["user", "Hello!", "assistant", "Hi there!"]
 
-    def test_no_expected_keys(self) -> None:
+    def test_reads_string_values_under_any_key(self) -> None:
         obj: dict = {"foo": "bar", "baz": 123}
-        assert extract_text_fields(obj) == []
+        assert extract_text_fields(obj) == ["bar"]
+
+    def test_reads_dpo_shape(self) -> None:
+        obj = {"prompt": "Ask me.", "chosen": "Sure.", "rejected": "No."}
+        assert extract_text_fields(obj) == ["Ask me.", "Sure.", "No."]
+
+    def test_reads_nested_lists_and_dicts(self) -> None:
+        obj = {"turns": [{"who": {"name": "Ana"}, "said": ["hi", ""]}]}
+        assert extract_text_fields(obj) == ["Ana", "hi"]
 
     def test_text_key(self) -> None:
         obj = {"text": "some text content"}
@@ -91,6 +101,27 @@ class TestExtractTextFields:
     def test_skips_non_string_values(self) -> None:
         obj = {"question": None, "gold_answer": 42}
         assert extract_text_fields(obj) == []
+
+
+EMOTIONAL_RANGE_PROBES = (
+    Path(__file__).resolve().parents[2] / "data" / "benchmarks" / "emotional_range" / "probes.jsonl"
+)
+
+
+class TestEmotionalRangeRealRow:
+    """Regression: the emotional_range probes use "context" and "register_description",
+    which the old fixed key list never read, so this benchmark contributed zero texts."""
+
+    def test_real_row_text_is_read(self) -> None:
+        with EMOTIONAL_RANGE_PROBES.open(encoding="utf-8") as fh:
+            row = json.loads(fh.readline())
+        fields = extract_text_fields(row)
+        assert row["context"] in fields
+        assert row["register_description"] in fields
+
+    def test_real_file_yields_texts(self) -> None:
+        texts = load_jsonl_texts(str(EMOTIONAL_RANGE_PROBES))
+        assert len(texts) > 0
 
 
 class TestLoadJsonlTexts:

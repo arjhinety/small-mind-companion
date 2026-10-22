@@ -431,3 +431,23 @@ datasets:
     freeze_pinned: false
     contamination_status: NOT_APPLICABLE
     derived_from: data/benchmarks/sft_personas_v1/personas
+
+# Amendments are dated and append-only: a changed verdict is recorded here, not by editing a status
+# line above. The status lines describe what the check said when it was written.
+amendments:
+  - date: "2026-10-22"
+    affects: [dpo-v0, dpo-v1-scale, distill-v1]
+    status_lines_changed: none
+    finding: >-
+      scripts/check_contamination.py read 0 texts from these files until 2026-10-22 (its
+      extract_text_fields read only text, content, question, gold_answer and messages). The
+      CLEAN_VERIFIED / INHERITED_CLEAN status was therefore not backed by a real comparison. The
+      script now reads every string value (this commit). Post-fix scan against all six probe
+      files: texts read dpo/v0 600, dpo/v1_scale 6147, distill/v1 8032; shared 13-grams 0 in all 18
+      train-x-probe pairs.
+    limit: >-
+      The 13-token window cannot match a probe under 13 tokens; only 5 of 688 pmb_v0_full probes are
+      that long. Zero shared 13-grams therefore means no leaked 13-token run, not no leak.
+    definition_unchanged: >-
+      The CLEAN_VERIFIED definition above (reported against pmb_v0_full) is not changed. This entry
+      records the post-fix evidence for the three verdicts only.

@@ -14,19 +14,24 @@ import sys
 from typing import Any
 
 
-def extract_text_fields(obj: dict[str, Any]) -> list[str]:
+def extract_text_fields(obj: Any) -> list[str]:
+    """Return every non-empty string value in a record, recursing into dicts and lists.
+
+    Reading a fixed list of keys made the check see nothing in records that use other
+    field names (emotional_range's "context", h22's "prompt", DPO's "prompt"/"chosen"/
+    "rejected", distillation's "prompt"), so those files were reported clean without
+    being compared. Every string value can carry leaked text, so every string is read.
+    """
     results: list[str] = []
-    for key in ("text", "content", "question", "gold_answer"):
-        val = obj.get(key)
-        if isinstance(val, str) and val:
-            results.append(val)
-    messages = obj.get("messages")
-    if isinstance(messages, list):
-        for msg in messages:
-            if isinstance(msg, dict):
-                content = msg.get("content")
-                if isinstance(content, str) and content:
-                    results.append(content)
+    if isinstance(obj, str):
+        if obj:
+            results.append(obj)
+    elif isinstance(obj, dict):
+        for val in obj.values():
+            results.extend(extract_text_fields(val))
+    elif isinstance(obj, list):
+        for val in obj:
+            results.extend(extract_text_fields(val))
     return results
 
 
