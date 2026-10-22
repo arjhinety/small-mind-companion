@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-504%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-508%20passing-brightgreen)
 
 ## Overview
 
@@ -71,7 +71,7 @@ User message + image
 ## Quick Start
 
 ```bash
-git clone https://github.com/arrogance231/small-mind-companion.git
+git clone https://github.com/arjhinety/small-mind-companion.git
 cd small-mind-companion
 uv sync             # base install (CPU-only, lint/test)
 ```
@@ -81,7 +81,7 @@ Smallest runnable example — generate a response using retrieved memory:
 ```python
 from onebee.inference.engine import HFEngine, GenerationConfig
 
-engine = HFEngine("arrochi112/onebee-gf-distill-v1")
+engine = HFEngine("arjhinety/onebee-gf-distill-v1")
 response = engine.generate([
     {"role": "system", "content": "You are a warm AI companion who remembers this user."},
     {"role": "user", "content": "What conference did I say I was attending?"},
@@ -158,19 +158,19 @@ Metrics are computed with an LLM judge under dual-order (position-bias-controlle
 Trained checkpoints are published to Hugging Face Hub, not committed to git (`outputs/` is gitignored). Resume/load any stage from its HF repo:
 
 ```bash
-hf download arrochi112/onebee-gf-distill-v1 --local-dir outputs/distill/v1/merged
+hf download arjhinety/onebee-gf-distill-v1 --local-dir outputs/distill/v1/merged
 ```
 
 | Checkpoint | Description |
 |---|---|
-| [`onebee-gf-sft-v0`](https://huggingface.co/arrochi112/onebee-gf-sft-v0) | Day 4 v0 SFT (202 train examples) |
-| [`onebee-gf-sft-v1`](https://huggingface.co/arrochi112/onebee-gf-sft-v1) | Proper-scale SFT, rebalanced (2232 train examples) |
-| [`onebee-gf-dpo-v0`](https://huggingface.co/arrochi112/onebee-gf-dpo-v0) | Week 2 DPO v0 (1 epoch, 200 pairs) |
-| [`onebee-gf-dpo-v1-4epoch`](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-4epoch) | DPO v0 data, 4 epochs (overfitting experiment) |
-| [`onebee-gf-dpo-v1-scale`](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
-| [`onebee-gf-distill-v1`](https://huggingface.co/arrochi112/onebee-gf-distill-v1) | SFT+DPO+distillation (H23) — **current best overall** |
-| [`onebee-gf-dpo-v1-scale-gguf`](https://huggingface.co/arrochi112/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations (of the pre-distillation checkpoint) — **Q2_K broken, use Q3_K_S or above** |
-| [`onebee-gf-distill-v1-gguf`](https://huggingface.co/arrochi112/onebee-gf-distill-v1-gguf) | GGUF quantizations of the current-best checkpoint (F16 through Q2_K + mmproj) — **Q2_K found broken on generation testing, use Q3_K_S or above** |
+| [`onebee-gf-sft-v0`](https://huggingface.co/arjhinety/onebee-gf-sft-v0) | Day 4 v0 SFT (202 train examples) |
+| [`onebee-gf-sft-v1`](https://huggingface.co/arjhinety/onebee-gf-sft-v1) | Proper-scale SFT, rebalanced (2232 train examples) |
+| [`onebee-gf-dpo-v0`](https://huggingface.co/arjhinety/onebee-gf-dpo-v0) | Week 2 DPO v0 (1 epoch, 200 pairs) |
+| [`onebee-gf-dpo-v1-4epoch`](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-4epoch) | DPO v0 data, 4 epochs (overfitting experiment) |
+| [`onebee-gf-dpo-v1-scale`](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale) | Proper-scale DPO, pre-distillation |
+| [`onebee-gf-distill-v1`](https://huggingface.co/arjhinety/onebee-gf-distill-v1) | SFT+DPO+distillation (H23) — **current best overall** |
+| [`onebee-gf-dpo-v1-scale-gguf`](https://huggingface.co/arjhinety/onebee-gf-dpo-v1-scale-gguf) | GGUF quantizations (of the pre-distillation checkpoint) — **Q2_K broken, use Q3_K_S or above** |
+| [`onebee-gf-distill-v1-gguf`](https://huggingface.co/arjhinety/onebee-gf-distill-v1-gguf) | GGUF quantizations of the current-best checkpoint (F16 through Q2_K + mmproj) — **Q2_K found broken on generation testing, use Q3_K_S or above** |
 
 Repo names still carry the project's earlier `onebee-gf` name (predates a repo rename to `small-mind-companion`) — renaming them would mean recreating and re-uploading tens of GB per repo, not worth it for a naming-only change.
 
@@ -209,7 +209,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   504 unit tests, run in CI
+tests/                   508 unit tests, run in CI
 ```
 
 ## Results & Analysis
