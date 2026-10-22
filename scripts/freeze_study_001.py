@@ -180,11 +180,11 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "on": "2026-10-22",
         "artifact": "README.md",
         "reason": (
-            "Changed the GitHub clone URL and the Hugging Face org links from arrochi112 to arjhinety, "
-            "and updated the test count from 504 to 508 to match the validator. No result, dataset, che"
-            "ckpoint, number or claim about a result changed. The org rename changes which repository e"
-            "ach link points to; whether the arjhinety repositories hold the same artifacts as the old "
-            "org was not verified here."
+            "Changed the GitHub clone URL and the Hugging Face org links from arrochi112 to "
+            "arjhinety, and updated the test count from 504 to 508 to match the validator. No "
+            "result, dataset, checkpoint, number or claim about a result changed. The org rename "
+            "changes which repository each link points to; whether the arjhinety repositories hold "
+            "the same artifacts as the old org was not verified here."
         ),
     },
 ]
