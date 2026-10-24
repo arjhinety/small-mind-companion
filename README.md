@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 34 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 35 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
@@ -180,7 +180,8 @@ Repo names still carry the project's earlier `onebee-gf` name (predates a repo r
 |---|---|---|---|
 | H1, H4, H5 | Memory retrieval and SFT each help; combined beats either alone | Confirmed at v0 scale | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
 | H10 | Retrieved-memory count k has an inverted-U optimum | Peaks at k=8 | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
-| H6, H7 | DPO improves preference alignment over SFT alone | Confirmed — 24.7pp pairwise win-rate gap at proper scale | [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
+| H6 | DPO improves persona consistency over SFT alone | Consistent, not confirmed — 24.7pp pairwise win-rate gap at proper scale, single seed | [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
+| H7 | DPO incurs an alignment tax on general capability | Not tested — no general-capability benchmark was run | [`docs/dpo_results.md`](docs/dpo_results.md) |
 | H16/H17-adjacent | 10x data scale improves calibration (UAR) | Confirmed after fixing 2 real bugs that initially masked the improvement | [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
 | H23 | On-policy distillation from a larger teacher improves quality without degrading persona consistency | Confirmed — `pra_lenient` +3.3pp, UAR flat, persona-consistency favored the distilled model | [`docs/distillation_results.md`](docs/distillation_results.md) |
 | — | GGUF quantization preserves generation quality | Confirmed down to Q3_K_S by manual generation checks (Q2_K broken) | [`docs/quantization_results.md`](docs/quantization_results.md) |

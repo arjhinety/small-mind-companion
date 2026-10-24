@@ -372,5 +372,16 @@
     "category": "MISLABELLED_RUN",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 35,
+    "severity": "MED",
+    "area": "T",
+    "location": "README.md:183",
+    "claim": "H6, H7 | DPO improves preference alignment over SFT alone | Confirmed — 24.7pp pairwise win-rate gap at proper scale",
+    "actual": "The 24.7pp C-vs-E gap is correct (results/v1_scale/C_vs_E_pairwise/summary.json) but neither hypothesis is confirmed. docs/proper_scale_results.md:65 calls the H6 evidence \"not a fully confirmed H6 verdict\" (one seed, one scale, ad-hoc pairwise judge rather than PCS). H7 (alignment tax on general capability) was never tested: docs/dpo_results.md:101, no general-capability benchmark was run on any DPO checkpoint. The validator and claims registry checked the number in the row, not the verdict beside it.",
+    "category": "UNSUPPORTED_CLAIM",
+    "pinned": "",
+    "public": "yes"
   }
 ]

@@ -270,7 +270,7 @@ HEADLINE_QUOTES: list[dict[str, Any]] = [
         "sources": [
             {
                 "path": "README.md",
-                "pattern": r"H6, H7 \|[^|]*\| Confirmed[^|]*?([\d.]+)pp pairwise",
+                "pattern": r"\| H6 \|[^|]*\| Consistent, not confirmed[^|]*?([\d.]+)pp pairwise",
             },
             {
                 "path": "docs/STUDIES.md",

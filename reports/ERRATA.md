@@ -391,6 +391,33 @@ of the claim, not a detail behind it.
 does not track this metric. It is now listed as a live discrepancy that the page would surface if
 it recurred.
 
+### E35 — The README marked H6 and H7 "Confirmed"; H7 was never tested (MED)
+
+**As written:** the README's Experiments table had one row,
+`H6, H7 | DPO improves preference alignment over SFT alone | Confirmed — 24.7pp pairwise win-rate gap at proper scale`.
+
+**Correction:** the two hypotheses are different claims and neither is confirmed.
+- **H6** (preference optimization improves persona consistency more than SFT alone,
+  `docs/research_questions.md:68`): the 24.7pp C-vs-E pairwise gap is real and reconciles with
+  `results/v1_scale/C_vs_E_pairwise/summary.json`, but `docs/proper_scale_results.md:65` calls it
+  "not a fully confirmed H6 verdict, but the strongest evidence yet" — one seed, one data scale,
+  an ad-hoc pairwise judge rather than the PCS metric H6 was specified against.
+- **H7** (preference optimization incurs an alignment tax on general capability,
+  `docs/research_questions.md:69`): **not tested.** `docs/dpo_results.md:101` says so — "Untested,
+  not refuted" — because no general-capability benchmark was run against any DPO checkpoint.
+
+The README row now splits them: H6 "Consistent, not confirmed — 24.7pp … single seed", H7 "Not
+tested". The row also renamed H6 as "preference alignment", which is the DPO training objective,
+not the persona-consistency outcome H6 predicts.
+
+**Why it survived the validator.** `scripts/validate.py` and `registry/claims.jsonl` checked the
+*number* in that row (the 24.7pp gap, which is correct) and treated the row as verified. Neither
+checks the *verdict* next to it. A correct figure under a wrong conclusion is the same shape as
+E2: the measurement was real, and the claim built on it was stronger than the measurement.
+
+**Found from outside the repository**, by a reader comparing the README against the study site
+(which already said "H7 was never tested").
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 

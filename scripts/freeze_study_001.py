@@ -187,6 +187,17 @@ REFREEZE_LOG: list[dict[str, str]] = [
             "the same artifacts as the old org was not verified here."
         ),
     },
+    {
+        "on": "2026-10-24",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E35: the Experiments table marked H6 and H7 'Confirmed'. Split into two rows: "
+            "H6 'Consistent, not confirmed' (the 24.7pp pairwise gap is unchanged and still "
+            "checked against its artifact) and H7 'Not tested'; the errata count in the README "
+            "moved from 34 to 35 to include E35. A correction to a verdict, not to any number, "
+            "dataset or checkpoint."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

@@ -202,5 +202,11 @@
     "status": "RESOLVED",
     "where": "docs/distillation_results.md:63-70",
     "note": "Row corrected to 21.25% and an inline note added explaining that 25.0% is the fixed-dedup pre-rebalance run. The third occurrence of the same class: the right run family, the wrong member of it."
+  },
+  {
+    "id": 35,
+    "status": "RESOLVED",
+    "where": "README.md:183-184",
+    "note": "Row split in two: H6 \"Consistent, not confirmed — 24.7pp pairwise win-rate gap at proper scale, single seed\"; H7 \"Not tested — no general-capability benchmark was run\". The validator pattern and the claims registry entry follow the H6 row; the 24.7pp figure is still checked against its artifact."
   }
 ]
