@@ -1,0 +1,106 @@
+{
+  "artifact_kind": "paired-significance-tests",
+  "generated_by": "scripts/paired_tests_v0_1.py",
+  "metric": "pra_lenient (per-probe `lenient_correct`, answerable probes only)",
+  "direction": "every difference is second minus first",
+  "methods": {
+    "test": "exact McNemar, two-sided: min(1, 2 * P(Binomial(b + c, 0.5) <= min(b, c)))",
+    "interval": "paired bootstrap over probes, 10000 resamples, seed 1337, 95% percentile interval (nearest rank), Python random.Random",
+    "multiplicity": "Holm across the four k-sweep steps; d_vs_e is a single comparison"
+  },
+  "caveats": [
+    "Every input is a single seed and a single run.",
+    "The k-sweep covers a 120-probe stratified subsample (15 per category), not the full 688.",
+    "The k-sweep raw.jsonl files are checked against their metrics.json by scripts/validate.py but are not pinned by the Study 001 freeze manifest."
+  ],
+  "inputs": {
+    "results/v0.1/D_memory/raw.jsonl": "1e2cb38259f3d961cc7383e8d65a448bd7b6de82d99890946c2367b062072c79",
+    "results/v0.1/E_sft_memory/raw.jsonl": "bafd29b287b62a58b3c94b0186f8b3b7326e19eee33d1b94e57bef3c8c174c89",
+    "results/v0.1/ksweep/k0/raw.jsonl": "ef2d062f70619935012e94088764b1cdb9cc3fd66bb898c43a11811d23d73acc",
+    "results/v0.1/ksweep/k16/raw.jsonl": "707064176e6180a7969e6cf6cbac243363561bdc4f580d783fd46305d071eebd",
+    "results/v0.1/ksweep/k2/raw.jsonl": "2dde9c4a63bad66575c89b9bd058ecf73196448671cbbdad11aba04b794c6911",
+    "results/v0.1/ksweep/k4/raw.jsonl": "97b8d097793a2af8ed7d1d45c0c170f8a7d6e4984b48f8654f0eb8b9813df0b7",
+    "results/v0.1/ksweep/k8/raw.jsonl": "d71b716a09051f276768b076838c6e8890f0da8fc9b9dd0bb69bf84da92c7750"
+  },
+  "comparisons": {
+    "d_vs_e": {
+      "first": "results/v0.1/D_memory/raw.jsonl",
+      "second": "results/v0.1/E_sft_memory/raw.jsonl",
+      "n_answerable_probes": 608,
+      "first_correct": 92,
+      "second_correct": 108,
+      "first_only_correct": 11,
+      "second_only_correct": 27,
+      "diff_pp": 2.631578947368421,
+      "mcnemar_exact_p": 0.013852965261321515,
+      "bootstrap_ci_pp": [
+        0.6578947368421052,
+        4.605263157894736
+      ]
+    },
+    "k0_vs_k2": {
+      "first": "results/v0.1/ksweep/k0/raw.jsonl",
+      "second": "results/v0.1/ksweep/k2/raw.jsonl",
+      "n_answerable_probes": 105,
+      "first_correct": 0,
+      "second_correct": 5,
+      "first_only_correct": 0,
+      "second_only_correct": 5,
+      "diff_pp": 4.761904761904762,
+      "mcnemar_exact_p": 0.0625,
+      "bootstrap_ci_pp": [
+        0.9523809523809524,
+        9.523809523809524
+      ],
+      "holm_adjusted_p": 0.1875
+    },
+    "k2_vs_k4": {
+      "first": "results/v0.1/ksweep/k2/raw.jsonl",
+      "second": "results/v0.1/ksweep/k4/raw.jsonl",
+      "n_answerable_probes": 105,
+      "first_correct": 5,
+      "second_correct": 8,
+      "first_only_correct": 1,
+      "second_only_correct": 4,
+      "diff_pp": 2.857142857142857,
+      "mcnemar_exact_p": 0.375,
+      "bootstrap_ci_pp": [
+        -0.9523809523809524,
+        7.6190476190476195
+      ],
+      "holm_adjusted_p": 0.5
+    },
+    "k4_vs_k8": {
+      "first": "results/v0.1/ksweep/k4/raw.jsonl",
+      "second": "results/v0.1/ksweep/k8/raw.jsonl",
+      "n_answerable_probes": 105,
+      "first_correct": 8,
+      "second_correct": 18,
+      "first_only_correct": 0,
+      "second_only_correct": 10,
+      "diff_pp": 9.523809523809524,
+      "mcnemar_exact_p": 0.001953125,
+      "bootstrap_ci_pp": [
+        4.761904761904762,
+        15.238095238095239
+      ],
+      "holm_adjusted_p": 0.0078125
+    },
+    "k8_vs_k16": {
+      "first": "results/v0.1/ksweep/k8/raw.jsonl",
+      "second": "results/v0.1/ksweep/k16/raw.jsonl",
+      "n_answerable_probes": 105,
+      "first_correct": 18,
+      "second_correct": 15,
+      "first_only_correct": 3,
+      "second_only_correct": 0,
+      "diff_pp": -2.857142857142857,
+      "mcnemar_exact_p": 0.25,
+      "bootstrap_ci_pp": [
+        -6.666666666666667,
+        0.0
+      ],
+      "holm_adjusted_p": 0.5
+    }
+  }
+}

@@ -1396,6 +1396,52 @@ def result_registry_is_fresh() -> bool:
     return RESULT_REGISTRY.read_text(encoding="utf-8") == module.serialise(module.build())
 
 
+_PAIRED_TESTS: dict[str, Any] = {}
+
+
+def _paired_tests() -> dict[str, Any]:
+    """Fresh recomputation from the committed raw.jsonl files, built once per validator run."""
+    if not _PAIRED_TESTS:
+        module = import_script("paired_tests_v0_1", "scripts/paired_tests_v0_1.py")
+        _PAIRED_TESTS["module"] = module
+        _PAIRED_TESTS["build"] = module.build()
+    return _PAIRED_TESTS
+
+
+def paired_tests_fresh() -> bool:
+    """results/v0.1/paired_tests/paired_tests.json equals a recomputation from raw.jsonl."""
+    cache = _paired_tests()
+    path = ROOT / "results/v0.1/paired_tests/paired_tests.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def paired_stat(comparison: str, field: str) -> float:
+    """One recomputed statistic: mcnemar_exact_p, holm_adjusted_p, diff_pp, ci_low or ci_high.
+
+    Recomputed from raw.jsonl, not read from the committed JSON, so a quoted value is checked
+    against the responses themselves.
+    """
+    row = _paired_tests()["build"]["comparisons"][comparison]
+    if field == "ci_low":
+        return float(row["bootstrap_ci_pp"][0])
+    if field == "ci_high":
+        return float(row["bootstrap_ci_pp"][1])
+    return float(row[field])
+
+
+def paired_counts(comparison: str) -> tuple[int, int, int, int]:
+    """(first_correct, second_correct, first_only_correct, second_only_correct)."""
+    row = _paired_tests()["build"]["comparisons"][comparison]
+    return (
+        row["first_correct"],
+        row["second_correct"],
+        row["first_only_correct"],
+        row["second_only_correct"],
+    )
+
+
 def result_registry_hashes_match() -> bool:
     for row in result_registry_rows():
         artifacts = row.get("artifacts") or {}
@@ -1868,6 +1914,9 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "studies_registry_matches_config": studies_registry_matches_config,
         "result_registry_is_fresh": result_registry_is_fresh,
         "result_registry_hashes_match": result_registry_hashes_match,
+        "paired_tests_fresh": paired_tests_fresh,
+        "paired_stat": paired_stat,
+        "paired_counts": paired_counts,
         "guardrail_references_resolve": guardrail_references_resolve,
         "errata_ids_resolve": errata_ids_resolve,
         "errata_presents_every_finding": errata_presents_every_finding,
