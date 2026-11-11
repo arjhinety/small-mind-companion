@@ -23,9 +23,13 @@ Both families compare two systems on the *same* probes, so the tests are paired:
   curve. ``d_vs_e`` is a single comparison and is not adjusted.
 
 Standard library only, on purpose: ``scripts/validate.py`` imports this module to recompute every
-quoted p-value and interval, and the validator does not depend on numpy. ``random.Random`` with a
-fixed seed is also stable across Python versions for ``choices``, which numpy's Generator streams
-do not promise.
+quoted p-value and interval, and the validator does not depend on numpy.
+
+Resampling draws indices as ``floor(rng.random() * n)`` from a seeded ``random.Random``
+(``draw_with_replacement``). Python guarantees only that ``random()`` keeps producing the same
+sequence for the same seed across versions; ``choices`` and the other helpers built on it may
+change. On CPython 3.11, unweighted ``choices`` computes exactly this expression, so the intervals
+are the same as they were when ``choices`` was called directly.
 
 Usage::
 
@@ -93,6 +97,13 @@ def mcnemar_exact(first_only: int, second_only: int) -> float:
     return min(1.0, 2.0 * tail)
 
 
+def draw_with_replacement(rng: random.Random, population: list[Any], k: int) -> list[Any]:
+    """k uniform draws with replacement, using only rng.random(), whose sequence Python keeps
+    stable across versions for a given seed."""
+    n = len(population)
+    return [population[math.floor(rng.random() * n)] for _ in range(k)]
+
+
 def paired_bootstrap_ci_pp(
     first: list[int], second: list[int], seed: int = SEED, n_resamples: int = N_RESAMPLES
 ) -> tuple[float, float]:
@@ -102,7 +113,7 @@ def paired_bootstrap_ci_pp(
     diffs = [b - a for a, b in zip(first, second, strict=True)]
     n = len(diffs)
     rng = random.Random(seed)
-    means = sorted(sum(rng.choices(diffs, k=n)) / n * 100 for _ in range(n_resamples))
+    means = sorted(sum(draw_with_replacement(rng, diffs, n)) / n * 100 for _ in range(n_resamples))
     alpha = 1.0 - CI_LEVEL
     lo = means[math.floor(alpha / 2 * n_resamples)]
     hi = means[math.ceil((1 - alpha / 2) * n_resamples) - 1]
@@ -146,7 +157,7 @@ def persona_bootstrap_ci_pp(
     rng = random.Random(seed)
     means: list[float] = []
     for _ in range(n_resamples):
-        drawn = rng.choices(names, k=len(names))
+        drawn = draw_with_replacement(rng, names, len(names))
         total = sum(by_group[g][0] for g in drawn)
         count = sum(by_group[g][1] for g in drawn)
         means.append(total / count * 100)
