@@ -1442,6 +1442,67 @@ def paired_counts(comparison: str) -> tuple[int, int, int, int]:
     )
 
 
+_UAR_LISTS: dict[str, Any] = {}
+
+
+def _uar_lists() -> dict[str, Any]:
+    """Fresh re-scoring of saved responses under both phrase lists, built once per run."""
+    if not _UAR_LISTS:
+        module = import_script("uar_phrase_lists", "scripts/uar_phrase_lists.py")
+        _UAR_LISTS["module"] = module
+        _UAR_LISTS["build"] = module.build()
+    return _UAR_LISTS
+
+
+def uar_lists_fresh() -> bool:
+    """results/audit/uar_phrase_lists/uar_phrase_lists.json equals a fresh re-scoring."""
+    cache = _uar_lists()
+    path = ROOT / "results/audit/uar_phrase_lists/uar_phrase_lists.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def uar_list_counts(run: str, phrase_list: str) -> tuple[int, int]:
+    """(abstentions on unanswerable probes, answerable probes flagged) for one run and list.
+
+    Recomputed from raw.jsonl with rule.py's own list object, not read from the output JSON.
+    """
+    row = _uar_lists()["build"]["runs"][run][phrase_list]
+    return (row["abstained_unanswerable"], row["abstained_answerable"])
+
+
+_SFT_COUNTS: dict[str, Any] = {}
+
+
+def _sft_counts() -> dict[str, Any]:
+    """Fresh template-match count of each SFT corpus, built once per validator run."""
+    if not _SFT_COUNTS:
+        module = import_script("sft_abstention_counts", "scripts/sft_abstention_counts.py")
+        _SFT_COUNTS["module"] = module
+        _SFT_COUNTS["build"] = module.build()
+    return _SFT_COUNTS
+
+
+def sft_counts_fresh() -> bool:
+    """results/audit/sft_abstention_counts/sft_abstention_counts.json equals a fresh count."""
+    cache = _sft_counts()
+    path = ROOT / "results/audit/sft_abstention_counts/sft_abstention_counts.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def sft_kind_counts(corpus: str, split: str) -> tuple[int, int, int]:
+    """(abstention, irrelevant_retrieval, memory_relevant) for a corpus split, or 'all'.
+
+    Recomputed from the committed jsonl by exact match against generate_sft_data.py's templates.
+    """
+    row = _sft_counts()["build"]["corpora"][corpus]
+    counts = row["total"] if split == "all" else row["by_split"][split]
+    return (counts["abstention"], counts["irrelevant_retrieval"], counts["memory_relevant"])
+
+
 def result_registry_hashes_match() -> bool:
     for row in result_registry_rows():
         artifacts = row.get("artifacts") or {}
@@ -1917,6 +1978,10 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "paired_tests_fresh": paired_tests_fresh,
         "paired_stat": paired_stat,
         "paired_counts": paired_counts,
+        "uar_lists_fresh": uar_lists_fresh,
+        "uar_list_counts": uar_list_counts,
+        "sft_counts_fresh": sft_counts_fresh,
+        "sft_kind_counts": sft_kind_counts,
         "guardrail_references_resolve": guardrail_references_resolve,
         "errata_ids_resolve": errata_ids_resolve,
         "errata_presents_every_finding": errata_presents_every_finding,

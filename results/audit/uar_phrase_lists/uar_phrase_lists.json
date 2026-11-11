@@ -1,0 +1,206 @@
+{
+  "artifact_kind": "uar-phrase-list-comparison",
+  "generated_by": "scripts/uar_phrase_lists.py",
+  "metric": "uar = abstentions on unanswerable probes / unanswerable probes; abstained_answerable counts answerable probes flagged as abstaining",
+  "lists": {
+    "original": {
+      "source": "src/onebee/evaluation/graders/rule.py _ABSTENTION_PHRASES[:17]",
+      "equals": "the whole list at commit 552cf47 (--verify-history)",
+      "phrases": [
+        "i don't know",
+        "i do not know",
+        "i'm not sure",
+        "i am not sure",
+        "i don't have that information",
+        "i do not have that information",
+        "you haven't told me",
+        "you have not told me",
+        "i don't recall",
+        "i do not recall",
+        "i cannot answer",
+        "i can't answer",
+        "i have no idea",
+        "i'm not aware",
+        "i am not aware",
+        "i don't remember",
+        "i do not remember"
+      ]
+    },
+    "current": {
+      "source": "src/onebee/evaluation/graders/rule.py _ABSTENTION_PHRASES",
+      "n_phrases": 29,
+      "added_after_original": [
+        "i don't think you've told me that",
+        "i do not think you have told me that",
+        "i don't have anything about that in what i remember",
+        "i don't want to guess",
+        "i do not want to guess",
+        "doesn't ring a bell",
+        "does not ring a bell",
+        "not seeing anything about that",
+        "don't think you've mentioned that",
+        "do not think you have mentioned that",
+        "rather not assume",
+        "not something i have on record"
+      ]
+    }
+  },
+  "note": "Read-only re-scoring. Stored abstained flags and metrics.json are not modified.",
+  "inputs": {
+    "results/v0.1/A_raw/raw.jsonl": "b26fad4b665f1ae3b2b76f7547a67d6fe5d5b08779080602444ae04134dd8e57",
+    "results/v0.1/B_sft/raw.jsonl": "2a24418ed3d5928d181f2b42c19f00a8b9a466a27d1b8275050b4e26f615c434",
+    "results/v0.1/D_memory/raw.jsonl": "1e2cb38259f3d961cc7383e8d65a448bd7b6de82d99890946c2367b062072c79",
+    "results/v0.1/E_sft_memory/raw.jsonl": "bafd29b287b62a58b3c94b0186f8b3b7326e19eee33d1b94e57bef3c8c174c89",
+    "results/v1_scale/B_sft/raw.jsonl": "3230924480dd94078a58d97ebf5c6ec3c40b497ab2583dc00fcba9dd532e1aaf",
+    "results/v1_scale/E_distill/raw.jsonl": "d617eeb709149cbf8950225ea81873cc9d5cf210655ef6af9a932a794b0b1fbb",
+    "results/v1_scale/E_sft_memory/raw.jsonl": "0969eb81bf84212d48c154c6ee606d4abde065f7836f3d49a70302b53b0a22fa"
+  },
+  "skipped": {
+    "results/v0.1/C1_vs_E_pairwise_small/raw.jsonl": "rows are not per-probe probe/response/abstained records",
+    "results/v0.1/C_vs_E_pairwise/raw.jsonl": "rows are not per-probe probe/response/abstained records",
+    "results/v1_scale/C_vs_E_pairwise/raw.jsonl": "rows are not per-probe probe/response/abstained records",
+    "results/v1_scale/C_vs_F_distill_pairwise/raw.jsonl": "rows are not per-probe probe/response/abstained records"
+  },
+  "runs": {
+    "results/v0.1/A_raw": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 11,
+        "abstained_answerable": 205
+      },
+      "original": {
+        "abstained_unanswerable": 11,
+        "uar": 0.1375,
+        "abstained_answerable": 205,
+        "stored_flags_match": true
+      },
+      "current": {
+        "abstained_unanswerable": 11,
+        "uar": 0.1375,
+        "abstained_answerable": 205,
+        "stored_flags_match": true
+      }
+    },
+    "results/v0.1/B_sft": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 13,
+        "abstained_answerable": 220
+      },
+      "original": {
+        "abstained_unanswerable": 13,
+        "uar": 0.1625,
+        "abstained_answerable": 220,
+        "stored_flags_match": true
+      },
+      "current": {
+        "abstained_unanswerable": 13,
+        "uar": 0.1625,
+        "abstained_answerable": 220,
+        "stored_flags_match": true
+      }
+    },
+    "results/v0.1/D_memory": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 7,
+        "abstained_answerable": 36
+      },
+      "original": {
+        "abstained_unanswerable": 7,
+        "uar": 0.0875,
+        "abstained_answerable": 36,
+        "stored_flags_match": true
+      },
+      "current": {
+        "abstained_unanswerable": 7,
+        "uar": 0.0875,
+        "abstained_answerable": 36,
+        "stored_flags_match": true
+      }
+    },
+    "results/v0.1/E_sft_memory": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 27,
+        "abstained_answerable": 151
+      },
+      "original": {
+        "abstained_unanswerable": 27,
+        "uar": 0.3375,
+        "abstained_answerable": 151,
+        "stored_flags_match": true
+      },
+      "current": {
+        "abstained_unanswerable": 27,
+        "uar": 0.3375,
+        "abstained_answerable": 151,
+        "stored_flags_match": true
+      }
+    },
+    "results/v1_scale/B_sft": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 17,
+        "abstained_answerable": 200
+      },
+      "original": {
+        "abstained_unanswerable": 17,
+        "uar": 0.2125,
+        "abstained_answerable": 200,
+        "stored_flags_match": true
+      },
+      "current": {
+        "abstained_unanswerable": 17,
+        "uar": 0.2125,
+        "abstained_answerable": 200,
+        "stored_flags_match": true
+      }
+    },
+    "results/v1_scale/E_distill": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 57,
+        "abstained_answerable": 129
+      },
+      "original": {
+        "abstained_unanswerable": 47,
+        "uar": 0.5875,
+        "abstained_answerable": 71,
+        "stored_flags_match": false
+      },
+      "current": {
+        "abstained_unanswerable": 57,
+        "uar": 0.7125,
+        "abstained_answerable": 129,
+        "stored_flags_match": true
+      }
+    },
+    "results/v1_scale/E_sft_memory": {
+      "n_unanswerable": 80,
+      "n_answerable": 608,
+      "stored": {
+        "abstained_unanswerable": 56,
+        "abstained_answerable": 195
+      },
+      "original": {
+        "abstained_unanswerable": 44,
+        "uar": 0.55,
+        "abstained_answerable": 137,
+        "stored_flags_match": false
+      },
+      "current": {
+        "abstained_unanswerable": 56,
+        "uar": 0.7,
+        "abstained_answerable": 195,
+        "stored_flags_match": true
+      }
+    }
+  }
+}
