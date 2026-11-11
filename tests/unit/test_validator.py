@@ -379,6 +379,34 @@ def test_paper_ledger_flags_a_method_source_whose_function_is_gone(
     assert "no_such_function" in finding.message
 
 
+def test_study002_configs_pass(v: Any) -> None:
+    findings = v.check_study002_configs()
+    assert findings
+    assert all(f.ok for f in findings), [(f.claim_id, f.message) for f in findings if not f.ok]
+
+
+def test_study002_config_with_local_base_or_main_or_no_configs_fails(
+    v: Any, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # The two ways Study 001's configs pinned nothing (ERRATA E4), plus an empty folder, which
+    # must not pass vacuously.
+    monkeypatch.setattr(v, "STUDY002_CONFIGS", tmp_path)
+    [empty] = v.check_study002_configs()
+    assert not empty.ok
+    (tmp_path / "bad.yaml").write_text(
+        'base_model: "outputs/sft/v1/merged"\nbase_model_revision: "main"\n', encoding="utf-8"
+    )
+    # Two segments and absent in CI, so it looks like an `org/name` Hub id unless outputs/ is
+    # rejected by name.
+    (tmp_path / "two_segment_local.yaml").write_text(
+        f'base_model: "outputs/merged"\nbase_model_revision: "{"a" * 40}"\n', encoding="utf-8"
+    )
+    bad, two_segment = v.check_study002_configs()
+    assert not bad.ok
+    assert "not a Hub repo id" in bad.message and "not a 40-char SHA" in bad.message
+    assert not two_segment.ok and "not a Hub repo id" in two_segment.message
+
+
 def test_upstream_ledger_passes(v: Any) -> None:
     failures = [f for f in v.check_upstream() if not f.ok]
     assert not failures, [(f.claim_id, f.message) for f in failures]

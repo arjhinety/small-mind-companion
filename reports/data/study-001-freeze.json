@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "7d205ed77bc3a3ecf721e9ef40c8416ff1d33b89",
+  "git_commit": "35f91aa5327059ecd4750719dfc8be92274c9aba",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "c7510b4f1ff0b53237d83267a99058c9f46b0593b3af7de54454090c84ad2f8d"
+        "sha256": "f6f58319bb767f15af2ad9c2f348e950781678b2d0a45b4c91def45ab22dfe60"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -386,6 +386,11 @@
     {
       "on": "2026-11-11",
       "artifact": "README.md",
+      "reason": "Test count 528 -> 531 in the badge and the layout block: two validator tests for the new Study 002 config check (configs/training/study002/*.yaml must load every model from the Hub at a 40-char commit SHA; an empty folder, a local base or a 'main' pin fails), and one test that each of those configs' pins reaches every model, tokenizer and teacher load. Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
       "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
     }
   ],
@@ -396,12 +401,12 @@
       "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
     },
     "docs/STUDIES.md": {
-      "bytes": 10480,
-      "sha256": "fcabf0545ca59cb994b8e1bac4e26992d498e15c3fb4fe89980749ef1d7c99da"
+      "bytes": 12501,
+      "sha256": "d252078e914492702a36241e9ca7457b6ff15bf2c0302b27bb6aa6950d8fd979"
     },
     "reports/ERRATA.md": {
-      "bytes": 46630,
-      "sha256": "8e4b7b038c8f90664453f38b3cd8eafef4c56ff23741af144188352895cc7407"
+      "bytes": 47135,
+      "sha256": "9356b8aaf7b7f2d3424aba795ddeecbd3f940c93bd3228cecf6017cfb8b6d907"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,

@@ -142,6 +142,31 @@ finding it came from.
 13. **Pin `base_model_revision` in the DPO and distillation configs** (E4). `distill_v1.yaml`
     (base and teacher), `dpo.yaml`, `dpo_v1_more_epochs.yaml` and `dpo_v1_scale.yaml` all reference
     `"main"`. Until they pin a SHA, no run launched from them can be called reproducible.
+
+    **Done 2026-11-11.** The frozen configs stay as Study 001's record. Pinned equivalents are in
+    `configs/training/study002/`, and `scripts/validate.py` now fails any config there whose model
+    is not a Hub repo id or whose revision is not a 40-char SHA. Two findings shaped them:
+    - The frozen bases are local folders (`outputs/*/merged`), for which `revision` is ignored, so
+      a SHA there would not have pinned anything. Each Study 002 config loads the published copy
+      instead, at the commit that added its weights (2026-08-14; unchanged as of 2026-11-11).
+      That each copy is byte-identical to the local folder Study 001 trained from is likely but
+      unverified: compare `sha256sum outputs/*/merged/model.safetensors` on the GPU box with the
+      values in `results/audit/hub_revisions/hub_revisions.json`.
+    - `main` has moved. On 2026-11-03 both Gemma models changed `tokenizer.json` (nothing else). The
+      distillation teacher is pinned to `google/gemma-4-E4B-it` at `ee0ef60`, the commit `main`
+      resolved to when Study 001's distillation ran (resolved from Hub history, not logged at the
+      time; the teacher reads the student's token ids, so the pin is for exactness).
+      `run_crossover_baseline.py`, which does use E4B's own tokenizer, is pinned to the same commit.
+
+    `src/onebee/training/distill.py` also now passes the student's revision to trl, which reads it
+    only from `model_init_kwargs`; before, a Hub student would have loaded from `main` whatever the
+    config said. `tests/unit/test_study002_pins.py` checks every pin reaches its load.
+
+    Outside this item and still unpinned: the evaluation and comparison scripts that load local
+    `outputs/*/merged` folders (`run_system_b*.py`, `run_system_e*.py`, `compare_*.py`,
+    `run_emotional_range_eval.py`), and `scripts/model_bakeoff.py`, which defaults to `main` but
+    records the commits it resolved. A Study 002 run of any of them should load the published copy
+    at its pinned commit instead.
 14. **A small blinded human evaluation.** No human review exists anywhere: every datasheet says "not
     human-reviewed", and no reviewer log or teacher transcript was retained, so the
     `gpt-5.6-luna` teacher identity is self-reported and unverifiable from the repository. A

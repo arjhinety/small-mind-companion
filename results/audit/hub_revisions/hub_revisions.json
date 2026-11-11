@@ -1,0 +1,112 @@
+{
+  "artifact_kind": "hub_revision_snapshot",
+  "generated_on": "2026-11-11",
+  "note": "Snapshot of Hugging Face Hub state for the Study 002 revision pins. Regenerate with scripts/hub_revisions.py (needs network).",
+  "checkpoints": {
+    "arjhinety/onebee-gf-sft-v0": {
+      "pinned_revision": "b7d767dcd8bc2af882a0542182f40926dcae3693",
+      "pinned_commit": {
+        "id": "b7d767dcd8bc2af882a0542182f40926dcae3693",
+        "date": "2026-08-14T13:13:19.000Z",
+        "title": "Upload folder using huggingface_hub"
+      },
+      "parent_commit": {
+        "id": "6aa8bcbce68c017ba40f5a93e95ff2f64e3b1423",
+        "date": "2026-08-14T13:12:33.000Z",
+        "title": "initial commit"
+      },
+      "pinned_commit_added_the_weights": true,
+      "head_commit": {
+        "id": "9c4f607db4e6b277da2dc4aaccc789af3b7c3ac3",
+        "date": "2026-09-13T14:54:02.000Z",
+        "title": "Correct the DPO UAR misattribution and normalise owner references"
+      },
+      "model_safetensors_sha256_at_pin": "70e9a579af7ee6c43331680491da815ee0cdcc1306c6fd810a7eeb393bb6386d",
+      "model_safetensors_sha256_at_head": "70e9a579af7ee6c43331680491da815ee0cdcc1306c6fd810a7eeb393bb6386d",
+      "weights_unchanged_since_pin": true,
+      "tokenizer_json_blob_at_pin": "1ff9f3e3439a939b971f9919e821bf87e835a503"
+    },
+    "arjhinety/onebee-gf-sft-v1": {
+      "pinned_revision": "8d0e632b02df9cdf8a06dc8408db57ee3e995357",
+      "pinned_commit": {
+        "id": "8d0e632b02df9cdf8a06dc8408db57ee3e995357",
+        "date": "2026-08-14T13:20:17.000Z",
+        "title": "Upload folder using huggingface_hub"
+      },
+      "parent_commit": {
+        "id": "6aa8bcbce68c017ba40f5a93e95ff2f64e3b1423",
+        "date": "2026-08-14T13:12:33.000Z",
+        "title": "initial commit"
+      },
+      "pinned_commit_added_the_weights": true,
+      "head_commit": {
+        "id": "4025a09c388c72aefe201ae100e4dfd354803f2f",
+        "date": "2026-09-13T14:53:41.000Z",
+        "title": "Correct the DPO UAR misattribution and normalise owner references"
+      },
+      "model_safetensors_sha256_at_pin": "73e592b0b77e94f9d3a1187e581279d0ad982b3554abe39e307933e33f3048e8",
+      "model_safetensors_sha256_at_head": "73e592b0b77e94f9d3a1187e581279d0ad982b3554abe39e307933e33f3048e8",
+      "weights_unchanged_since_pin": true,
+      "tokenizer_json_blob_at_pin": "1ff9f3e3439a939b971f9919e821bf87e835a503"
+    },
+    "arjhinety/onebee-gf-dpo-v1-scale": {
+      "pinned_revision": "b984814810a1248f74349e2dcb549d6e9ddb329f",
+      "pinned_commit": {
+        "id": "b984814810a1248f74349e2dcb549d6e9ddb329f",
+        "date": "2026-08-14T13:21:54.000Z",
+        "title": "Upload folder using huggingface_hub"
+      },
+      "parent_commit": {
+        "id": "c8c3d8cddc19ddb71bbdd11117839f511f2ba4e1",
+        "date": "2026-08-14T13:12:36.000Z",
+        "title": "initial commit"
+      },
+      "pinned_commit_added_the_weights": true,
+      "head_commit": {
+        "id": "e152aa73e11d39f057988c3a497095b1c9708a34",
+        "date": "2026-09-13T14:53:37.000Z",
+        "title": "Correct the DPO UAR misattribution and normalise owner references"
+      },
+      "model_safetensors_sha256_at_pin": "b5eb69cadfb436f6d2e0240abda79b7d005a4ee81b24c1088990d66651ea29c9",
+      "model_safetensors_sha256_at_head": "b5eb69cadfb436f6d2e0240abda79b7d005a4ee81b24c1088990d66651ea29c9",
+      "weights_unchanged_since_pin": true,
+      "tokenizer_json_blob_at_pin": "1ff9f3e3439a939b971f9919e821bf87e835a503"
+    }
+  },
+  "gemma": {
+    "google/gemma-4-E4B-it": {
+      "pinned_revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+      "pinned_commit": {
+        "id": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+        "date": "2026-07-20T16:42:03.000Z",
+        "title": "Add response_template to tokenizer_config.json (#39)"
+      },
+      "tokenizer_json_blob_at_pin": "1ff9f3e3439a939b971f9919e821bf87e835a503",
+      "next_commit": {
+        "id": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+        "date": "2026-11-03T16:13:15.000Z",
+        "title": "fix: Remediate 219 glitch tokens in tokenizer.json (#50)"
+      },
+      "files_changed_by_next_commit": [
+        "tokenizer.json"
+      ]
+    },
+    "google/gemma-4-E2B-it": {
+      "pinned_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "pinned_commit": {
+        "id": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+        "date": "2026-07-20T16:41:56.000Z",
+        "title": "Add response_template to tokenizer_config.json (#40)"
+      },
+      "tokenizer_json_blob_at_pin": "1ff9f3e3439a939b971f9919e821bf87e835a503",
+      "next_commit": {
+        "id": "4adf15748de9e1a0097b6274cee9c15836c41c37",
+        "date": "2026-11-03T16:10:29.000Z",
+        "title": "fix: Remediate 233 glitch tokens in tokenizer.json (#51)"
+      },
+      "files_changed_by_next_commit": [
+        "tokenizer.json"
+      ]
+    }
+  }
+}

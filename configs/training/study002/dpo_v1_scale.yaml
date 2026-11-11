@@ -1,0 +1,11 @@
+# Study 002 pinned equivalent of configs/training/dpo_v1_scale.yaml (frozen; see dpo_v0.yaml for why
+# the frozen file pins nothing).
+# Base: the SFT v1 checkpoint as published on the Hub, at the commit that added its weights
+# (2026-08-14; unchanged as of 2026-11-11, see results/audit/hub_revisions/hub_revisions.json).
+# Identity with the local outputs/sft/v1/merged is unverified.
+# Same data and hyperparameters as the frozen config, including the lineage defect of STUDIES item 4.
+base_model: "arjhinety/onebee-gf-sft-v1"
+base_model_revision: "8d0e632b02df9cdf8a06dc8408db57ee3e995357"
+train_file: "data/dpo/v1_scale/train.jsonl"
+val_file: "data/dpo/v1_scale/val.jsonl"
+output_dir: "outputs/study002/dpo/v1_scale"
