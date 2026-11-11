@@ -1,0 +1,416 @@
+{
+  "artifact_kind": "pra-containment-exploratory",
+  "generated_by": "scripts/pra_containment.py",
+  "status": "exploratory: rule defined after reading these responses; not a reported metric",
+  "rules": {
+    "exact_whole_response": "src/onebee/evaluation/graders/rule.py exact_match(response, gold_answer)",
+    "containment": "normalize_text(gold) occurs in normalize_text(response) as a whole word or phrase: (?<!\\w)gold(?!\\w)",
+    "judge": "stored lenient_correct (judge score >= 3)"
+  },
+  "totals": {
+    "runs": 7,
+    "responses": 4816,
+    "exact_whole_response": 3
+  },
+  "runs": {
+    "results/v0.1/A_raw": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 1,
+        "contain_only": 2,
+        "judge_only": 0,
+        "neither": 605
+      },
+      "cohen_kappa": 0.4988,
+      "by_category": {
+        "continuity": {
+          "both": 0,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 95
+        },
+        "distractor": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "episodic": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 69
+        },
+        "factual": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 98
+        },
+        "outdated_fact": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "preference": {
+          "both": 1,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 89
+        },
+        "temporal": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 62
+        }
+      }
+    },
+    "results/v0.1/B_sft": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 1,
+        "contain_only": 2,
+        "judge_only": 0,
+        "neither": 605
+      },
+      "cohen_kappa": 0.4988,
+      "by_category": {
+        "continuity": {
+          "both": 0,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 95
+        },
+        "distractor": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "episodic": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 69
+        },
+        "factual": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 98
+        },
+        "outdated_fact": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "preference": {
+          "both": 1,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 89
+        },
+        "temporal": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 62
+        }
+      }
+    },
+    "results/v0.1/D_memory": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 87,
+        "contain_only": 13,
+        "judge_only": 5,
+        "neither": 503
+      },
+      "cohen_kappa": 0.8887,
+      "by_category": {
+        "continuity": {
+          "both": 16,
+          "contain_only": 2,
+          "judge_only": 1,
+          "neither": 77
+        },
+        "distractor": {
+          "both": 15,
+          "contain_only": 2,
+          "judge_only": 2,
+          "neither": 77
+        },
+        "episodic": {
+          "both": 21,
+          "contain_only": 3,
+          "judge_only": 0,
+          "neither": 45
+        },
+        "factual": {
+          "both": 10,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 86
+        },
+        "outdated_fact": {
+          "both": 9,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 85
+        },
+        "preference": {
+          "both": 6,
+          "contain_only": 2,
+          "judge_only": 1,
+          "neither": 82
+        },
+        "temporal": {
+          "both": 10,
+          "contain_only": 0,
+          "judge_only": 1,
+          "neither": 51
+        }
+      }
+    },
+    "results/v0.1/E_sft_memory": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 3,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 106,
+        "contain_only": 4,
+        "judge_only": 2,
+        "neither": 496
+      },
+      "cohen_kappa": 0.9665,
+      "by_category": {
+        "continuity": {
+          "both": 19,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 75
+        },
+        "distractor": {
+          "both": 19,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 77
+        },
+        "episodic": {
+          "both": 22,
+          "contain_only": 0,
+          "judge_only": 2,
+          "neither": 45
+        },
+        "factual": {
+          "both": 14,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 84
+        },
+        "outdated_fact": {
+          "both": 12,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 83
+        },
+        "preference": {
+          "both": 9,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 81
+        },
+        "temporal": {
+          "both": 11,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 51
+        }
+      }
+    },
+    "results/v1_scale/B_sft": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 0,
+        "contain_only": 4,
+        "judge_only": 1,
+        "neither": 603
+      },
+      "cohen_kappa": -0.0026,
+      "by_category": {
+        "continuity": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "distractor": {
+          "both": 0,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 95
+        },
+        "episodic": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 69
+        },
+        "factual": {
+          "both": 0,
+          "contain_only": 1,
+          "judge_only": 1,
+          "neither": 96
+        },
+        "outdated_fact": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 96
+        },
+        "preference": {
+          "both": 0,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 89
+        },
+        "temporal": {
+          "both": 0,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 62
+        }
+      }
+    },
+    "results/v1_scale/E_distill": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 111,
+        "contain_only": 4,
+        "judge_only": 2,
+        "neither": 491
+      },
+      "cohen_kappa": 0.9676,
+      "by_category": {
+        "continuity": {
+          "both": 18,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 78
+        },
+        "distractor": {
+          "both": 17,
+          "contain_only": 0,
+          "judge_only": 1,
+          "neither": 78
+        },
+        "episodic": {
+          "both": 27,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 42
+        },
+        "factual": {
+          "both": 11,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 87
+        },
+        "outdated_fact": {
+          "both": 17,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 77
+        },
+        "preference": {
+          "both": 9,
+          "contain_only": 2,
+          "judge_only": 0,
+          "neither": 80
+        },
+        "temporal": {
+          "both": 12,
+          "contain_only": 0,
+          "judge_only": 1,
+          "neither": 49
+        }
+      }
+    },
+    "results/v1_scale/E_sft_memory": {
+      "responses": 688,
+      "responses_with_gold": 608,
+      "exact_whole_response": 0,
+      "answerable": 608,
+      "containment_vs_judge": {
+        "both": 92,
+        "contain_only": 4,
+        "judge_only": 1,
+        "neither": 511
+      },
+      "cohen_kappa": 0.9687,
+      "by_category": {
+        "continuity": {
+          "both": 15,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 81
+        },
+        "distractor": {
+          "both": 19,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 77
+        },
+        "episodic": {
+          "both": 22,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 46
+        },
+        "factual": {
+          "both": 8,
+          "contain_only": 1,
+          "judge_only": 0,
+          "neither": 89
+        },
+        "outdated_fact": {
+          "both": 10,
+          "contain_only": 2,
+          "judge_only": 1,
+          "neither": 83
+        },
+        "preference": {
+          "both": 10,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 81
+        },
+        "temporal": {
+          "both": 8,
+          "contain_only": 0,
+          "judge_only": 0,
+          "neither": 54
+        }
+      }
+    }
+  }
+}

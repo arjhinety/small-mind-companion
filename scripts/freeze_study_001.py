@@ -252,6 +252,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (
+            "ERRATA E41: the errata count moved from 40 to 41. E41 corrects the audit's causal "
+            "explanation for pra_strict being ~0 (whole-response exact match, not the empty "
+            "acceptable_alternatives field). Nothing else in the README changed. No result, "
+            "verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
             "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the "
             "pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as "
             "trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to "
@@ -410,8 +420,10 @@ def build() -> dict[str, object]:
             "No quantization figure in this repository is backed by a committed artifact "
             "(*.gguf is gitignored and results/ holds no quantization output).",
             hash_claim,
-            "The acceptable_alternatives field is unpopulated in 688/688 PMB probes, which is "
-            "why pra_strict is ~0 throughout and pra_lenient is the reported metric.",
+            "pra_strict is ~0 throughout because it requires the whole response to equal the gold "
+            "answer (ERRATA E41), so pra_lenient is the reported metric. The "
+            "acceptable_alternatives field is unpopulated in 688/688 PMB probes; that is not the "
+            "cause.",
             "Every result is a single seed and a single run. Nothing here is replicated.",
             "No human evaluation exists; no reviewer log or teacher transcript was retained, so "
             "the teacher identity is self-reported and unverifiable from this repository.",

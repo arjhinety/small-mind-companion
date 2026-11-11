@@ -438,5 +438,16 @@
     "category": "WRONG_FACILITY_CLAIM",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 41,
+    "severity": "LOW",
+    "area": "D",
+    "location": "reports/ERRATA.md E22; docs/STUDIES.md (not-claimed list, Study 002 item 10); docs/GUARDRAILS.md G12; findings.json #22; freeze manifest not_claimed; data/benchmarks/pmb_v0_full/DATASHEET.md:32-34",
+    "claim": "The acceptable_alternatives field is empty in 688/688, which is why pra_strict is ~0; populating it makes pra_strict meaningful.",
+    "actual": "pra_strict uses exact_match, which compares the whole normalised response with the gold answer; it matches 3 of 4816 responses across all 7 full-harness runs. Alternatives are compared the same way, so populating them would leave pra_strict ~0, and would change pra_lenient because they are appended to the judge rubric.",
+    "category": "WRONG_CAUSAL_CLAIM",
+    "pinned": "",
+    "public": "yes"
   }
 ]

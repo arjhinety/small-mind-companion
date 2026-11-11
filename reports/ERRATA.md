@@ -224,7 +224,7 @@ unavailable rather than presenting a command that fails.
 | E19 | `sft_personas_v0`, `sft_personas_v1` and `pmb_v0` datasheets were all titled "PMB v0 — Personalised Memory Benchmark". Only `pmb_v0_full` is the benchmark; the others are training-persona corpora and a fixture smoke test. Root cause was a hardcoded title in `scripts/build_pmb.py` |
 | E20 | `pmb_v0_full/DATASHEET.md` said "This run (8 personas) may not be the full v0 benchmark (target: 8 personas)" — self-contradictory, and stale relative to the generator that was fixed 65 s earlier |
 | E21 | `data/distill/v1/` has **no `hash.txt`**, contradicting "Every dataset directory has a hash.txt" |
-| E22 | Probes were said to ship "acceptable alternatives"; the field is present on all 688 probes and **empty in 688/688**, which is why `pra_strict` is ~0 throughout and `pra_lenient` is the reported metric |
+| E22 | Probes were said to ship "acceptable alternatives"; the field is present on all 688 probes and **empty in 688/688**, which is why `pra_strict` is ~0 throughout and `pra_lenient` is the reported metric (the causal link is wrong; see E41) |
 | E23 | `make lint` / `make typecheck` assume the `dev` extra that the documented bare `uv sync` does not install |
 | E24 | A card template linked to `README.md#engineering-highlights`; that heading does not exist (it is now "Results & Analysis") |
 | E25 | `dpo-v1-scale` was still called "current best checkpoint overall" in the card template, the card generator and the quantization doc header, contradicting `distill-v1`'s status in those same files |
@@ -654,6 +654,33 @@ experimental trainer works with this repository's training code is untested. H3.
 **Why it survived the validator.** The README row's verdict was unchecked. The quirks entry recorded a
 true symptom (the `ImportError`) and a false conclusion without inspecting the installed package.
 
+### E41 — The audit gave the wrong cause for `pra_strict` being ~0 (LOW)
+
+**As written:** E22 above; `docs/STUDIES.md` ("What Study 001 does not claim" and Study 002 item 10);
+`docs/GUARDRAILS.md` G12; finding #22 in `reports/audits/001-claim-audit/findings.json`; the freeze
+manifest's `not_claimed` list; and `data/benchmarks/pmb_v0_full/DATASHEET.md:32-34` (frozen). All say
+the `acceptable_alternatives` field is empty, "which is why `pra_strict` is ~0". Study 002 item 10
+added: "Populating it makes `pra_strict` meaningful".
+
+**Correction:** `pra_strict` uses `exact_match` (`src/onebee/evaluation/graders/rule.py:57`), which
+compares the *whole* normalised response with the gold answer. Responses are sentences ("You graduated
+from Cambridge."), so it matched 3 of 4816 responses across all 7 full-harness runs
+(`results/audit/pra_containment/pra_containment.json`). Alternatives are compared the same way, so
+populating them would leave `pra_strict` at ~0; the empty field is not the cause. The original
+write-up had the cause right (`docs/day3_memory_results.md:83`: "it requires exact string match
+against free-form generation"). Populating the field would also change `pra_lenient`, because
+alternatives are appended to the judge's rubric (`src/onebee/evaluation/metrics/personalized.py:88-89`),
+so it would no longer be Study 001's measurement. No `pra_strict` or `pra_lenient` value changes; only
+the explanation was wrong. Item 10 is closed without populating the field.
+
+An exploratory comparison in the same artifact counts whether the gold answer occurs in the response
+as a whole word. On the runs where answers are recalled, it agrees with the judge at Cohen's kappa
+0.8887 to 0.9687. The rule was written after reading these responses, so this describes them and
+validates nothing; a judge-free check for Study 002 has to be fixed before its runs.
+
+**Why it survived the validator.** The claims checked were true in isolation: the field is empty and
+`pra_strict` is ~0. The causal link between them was never checked.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 
@@ -685,7 +712,7 @@ So this file is not read as blanket scepticism:
 - No committed evidence for any quantization number.
 - `data/distill/v1/hash.txt` was never generated, and the four benchmark `hash.txt` files did not
   verify (E29) — **both resolved 2026-09-13**: all 11 corpora now verify.
-- The `acceptable_alternatives` field is unpopulated in all 688 probes.
+- The `acceptable_alternatives` field is unpopulated in all 688 probes. This is not why `pra_strict` is ~0 (E41).
 - The DPO v1_scale prompt-context divergence from SFT v1 was never root-caused.
 - No human evaluation exists anywhere; no reviewer log or teacher transcript was retained, so
   "not human-reviewed" and the `gpt-5.6-luna` teacher identity are self-reported and unverifiable
