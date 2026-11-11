@@ -74,6 +74,11 @@ ENV_ALLOWLIST = (
     "HF_HUB_DISABLE_XET",
     "HF_HUB_ENABLE_HF_TRANSFER",
     "JUDGE_MODEL",
+    "MODAL_CLOUD_PROVIDER",
+    "MODAL_ENVIRONMENT",
+    "MODAL_IMAGE_ID",
+    "MODAL_IS_REMOTE",
+    "MODAL_REGION",
     "OMP_NUM_THREADS",
     "PYTHONHASHSEED",
     "PYTORCH_CUDA_ALLOC_CONF",
@@ -137,7 +142,9 @@ def check_machine(
     machines: dict[str, dict[str, Any]],
     platform_name: str = sys.platform,
     has_nvidia_smi: bool | None = None,
+    environ: dict[str, str] | None = None,
 ) -> dict[str, Any]:
+    env = dict(os.environ if environ is None else environ)
     if machine_id not in machines:
         raise RefusedError(
             f"machine {machine_id!r} is not in registry/machines.yaml; add it there first"
@@ -157,6 +164,20 @@ def check_machine(
         )
         if not present:
             raise RefusedError(f"{machine_id!r} requires a GPU but nvidia-smi is not available")
+    # A run must be logged where it executes: e.g. `--machine modal` only inside a Modal
+    # container, never on the machine that launched it (that would record the launcher's
+    # hardware under the Modal label).
+    for name, value in (machine.get("requires_env") or {}).items():
+        if env.get(name) != str(value):
+            raise RefusedError(
+                f"{machine_id!r} requires {name}={value} (this process is not running on that "
+                "machine; start the wrapper inside it)"
+            )
+    for name in machine.get("forbids_env") or []:
+        if name in env:
+            raise RefusedError(
+                f"{machine_id!r} must not see {name}: this process looks like it runs elsewhere"
+            )
     return machine
 
 
@@ -197,17 +218,21 @@ def git_state() -> dict[str, Any]:
 
 
 def probe_sqlite_vec() -> dict[str, Any]:
-    """Whether sqlite-vec loads with the same calls src/onebee/memory/store.py makes."""
+    """Whether sqlite-vec loads, using the memory store's own loader (so the probe and the
+    store cannot disagree about how to load it)."""
     try:
         import sqlite3
 
-        import sqlite_vec  # type: ignore[import-not-found]
+        from onebee.memory.store import load_sqlite_vec
 
         conn = sqlite3.connect(":memory:")
-        sqlite_vec.load(conn)
-        return {"loads": True, "error": None}
+        try:
+            error = load_sqlite_vec(conn)
+        finally:
+            conn.close()
     except Exception as exc:  # noqa: BLE001 - the probe reports, it does not fail the run
-        return {"loads": False, "error": f"{type(exc).__name__}: {exc}"}
+        error = f"{type(exc).__name__}: {exc}"
+    return {"loads": error is None, "error": error}
 
 
 def gpu_summary() -> list[dict[str, str]] | None:

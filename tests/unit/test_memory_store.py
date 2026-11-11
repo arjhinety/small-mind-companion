@@ -1,40 +1,32 @@
 from __future__ import annotations
 
+import sqlite3
 import time
 
 import pytest
 
+from onebee.memory import store as store_module
 from onebee.memory.store import (
     MemoryRecord,
     MemoryStore,
     SessionRecord,
     TurnRecord,
+    VectorSearchUnavailableError,
+    load_sqlite_vec,
 )
 
 
 def _sqlite_vec_loads() -> bool:
-    """Whether sqlite-vec can actually be *loaded into a connection*, not merely imported.
+    """Whether sqlite-vec loads into a connection, using the store's own loader.
 
-    `find_spec("sqlite_vec") is not None` is the obvious check and the wrong one: the package can
-    be installed and importable while `sqlite_vec.load()` fails at runtime (extension unavailable
-    for the platform's SQLite build, `enable_load_extension` disabled, wrong ABI). When that
-    happens the store silently takes its no-vec path — correct behaviour — but a test that only
-    checked `find_spec` would still assert vec behaviour that never ran, and fail. Probing by
-    loading is what the store itself does, so this is the honest capability check.
+    Probing by loading (not by `find_spec`) is the honest capability check; using
+    `load_sqlite_vec` keeps the probe and the store from disagreeing about how to load it.
     """
+    conn = sqlite3.connect(":memory:")
     try:
-        import sqlite3
-
-        import sqlite_vec
-
-        conn = sqlite3.connect(":memory:")
-        try:
-            sqlite_vec.load(conn)
-        finally:
-            conn.close()
-        return True
-    except Exception:
-        return False
+        return load_sqlite_vec(conn) is None
+    finally:
+        conn.close()
 
 
 _HAS_SQLITE_VEC = _sqlite_vec_loads()
@@ -325,16 +317,14 @@ class TestSearch:
         assert rec_st.id in ids
         assert rec_ep.id not in ids
 
-    def test_vector_search_graceful_when_vec_unavailable(self, tmp_path):
-        store = MemoryStore(str(tmp_path / "test.db"))
-        rec = _make_record(content="vector candidate")
-        store.write(rec)
-
-        results = store.search(query_embedding=[0.1, 0.2, 0.3, 0.4], k=5)
-        if _HAS_SQLITE_VEC:
-            pass
-        else:
-            assert len(results) == 0
+    def test_vector_query_of_the_wrong_dimension_raises(self, tmp_path):
+        """A failing vector query must surface; it used to be swallowed into keyword search."""
+        if not _HAS_SQLITE_VEC:
+            pytest.skip("sqlite-vec not available")
+        store = MemoryStore(str(tmp_path / "test.db"))  # 384-dimension table
+        store.write(_make_record(content="vector candidate"))
+        with pytest.raises(sqlite3.OperationalError):
+            store.search(query_embedding=[0.1, 0.2, 0.3, 0.4], k=5)
 
     def test_vector_search_finds_record_when_vec_available(self, tmp_path):
         if not _HAS_SQLITE_VEC:
@@ -456,30 +446,47 @@ class TestStats:
         assert stats2["db_size_bytes"] >= stats1["db_size_bytes"]
 
 
-class TestGracefulVecUnavailable:
-    def test_store_works_without_vec(self, tmp_path):
-        store = MemoryStore(str(tmp_path / "test.db"))
-        assert store._vec_available is _HAS_SQLITE_VEC
+class TestVecUnavailable:
+    """When sqlite-vec cannot load, the store says so and refuses embeddings unless told not to."""
 
+    @pytest.fixture
+    def no_vec(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setattr(store_module, "load_sqlite_vec", lambda conn: "simulated failure")
+
+    def test_vector_search_loads_when_installed(self, tmp_path):
+        pytest.importorskip("sqlite_vec")
+        store = MemoryStore(str(tmp_path / "test.db"))
+        assert store.search_mode == "hybrid"
+        assert store.vector_search_error is None
+
+    def test_store_warns_and_reports_keyword_only(self, tmp_path, no_vec):
+        with pytest.warns(RuntimeWarning, match="simulated failure"):
+            store = MemoryStore(str(tmp_path / "test.db"))
+        assert store.search_mode == "keyword-only"
         rec = _make_record(content="works without vec")
         store.write(rec)
-        fetched = store.get_by_id(rec.id)
-        assert fetched is not None
-
+        assert store.get_by_id(rec.id) is not None
         stats = store.stats()
-        assert stats["vec_available"] is _HAS_SQLITE_VEC
+        assert stats["vec_available"] is False
         assert stats["total_rows"] == 1
 
-    def test_search_degrades_gracefully_without_vec(self, tmp_path):
-        store = MemoryStore(str(tmp_path / "test.db"))
-        rec = _make_record(content="test")
-        store.write(rec)
+    def test_embedding_without_vector_search_raises(self, tmp_path, no_vec):
+        with pytest.warns(RuntimeWarning):
+            store = MemoryStore(str(tmp_path / "test.db"), embedding_dim=4)
+        with pytest.raises(VectorSearchUnavailableError, match="write"):
+            store.write(_make_record(content="x", embedding=[0.1, 0.2, 0.3, 0.4]))
+        with pytest.raises(VectorSearchUnavailableError, match="search"):
+            store.search(query_embedding=[0.1, 0.2, 0.3, 0.4])
 
-        results = store.search(query_embedding=[0.1, 0.2, 0.3])
-        if _HAS_SQLITE_VEC:
-            pass
-        else:
-            assert len(results) == 0
+    def test_keyword_fallback_is_opt_in(self, tmp_path, no_vec):
+        with pytest.warns(RuntimeWarning, match="keyword-only"):
+            store = MemoryStore(
+                str(tmp_path / "test.db"), embedding_dim=4, allow_keyword_fallback=True
+            )
+        rec = _make_record(content="alpha bravo", embedding=[0.1, 0.2, 0.3, 0.4])
+        store.write(rec)
+        results = store.search(query="alpha", query_embedding=[0.1, 0.2, 0.3, 0.4])
+        assert [r.id for r in results] == [rec.id]
 
 
 class TestRedaction:

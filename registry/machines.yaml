@@ -14,6 +14,8 @@ machines:
     workdir: /root/small-mind-companion
     workdir_evidence: docs/model_quirks.md "How to re-run these smoke tests"
     requires_gpu: true
+    # Inside a Modal container these are set; seeing them means this is not the GPU box.
+    forbids_env: [MODAL_IS_REMOTE, MODAL_TASK_ID]
     runs_allowed: true
 
   - id: modal
@@ -27,6 +29,10 @@ machines:
       CUDA builds need nvidia/cuda:12.8.1-devel-ubuntu22.04; debian_slim has no toolkit
       (registry/upstream.jsonl modal-debian-slim-no-cuda-toolkit)
     requires_gpu: true
+    # The wrapper must run inside the Modal container (repo and HF token available there), not on
+    # the machine that launches the job. Modal sets MODAL_IS_REMOTE=1 in Function containers
+    # (modal.com/docs/guide/environment_variables).
+    requires_env: {MODAL_IS_REMOTE: "1"}
     runs_allowed: true
 
   - id: local-windows
