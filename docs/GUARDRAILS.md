@@ -111,8 +111,8 @@ SFT datasheet as its source. The data was clean the whole time; only the documen
 generate one from the other or state it once.
 
 **G12. A field documented as populated must be populated.** Finding #22: the README said probes
-ship with "acceptable alternatives"; the field is empty in 688/688, which is precisely why
-`pra_strict` is ~0 and `pra_lenient` is the reported metric.
+ship with "acceptable alternatives"; the field is empty in 688/688. (The audit added that this is
+why `pra_strict` is ~0; it is not. Whole-response exact match is, see ERRATA E41.)
 *Check:* every documented schema field is either populated or documented as unpopulated with the
 consequence spelled out.
 

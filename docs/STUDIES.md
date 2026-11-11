@@ -64,9 +64,9 @@ UAR = unanswerable-abstention rate.
    checkpoints; Q3_K_S is the smallest verified-coherent level.
 
 **What Study 001 does not claim.** No full-PMB measurement exists for any DPO checkpoint. No
-quantization figure is backed by a committed artifact. The `acceptable_alternatives` field is
-unpopulated in all 688 probes, which is why `pra_strict` is ~0 and `pra_lenient` is reported
-instead. Everything is a single seed and a single run. There is no human evaluation.
+quantization figure is backed by a committed artifact. `pra_strict` (whole-response exact match) is ~0
+because responses are sentences, not because the `acceptable_alternatives` field is empty (E41), so
+`pra_lenient` is reported instead. Everything is a single seed and a single run. There is no human evaluation.
 **Freeze.** `scripts/freeze_study_001.py` pins 76 artifacts across 7 groups by SHA-256 over
 LF-normalised bytes. `--check` fails if any of them changes:
 
@@ -127,10 +127,14 @@ finding it came from.
    every size, throughput and perplexity figure is restated from run logs a reader cannot check.
    Even without re-running the benchmarks, a `results/quantization/` directory holding the original
    stdout would close most of this.
-10. **Populate `acceptable_alternatives`, or drop the field** (E22). It is present on all 688 probes
-    and empty in 688/688, which is why `pra_strict` is ~0 throughout and `pra_lenient` is the
-    reported metric. Populating it makes `pra_strict` meaningful; dropping it removes the need to
-    explain it away.
+10. **Populate `acceptable_alternatives`, or drop the field** (E22). **Closed 2026-11-11 without
+    populating it** (E41). The item's premise was wrong: `pra_strict` is ~0 because it compares the
+    whole response with the gold answer (3 of 4816 responses match across all 7 full-harness runs),
+    and alternatives are compared the same way, so populating them would not change it. It would
+    change `pra_lenient`, whose judge rubric includes the alternatives, and the probe file is frozen.
+    The field stays, documented as unpopulated. A judge-free cross-check (does the response contain
+    the answer) agrees with the judge on Study 001's runs, but that rule was written after seeing
+    the responses; it is to be pre-registered before any Study 002 run it scores.
 11. **Widen the k-sweep.** It covers 120 of 688 probes (15 per category, seed 1337) and is reported
     as an inverted U peaking at k=8. At n=120 the curve's shoulders are not distinguishable from
     noise; a full-688 run costs inference, not training.

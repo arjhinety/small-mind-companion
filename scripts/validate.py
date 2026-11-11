@@ -1447,6 +1447,39 @@ def paired_counts(comparison: str) -> tuple[int, int, int, int]:
     )
 
 
+_PRA_CONTAINMENT: dict[str, Any] = {}
+
+
+def _pra_containment() -> dict[str, Any]:
+    """Fresh exact-match and containment-vs-judge tabulation (ERRATA E41), built once per run."""
+    if not _PRA_CONTAINMENT:
+        module = import_script("pra_containment", "scripts/pra_containment.py")
+        _PRA_CONTAINMENT["module"] = module
+        _PRA_CONTAINMENT["build"] = module.build()
+    return _PRA_CONTAINMENT
+
+
+def pra_containment_fresh() -> bool:
+    """results/audit/pra_containment/pra_containment.json equals a fresh recomputation."""
+    cache = _pra_containment()
+    path = ROOT / "results/audit/pra_containment/pra_containment.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def exact_whole_response_total() -> list[int]:
+    """[responses whose whole normalised text equals the gold answer, all responses] across every
+    full-harness run, recomputed from raw.jsonl."""
+    totals = _pra_containment()["build"]["totals"]
+    return [totals["exact_whole_response"], totals["responses"]]
+
+
+def pra_kappa(run: str) -> float | None:
+    """Cohen's kappa of containment vs the judge on one run, recomputed from raw.jsonl."""
+    return _pra_containment()["build"]["runs"][run]["cohen_kappa"]
+
+
 _UAR_LISTS: dict[str, Any] = {}
 
 
@@ -2140,6 +2173,9 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "paired_stat": paired_stat,
         "paired_counts": paired_counts,
         "uar_lists_fresh": uar_lists_fresh,
+        "pra_containment_fresh": pra_containment_fresh,
+        "exact_whole_response_total": exact_whole_response_total,
+        "pra_kappa": pra_kappa,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
         "uar_trajectory_counts": uar_trajectory_counts,

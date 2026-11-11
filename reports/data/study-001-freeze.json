@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "35f91aa5327059ecd4750719dfc8be92274c9aba",
+  "git_commit": "6846a7eda8ec746252f4ae4004dd84054183e48a",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "f6f58319bb767f15af2ad9c2f348e950781678b2d0a45b4c91def45ab22dfe60"
+        "sha256": "e273135fac4bb72765f6489a612ca95c3e1cfe79c646a2dcc33cda87e29746f3"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -391,34 +391,39 @@
     {
       "on": "2026-11-11",
       "artifact": "README.md",
+      "reason": "ERRATA E41: the errata count moved from 40 to 41. E41 corrects the audit's causal explanation for pra_strict being ~0 (whole-response exact match, not the empty acceptable_alternatives field). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
       "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
   "living_documents": {
     "docs/GUARDRAILS.md": {
-      "bytes": 9212,
-      "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
+      "bytes": 9241,
+      "sha256": "7f279bfa978e3dcc5d3ab3ae91265e48932f15afd966dfad75e73adf09878699"
     },
     "docs/STUDIES.md": {
-      "bytes": 12501,
-      "sha256": "d252078e914492702a36241e9ca7457b6ff15bf2c0302b27bb6aa6950d8fd979"
+      "bytes": 13005,
+      "sha256": "9f78aeebcac40f811e270a59ab910c5f7e45bf9698cf75836a332fd2b56ba114"
     },
     "reports/ERRATA.md": {
-      "bytes": 47135,
-      "sha256": "9356b8aaf7b7f2d3424aba795ddeecbd3f940c93bd3228cecf6017cfb8b6d907"
+      "bytes": 49255,
+      "sha256": "9deb93871ccc28afd2b689e50bc7ea49c969bc800b474754ff8049aa9433db17"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "743f69c11186e77efbd9110fc29c1b458fbb6fdb4a58fb00b23cca0fbe13901b"
+      "sha256": "5e3beb7adc0876d23a5551febf93ae37fb30f48dac9ebe99ccc4cf6e25436318"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 28614,
-      "sha256": "b83a1b6fe5d4a457f24ef293c3cd540e229eb3592e6c2e41c52b576f5911055f"
+      "bytes": 29452,
+      "sha256": "5ed47c09eb4b4563b9deedabb1e026cf56b4a41aa59265dbba4d9e5e136b6a33"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 13514,
-      "sha256": "443381462f1e4e28e47c684d67db812a1d186da1363067a503b0c3f98d2e3b55"
+      "bytes": 13906,
+      "sha256": "95de64fe08ef3ec616731b3f9e5bc251e80ad450236aae741ebea0a882482fdf"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",
@@ -426,7 +431,7 @@
     "No full-PMB pra_lenient or UAR measurement exists for any DPO checkpoint; dpo-v1-scale appears only in pairwise comparisons.",
     "No quantization figure in this repository is backed by a committed artifact (*.gguf is gitignored and results/ holds no quantization output).",
     "All 11 corpora carry a hash.txt that verifies, but the four benchmark hashes are a 2026-09-13 repair: before that they matched under no tested algorithm and data/distill/v1/ had none (reports/ERRATA.md E29).",
-    "The acceptable_alternatives field is unpopulated in 688/688 PMB probes, which is why pra_strict is ~0 throughout and pra_lenient is the reported metric.",
+    "pra_strict is ~0 throughout because it requires the whole response to equal the gold answer (ERRATA E41), so pra_lenient is the reported metric. The acceptable_alternatives field is unpopulated in 688/688 PMB probes; that is not the cause.",
     "Every result is a single seed and a single run. Nothing here is replicated.",
     "No human evaluation exists; no reviewer log or teacher transcript was retained, so the teacher identity is self-reported and unverifiable from this repository."
   ],
