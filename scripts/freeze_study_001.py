@@ -262,6 +262,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (
+            "Test count moved from 531 to 536: tests/unit/test_pra_contain.py adds five test "
+            "functions pinning the pre-registered Study 002 pra_contain rule "
+            "(docs/preregistrations/study002-answer-containment.md). Nothing else in the README "
+            "changed. No result, verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
             "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the "
             "pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as "
             "trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to "
