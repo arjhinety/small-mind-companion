@@ -109,6 +109,54 @@ def paired_bootstrap_ci_pp(
     return lo, hi
 
 
+PROBES = "data/benchmarks/pmb_v0_full/probes.jsonl"
+
+
+def persona_of_probe() -> dict[str, str]:
+    """probe_id -> persona_id, from the PMB probe file."""
+    mapping: dict[str, str] = {}
+    for line in (ROOT / PROBES).read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            probe = json.loads(line)
+            mapping[probe["probe_id"]] = probe["persona_id"]
+    return mapping
+
+
+def persona_bootstrap_ci_pp(
+    first: list[int],
+    second: list[int],
+    groups: list[str],
+    seed: int = SEED,
+    n_resamples: int = N_RESAMPLES,
+) -> tuple[float, float]:
+    """Percentile CI, in percentage points, on mean(second - first), resampling whole personas.
+
+    Each resample draws as many personas as there are, with replacement, and pools every paired
+    probe of each drawn persona; the statistic is the pooled mean difference. Same interval
+    convention as paired_bootstrap_ci_pp. With few personas the interval is coarse: it can take
+    only as many values as there are distinct persona multisets.
+    """
+    if not (len(first) == len(second) == len(groups)) or not first:
+        raise ValueError("persona bootstrap needs equal-length, non-empty lists")
+    by_group: dict[str, tuple[int, int]] = {}
+    for a, b, g in zip(first, second, groups, strict=True):
+        total, count = by_group.get(g, (0, 0))
+        by_group[g] = (total + (b - a), count + 1)
+    names = sorted(by_group)
+    rng = random.Random(seed)
+    means: list[float] = []
+    for _ in range(n_resamples):
+        drawn = rng.choices(names, k=len(names))
+        total = sum(by_group[g][0] for g in drawn)
+        count = sum(by_group[g][1] for g in drawn)
+        means.append(total / count * 100)
+    means.sort()
+    alpha = 1.0 - CI_LEVEL
+    lo = means[math.floor(alpha / 2 * n_resamples)]
+    hi = means[math.ceil((1 - alpha / 2) * n_resamples) - 1]
+    return lo, hi
+
+
 def holm_adjust(p_values: dict[str, float]) -> dict[str, float]:
     """Holm step-down adjusted p-values (monotone, capped at 1)."""
     ordered = sorted(p_values.items(), key=lambda item: item[1])
@@ -134,6 +182,9 @@ def compare(comparison_id: str, first_rel: str, second_rel: str) -> dict[str, An
     first_only = sum(1 for x, y in zip(a, b, strict=True) if x and not y)
     second_only = sum(1 for x, y in zip(a, b, strict=True) if y and not x)
     lo, hi = paired_bootstrap_ci_pp(a, b)
+    personas = persona_of_probe()
+    groups = [personas[i] for i in ids]
+    plo, phi = persona_bootstrap_ci_pp(a, b, groups)
     n = len(ids)
     return {
         "first": first_rel,
@@ -146,6 +197,8 @@ def compare(comparison_id: str, first_rel: str, second_rel: str) -> dict[str, An
         "diff_pp": (sum(b) - sum(a)) / n * 100,
         "mcnemar_exact_p": mcnemar_exact(first_only, second_only),
         "bootstrap_ci_pp": [lo, hi],
+        "n_personas": len(set(groups)),
+        "persona_bootstrap_ci_pp": [plo, phi],
     }
 
 
@@ -168,6 +221,10 @@ def build() -> dict[str, Any]:
             "interval": (
                 f"paired bootstrap over probes, {N_RESAMPLES} resamples, seed {SEED}, "
                 f"{int(CI_LEVEL * 100)}% percentile interval (nearest rank), Python random.Random"
+            ),
+            "persona_interval": (
+                f"bootstrap over whole personas (persona_id from {PROBES}), {N_RESAMPLES} "
+                f"resamples, seed {SEED}, same percentile convention; pooled mean difference"
             ),
             "multiplicity": "Holm across the four k-sweep steps; d_vs_e is a single comparison",
         },

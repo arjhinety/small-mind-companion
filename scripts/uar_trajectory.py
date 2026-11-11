@@ -143,10 +143,14 @@ def build() -> dict[str, Any]:
             }
         steps[step] = entry
 
-    def paired(first: list[int], second: list[int]) -> dict[str, Any]:
+    personas = tests.persona_of_probe()
+
+    def paired(first: list[int], second: list[int], ids: list[str]) -> dict[str, Any]:
         first_only = sum(1 for x, y in zip(first, second, strict=True) if x and not y)
         second_only = sum(1 for x, y in zip(first, second, strict=True) if y and not x)
         lo, hi = tests.paired_bootstrap_ci_pp(first, second)
+        groups = [personas[i] for i in ids]
+        plo, phi = tests.persona_bootstrap_ci_pp(first, second, groups)
         return {
             "first": sum(first),
             "second": sum(second),
@@ -155,6 +159,8 @@ def build() -> dict[str, Any]:
             "diff_pp": (sum(second) - sum(first)) / len(first) * 100,
             "mcnemar_exact_p": tests.mcnemar_exact(first_only, second_only),
             "bootstrap_ci_pp": [lo, hi],
+            "n_personas": len(set(groups)),
+            "persona_bootstrap_ci_pp": [plo, phi],
         }
 
     comparisons: dict[str, Any] = {}
@@ -162,9 +168,11 @@ def build() -> dict[str, Any]:
         comparisons[f"{first}_vs_{second}"] = {
             name: {
                 "unanswerable_abstention": paired(
-                    outcomes(first, pl, unans), outcomes(second, pl, unans)
+                    outcomes(first, pl, unans), outcomes(second, pl, unans), unans
                 ),
-                "answerable_flagged": paired(outcomes(first, pl, ans), outcomes(second, pl, ans)),
+                "answerable_flagged": paired(
+                    outcomes(first, pl, ans), outcomes(second, pl, ans), ans
+                ),
             }
             for name, pl in lists.items()
         }
@@ -183,6 +191,10 @@ def build() -> dict[str, Any]:
             "interval": (
                 f"paired bootstrap, {tests.N_RESAMPLES} resamples, seed {tests.SEED}, 95% "
                 "percentile interval (scripts/paired_tests_v0_1.paired_bootstrap_ci_pp)"
+            ),
+            "persona_interval": (
+                "bootstrap over the 8 personas, resampling whole personas "
+                "(scripts/paired_tests_v0_1.persona_bootstrap_ci_pp)"
             ),
             "direction": "differences are second minus first, in percentage points",
         },

@@ -6,6 +6,7 @@
   "methods": {
     "test": "exact McNemar, two-sided: min(1, 2 * P(Binomial(b + c, 0.5) <= min(b, c)))",
     "interval": "paired bootstrap over probes, 10000 resamples, seed 1337, 95% percentile interval (nearest rank), Python random.Random",
+    "persona_interval": "bootstrap over whole personas (persona_id from data/benchmarks/pmb_v0_full/probes.jsonl), 10000 resamples, seed 1337, same percentile convention; pooled mean difference",
     "multiplicity": "Holm across the four k-sweep steps; d_vs_e is a single comparison"
   },
   "caveats": [
@@ -36,6 +37,11 @@
       "bootstrap_ci_pp": [
         0.6578947368421052,
         4.605263157894736
+      ],
+      "n_personas": 8,
+      "persona_bootstrap_ci_pp": [
+        -0.1644736842105263,
+        5.263157894736842
       ]
     },
     "k0_vs_k2": {
@@ -51,6 +57,11 @@
       "bootstrap_ci_pp": [
         0.9523809523809524,
         9.523809523809524
+      ],
+      "n_personas": 8,
+      "persona_bootstrap_ci_pp": [
+        2.0,
+        7.608695652173914
       ],
       "holm_adjusted_p": 0.1875
     },
@@ -68,6 +79,11 @@
         -0.9523809523809524,
         7.6190476190476195
       ],
+      "n_personas": 8,
+      "persona_bootstrap_ci_pp": [
+        0.8130081300813009,
+        5.217391304347826
+      ],
       "holm_adjusted_p": 0.5
     },
     "k4_vs_k8": {
@@ -84,6 +100,11 @@
         4.761904761904762,
         15.238095238095239
       ],
+      "n_personas": 8,
+      "persona_bootstrap_ci_pp": [
+        4.8,
+        14.893617021276595
+      ],
       "holm_adjusted_p": 0.0078125
     },
     "k8_vs_k16": {
@@ -99,6 +120,11 @@
       "bootstrap_ci_pp": [
         -6.666666666666667,
         0.0
+      ],
+      "n_personas": 8,
+      "persona_bootstrap_ci_pp": [
+        -5.555555555555555,
+        -0.8403361344537815
       ],
       "holm_adjusted_p": 0.5
     }

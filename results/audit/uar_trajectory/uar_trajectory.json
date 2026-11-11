@@ -10,6 +10,7 @@
   "methods": {
     "test": "exact McNemar, two-sided (scripts/paired_tests_v0_1.mcnemar_exact)",
     "interval": "paired bootstrap, 10000 resamples, seed 1337, 95% percentile interval (scripts/paired_tests_v0_1.paired_bootstrap_ci_pp)",
+    "persona_interval": "bootstrap over the 8 personas, resampling whole personas (scripts/paired_tests_v0_1.persona_bootstrap_ci_pp)",
     "direction": "differences are second minus first, in percentage points"
   },
   "scope": "One training run (one seed) per step. Probe-level tests cannot measure seed-to-seed variance between training runs. The corpus behind each run is inferred from commit order.",
@@ -106,6 +107,11 @@
           "bootstrap_ci_pp": [
             -30.0,
             -5.0
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -27.500000000000004,
+            -6.25
           ]
         },
         "answerable_flagged": {
@@ -118,6 +124,11 @@
           "bootstrap_ci_pp": [
             -18.585526315789476,
             -11.513157894736842
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -20.394736842105264,
+            -9.868421052631579
           ]
         }
       },
@@ -132,6 +143,11 @@
           "bootstrap_ci_pp": [
             -30.0,
             -5.0
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -27.500000000000004,
+            -6.25
           ]
         },
         "answerable_flagged": {
@@ -144,6 +160,11 @@
           "bootstrap_ci_pp": [
             -18.585526315789476,
             -11.513157894736842
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -20.394736842105264,
+            -9.868421052631579
           ]
         }
       }
@@ -160,6 +181,11 @@
           "bootstrap_ci_pp": [
             -22.5,
             -5.0
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -21.25,
+            -5.0
           ]
         },
         "answerable_flagged": {
@@ -172,6 +198,11 @@
           "bootstrap_ci_pp": [
             -7.565789473684211,
             -1.644736842105263
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -9.375,
+            -0.1644736842105263
           ]
         }
       },
@@ -186,6 +217,11 @@
           "bootstrap_ci_pp": [
             71.25,
             88.75
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            70.0,
+            88.75
           ]
         },
         "answerable_flagged": {
@@ -198,6 +234,11 @@
           "bootstrap_ci_pp": [
             55.42763157894737,
             63.32236842105263
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            52.960526315789465,
+            65.95394736842105
           ]
         }
       }
@@ -214,6 +255,11 @@
           "bootstrap_ci_pp": [
             41.25,
             63.74999999999999
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            43.75,
+            61.25000000000001
           ]
         },
         "answerable_flagged": {
@@ -226,6 +272,11 @@
           "bootstrap_ci_pp": [
             13.651315789473683,
             21.052631578947366
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            13.322368421052634,
+            21.875
           ]
         }
       },
@@ -240,6 +291,11 @@
           "bootstrap_ci_pp": [
             -36.25,
             -17.5
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -40.0,
+            -16.25
           ]
         },
         "answerable_flagged": {
@@ -252,6 +308,11 @@
           "bootstrap_ci_pp": [
             -41.28289473684211,
             -32.89473684210527
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -41.776315789473685,
+            -32.56578947368421
           ]
         }
       }
@@ -268,6 +329,11 @@
           "bootstrap_ci_pp": [
             6.25,
             35.0
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            11.25,
+            31.25
           ]
         },
         "answerable_flagged": {
@@ -280,6 +346,11 @@
           "bootstrap_ci_pp": [
             -6.743421052631579,
             2.138157894736842
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -10.69078947368421,
+            6.0855263157894735
           ]
         }
       },
@@ -294,6 +365,11 @@
           "bootstrap_ci_pp": [
             22.5,
             50.0
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            21.25,
+            50.0
           ]
         },
         "answerable_flagged": {
@@ -306,6 +382,11 @@
           "bootstrap_ci_pp": [
             2.631578947368421,
             11.842105263157894
+          ],
+          "n_personas": 8,
+          "persona_bootstrap_ci_pp": [
+            -1.3157894736842104,
+            15.789473684210526
           ]
         }
       }

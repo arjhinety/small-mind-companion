@@ -1418,7 +1418,8 @@ def paired_tests_fresh() -> bool:
 
 
 def paired_stat(comparison: str, field: str) -> float:
-    """One recomputed statistic: mcnemar_exact_p, holm_adjusted_p, diff_pp, ci_low or ci_high.
+    """One recomputed statistic: mcnemar_exact_p, holm_adjusted_p, diff_pp, ci_low, ci_high,
+    persona_ci_low or persona_ci_high.
 
     Recomputed from raw.jsonl, not read from the committed JSON, so a quoted value is checked
     against the responses themselves.
@@ -1428,6 +1429,10 @@ def paired_stat(comparison: str, field: str) -> float:
         return float(row["bootstrap_ci_pp"][0])
     if field == "ci_high":
         return float(row["bootstrap_ci_pp"][1])
+    if field == "persona_ci_low":
+        return float(row["persona_bootstrap_ci_pp"][0])
+    if field == "persona_ci_high":
+        return float(row["persona_bootstrap_ci_pp"][1])
     return float(row[field])
 
 
@@ -1507,12 +1512,17 @@ def uar_trajectory_max_adjacent_p() -> float:
 
 def uar_trajectory_test(comparison: str, phrase_list: str, outcome: str, field: str) -> float:
     """One paired statistic from the committed trajectory JSON: mcnemar_exact_p, diff_pp,
-    ci_low or ci_high, for outcome unanswerable_abstention or answerable_flagged."""
+    ci_low, ci_high, persona_ci_low or persona_ci_high, for outcome unanswerable_abstention or
+    answerable_flagged."""
     row = load_json(UAR_TRAJECTORY)["comparisons"][comparison][phrase_list][outcome]
     if field == "ci_low":
         return float(row["bootstrap_ci_pp"][0])
     if field == "ci_high":
         return float(row["bootstrap_ci_pp"][1])
+    if field == "persona_ci_low":
+        return float(row["persona_bootstrap_ci_pp"][0])
+    if field == "persona_ci_high":
+        return float(row["persona_bootstrap_ci_pp"][1])
     return float(row[field])
 
 
@@ -1527,6 +1537,7 @@ def uar_trajectory_v0_vs_4fcf740_recomputes() -> bool:
     second = {r["probe"]["probe_id"]: r for r in load_jsonl(ROOT / SYSTEM_E_V1_RAW)}
     if set(first) != set(second):
         return False
+    personas = tests.persona_of_probe()
     recorded = load_json(UAR_TRAJECTORY)["comparisons"]["v0_vs_4fcf740"]
     for name, phrase_list in lists.items():
         for outcome, answerable in (
@@ -1551,6 +1562,22 @@ def uar_trajectory_v0_vs_4fcf740_recomputes() -> bool:
             if not close(row["mcnemar_exact_p"], tests.mcnemar_exact(first_only, second_only)):
                 return False
             if list(row["bootstrap_ci_pp"]) != list(tests.paired_bootstrap_ci_pp(a, b)):
+                return False
+            groups = [personas[i] for i in ids]
+            persona_ci = list(tests.persona_bootstrap_ci_pp(a, b, groups))
+            if list(row["persona_bootstrap_ci_pp"]) != persona_ci:
+                return False
+    return True
+
+
+def uar_trajectory_adjacent_persona_ci_excludes_zero() -> bool:
+    """Every adjacent step's persona-level interval on unanswerable-probe abstention excludes
+    zero, under both phrase lists (read from the committed trajectory JSON)."""
+    comparisons = load_json(UAR_TRAJECTORY)["comparisons"]
+    for c in ("v0_vs_e9e5ca8", "e9e5ca8_vs_5a9fe1b", "5a9fe1b_vs_4fcf740"):
+        for name in ("original", "current"):
+            lo, hi = comparisons[c][name]["unanswerable_abstention"]["persona_bootstrap_ci_pp"]
+            if lo <= 0.0 <= hi:
                 return False
     return True
 
@@ -2079,6 +2106,9 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "uar_trajectory_test": uar_trajectory_test,
         "uar_trajectory_fresh": uar_trajectory_fresh,
         "uar_trajectory_max_adjacent_p": uar_trajectory_max_adjacent_p,
+        "uar_trajectory_adjacent_persona_ci_excludes_zero": (
+            uar_trajectory_adjacent_persona_ci_excludes_zero
+        ),
         "uar_trajectory_v0_vs_4fcf740_recomputes": uar_trajectory_v0_vs_4fcf740_recomputes,
         "uar_trajectory_agrees_with_lists": uar_trajectory_agrees_with_lists,
         "sft_kind_counts": sft_kind_counts,
