@@ -106,3 +106,32 @@ def test_environment_id_matches_the_validator(rl: Any) -> None:
     record, _private = rl.capture_environment("gpu-box", rl.Redactor({}))
     assert v.environment_id(record) == record["env_id"]
     assert json.loads(json.dumps(record)) == record
+
+
+def test_modal_runs_only_inside_a_modal_container(rl: Any) -> None:
+    """`--machine modal` from the launching machine would log the launcher's hardware."""
+    machines = rl.load_machines()
+    with pytest.raises(rl.RefusedError, match="MODAL_IS_REMOTE"):
+        rl.check_machine("modal", machines, platform_name="linux", has_nvidia_smi=True, environ={})
+    assert rl.check_machine(
+        "modal",
+        machines,
+        platform_name="linux",
+        has_nvidia_smi=True,
+        environ={"MODAL_IS_REMOTE": "1"},
+    )
+
+
+def test_gpu_box_refuses_inside_a_modal_container(rl: Any) -> None:
+    machines = rl.load_machines()
+    with pytest.raises(rl.RefusedError, match="MODAL_TASK_ID"):
+        rl.check_machine(
+            "gpu-box",
+            machines,
+            platform_name="linux",
+            has_nvidia_smi=True,
+            environ={"MODAL_TASK_ID": "ta-123"},
+        )
+    assert rl.check_machine(
+        "gpu-box", machines, platform_name="linux", has_nvidia_smi=True, environ={}
+    )

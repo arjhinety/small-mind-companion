@@ -224,6 +224,18 @@ REFREEZE_LOG: list[dict[str, str]] = [
             "verdict, dataset or checkpoint changed."
         ),
     },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
+            "Test count 524 -> 528 in the badge and the layout block: memory-store tests for "
+            "loading sqlite-vec with enable_load_extension and for refusing embeddings when "
+            "vector search is unavailable (the silent keyword-search fallback), and run-wrapper "
+            "tests that a Modal run is logged inside the Modal container. Nothing else in the "
+            "README changed. No result, verdict, dataset or checkpoint changed; the committed "
+            "stores show vector search was loaded when they were built."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

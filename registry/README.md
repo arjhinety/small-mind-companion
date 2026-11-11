@@ -180,7 +180,10 @@ come from run logs (`runs/manifests/<run>.json`), which can point back with `ups
 
 Every run goes through `scripts/run_logged.py --machine <id> --purpose "..." -- <command>`. It
 refuses a machine that is not listed, is listed with `runs_allowed: false`, does not match its
-declared platform, or lacks `nvidia-smi` when `requires_gpu` is set. Then it records:
+declared platform, lacks `nvidia-smi` when `requires_gpu` is set, is missing an environment
+variable its `requires_env` names, or sees one its `forbids_env` names. That last pair makes the
+wrapper run where the work runs: `modal` requires `MODAL_IS_REMOTE=1`, so it only runs inside a
+Modal container, and `gpu-box` refuses inside one. Then it records:
 
 - `runs/manifests/<run_id>.json` (committed): command, purpose, machine, git commit and dirty state,
   timings, exit code, the log's SHA-256 and line/warning/error counts, the upload's repo, path and

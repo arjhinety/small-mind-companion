@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "091947125bf1f54ef2ee208a3ca71df0a4809fbf",
+  "git_commit": "59ce79cc9aeb7a2fe781e97ee4d735f7b207361e",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19423,
-        "sha256": "4ee81cac2de821d5a157db73051079a2dc44ae7d9cf8507f44dcc1b76bcba665"
+        "sha256": "01c5240916f55d3dba00b663b6d5f92a2ca89cfceb3123fec8a578314a87b87c"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -377,6 +377,11 @@
       "on": "2026-11-11",
       "artifact": "README.md",
       "reason": "Test count 513 -> 524 in the badge and the layout block: eleven tests for the upstream ledger (registry/upstream.jsonl), the machine registry and the logged-run wrapper (scripts/run_logged.py). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
+      "reason": "Test count 524 -> 528 in the badge and the layout block: memory-store tests for loading sqlite-vec with enable_load_extension and for refusing embeddings when vector search is unavailable (the silent keyword-search fallback), and run-wrapper tests that a Modal run is logged inside the Modal container. Nothing else in the README changed. No result, verdict, dataset or checkpoint changed; the committed stores show vector search was loaded when they were built."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",

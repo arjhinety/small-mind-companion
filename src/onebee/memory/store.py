@@ -6,12 +6,41 @@ import re
 import sqlite3
 import time
 import uuid
+import warnings
 from pathlib import Path
 from typing import Any, Protocol
 
 from pydantic import BaseModel, Field
 
 _FTS_TOKEN_RE = re.compile(r"\w+", re.UNICODE)
+
+
+class VectorSearchUnavailableError(RuntimeError):
+    """An embedding was written or queried, but sqlite-vec is not loaded into this store."""
+
+
+def load_sqlite_vec(conn: sqlite3.Connection) -> str | None:
+    """Load the sqlite-vec extension into ``conn``. Returns None on success, else the reason.
+
+    Python's sqlite3 refuses ``load_extension`` ("not authorized") until
+    ``enable_load_extension(True)`` is called on the connection; ``sqlite_vec.load`` does not do
+    that itself. Extension loading is switched back off afterwards.
+    """
+    try:
+        import sqlite_vec
+    except ImportError as exc:
+        return f"ImportError: {exc}"
+    try:
+        conn.enable_load_extension(True)
+    except AttributeError:
+        return "this Python's sqlite3 module was built without extension loading"
+    try:
+        sqlite_vec.load(conn)
+    except Exception as exc:  # noqa: BLE001 - the reason is reported to the caller
+        return f"{type(exc).__name__}: {exc}"
+    finally:
+        conn.enable_load_extension(False)
+    return None
 
 
 def _sanitize_fts_query(query: str) -> str:
@@ -135,9 +164,20 @@ class MemoryStoreProtocol(Protocol):
 
 
 class MemoryStore:
-    def __init__(self, db_path: str, embedding_dim: int = 384) -> None:
+    def __init__(
+        self, db_path: str, embedding_dim: int = 384, allow_keyword_fallback: bool = False
+    ) -> None:
+        """Open (or create) a memory store.
+
+        If sqlite-vec cannot be loaded the store warns, and any write or search that carries an
+        embedding raises ``VectorSearchUnavailableError`` -- unless ``allow_keyword_fallback`` is
+        set, in which case embeddings are ignored and search is keyword-only. Silent degradation
+        to keyword search is how vector search could be off without anyone knowing; the mode in
+        use is exposed as ``search_mode``.
+        """
         self.db_path = db_path
         self.embedding_dim = embedding_dim
+        self.allow_keyword_fallback = allow_keyword_fallback
         parent = Path(db_path).parent
         if not parent.exists():
             parent.mkdir(parents=True, exist_ok=True)
@@ -146,17 +186,40 @@ class MemoryStore:
         self._conn.execute("PRAGMA journal_mode=WAL")
         self._conn.execute("PRAGMA foreign_keys=ON")
 
-        self._vec_available = False
-        try:
-            import sqlite_vec
-
-            sqlite_vec.load(self._conn)
-            self._vec_available = True
-        except (ImportError, Exception):
-            self._vec_available = False
+        self.vector_search_error = load_sqlite_vec(self._conn)
+        self._vec_available = self.vector_search_error is None
+        if not self._vec_available:
+            warnings.warn(
+                f"MemoryStore({db_path!r}): vector search unavailable "
+                f"({self.vector_search_error}); "
+                + (
+                    "allow_keyword_fallback=True, so search is keyword-only"
+                    if allow_keyword_fallback
+                    else "writes and searches that carry an embedding will raise"
+                ),
+                RuntimeWarning,
+                stacklevel=2,
+            )
 
         self._init_schema()
         self._vec_table_created = False
+
+    @property
+    def search_mode(self) -> str:
+        """``hybrid`` (keyword + vector) when sqlite-vec is loaded, else ``keyword-only``."""
+        return "hybrid" if self._vec_available else "keyword-only"
+
+    def _require_vectors(self, what: str) -> bool:
+        """True when vectors can be used; raises unless keyword fallback was opted into."""
+        if self._vec_available:
+            return True
+        if self.allow_keyword_fallback:
+            return False
+        raise VectorSearchUnavailableError(
+            f"{what} carries an embedding, but vector search is unavailable in "
+            f"{self.db_path!r} ({self.vector_search_error}). Pass allow_keyword_fallback=True "
+            "to accept keyword-only search."
+        )
 
     def _init_schema(self) -> None:
         schema_path = Path(__file__).parent / "schema.sql"
@@ -230,7 +293,7 @@ class MemoryStore:
             values,
         )
 
-        if record.embedding is not None and self._vec_available:
+        if record.embedding is not None and self._require_vectors("write()"):
             self._ensure_vec_table()
             if record.embedding_id is None:
                 row = self._conn.execute(
@@ -308,26 +371,25 @@ class MemoryStore:
                     seen_ids.add(rid)
                     records.append(self._row_to_record(r))
 
-        if query_embedding is not None and self._vec_available:
+        if query_embedding is not None and self._require_vectors("search()"):
             self._ensure_vec_table()
-            try:
-                vec_where = (
-                    f"{base_where} AND m.embedding_id IN "
-                    f"(SELECT embedding_id FROM memory_vec "
-                    f"WHERE embedding MATCH ? ORDER BY distance LIMIT ?)"
-                )
-                vec_params = base_params + [json.dumps(query_embedding), k * 2]
-                rows = self._conn.execute(
-                    f"SELECT m.* FROM memory m {vec_where}",
-                    vec_params,
-                ).fetchall()
-                for r in rows:
-                    rid = r["id"]
-                    if rid not in seen_ids:
-                        seen_ids.add(rid)
-                        records.append(self._row_to_record(r))
-            except sqlite3.OperationalError:
-                pass
+            # No try/except: a failing vector query (wrong dimension, corrupt table) used to be
+            # swallowed here, which silently turned hybrid search into keyword search.
+            vec_where = (
+                f"{base_where} AND m.embedding_id IN "
+                f"(SELECT embedding_id FROM memory_vec "
+                f"WHERE embedding MATCH ? ORDER BY distance LIMIT ?)"
+            )
+            vec_params = base_params + [json.dumps(query_embedding), k * 2]
+            rows = self._conn.execute(
+                f"SELECT m.* FROM memory m {vec_where}",
+                vec_params,
+            ).fetchall()
+            for r in rows:
+                rid = r["id"]
+                if rid not in seen_ids:
+                    seen_ids.add(rid)
+                    records.append(self._row_to_record(r))
 
         if not query and query_embedding is None:
             rows = self._conn.execute(
