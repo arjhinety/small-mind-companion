@@ -10,12 +10,15 @@ For every full-harness run in ``results/registry.jsonl`` (``run_kind == "pmb_ful
   ``exact_match`` in ``rule.py``, the rule behind ``pra_strict``. It is ~0 because responses are
   sentences, and it would stay ~0 with any ``acceptable_alternatives``, since those are compared the
   same way.
-* **containment vs judge** -- on answerable probes, whether the normalised gold answer occurs in
-  the normalised response as a whole word or phrase (``(?<!\\w)gold(?!\\w)``), cross-tabulated with
-  the stored judge verdict ``lenient_correct``, with Cohen's kappa per run and counts per category.
+* **containment vs judge** -- on answerable probes, ``contains_answer`` in ``rule.py`` (the
+  normalised gold answer occurs in the normalised response as a whole word or phrase,
+  ``(?<!\\w)gold(?!\\w)``), cross-tabulated with the stored judge verdict ``lenient_correct``, with
+  Cohen's kappa per run and counts per category. The same rule is pre-registered for Study 002 as
+  ``pra_contain`` (``docs/preregistrations/study002-answer-containment.md``).
 
-``normalize_text`` and ``exact_match`` are ``rule.py``'s own functions, loaded by path (it imports
-only ``re`` and ``string``), so this script and ``scripts/validate.py`` need no third-party package.
+``normalize_text``, ``exact_match`` and ``contains_answer`` are ``rule.py``'s own functions, loaded
+by path (it imports only ``re`` and ``string``), so this script and ``scripts/validate.py`` need no
+third-party package.
 Read-only: no ``raw.jsonl`` or ``metrics.json`` is modified.
 
 Usage::
@@ -29,7 +32,6 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
-import re
 import sys
 import types
 from collections import Counter
@@ -58,14 +60,6 @@ def full_harness_runs() -> list[str]:
     return [r["run_path"] for r in rows if r.get("run_kind") == "pmb_full_harness"]
 
 
-def contains(rule: types.ModuleType, response: str, gold: str) -> bool:
-    needle = rule.normalize_text(gold)
-    if not needle:
-        return False
-    pattern = r"(?<!\w)" + re.escape(needle) + r"(?!\w)"
-    return re.search(pattern, rule.normalize_text(response)) is not None
-
-
 def kappa(cells: Counter[str]) -> float | None:
     n = sum(cells[c] for c in CELLS)
     observed = (cells["both"] + cells["neither"]) / n
@@ -85,7 +79,7 @@ def score_run(rule: types.ModuleType, run: str) -> dict[str, Any]:
         probe = row["probe"]
         if not probe["answerable"]:
             continue
-        contained = contains(rule, row["response"], probe["gold_answer"])
+        contained = rule.contains_answer(row["response"], probe["gold_answer"])
         judged = bool(row["lenient_correct"])
         cell = CELLS[0 if contained and judged else 1 if contained else 2 if judged else 3]
         cells[cell] += 1

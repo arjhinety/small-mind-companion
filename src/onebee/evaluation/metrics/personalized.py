@@ -5,7 +5,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from onebee.evaluation.graders.judge import Judge
-from onebee.evaluation.graders.rule import detect_abstention, exact_match
+from onebee.evaluation.graders.rule import contains_answer, detect_abstention, exact_match
 
 
 class Probe(BaseModel):
@@ -55,6 +55,18 @@ def pra_lenient(results: list[ProbeResult]) -> float:
         elif r.lenient_correct is None and r.strict_correct:
             n_correct += 1
     return n_correct / len(answerable)
+
+
+def pra_contain(results: list[ProbeResult]) -> float | None:
+    """Share of answerable probes whose response contains the gold answer as a whole word or
+    phrase (``contains_answer``). Secondary cross-check on ``pra_lenient``, pre-registered in
+    ``docs/preregistrations/study002-answer-containment.md``. ``None`` when nothing is
+    answerable."""
+    answerable = [r for r in results if r.probe.answerable]
+    if not answerable:
+        return None
+    hits = sum(contains_answer(r.response, r.probe.gold_answer) for r in answerable)
+    return hits / len(answerable)
 
 
 def uar(results: list[ProbeResult]) -> float:

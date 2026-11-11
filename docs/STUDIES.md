@@ -134,7 +134,9 @@ finding it came from.
     change `pra_lenient`, whose judge rubric includes the alternatives, and the probe file is frozen.
     The field stays, documented as unpopulated. A judge-free cross-check (does the response contain
     the answer) agrees with the judge on Study 001's runs, but that rule was written after seeing
-    the responses; it is to be pre-registered before any Study 002 run it scores.
+    the responses. It is pre-registered for Study 002, unchanged, as the secondary cross-check
+    `pra_contain` in `docs/preregistrations/study002-answer-containment.md` (2026-11-11), with its
+    known failure modes and the report every Study 002 run owes it.
 11. **Widen the k-sweep.** It covers 120 of 688 probes (15 per category, seed 1337) and is reported
     as an inverted U peaking at k=8. At n=120 the curve's shoulders are not distinguishable from
     noise; a full-688 run costs inference, not training.

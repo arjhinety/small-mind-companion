@@ -58,6 +58,17 @@ def exact_match(prediction: str, gold: str) -> bool:
     return normalize_text(prediction) == normalize_text(gold)
 
 
+def contains_answer(response: str, gold: str) -> bool:
+    """Whether the normalised gold answer occurs in the normalised response as a whole word or
+    phrase. The rule behind ``pra_contain``, pre-registered in
+    ``docs/preregistrations/study002-answer-containment.md``; change it only by amendment there."""
+    needle = normalize_text(gold)
+    if not needle:
+        return False
+    pattern = r"(?<!\w)" + re.escape(needle) + r"(?!\w)"
+    return re.search(pattern, normalize_text(response)) is not None
+
+
 def fuzzy_match(prediction: str, gold: str, threshold: float = 0.8) -> bool:
     pred_tokens = set(normalize_text(prediction).split())
     gold_tokens = set(normalize_text(gold).split())

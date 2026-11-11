@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "6846a7eda8ec746252f4ae4004dd84054183e48a",
+  "git_commit": "3ee680edfd1d21b3a004267018df21ad4a3e6fea",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "e273135fac4bb72765f6489a612ca95c3e1cfe79c646a2dcc33cda87e29746f3"
+        "sha256": "66cadc2fcdee0044922fa0df5f7575d55c0a56986f657a80e4bb1728d312f28d"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -396,6 +396,11 @@
     {
       "on": "2026-11-11",
       "artifact": "README.md",
+      "reason": "Test count moved from 531 to 536: tests/unit/test_pra_contain.py adds five test functions pinning the pre-registered Study 002 pra_contain rule (docs/preregistrations/study002-answer-containment.md). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
       "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
     }
   ],
@@ -406,8 +411,8 @@
       "sha256": "7f279bfa978e3dcc5d3ab3ae91265e48932f15afd966dfad75e73adf09878699"
     },
     "docs/STUDIES.md": {
-      "bytes": 13005,
-      "sha256": "9f78aeebcac40f811e270a59ab910c5f7e45bf9698cf75836a332fd2b56ba114"
+      "bytes": 13185,
+      "sha256": "e834733ddfdabdf7ec929023f9b63e76889827bd51ec66aa31079a59da82bb74"
     },
     "reports/ERRATA.md": {
       "bytes": 49255,
