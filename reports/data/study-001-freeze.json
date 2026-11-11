@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "0b183e219537ea52ce77c98f52dc41ddad6fb34f",
+  "git_commit": "091947125bf1f54ef2ee208a3ca71df0a4809fbf",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19423,
-        "sha256": "0d0b6e61f34e2487a61cf0ddce789daf8ea54685f16afa4a134094394472e59e"
+        "sha256": "4ee81cac2de821d5a157db73051079a2dc44ae7d9cf8507f44dcc1b76bcba665"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -372,6 +372,11 @@
       "on": "2026-11-11",
       "artifact": "README.md",
       "reason": "ERRATA E36, E37 and E39 (E38 is recorded without a README change). The Experiments row 'H1, H4, H5 | ... | Confirmed at v0 scale' became 'H1, H4' plus a separate H5 row, 'Not tested' (E36); H10 'Peaks at k=8' became 'Not confirmed' (E37); the 'H16/H17-adjacent' data-scale row was relabelled '-' and rewritten to report abstention on unanswerable and answerable probes under both UAR phrase lists and to name every change between the two runs (E39). The errata count moved from 35 to 39 and the test count from 508 to 513 (five tests for the paper ledger and the paired statistics). Verdicts and attributions changed; no measured number, dataset or checkpoint changed. New figures quoted in the README are post-hoc reanalyses of frozen responses, each checked by registry/claims.jsonl."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
+      "reason": "Test count 513 -> 524 in the badge and the layout block: eleven tests for the upstream ledger (registry/upstream.jsonl), the machine registry and the logged-run wrapper (scripts/run_logged.py). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",

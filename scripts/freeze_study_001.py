@@ -214,6 +214,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
             "frozen responses, each checked by registry/claims.jsonl."
         ),
     },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
+            "Test count 513 -> 524 in the badge and the layout block: eleven tests for the "
+            "upstream ledger (registry/upstream.jsonl), the machine registry and the logged-run "
+            "wrapper (scripts/run_logged.py). Nothing else in the README changed. No result, "
+            "verdict, dataset or checkpoint changed."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,
