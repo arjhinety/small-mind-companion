@@ -28,3 +28,6 @@ htmlcov/
 node_modules/
 .DS_Store
 uv.lock.tmp
+
+# scripts/run_logged.py: full logs stay local until uploaded to the private run-log repo.
+runs/local/

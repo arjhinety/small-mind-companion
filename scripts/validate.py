@@ -2550,6 +2550,216 @@ def check_papers() -> list[Finding]:
     return findings
 
 
+UPSTREAM = ROOT / "registry" / "upstream.jsonl"
+MACHINES_REGISTRY = ROOT / "registry" / "machines.yaml"
+RUN_MANIFESTS = ROOT / "runs" / "manifests"
+RUN_ENVIRONMENTS = ROOT / "runs" / "environments"
+RUN_LOCAL = ROOT / "runs" / "local"
+UPSTREAM_KINDS = (
+    "bug",
+    "footgun",
+    "breaking-change",
+    "missing-feature",
+    "docs-gap",
+    "packaging",
+    "unconfirmed",
+)
+OUR_REPORT_STATUSES = ("not-filed", "filed", "wont-report")
+UPSTREAM_STATUSES = ("unchecked", "no-issue-found", "open", "fixed", "wont-fix")
+REQUIRED_UPSTREAM_FIELDS = (
+    "id",
+    "project",
+    "tracker",
+    "version_seen",
+    "version_source",
+    "kind",
+    "summary",
+    "symptom",
+    "workaround",
+    "would_help",
+    "evidence",
+    "first_recorded",
+    "minimal_repro",
+    "our_report",
+    "upstream_state",
+)
+SECRET_SHAPED = re.compile(r"hf_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_\-]{20,}")
+
+
+def _evidence_resolves(ref: str) -> str | None:
+    """None when the evidence reference resolves, else the problem."""
+    if ref.startswith("docs/model_quirks.md#"):
+        number = ref.split("#", 1)[1]
+        if not re.search(
+            rf"^ ?{re.escape(number)}\. \*\*", read_text("docs/model_quirks.md"), re.M
+        ):
+            return f"{ref}: no numbered item {number}"
+        return None
+    if ref.startswith("runs/manifests/"):
+        return None if (ROOT / ref).is_file() else f"{ref}: no such manifest"
+    return f"{ref}: evidence must be docs/model_quirks.md#N or runs/manifests/<run>.json"
+
+
+def check_upstream() -> list[Finding]:
+    """registry/upstream.jsonl: what we hit in libraries we use, how we worked around it, and
+    whether it has been reported."""
+    if not UPSTREAM.is_file():
+        return [Finding("upstream", "ledger", False, "registry/upstream.jsonl missing")]
+    findings: list[Finding] = []
+    seen: set[str] = set()
+    for lineno, line in enumerate(UPSTREAM.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError as exc:
+            findings.append(Finding("upstream", f"line-{lineno}", False, f"invalid JSON: {exc}"))
+            continue
+        uid = str(entry.get("id", f"line-{lineno}"))
+        missing = [f for f in REQUIRED_UPSTREAM_FIELDS if f not in entry]
+        if missing:
+            findings.append(Finding("upstream", uid, False, f"missing fields: {missing}"))
+            continue
+        problems: list[str] = []
+        if uid in seen:
+            problems.append("duplicate id")
+        seen.add(uid)
+        if entry["kind"] not in UPSTREAM_KINDS:
+            problems.append(f"kind {entry['kind']!r} not in {UPSTREAM_KINDS}")
+        for field in ("summary", "symptom", "would_help", "version_seen"):
+            if not str(entry[field]).strip():
+                problems.append(f"{field} is empty")
+        report = entry["our_report"]
+        if report.get("status") not in OUR_REPORT_STATUSES:
+            problems.append(f"our_report.status not in {OUR_REPORT_STATUSES}")
+        elif report["status"] == "filed" and not report.get("url"):
+            problems.append("our_report is filed but has no url")
+        state = entry["upstream_state"]
+        if state.get("status") not in UPSTREAM_STATUSES:
+            problems.append(f"upstream_state.status not in {UPSTREAM_STATUSES}")
+        elif state["status"] != "unchecked" and not state.get("checked_on"):
+            problems.append("upstream_state was checked but has no checked_on date")
+        elif state["status"] in ("open", "fixed", "wont-fix") and not state.get("url"):
+            problems.append(f"upstream_state {state['status']} needs the issue url")
+        if not entry["evidence"]:
+            problems.append("no evidence")
+        for ref in entry["evidence"]:
+            problem = _evidence_resolves(str(ref))
+            if problem:
+                problems.append(problem)
+        workaround = entry["workaround"]
+        if not str(workaround.get("description", "")).strip():
+            problems.append("workaround.description is empty")
+        for where in workaround.get("where", []):
+            path = ROOT / str(where.get("path", ""))
+            if not path.is_file():
+                problems.append(f"workaround.where {where.get('path')}: no such file")
+            elif str(where.get("contains", "")) not in path.read_text(encoding="utf-8"):
+                problems.append(f"workaround.where {where.get('path')}: anchor text not found")
+        if not re.fullmatch(r"[0-9a-f]{7,40}", str(entry["first_recorded"].get("commit", ""))):
+            problems.append("first_recorded.commit is not a commit hash")
+        findings.append(
+            Finding("upstream", uid, not problems, "; ".join(problems) if problems else "ok")
+        )
+    return findings
+
+
+def environment_id(record: dict[str, Any]) -> str:
+    """The content address scripts/run_logged.py gives an environment record."""
+    body = {k: v for k, v in record.items() if k != "env_id"}
+    canonical = json.dumps(body, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+
+
+def check_runs() -> list[Finding]:
+    """registry/machines.yaml and every committed run manifest and environment record."""
+    findings: list[Finding] = []
+    machines_doc = load_yaml(MACHINES_REGISTRY)
+    machines = {m["id"]: m for m in machines_doc["machines"]}
+    machine_problems = [
+        f"{mid}: {field}"
+        for mid, m in machines.items()
+        for field in ("kind", "platform", "runs_allowed", "requires_gpu")
+        if field not in m
+    ] + [
+        f"{mid}: runs_allowed is false with no not_allowed_reason"
+        for mid, m in machines.items()
+        if m.get("runs_allowed") is False and not m.get("not_allowed_reason")
+    ]
+    if len(machines) != len(machines_doc["machines"]):
+        machine_problems.append("duplicate machine id")
+    findings.append(
+        Finding(
+            "runs",
+            "machines-registry",
+            not machine_problems,
+            "; ".join(machine_problems) if machine_problems else f"{len(machines)} machines",
+        )
+    )
+    upstream_ids = {
+        json.loads(line)["id"]
+        for line in UPSTREAM.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    }
+    for env_path in sorted(RUN_ENVIRONMENTS.glob("*.json")):
+        text = env_path.read_text(encoding="utf-8")
+        record = json.loads(text)
+        problems = []
+        if record.get("env_id") != env_path.stem:
+            problems.append("env_id does not match the file name")
+        if environment_id(record) != record.get("env_id"):
+            problems.append("env_id is not the content hash of the record (edited after capture?)")
+        if record.get("machine") not in machines:
+            problems.append(f"machine {record.get('machine')!r} not in registry/machines.yaml")
+        if SECRET_SHAPED.search(text):
+            problems.append("contains a token-shaped string")
+        findings.append(
+            Finding(
+                "runs",
+                f"environment {env_path.stem}",
+                not problems,
+                "; ".join(problems) if problems else "ok",
+            )
+        )
+    for manifest_path in sorted(RUN_MANIFESTS.glob("*.json")):
+        text = manifest_path.read_text(encoding="utf-8")
+        manifest = json.loads(text)
+        problems = []
+        if manifest.get("run_id") != manifest_path.stem:
+            problems.append("run_id does not match the file name")
+        machine = machines.get(manifest.get("machine"))
+        if machine is None:
+            problems.append(f"machine {manifest.get('machine')!r} not in registry/machines.yaml")
+        if not (RUN_ENVIRONMENTS / f"{manifest.get('environment')}.json").is_file():
+            problems.append(f"environment {manifest.get('environment')} has no record")
+        upload = manifest.get("upload", {})
+        if upload.get("status") not in ("pending", "uploaded"):
+            problems.append("upload.status must be pending or uploaded")
+        elif upload["status"] == "uploaded" and not all(
+            upload.get(k) for k in ("repo", "path", "revision")
+        ):
+            problems.append("uploaded run is missing repo, path or revision")
+        for ref in manifest.get("upstream_refs", []):
+            if ref not in upstream_ids:
+                problems.append(f"upstream_refs {ref!r} not in registry/upstream.jsonl")
+        if SECRET_SHAPED.search(text):
+            problems.append("contains a token-shaped string")
+        local_log = RUN_LOCAL / manifest_path.stem / "log.txt"
+        if local_log.is_file():
+            actual = hashlib.sha256(local_log.read_bytes()).hexdigest()
+            if actual != manifest.get("log", {}).get("sha256"):
+                problems.append("local log.txt does not match the manifest's sha256")
+        findings.append(
+            Finding(
+                "runs",
+                f"run {manifest_path.stem}",
+                not problems,
+                "; ".join(problems) if problems else "ok",
+            )
+        )
+    return findings
+
+
 def check_crossdoc() -> list[Finding]:
     findings: list[Finding] = []
     ok = metric_values_consistent()
@@ -2696,6 +2906,8 @@ def run(
     findings += claim_findings
     findings += check_crossdoc()
     findings += check_papers()
+    findings += check_upstream()
+    findings += check_runs()
     hygiene = check_hygiene()
     if include_pollution:
         findings += check_pollution()

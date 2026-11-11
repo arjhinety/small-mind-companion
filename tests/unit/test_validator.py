@@ -377,3 +377,45 @@ def test_paper_ledger_flags_a_method_source_whose_function_is_gone(
     finding = next(f for f in v.check_papers() if f.claim_id == "mcnemar-1947")
     assert not finding.ok
     assert "no_such_function" in finding.message
+
+
+def test_upstream_ledger_passes(v: Any) -> None:
+    failures = [f for f in v.check_upstream() if not f.ok]
+    assert not failures, [(f.claim_id, f.message) for f in failures]
+
+
+def test_upstream_ledger_flags_a_moved_workaround_and_a_filed_report_without_url(
+    v: Any, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    rows = [
+        json.loads(line)
+        for line in (ROOT / "registry" / "upstream.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    rows[0]["workaround"]["where"] = [{"path": "README.md", "contains": "no such anchor text"}]
+    rows[1]["our_report"] = {"status": "filed", "url": None}
+    ledger = tmp_path / "upstream.jsonl"
+    ledger.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    monkeypatch.setattr(v, "UPSTREAM", ledger)
+    failed = {f.claim_id: f.message for f in v.check_upstream() if not f.ok}
+    assert "anchor text not found" in failed[rows[0]["id"]]
+    assert "no url" in failed[rows[1]["id"]]
+
+
+def test_runs_check_flags_an_edited_environment_record(
+    v: Any, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    record: dict[str, Any] = {
+        "schema_version": 1,
+        "machine": "gpu-box",
+        "packages": {"torch": "2.13.0"},
+    }
+    record["env_id"] = v.environment_id(record)
+    record["packages"]["torch"] = "9.9.9"  # edited after capture
+    envs = tmp_path / "environments"
+    envs.mkdir()
+    (envs / f"{record['env_id']}.json").write_text(json.dumps(record), encoding="utf-8")
+    monkeypatch.setattr(v, "RUN_ENVIRONMENTS", envs)
+    monkeypatch.setattr(v, "RUN_MANIFESTS", tmp_path / "manifests")
+    failed = [f for f in v.check_runs() if not f.ok]
+    assert failed and "content hash" in failed[0].message

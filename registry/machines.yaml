@@ -1,0 +1,40 @@
+# Machines a run may execute on. scripts/run_logged.py refuses any machine not listed here, and any
+# listed machine whose runs_allowed is false. What each machine actually had (GPU, driver, CUDA,
+# library versions) is captured per run in runs/environments/, not declared here; the fields below
+# are what is expected, with the evidence for each.
+machines:
+  - id: gpu-box
+    kind: remote-gpu
+    platform: linux
+    provider: DataCrunch
+    provider_evidence: >-
+      commit e9e5ca8 was authored on host flat-wind-begins-fin-03.datacrunch.io
+    gpu_expected: NVIDIA Blackwell (sm_120); exact model not recorded
+    gpu_evidence: docs/model_quirks.md #4
+    workdir: /root/small-mind-companion
+    workdir_evidence: docs/model_quirks.md "How to re-run these smoke tests"
+    requires_gpu: true
+    runs_allowed: true
+
+  - id: modal
+    kind: serverless-gpu
+    platform: linux
+    provider: Modal
+    provider_evidence: docs/model_quirks.md #25
+    gpu_expected: RTX-PRO-6000 (Modal's GPU type string)
+    gpu_evidence: docs/model_quirks.md #25
+    image_note: >-
+      CUDA builds need nvidia/cuda:12.8.1-devel-ubuntu22.04; debian_slim has no toolkit
+      (registry/upstream.jsonl modal-debian-slim-no-cuda-toolkit)
+    requires_gpu: true
+    runs_allowed: true
+
+  - id: local-windows
+    kind: workstation
+    platform: win32
+    provider: local
+    requires_gpu: false
+    runs_allowed: false
+    not_allowed_reason: >-
+      No runs on this machine until the owner says so (decided 2026-11-11). Experiments run on
+      gpu-box or modal.
