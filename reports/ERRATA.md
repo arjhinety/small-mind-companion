@@ -634,6 +634,26 @@ and the trajectory by `scripts/uar_trajectory.py`.
 **Why it survived the validator.** The row's numbers were checked; the attribution in its verdict
 was not.
 
+### E40 — ORPO was recorded as removed from the pinned trl; it had moved to `trl.experimental` (MED)
+
+**As written:** `README.md:190`: `— | ORPO as an alternative to DPO | Blocked — not supported by the
+pinned trl version`. `docs/model_quirks.md` #15: "`trl.ORPOTrainer`/`ORPOConfig` do not exist in this
+environment's trl (1.10.0) at all … ORPO support was dropped entirely". `docs/research_questions.md:116-121`
+moved H3.1 to Week 3 on that basis.
+
+**Correction:** trl 1.10.0 ships ORPO as `trl.experimental.orpo`: `trl/experimental/orpo/__init__.py`
+exports `ORPOConfig` and `ORPOTrainer` (checked in `trl-1.10.0-py3-none-any.whl` from PyPI, sha256
+`f4bdad4a10dffa558399177938267b0aee51a5052768027cbe807a97d1916576`). Only the top-level
+`from trl import ORPOConfig` fails. trl moved ORPO into its experimental namespace and later removed the
+deprecated top-level alias (release notes for v0.29.0, PR #5050); the experimental namespace carries no
+stability guarantee. H3.1 was shelved on a misread `ImportError`, not on a missing feature. Whether the
+experimental trainer works with this repository's training code is untested. H3.1 returns to Study 002
+(`docs/STUDIES.md` item 16), and the `trl-orpo-removed` entry was dropped from
+`registry/upstream.jsonl`, since there was nothing to report upstream.
+
+**Why it survived the validator.** The README row's verdict was unchecked. The quirks entry recorded a
+true symptom (the `ImportError`) and a false conclusion without inspecting the installed package.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 

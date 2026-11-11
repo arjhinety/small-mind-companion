@@ -427,5 +427,16 @@
     "category": "CONFOUNDED_COMPARISON",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 40,
+    "severity": "MED",
+    "area": "D",
+    "location": "README.md:190; docs/model_quirks.md #15; docs/research_questions.md:116-121",
+    "claim": "ORPO as an alternative to DPO | Blocked — not supported by the pinned trl version",
+    "actual": "trl 1.10.0 ships ORPOConfig and ORPOTrainer in trl.experimental.orpo (checked in the PyPI wheel); only the top-level import fails. H3.1 was shelved on a misread ImportError.",
+    "category": "WRONG_FACILITY_CLAIM",
+    "pinned": "",
+    "public": "yes"
   }
 ]

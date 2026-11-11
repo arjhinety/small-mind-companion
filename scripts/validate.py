@@ -2565,7 +2565,7 @@ UPSTREAM_KINDS = (
     "unconfirmed",
 )
 OUR_REPORT_STATUSES = ("not-filed", "filed", "wont-report")
-UPSTREAM_STATUSES = ("unchecked", "no-issue-found", "open", "fixed", "wont-fix")
+UPSTREAM_STATUSES = ("unchecked", "no-issue-found", "open", "fixed", "wont-fix", "intended")
 REQUIRED_UPSTREAM_FIELDS = (
     "id",
     "project",

@@ -5,7 +5,7 @@ evidence is hash-pinned, its write-ups stop changing, and its repository links r
 tag. Work done after a freeze belongs to the next study.
 
 The rule exists because the alternative — a repository whose numbers quietly drift as the
-interesting result changes — is exactly what the audit found 39 instances of. See
+interesting result changes — is exactly what the audit found 40 instances of. See
 [`reports/ERRATA.md`](../reports/ERRATA.md) for what went wrong, and
 [`docs/GUARDRAILS.md`](GUARDRAILS.md) for the rules derived from it.
 
@@ -153,6 +153,10 @@ finding it came from.
     judge from a different model family, and report, per system, the change in `pra_lenient` and
     the agreement between the two judges. A gain that shrinks under the second judge measured the
     judge, not the model. API cost only; nothing is regenerated.
+16. **H3.1: ORPO vs DPO** (E40, needs a GPU). ORPO is available as `trl.experimental.orpo` in the
+    pinned trl. Train it on the same preference pairs as DPO v1_scale (after item 4's lineage fix) and
+    compare at matched compute. The experimental API may change between releases, so record the exact
+    trl version in the run manifest.
 
 **Not Study 002:** correcting a Study 001 claim. Those go in `reports/ERRATA.md` against the frozen
 artifact. If a *result* changes, it is a Study 002 result and is reported as one.

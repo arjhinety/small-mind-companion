@@ -160,8 +160,8 @@ One JSON object per line: one thing a library or tool did that cost us time, and
 could plausibly fix, document or want to know about. Seeded from `docs/model_quirks.md`; new entries
 come from run logs (`runs/manifests/<run>.json`), which can point back with `upstream_refs`.
 
-- **`project`, `tracker`** — the library and its issue tracker. Tracker URLs were written from
-  memory and are not checked; confirm before filing. `null` when unknown.
+- **`project`, `tracker`** — the library and its issue tracker (verified for every entry on
+  2026-11-11). `null` when there is no public tracker.
 - **`version_seen`, `version_source`** — the version we hit it on and where that is recorded;
   `unrecorded` when nothing in the repository says.
 - **`kind`** — `bug`, `footgun` (works as designed, easy to misuse), `breaking-change`,
@@ -173,8 +173,10 @@ come from run logs (`runs/manifests/<run>.json`), which can point back with `ups
 - **`evidence`** — `docs/model_quirks.md#N` (the numbered item must exist) or a run manifest.
 - **`minimal_repro`** — `none written` until one exists; a report needs one.
 - **`our_report`** — `not-filed`, `filed` (needs `url`) or `wont-report`.
-- **`upstream_state`** — `unchecked`, `no-issue-found`, `open`, `fixed` or `wont-fix`; anything but
-  `unchecked` needs `checked_on`, and `open`/`fixed`/`wont-fix` need the issue `url`.
+- **`upstream_state`** — `unchecked`, `no-issue-found`, `open`, `fixed`, `wont-fix` (a report was
+  declined) or `intended` (deliberate, documented behaviour, so there is nothing to report); anything
+  but `unchecked` needs `checked_on`, and `open`/`fixed`/`wont-fix` need the issue `url`. Optional
+  `related` (more links) and `note` (what the check found).
 
 ## Runs: `machines.yaml`, `runs/manifests/`, `runs/environments/`
 

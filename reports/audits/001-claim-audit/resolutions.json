@@ -232,5 +232,11 @@
     "status": "RESOLVED",
     "where": "README.md:186",
     "note": "Row relabelled \"—\" and rewritten to report abstention on unanswerable and answerable probes under both phrase lists and to name every change between the runs."
+  },
+  {
+    "id": 40,
+    "status": "RESOLVED",
+    "where": "README.md:190; docs/STUDIES.md (Study 002 item 16); registry/upstream.jsonl",
+    "note": "README row now reads \"Not run\" with the experimental import path; H3.1 is back on the Study 002 list; the upstream-ledger entry was removed."
   }
 ]
