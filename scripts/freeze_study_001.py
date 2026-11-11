@@ -240,6 +240,18 @@ REFREEZE_LOG: list[dict[str, str]] = [
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (
+            "Test count 528 -> 531 in the badge and the layout block: two validator tests for the "
+            "new Study 002 config check (configs/training/study002/*.yaml must load every model "
+            "from the Hub at a 40-char commit SHA; an empty folder, a local base or a 'main' pin "
+            "fails), and one test that each of those configs' pins reaches every model, tokenizer "
+            "and teacher load. Nothing else in the README changed. No result, verdict, dataset or "
+            "checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
             "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the "
             "pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as "
             "trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to "

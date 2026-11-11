@@ -136,7 +136,10 @@ def run_distillation(
         run_name=config.run_name,
         # Defaults to float32 otherwise (see DistillationTrainer's docstring) -- would make
         # the 8B teacher use ~32GB just for weights instead of ~16GB.
-        model_init_kwargs={"dtype": "bfloat16"},
+        # `revision` too: trl loads a string student with `model_init_kwargs` and reads its revision
+        # from there only, so without it a Hub student would load from "main" whatever
+        # `base_model_revision` says (STUDIES item 13). Ignored for a local folder.
+        model_init_kwargs={"dtype": "bfloat16", "revision": config.base_model_revision},
         teacher_model_init_kwargs={"dtype": "bfloat16"},
     )
 

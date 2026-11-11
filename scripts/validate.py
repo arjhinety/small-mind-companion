@@ -2027,8 +2027,48 @@ class Evaluator:
         raise ValueError(f"unsupported expression element: {type(node).__name__}")
 
 
+HUB_REVISIONS = ROOT / "results" / "audit" / "hub_revisions" / "hub_revisions.json"
+
+
+def study002_pins_match_snapshot() -> list[str]:
+    """Every Study 002 revision pin that disagrees with the Hub snapshot's pinned commit for the
+    same repo: the four configs' base/teacher pins and run_crossover_baseline.py's large-model pin.
+    An empty list means every pin is the commit the snapshot documents."""
+    snapshot = load_json(HUB_REVISIONS)
+    documented = {**snapshot["checkpoints"], **snapshot["gemma"]}
+    pins: list[tuple[str, str, str]] = []
+    for config in sorted(STUDY002_CONFIGS.glob("*.yaml")):
+        doc = load_document(config)
+        for model_key, revision_key in STUDY002_MODEL_KEYS:
+            if doc.get(model_key) is not None:
+                pins.append((config.name, str(doc[model_key]), str(doc.get(revision_key))))
+    crossover = read_text("run_crossover_baseline.py")
+    model = re.search(r'^LARGE_MODEL = "([^"]+)"', crossover, re.M)
+    revision = re.search(r'^LARGE_MODEL_REVISION = "([^"]+)"', crossover, re.M)
+    pins.append(
+        (
+            "run_crossover_baseline.py",
+            model.group(1) if model else "",
+            revision.group(1) if revision else "",
+        )
+    )
+    return [
+        f"{where}: {repo}@{rev}"
+        for where, repo, rev in pins
+        if documented.get(repo, {}).get("pinned_revision") != rev
+    ]
+
+
+def gemma_files_changed_after_pin() -> dict[str, list[str]]:
+    """Per Gemma repo in the Hub snapshot: the files the commit after the pin changed."""
+    gemma = load_json(HUB_REVISIONS)["gemma"]
+    return {repo: record["files_changed_by_next_commit"] for repo, record in gemma.items()}
+
+
 def _computed_functions() -> dict[str, Callable[..., Any]]:
     return {
+        "study002_pins_match_snapshot": study002_pins_match_snapshot,
+        "gemma_files_changed_after_pin": gemma_files_changed_after_pin,
         "split_counts": split_counts,
         "count_test_functions": count_test_functions,
         "test_function_count": count_test_functions,
@@ -2760,6 +2800,47 @@ def check_runs() -> list[Finding]:
     return findings
 
 
+STUDY002_CONFIGS = ROOT / "configs" / "training" / "study002"
+# Repo-relative roots a model path can live under; `outputs/merged` would otherwise look like an
+# `org/name` Hub id, and outputs/ does not exist in CI to be caught by the existence test.
+LOCAL_ROOTS = ("outputs", "data", "configs", "results", "runs", ".", "..")
+HUB_MODEL_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*")
+STUDY002_MODEL_KEYS = (
+    ("base_model", "base_model_revision"),
+    ("teacher_model", "teacher_model_revision"),
+)
+
+
+def check_study002_configs() -> list[Finding]:
+    """configs/training/study002/*.yaml: every model loads from the Hub at a 40-char commit SHA.
+
+    ERRATA E4: Study 001's DPO and distillation configs said "main", and their bases were local
+    folders, for which `revision` is ignored. A Study 002 config that repeats either cannot be
+    called reproducible, so both fail here rather than being reported as hygiene."""
+    configs = sorted(STUDY002_CONFIGS.glob("*.yaml"))
+    if not configs:
+        return [Finding("study002-configs", "present", False, f"no configs in {STUDY002_CONFIGS}")]
+    findings: list[Finding] = []
+    for config in configs:
+        doc = load_document(config)
+        problems: list[str] = []
+        for model_key, revision_key in STUDY002_MODEL_KEYS:
+            model = doc.get(model_key)
+            if model is None:
+                continue
+            local = str(model).split("/")[0] in LOCAL_ROOTS or (ROOT / str(model)).exists()
+            if not HUB_MODEL_ID.fullmatch(str(model)) or local:
+                problems.append(
+                    f"{model_key} {model!r} is not a Hub repo id; revision would be ignored"
+                )
+            if not re.fullmatch(r"[0-9a-f]{40}", str(doc.get(revision_key, ""))):
+                problems.append(f"{revision_key} {doc.get(revision_key)!r} is not a 40-char SHA")
+        findings.append(
+            Finding("study002-configs", config.name, not problems, "; ".join(problems) or "pinned")
+        )
+    return findings
+
+
 def check_crossdoc() -> list[Finding]:
     findings: list[Finding] = []
     ok = metric_values_consistent()
@@ -2908,6 +2989,7 @@ def run(
     findings += check_papers()
     findings += check_upstream()
     findings += check_runs()
+    findings += check_study002_configs()
     hygiene = check_hygiene()
     if include_pollution:
         findings += check_pollution()

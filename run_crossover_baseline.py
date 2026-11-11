@@ -20,6 +20,11 @@ from onebee.inference.engine import GenerationConfig, HFEngine
 # scaffolded result (System E-distill / H23, see docs/distillation_results.md) once run.
 
 LARGE_MODEL = "google/gemma-4-E4B-it"
+# Pinned to the commit "main" pointed to through all of Study 001 (2026-07-20 to 2026-11-03; see
+# results/audit/hub_revisions/hub_revisions.json). The 2026-11-03 commit changed tokenizer.json, and
+# this script uses E4B's own tokenizer, so loading "main" would make the crossover differ from every
+# Study 001 system by tokenizer as well as by model.
+LARGE_MODEL_REVISION = "ee0ef6023621cff504d758262d4e04895a5af4a2"
 
 probes_path = Path("data/benchmarks/pmb_v0_full/probes.jsonl")
 probes: list[Probe] = []
@@ -29,7 +34,7 @@ with open(probes_path) as f:
 
 print(f"Loaded {len(probes)} probes", file=sys.stderr)
 
-engine = HFEngine(LARGE_MODEL)
+engine = HFEngine(LARGE_MODEL, revision=LARGE_MODEL_REVISION)
 engine.load()
 config = GenerationConfig(max_new_tokens=64)
 judge = OpenAIJudge(model="gpt-5.6-luna")

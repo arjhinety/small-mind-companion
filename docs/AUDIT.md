@@ -77,6 +77,7 @@ It is CPU-only, offline, and downloads nothing. Its sections:
 | `crossdoc` | the same metric must not be quoted with two values across `README.md` and `docs/STUDIES.md`, and every referenced guardrail id must exist |
 | `hygiene` | report-only determinism hygiene: configs whose `base_model_revision` is not a 40-char SHA, corpora with no `hash.txt`, and frozen write-ups whose quoted percentage disagrees with its artifact |
 | `pollution` | no training corpus shares a 13-gram with the PMB benchmark (`scripts/check_contamination.py` logic) |
+| `study002-configs` | every `configs/training/study002/*.yaml` loads each model (base, teacher) from a Hub repo id at a 40-char commit SHA; a local path, a `"main"` pin or an empty folder fails (STUDIES item 13) |
 
 Two deliberate limits, because a stricter check would be a false one:
 
@@ -166,7 +167,9 @@ Recorded here so the validator's reports are not mistaken for surprises:
 - **`docs/STUDIES.md` describes the curriculum as "not human-reviewed" and single-seed**; both are
   `manual` in the claims matrix. They are absences, not measurements.
 - **Five training configs do not pin `base_model_revision`** (`dpo*.yaml`, `distill_v1.yaml`); the
-  validator reports them every run (G6). Pinning them is a Study 002 item.
+  validator reports them every run (G6). They stay that way: they are frozen Study 001 evidence and
+  record what was run. Study 002 uses pinned equivalents in `configs/training/study002/`, which the
+  `study002-configs` section enforces (STUDIES item 13).
 - **`data/benchmarks/emotional_range/` and `data/benchmarks/h22_judgment/` have no `hash.txt`.** They
   are unrun probe sets referenced by no headline number.
 - **The training-persona corpora are not disjoint from PMB at the text level.** 138 of PMB's 266

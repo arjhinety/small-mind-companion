@@ -693,3 +693,11 @@ So this file is not read as blanket scepticism:
 - Single seed throughout. Every headline number in this project is one run.
 - H5 has no test: no generic-SFT model was trained, and MUR cannot measure it as implemented (E36).
 - Every judge-scored training gain is scored by the model that wrote the training targets (E38); re-scoring the saved responses with an unrelated judge is Study 002 item 15.
+
+## Resolved since the audit
+
+- **E4 (2026-11-11, Study 002 item 13).** The configs named in E4 are unchanged; they are frozen
+  Study 001 evidence and record what was run. Pinning them in place would not have worked either:
+  their bases are local folders, for which `revision` is ignored, and `main` has since moved (both
+  Gemma models changed `tokenizer.json` on 2026-11-03). Study 002 uses pinned equivalents in
+  `configs/training/study002/`, enforced by `scripts/validate.py`; see STUDIES item 13.

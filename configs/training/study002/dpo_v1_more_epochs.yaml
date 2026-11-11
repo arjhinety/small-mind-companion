@@ -1,0 +1,8 @@
+# Study 002 pinned equivalent of configs/training/dpo_v1_more_epochs.yaml (frozen; see dpo_v0.yaml
+# for why the frozen file pins nothing). Same base and data as dpo_v0.yaml, 4 epochs.
+base_model: "arjhinety/onebee-gf-sft-v0"
+base_model_revision: "b7d767dcd8bc2af882a0542182f40926dcae3693"
+train_file: "data/dpo/v0/train.jsonl"
+val_file: "data/dpo/v0/val.jsonl"
+output_dir: "outputs/study002/dpo/v1"
+num_train_epochs: 4.0

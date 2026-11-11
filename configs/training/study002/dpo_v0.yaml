@@ -1,0 +1,13 @@
+# Study 002 pinned equivalent of configs/training/dpo.yaml (frozen Study 001 evidence, which loads
+# a local folder at revision "main" and so pins nothing; see ERRATA E4).
+# Base: the SFT v0 checkpoint as published on the Hub, at the commit that added its weights
+# (2026-08-14; the weights file is unchanged as of 2026-11-11, see
+# results/audit/hub_revisions/hub_revisions.json). That it is byte-identical to the local
+# outputs/sft/v0/merged Study 001 trained from is likely but unverified (needs a sha256 on the box).
+# Same data and hyperparameters as the frozen config, so it carries the same data-lineage defect
+# (STUDIES item 4); regenerated pairs get their own config.
+base_model: "arjhinety/onebee-gf-sft-v0"
+base_model_revision: "b7d767dcd8bc2af882a0542182f40926dcae3693"
+train_file: "data/dpo/v0/train.jsonl"
+val_file: "data/dpo/v0/val.jsonl"
+output_dir: "outputs/study002/dpo/v0"

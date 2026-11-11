@@ -1,0 +1,23 @@
+# Study 002 pinned equivalent of configs/training/distill_v1.yaml (frozen; it loads a local folder
+# and the teacher at "main", so it pins nothing; see ERRATA E4).
+# Base: the DPO v1_scale checkpoint as published on the Hub, at the commit that added its
+# weights (2026-08-14; unchanged as of 2026-11-11, see results/audit/hub_revisions/
+# hub_revisions.json). Identity with the local outputs/dpo/v1_scale/merged is unverified.
+# Teacher: google/gemma-4-E4B-it at ee0ef60, the commit "main" resolved to when Study 001's
+# distillation ran (2026-08-14/15; main pointed there from 2026-07-20 to 2026-11-03). Resolved from
+# Hub history, not logged at the time. The 2026-11-03 commit changed only tokenizer.json, which the
+# teacher never uses here (trl feeds it the student's token ids), so the pin is for exactness.
+base_model: "arjhinety/onebee-gf-dpo-v1-scale"
+base_model_revision: "b984814810a1248f74349e2dcb549d6e9ddb329f"
+teacher_model: "google/gemma-4-E4B-it"
+teacher_model_revision: "ee0ef6023621cff504d758262d4e04895a5af4a2"
+train_file: "data/distill/v1/train.jsonl"
+val_file: "data/distill/v1/val.jsonl"
+output_dir: "outputs/study002/distill/v1"
+num_train_epochs: 1.0
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+max_completion_length: 128
+temperature: 1.0
+beta: 1.0
+report_to: "none"
