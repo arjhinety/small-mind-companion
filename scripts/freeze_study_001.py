@@ -198,6 +198,22 @@ REFREEZE_LOG: list[dict[str, str]] = [
             "dataset or checkpoint."
         ),
     },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E36, E37 and E39 (E38 is recorded without a README change). The Experiments "
+            "row 'H1, H4, H5 | ... | Confirmed at v0 scale' became 'H1, H4' plus a separate H5 "
+            "row, 'Not tested' (E36); H10 'Peaks at k=8' became 'Not confirmed' (E37); the "
+            "'H16/H17-adjacent' data-scale row was relabelled '-' and rewritten to report "
+            "abstention on unanswerable and answerable probes under both UAR phrase lists and to "
+            "name every change between the two runs (E39). The errata count moved from 35 to 39 "
+            "and the test count from 508 to 513 (five tests for the paper ledger and the paired "
+            "statistics). Verdicts and attributions changed; no measured number, dataset or "
+            "checkpoint changed. New figures quoted in the README are post-hoc reanalyses of "
+            "frozen responses, each checked by registry/claims.jsonl."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

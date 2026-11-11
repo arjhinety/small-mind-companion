@@ -332,3 +332,48 @@ def test_strict_hygiene_is_fatal_and_only_for_hygiene(v: Any) -> None:
         "documented-vs-artifact-metrics",
     }
     assert "config-revisions" in strict_failures, "the five 'main' revision pins are a real gap"
+
+
+def test_paper_ledger_passes(v: Any) -> None:
+    """Every entry in registry/papers.jsonl is complete and every cited arXiv id has an entry."""
+    failures = [f for f in v.check_papers() if not f.ok]
+    assert not failures, [(f.claim_id, f.message) for f in failures]
+
+
+def test_paper_ledger_flags_a_cited_paper_without_an_entry(
+    v: Any, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Dropping a cited paper from the ledger must fail the citation-coverage check."""
+    rows = [
+        json.loads(line)
+        for line in (ROOT / "registry" / "papers.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    ledger = tmp_path / "papers.jsonl"
+    kept = [r for r in rows if r["identifier"].get("arxiv") != "2503.01747"]
+    ledger.write_text("\n".join(json.dumps(r) for r in kept) + "\n", encoding="utf-8")
+    monkeypatch.setattr(v, "PAPERS", ledger)
+    coverage = next(
+        f for f in v.check_papers() if f.claim_id == "every-cited-arxiv-paper-has-an-entry"
+    )
+    assert not coverage.ok
+    assert "2503.01747" in coverage.message
+
+
+def test_paper_ledger_flags_a_method_source_whose_function_is_gone(
+    v: Any, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    rows = [
+        json.loads(line)
+        for line in (ROOT / "registry" / "papers.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    for row in rows:
+        if row["id"] == "mcnemar-1947":
+            row["used_by"] = ["scripts/paired_tests_v0_1.py::no_such_function"]
+    ledger = tmp_path / "papers.jsonl"
+    ledger.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    monkeypatch.setattr(v, "PAPERS", ledger)
+    finding = next(f for f in v.check_papers() if f.claim_id == "mcnemar-1947")
+    assert not finding.ok
+    assert "no_such_function" in finding.message

@@ -5,7 +5,7 @@ evidence is hash-pinned, its write-ups stop changing, and its repository links r
 tag. Work done after a freeze belongs to the next study.
 
 The rule exists because the alternative — a repository whose numbers quietly drift as the
-interesting result changes — is exactly what the audit found 35 instances of. See
+interesting result changes — is exactly what the audit found 39 instances of. See
 [`reports/ERRATA.md`](../reports/ERRATA.md) for what went wrong, and
 [`docs/GUARDRAILS.md`](GUARDRAILS.md) for the rules derived from it.
 
@@ -134,9 +134,11 @@ finding it came from.
 11. **Widen the k-sweep.** It covers 120 of 688 probes (15 per category, seed 1337) and is reported
     as an inverted U peaking at k=8. At n=120 the curve's shoulders are not distinguishable from
     noise; a full-688 run costs inference, not training.
-12. **Measure `mur`.** It is defined and implemented in the harness and is **0.0 in every saved
-    run** — because it is computed but not called, not because the models score zero. Either wire it
-    up or remove it from the reported metric set.
+12. **Replace `mur`** (E36). The harness calls it, and it is **0.0 in every saved run** because the
+    IDs it compares never match: probes cite benchmark-authored memory IDs, while the store assigns a
+    random UUID at insert. Its Week-1 proxy also measures retrieval, not the answer, so even with the
+    IDs reconciled it could not test H5. A response-level memory-utilisation measure is needed, or
+    the metric should be dropped from the reported set.
 13. **Pin `base_model_revision` in the DPO and distillation configs** (E4). `distill_v1.yaml`
     (base and teacher), `dpo.yaml`, `dpo_v1_more_epochs.yaml` and `dpo_v1_scale.yaml` all reference
     `"main"`. Until they pin a SHA, no run launched from them can be called reproducible.
@@ -144,6 +146,13 @@ finding it came from.
     human-reviewed", and no reviewer log or teacher transcript was retained, so the
     `gpt-5.6-luna` teacher identity is self-reported and unverifiable from the repository. A
     few dozen probes scored by a human would bound how much the judge-based metric can be trusted.
+15. **Re-score with an unrelated judge** (E36, E38). Every `pra_lenient` and pairwise verdict was
+    scored by `gpt-5.6-luna`, which also wrote the SFT and DPO training targets. Re-judge the saved
+    responses (every `results/**/raw.jsonl`, including the two pairwise sets, which store both
+    responses per probe, and the PCS analysis where it can be re-run from saved responses) with a
+    judge from a different model family, and report, per system, the change in `pra_lenient` and
+    the agreement between the two judges. A gain that shrinks under the second judge measured the
+    judge, not the model. API cost only; nothing is regenerated.
 
 **Not Study 002:** correcting a Study 001 claim. Those go in `reports/ERRATA.md` against the frozen
 artifact. If a *result* changes, it is a Study 002 result and is reported as one.

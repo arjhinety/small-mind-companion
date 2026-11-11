@@ -418,6 +418,222 @@ E2: the measurement was real, and the claim built on it was stronger than the me
 **Found from outside the repository**, by a reader comparing the README against the study site
 (which already said "H7 was never tested").
 
+### E36 — H5 was judged on a different comparison and a different metric than it was pre-registered on (HIGH)
+
+**As written:** `docs/day4_sft_results.md:32-33`: "H5 (memory-aware SFT beats generic SFT when
+evaluated with memory): **confirmed.** D→E: +2.6pp `pra_lenient` (15.13%→17.76%)." The README row
+`H1, H4, H5 | … | Confirmed at v0 scale` (`README.md:181`) carried the same verdict.
+
+**Correction:** H5 is **not tested**. `docs/research_questions.md:67` pre-registered it as Exp B1 vs
+B2 (memory-aware SFT against generic SFT, both evaluated with memory), predicting +8 to +15pp on
+Memory Utilization Rate. The verdict changed both:
+- **The comparison.** D is the raw base model with memory; E is memory-aware SFT with memory. No
+  generic-SFT model was trained, so the B2 arm does not exist, and D→E cannot separate
+  memory-aware SFT from SFT in general, which is what H5 asks.
+- **The metric.** The verdict used `pra_lenient`, not MUR, and +2.6pp is below the pre-registered
+  range even on that metric.
+
+**What D→E does show** *(post-hoc reanalysis of the frozen responses, not a new result)*: 108 vs 92
+of 608 answerable probes, 27 correct only under E and 11 only under D (exact McNemar p = 0.014;
+paired bootstrap 95% CI +0.7 to +4.6pp resampling probes, −0.2 to +5.3pp resampling whole
+personas; single seed). The probe-level test separates the two response sets; the persona-level
+interval, over only 8 personas, does not exclude zero, so the gap may depend on which personas the
+benchmark contains. With 8 personas any interval is coarse; error bars on small evaluation sets are
+easily too narrow, as Bowyer et al. (arXiv 2503.01747) show for CLT-based intervals. The D→E gap is
+graded by the model that wrote E's training answers, so it may partly reflect the judge favouring
+its own style: `run_system_d.py:38` and `run_system_e.py:38` request `gpt-5.6-luna` as judge, and
+`generate_sft_data.py:55` requested SFT v0's targets from the same model, a relationship Li et al.
+(arXiv 2502.01534) call preference leakage and report biases judges toward the related student
+model. The same caveat applies to every judge-scored training gain in this repository; see E38.
+Neither `pra_strict` (near 0 by construction) nor UAR (scored on the 80 unanswerable probes, not
+the 608 behind the gap) can confirm or refute it. Figures recomputed by
+`scripts/paired_tests_v0_1.py` (`results/v0.1/paired_tests/paired_tests.json`).
+
+**MUR could not have tested H5 as implemented.** `mur`
+(`src/onebee/evaluation/metrics/memory_quality.py:7`) is called by the harness
+(`src/onebee/evaluation/harness.py:66`) and is 0.0 in every saved run because the IDs it compares
+never match: probes cite benchmark-authored IDs (`p000_s003_t008`), while the memory store assigns
+a random UUID at insert (`src/onebee/memory/store.py:179-180`). Of the 39 gold IDs for persona
+p000, 0 appear in `data/stores/pmb_v0_full/p000.db`. The implemented proxy also only asks whether a
+gold memory was *retrieved*, which depends on the retriever, not on the answer; two SFT variants
+sharing a retriever score the same by construction. Wiring it up would not test H5; a
+response-level measure is needed.
+
+Corrected alongside: `docs/STUDIES.md` Study 002 item 12 ("computed but not called": it is called;
+the IDs never match) and `registry/benchmarks.yaml` (`mur` was described as "Misattribution rate":
+it is Memory Utilisation Rate).
+
+**Why it survived the validator.** No claim in `registry/claims.jsonl` covered the README's
+H1/H4/H5 row. Same shape as E35: the verdict column was unchecked.
+
+### E37 — H10's "peaks at k=8" rests on a 3-probe decline (MED)
+
+**As written:** `docs/day3_memory_results.md:48-49`: "H10 … **confirmed closely.** Clear
+inverted-U, peak exactly at k=8, decline at k=16." README: `H10 | … | Peaks at k=8`
+(`README.md:182`).
+
+**Correction:** H10 is **not confirmed**. *(The figures below are a post-hoc reanalysis of the
+frozen responses, not a new result.)* The k-sweep ran on a 120-probe stratified subsample (105
+answerable). From k=8 to k=16, **3 probes were lost and 0 gained** (18 → 15 correct; exact McNemar
+p = 0.25), so the decline that makes the curve an inverted U is within noise. The paired bootstrap
+95% interval for that change is −6.7 to 0.0pp. Its upper bound is 0.0 because every disagreeing
+probe went the same way, so it is a by-product of the method, not evidence. Resampling whole
+personas instead gives −5.6 to −0.8pp. That interval excludes zero only because the 3 lost probes
+belong to 3 different personas and none was gained: a resample avoids all three with probability
+(5/8)⁸ ≈ 2.3%, below the 2.5% tail, so it too is a by-product of the method, not evidence. The rise
+before the peak is real: from k=4 to k=8, 10 probes were gained and 0 lost (8 → 18 correct;
+p = 0.002; 95% interval +4.8 to +15.2pp resampling probes, +4.8 to +14.9pp resampling personas).
+The data cannot be told apart from H10's own falsifier, "monotonic non-decreasing"
+(`docs/research_questions.md:73`), and k=12, where degradation was predicted to begin, was never
+run.
+
+Every figure above is recomputed from the committed responses by `scripts/paired_tests_v0_1.py`
+(`results/v0.1/paired_tests/paired_tests.json`) and checked by `registry/claims.jsonl`. The k-sweep
+`raw.jsonl` files are validated against their `metrics.json` but are not pinned by the Study 001
+freeze.
+
+**Why it survived the validator.** The k-sweep metrics are pinned by the freeze; no claim checked
+the verdict built on them.
+
+### E38 — Every judge-scored training gain is graded by the model that wrote the training targets (MED)
+
+**As written:** the README's results table (`README.md:35-43`) and its Experiments rows for H5, H6
+and H23 (`README.md:181`, `:183`, `:186`) report gains of trained systems over untrained or
+less-trained ones, measured by `pra_lenient` or by a pairwise judge. None says who scored them.
+
+**Correction:** no figure changes, but each of these comparisons is graded by the model that wrote
+the training data it rewards. Every evaluation and comparison script constructs
+`OpenAIJudge(model="gpt-5.6-luna")`, for example `run_system_e_v1.py:38` and
+`compare_c_vs_e_v1_scale.py:47`. The same model wrote the targets for every SFT and DPO corpus
+(`generate_sft_data.py:55`, `generate_dpo_data.py:55`; the `sft/v0`, `sft/v1`, `dpo/v0` and
+`dpo/v1_scale` datasheets). The distillation teacher is different (`google/gemma-4-E4B-it`,
+`configs/training/distill_v1.yaml:9`), but the distilled model starts from the DPO checkpoint. Li et
+al. (arXiv 2502.01534) call this relationship between generator and judge preference leakage and
+report that it biases judges toward the related student model. A gain measured this way may partly
+reflect the judge favouring its own style.
+
+**Affected:** the `pra_lenient` of every trained row against an untrained one in the results table;
+D→E (E36); the 24.7pp C-vs-E pairwise gap, where C additionally trained on gpt-5.6-luna-written
+chosen responses (H6); and the H23 uplift and its persona-consistency comparison.
+
+**UAR is free of judge bias, but its grader was extended after seeing outputs.** UAR is scored by a
+rule-based phrase matcher (`src/onebee/evaluation/metrics/personalized.py:76`,
+`src/onebee/evaluation/graders/rule.py:86-88`), not by `gpt-5.6-luna`. Its phrase list was extended
+twice on 2026-08-14 to include phrasing the SFT data teaches:
+- **After outputs were seen.** Five literal training-template phrases (`rule.py:32-36`, commit
+  `2615598`) were added after the dedup-fixed v1 outputs were seen (`docs/model_quirks.md:195-199`).
+- **With the new training phrasing.** Seven paraphrases (`rule.py:40-46`, commit `2156e20`) were
+  added in the same commit that wrote the new training templates, before the rebalanced run the
+  README reports.
+
+Both facts hold. The extension corrected a real mismatch: a model that had learned the trained
+abstention phrasing was scored as not abstaining, so the dedup-fixed run read 2.5% where its saved
+responses give 77/80 = 96.25% under the extended list (that run is superseded; its metrics were
+never committed). And the measurement was changed after seeing the outputs it scores, which is the
+adaptive reuse of data that standard inference does not assume (Dwork et al., arXiv 1411.2664).
+
+**Which README numbers rest on which list.** The v0 rows (`README.md:36-39`) were scored with the
+original 17 phrases (`_ABSTENTION_PHRASES[:17]`), the v1 SFT+memory and distilled rows (`:40`,
+`:42`) with the full list. Re-scoring every committed run under both lists
+(`scripts/uar_phrase_lists.py`) changes only those two: 70.0% becomes 55.0% and 71.25% becomes
+58.75% under the original list. The H23 row ("UAR flat") compares two runs scored with the same
+full list. The data-scale row compares across list versions and is corrected in E39. The results
+table places the v0 SFT+memory row (33.75%, original list) next to the v1 row (70.0%, full list)
+without saying the scoring changed.
+
+Because the added phrases are the SFT data's own wording, gaps between raw and trained models' UAR
+may partly measure wording rather than abstention behaviour; whether raw models abstain in
+phrasings no version of the list covers is untested. Comparisons between untrained systems that
+differ only in retrieval (A vs D, the k-sweep) are outside both the judge-bias and phrase-list
+concerns.
+
+**Size unknown.** The judge sees a gold answer and scores correctness on 1–5, which may limit a
+style preference; this has not been tested. The responses are saved, so re-scoring them with an
+unrelated judge would measure it (Study 002 item 15, `docs/STUDIES.md`).
+
+**Why it survived the validator.** The validator checks numbers against artifacts. Which model
+produced an artifact, which grader version scored it, and how either relates to the training data
+were recorded only in prose.
+
+### E39 — The "10x data scale improves calibration" row attributes to scale a change made of several (MED)
+
+**As written:** `README.md:185`: `H16/H17-adjacent | 10x data scale improves calibration (UAR) |
+Confirmed after fixing 2 real bugs that initially masked the improvement`.
+
+**Correction:** the row compares System E trained on SFT v0 (`results/v0.1/E_sft_memory`) with
+System E trained on the final SFT v1 corpus (`results/v1_scale/E_sft_memory`, `4fcf740`):
+abstention on unanswerable probes 33.75% → 70.0% and answerable probes flagged as abstaining
+151 → 195 of 608, under the full phrase list. Between those runs, everything below changed.
+*Training data:*
+1. Size: 225 → 2480 examples (`data/sft/v0/DATASHEET.md:9`, `data/sft/v1/DATASHEET.md:9`).
+2. Personas: 4 → 40, each with its own memory store (`DATASHEET.md:5-6`).
+3. Dedup fix (`bd7e556`, `docs/model_quirks.md` #16): abstention and irrelevant-retrieval
+   examples stopped collapsing to one each.
+4. Intended ratios: 15%/10% → 6%/5% (`2156e20`). Because of change 3, the actual shares went *up*:
+   1 + 1 of 225 (0.4% each) → 136 irrelevant-retrieval (5.5%) and 105 abstention (4.2%) of 2480.
+5. Templates: one fixed target per kind → four paraphrases per kind (`2156e20`).
+
+*Training config:*
+
+6. Effective batch 8 → 32: `per_device_train_batch_size` 4 → 8 and `gradient_accumulation_steps`
+   2 → 4 (`configs/training/sft.yaml:19-20`, `configs/training/sft_v1.yaml:19-20`); with 2 epochs,
+   52 → about 140 optimizer steps (v1 computed, not recorded).
+
+*Evaluation:*
+
+7. UAR phrase list: 17 → 29 phrases (E38). Under one list the change is 33.75% → 70.0% with
+   answerable flagged 151 → 195 of 608 (full), or 33.75% → 55.0% with 151 → 137 of 608 (original;
+   that 151 → 137 difference is within noise: exact McNemar p = 0.343, paired bootstrap 95% CI
+   −6.7 to +2.1pp, one training seed per run).
+
+Unchanged: base model and revision, LoRA settings, learning rate, schedule, warmup, epochs, max
+length and seed (`sft.yaml:2-15,21-24`, `sft_v1.yaml:5-18,21-24`); the teacher; retrieval k=8; the
+judge; the 688 probes; the evaluation script apart from the checkpoint path.
+
+**The trajectory, one phrase list at a time.** *(Post-hoc reanalysis of saved responses, not a new
+result.)* System E was trained and evaluated four times between v0 and the reported v1 run. Each
+step is one training run with one seed; the corpus behind each v1 run is inferred from commit order
+(`scripts/uar_trajectory.py`, `results/audit/uar_trajectory/uar_trajectory.json`).
+
+| Step | SFT corpus (abstention + irrelevant-retrieval of total) | Changes from the previous step | Full list: UAR / answerable flagged | Original 17: UAR / answerable flagged |
+|---|---|---|---|---|
+| v0 | `data/sft/v0`: 1 + 1 of 225 | — | 33.75% / 151 of 608 | 33.75% / 151 of 608 |
+| `e9e5ca8` | `data/sft/v1` @ `2b4c308`: 1 + 1 of 2242 | 1, 2, 6: 10x size, 40 personas, effective batch 32 | 16.25% / 60 | 16.25% / 60 |
+| `5a9fe1b` | @ `bc2f409`: 129 + 341 of 2698 | 3: the dedup fix (the corpus grew because examples stopped collapsing) | 96.25% / 421 | 2.50% / 32 |
+| `4fcf740` | @ `799390e`: 105 + 136 of 2480 | 4, 5: lower ratios, four templates per kind | 70.0% / 195 | 55.0% / 137 |
+
+Under the full list, abstention on unanswerable probes runs 33.75% → 16.25% → 96.25% → 70.0%, and
+on answerable probes 151 → 60 → 421 → 195 of 608 (24.8% → 9.9% → 69.2% → 32.1%). Under the original
+list the dedup-fix step reverses direction on both, because that model answers in template wording
+the original list does not contain (E38): 33.75% → 16.25% → 2.50% → 55.0%, and
+151 → 60 → 32 → 137. Neither measure alone describes the change: the reported run abstains more on
+unanswerable probes than v0 under both lists; on answerable probes, under the full list,
+151 → 195 (exact McNemar p = 0.002; 95% CI +2.6 to +11.8pp resampling probes, but −1.3 to +15.8pp
+resampling whole personas; see E36 on intervals over 8 personas), and under the original list
+151 → 137, a difference within noise (exact McNemar p = 0.343; 95% CI −6.7 to +2.1pp resampling
+probes, −10.7 to +6.1pp resampling personas; one training seed per run). On the 80 unanswerable
+probes, every adjacent step differs by more than chance at the probe level under both lists (exact
+McNemar p ≤ 0.013; the probe-level and persona-level intervals both exclude zero). No step changes
+one thing: the first carries changes 1, 2 and 6 together, and the dedup fix also changed the corpus
+size.
+
+**Each step is one training run with one seed.** The McNemar tests and bootstrap intervals resample
+probes, not training runs. They show that two saved sets of responses are unlikely to abstain
+equally often on these probes. They cannot measure how much UAR moves between training runs of the
+same configuration, which is the variation a claim about a configuration needs. Comparing training
+configurations needs several seeds per configuration (Colas et al., arXiv 1806.08295, relate the
+number of seeds to the probability of statistical errors in such comparisons). So the table shows
+what four single runs did. It does not show that any one change produces its step, and the step
+sizes carry no seed-level uncertainty. `docs/proper_scale_results.md:26-27` calls 16.25% "wrong"
+with a "corrected value" of 70.0%: it is a correct measurement of a different model, two steps
+earlier in this table, superseded rather than corrected.
+
+Counts are recomputed by `scripts/sft_abstention_counts.py`, UAR by `scripts/uar_phrase_lists.py`
+and the trajectory by `scripts/uar_trajectory.py`.
+
+**Why it survived the validator.** The row's numbers were checked; the attribution in its verdict
+was not.
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 
@@ -455,3 +671,5 @@ So this file is not read as blanket scepticism:
   "not human-reviewed" and the `gpt-5.6-luna` teacher identity are self-reported and unverifiable
   from the repository.
 - Single seed throughout. Every headline number in this project is one run.
+- H5 has no test: no generic-SFT model was trained, and MUR cannot measure it as implemented (E36).
+- Every judge-scored training gain is scored by the model that wrote the training targets (E38); re-scoring the saved responses with an unrelated judge is Study 002 item 15.

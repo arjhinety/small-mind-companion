@@ -208,5 +208,29 @@
     "status": "RESOLVED",
     "where": "README.md:183-184",
     "note": "Row split in two: H6 \"Consistent, not confirmed — 24.7pp pairwise win-rate gap at proper scale, single seed\"; H7 \"Not tested — no general-capability benchmark was run\". The validator pattern and the claims registry entry follow the H6 row; the 24.7pp figure is still checked against its artifact."
+  },
+  {
+    "id": 36,
+    "status": "RESOLVED",
+    "where": "README.md:182; docs/STUDIES.md (Study 002 item 12); registry/benchmarks.yaml (mur)",
+    "note": "H5 row now reads \"Not tested\"; the D→E gap is reported as SFT+memory vs raw+memory. Corrections to the frozen write-up are in ERRATA E36."
+  },
+  {
+    "id": 37,
+    "status": "RESOLVED",
+    "where": "README.md:183",
+    "note": "H10 row now reads \"Not confirmed\"; every quoted figure is a claim recomputed from raw.jsonl."
+  },
+  {
+    "id": 38,
+    "status": "PARTIAL",
+    "where": "reports/ERRATA.md (E38); docs/STUDIES.md (Study 002 item 15)",
+    "note": "Recorded as a caveat; no figure changes. Measuring the judge's bias needs the saved responses re-scored by an unrelated judge (Study 002 item 15)."
+  },
+  {
+    "id": 39,
+    "status": "RESOLVED",
+    "where": "README.md:186",
+    "note": "Row relabelled \"—\" and rewritten to report abstention on unanswerable and answerable probes under both phrase lists and to name every change between the runs."
   }
 ]

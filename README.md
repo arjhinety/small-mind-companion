@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-508%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-513%20passing-brightgreen)
 
 ## Overview
 
@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 35 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 39 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
@@ -178,11 +178,12 @@ Repo names still carry the project's earlier `onebee-gf` name (predates a repo r
 
 | # | Hypothesis | Result | Detail |
 |---|---|---|---|
-| H1, H4, H5 | Memory retrieval and SFT each help; combined beats either alone | Confirmed at v0 scale | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
-| H10 | Retrieved-memory count k has an inverted-U optimum | Peaks at k=8 | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
+| H1, H4 | Memory retrieval and SFT each help; combined beats either alone | Confirmed at v0 scale | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
+| H5 | Memory-aware SFT beats generic SFT, both with memory | Not tested — no generic-SFT model was trained, and the pre-registered metric (MUR) reads 0.0 in every run because benchmark memory IDs never match store IDs. SFT+memory was 2.6pp above raw+memory (single seed; the persona-level interval includes zero) | [`docs/day4_sft_results.md`](docs/day4_sft_results.md) |
+| H10 | Retrieved-memory count k has an inverted-U optimum | Not confirmed — recall rises to k=8; the drop at k=16 is 3 of 105 probes on a 120-probe subsample, within noise | [`docs/day3_memory_results.md`](docs/day3_memory_results.md) |
 | H6 | DPO improves persona consistency over SFT alone | Consistent, not confirmed — 24.7pp pairwise win-rate gap at proper scale, single seed | [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
 | H7 | DPO incurs an alignment tax on general capability | Not tested — no general-capability benchmark was run | [`docs/dpo_results.md`](docs/dpo_results.md) |
-| H16/H17-adjacent | 10x data scale improves calibration (UAR) | Confirmed after fixing 2 real bugs that initially masked the improvement | [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
+| — | SFT v1 vs SFT v0, both with memory: abstention on unanswerable and answerable probes | Unanswerable probes abstained (UAR) 33.75% → 70.0%, answerable probes flagged as abstaining 151 → 195 of 608 (24.8% → 32.1%; the persona-level interval, −1.3 to +15.8pp, includes zero); under the original 17-phrase UAR list, 33.75% → 55.0% and 151 → 137 of 608 (24.8% → 22.5%; within noise: exact McNemar p = 0.343, paired bootstrap 95% CI −6.7 to +2.1pp). Not attributable to scale: between the runs, 10x data (225 → 2480), 4 → 40 personas, the dedup fix, abstention/irrelevant examples 1/1 → 105/136 with 4 paraphrased templates instead of 1, effective batch 8 → 32, and a 17 → 29-phrase grader. The first v1 run, before the dedup fix, gave 16.25% and 60 of 608. One training seed per run | [`docs/proper_scale_results.md`](docs/proper_scale_results.md) |
 | H23 | On-policy distillation from a larger teacher improves quality without degrading persona consistency | Confirmed — `pra_lenient` +3.3pp, UAR flat, persona-consistency favored the distilled model | [`docs/distillation_results.md`](docs/distillation_results.md) |
 | — | GGUF quantization preserves generation quality | Confirmed down to Q3_K_S by manual generation checks (Q2_K broken) | [`docs/quantization_results.md`](docs/quantization_results.md) |
 | H22 | Abliteration increases compliance at the cost of judgment quality | Eval harness built, not yet run | [`docs/research_questions.md`](docs/research_questions.md) |
@@ -210,7 +211,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   508 unit tests, run in CI
+tests/                   513 unit tests, run in CI
 ```
 
 ## Results & Analysis
