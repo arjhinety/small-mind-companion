@@ -2451,6 +2451,105 @@ def check_registries() -> list[Finding]:
     return findings
 
 
+PAPERS = ROOT / "registry" / "papers.jsonl"
+REQUIRED_PAPER_FIELDS = (
+    "id",
+    "identifier",
+    "title",
+    "authors",
+    "year",
+    "verified",
+    "role",
+    "supports",
+    "does_not_support",
+    "cited_in",
+    "planned_for",
+    "used_by",
+)
+PAPER_ROLES = ("caveat", "method-source", "background")
+# Documents whose arXiv citations must each have a ledger entry.
+PAPER_CITING_GLOBS = ("README.md", "reports/ERRATA.md", "docs/**/*.md", "registry/*.yaml")
+ARXIV_CITATION = re.compile(r"arxiv[\s:]*(?:abs/)?(\d{4}\.\d{4,5})", re.IGNORECASE)
+
+
+def check_papers() -> list[Finding]:
+    """registry/papers.jsonl: every cited arXiv paper has an entry, and every entry's
+    provenance fields are filled and its locations resolve."""
+    findings: list[Finding] = []
+    if not PAPERS.is_file():
+        return [Finding("papers", "ledger", False, f"{PAPERS.relative_to(ROOT)} missing")]
+    entries: list[dict[str, Any]] = []
+    for lineno, line in enumerate(PAPERS.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            entries.append(json.loads(line))
+        except json.JSONDecodeError as exc:
+            findings.append(Finding("papers", f"line-{lineno}", False, f"invalid JSON: {exc}"))
+    seen: set[str] = set()
+    ledger_arxiv: set[str] = set()
+    for entry in entries:
+        pid = str(entry.get("id", "?"))
+        problems: list[str] = []
+        missing = [f for f in REQUIRED_PAPER_FIELDS if f not in entry]
+        if missing:
+            findings.append(Finding("papers", pid, False, f"missing fields: {missing}"))
+            continue
+        if pid in seen:
+            problems.append("duplicate id")
+        seen.add(pid)
+        if entry["role"] not in PAPER_ROLES:
+            problems.append(f"role {entry['role']!r} not in {PAPER_ROLES}")
+        verified = entry["verified"]
+        if not all(verified.get(k) for k in ("how", "on", "read")):
+            problems.append("verified needs non-empty how, on and read")
+        if not str(entry["supports"]).strip() or not str(entry["does_not_support"]).strip():
+            problems.append("supports and does_not_support must both be filled")
+        if not (entry["cited_in"] or entry["planned_for"] or entry["used_by"]):
+            problems.append("no cited_in, planned_for or used_by: the entry is not used")
+        arxiv_id = entry["identifier"].get("arxiv")
+        if arxiv_id:
+            ledger_arxiv.add(arxiv_id)
+        tokens = [str(v) for v in entry["identifier"].values()]
+        for where in entry["cited_in"]:
+            path = ROOT / str(where).split(":", 1)[0]
+            if not path.is_file():
+                problems.append(f"cited_in {where}: no such file")
+            elif not any(t in path.read_text(encoding="utf-8") for t in tokens):
+                problems.append(f"cited_in {where}: the file does not contain {tokens}")
+        if entry["role"] == "method-source" and not entry["used_by"]:
+            problems.append("a method-source entry must name the code that uses it")
+        for use in entry["used_by"]:
+            rel, _, func = str(use).partition("::")
+            path = ROOT / rel
+            if not path.is_file():
+                problems.append(f"used_by {use}: no such file")
+            elif func and not re.search(rf"^def {re.escape(func)}\(", read_text(rel), re.M):
+                problems.append(f"used_by {use}: no `def {func}(` in {rel}")
+        findings.append(
+            Finding("papers", pid, not problems, "; ".join(problems) if problems else "ok")
+        )
+    uncovered: list[str] = []
+    for pattern in PAPER_CITING_GLOBS:
+        for path in sorted(ROOT.glob(pattern)):
+            for match in ARXIV_CITATION.finditer(path.read_text(encoding="utf-8")):
+                if match.group(1) not in ledger_arxiv:
+                    uncovered.append(f"{path.relative_to(ROOT).as_posix()}: arXiv {match.group(1)}")
+    findings.append(
+        Finding(
+            "papers",
+            "every-cited-arxiv-paper-has-an-entry",
+            not uncovered,
+            (
+                f"cited without a ledger entry: {sorted(set(uncovered))}"
+                if uncovered
+                else f"{len(entries)} entries; every arXiv citation in the docs has one"
+            ),
+        )
+    )
+    return findings
+
+
 def check_crossdoc() -> list[Finding]:
     findings: list[Finding] = []
     ok = metric_values_consistent()
@@ -2596,6 +2695,7 @@ def run(
     claim_findings, manual, drift = check_claims(evaluator)
     findings += claim_findings
     findings += check_crossdoc()
+    findings += check_papers()
     hygiene = check_hygiene()
     if include_pollution:
         findings += check_pollution()
