@@ -1,0 +1,314 @@
+{
+  "artifact_kind": "uar-trajectory",
+  "generated_by": "scripts/uar_trajectory.py",
+  "lists": {
+    "original": "src/onebee/evaluation/graders/rule.py _ABSTENTION_PHRASES[:17]",
+    "current": "src/onebee/evaluation/graders/rule.py _ABSTENTION_PHRASES (29 phrases)"
+  },
+  "n_unanswerable": 80,
+  "n_answerable": 608,
+  "methods": {
+    "test": "exact McNemar, two-sided (scripts/paired_tests_v0_1.mcnemar_exact)",
+    "interval": "paired bootstrap, 10000 resamples, seed 1337, 95% percentile interval (scripts/paired_tests_v0_1.paired_bootstrap_ci_pp)",
+    "direction": "differences are second minus first, in percentage points"
+  },
+  "scope": "One training run (one seed) per step. Probe-level tests cannot measure seed-to-seed variance between training runs. The corpus behind each run is inferred from commit order.",
+  "inputs": {
+    "results/v0.1/E_sft_memory/raw.jsonl": "bafd29b287b62a58b3c94b0186f8b3b7326e19eee33d1b94e57bef3c8c174c89",
+    "e9e5ca8:results/v1_scale/E_sft_memory/raw.jsonl": "56cdf888d2835dd0cdd23fbcb5e49a7de256276458dff1a2ba28a8cdcb898675",
+    "5a9fe1b:results/v1_scale/E_sft_memory/raw.jsonl": "cda8039b2229f478202ab6062991aef8f6fefef98f7bad2bedfd04a817899ae9",
+    "4fcf740:results/v1_scale/E_sft_memory/raw.jsonl": "0969eb81bf84212d48c154c6ee606d4abde065f7836f3d49a70302b53b0a22fa"
+  },
+  "steps": {
+    "v0": {
+      "source": "results/v0.1/E_sft_memory/raw.jsonl",
+      "trained_on": "data/sft/v0 @ f0d7ece",
+      "stored": {
+        "abstained_unanswerable": 27,
+        "abstained_answerable": 151
+      },
+      "original": {
+        "abstained_unanswerable": 27,
+        "uar": 0.3375,
+        "abstained_answerable": 151
+      },
+      "current": {
+        "abstained_unanswerable": 27,
+        "uar": 0.3375,
+        "abstained_answerable": 151
+      }
+    },
+    "e9e5ca8": {
+      "source": "e9e5ca8:results/v1_scale/E_sft_memory/raw.jsonl",
+      "trained_on": "data/sft/v1 @ 2b4c308 (dedup bug present)",
+      "stored": {
+        "abstained_unanswerable": 13,
+        "abstained_answerable": 60
+      },
+      "original": {
+        "abstained_unanswerable": 13,
+        "uar": 0.1625,
+        "abstained_answerable": 60
+      },
+      "current": {
+        "abstained_unanswerable": 13,
+        "uar": 0.1625,
+        "abstained_answerable": 60
+      }
+    },
+    "5a9fe1b": {
+      "source": "5a9fe1b:results/v1_scale/E_sft_memory/raw.jsonl",
+      "trained_on": "data/sft/v1 @ bc2f409 (dedup fix only)",
+      "stored": {
+        "abstained_unanswerable": 2,
+        "abstained_answerable": 32
+      },
+      "original": {
+        "abstained_unanswerable": 2,
+        "uar": 0.025,
+        "abstained_answerable": 32
+      },
+      "current": {
+        "abstained_unanswerable": 77,
+        "uar": 0.9625,
+        "abstained_answerable": 421
+      }
+    },
+    "4fcf740": {
+      "source": "4fcf740:results/v1_scale/E_sft_memory/raw.jsonl",
+      "trained_on": "data/sft/v1 @ 799390e (ratio rebalance + templates)",
+      "stored": {
+        "abstained_unanswerable": 56,
+        "abstained_answerable": 195
+      },
+      "original": {
+        "abstained_unanswerable": 44,
+        "uar": 0.55,
+        "abstained_answerable": 137
+      },
+      "current": {
+        "abstained_unanswerable": 56,
+        "uar": 0.7,
+        "abstained_answerable": 195
+      }
+    }
+  },
+  "comparisons": {
+    "v0_vs_e9e5ca8": {
+      "original": {
+        "unanswerable_abstention": {
+          "first": 27,
+          "second": 13,
+          "first_only": 21,
+          "second_only": 7,
+          "diff_pp": -17.5,
+          "mcnemar_exact_p": 0.012540951371192932,
+          "bootstrap_ci_pp": [
+            -30.0,
+            -5.0
+          ]
+        },
+        "answerable_flagged": {
+          "first": 151,
+          "second": 60,
+          "first_only": 111,
+          "second_only": 20,
+          "diff_pp": -14.967105263157896,
+          "mcnemar_exact_p": 1.7618615889081849e-16,
+          "bootstrap_ci_pp": [
+            -18.585526315789476,
+            -11.513157894736842
+          ]
+        }
+      },
+      "current": {
+        "unanswerable_abstention": {
+          "first": 27,
+          "second": 13,
+          "first_only": 21,
+          "second_only": 7,
+          "diff_pp": -17.5,
+          "mcnemar_exact_p": 0.012540951371192932,
+          "bootstrap_ci_pp": [
+            -30.0,
+            -5.0
+          ]
+        },
+        "answerable_flagged": {
+          "first": 151,
+          "second": 60,
+          "first_only": 111,
+          "second_only": 20,
+          "diff_pp": -14.967105263157896,
+          "mcnemar_exact_p": 1.7618615889081849e-16,
+          "bootstrap_ci_pp": [
+            -18.585526315789476,
+            -11.513157894736842
+          ]
+        }
+      }
+    },
+    "e9e5ca8_vs_5a9fe1b": {
+      "original": {
+        "unanswerable_abstention": {
+          "first": 13,
+          "second": 2,
+          "first_only": 13,
+          "second_only": 2,
+          "diff_pp": -13.750000000000002,
+          "mcnemar_exact_p": 0.00738525390625,
+          "bootstrap_ci_pp": [
+            -22.5,
+            -5.0
+          ]
+        },
+        "answerable_flagged": {
+          "first": 60,
+          "second": 32,
+          "first_only": 56,
+          "second_only": 28,
+          "diff_pp": -4.605263157894736,
+          "mcnemar_exact_p": 0.0029853231844472294,
+          "bootstrap_ci_pp": [
+            -7.565789473684211,
+            -1.644736842105263
+          ]
+        }
+      },
+      "current": {
+        "unanswerable_abstention": {
+          "first": 13,
+          "second": 77,
+          "first_only": 0,
+          "second_only": 64,
+          "diff_pp": 80.0,
+          "mcnemar_exact_p": 1.0842021724855044e-19,
+          "bootstrap_ci_pp": [
+            71.25,
+            88.75
+          ]
+        },
+        "answerable_flagged": {
+          "first": 60,
+          "second": 421,
+          "first_only": 3,
+          "second_only": 364,
+          "diff_pp": 59.375,
+          "mcnemar_exact_p": 5.4813142816408925e-104,
+          "bootstrap_ci_pp": [
+            55.42763157894737,
+            63.32236842105263
+          ]
+        }
+      }
+    },
+    "5a9fe1b_vs_4fcf740": {
+      "original": {
+        "unanswerable_abstention": {
+          "first": 2,
+          "second": 44,
+          "first_only": 1,
+          "second_only": 43,
+          "diff_pp": 52.5,
+          "mcnemar_exact_p": 5.115907697472721e-12,
+          "bootstrap_ci_pp": [
+            41.25,
+            63.74999999999999
+          ]
+        },
+        "answerable_flagged": {
+          "first": 32,
+          "second": 137,
+          "first_only": 23,
+          "second_only": 128,
+          "diff_pp": 17.269736842105264,
+          "mcnemar_exact_p": 7.361930185727889e-19,
+          "bootstrap_ci_pp": [
+            13.651315789473683,
+            21.052631578947366
+          ]
+        }
+      },
+      "current": {
+        "unanswerable_abstention": {
+          "first": 77,
+          "second": 56,
+          "first_only": 21,
+          "second_only": 0,
+          "diff_pp": -26.25,
+          "mcnemar_exact_p": 9.5367431640625e-07,
+          "bootstrap_ci_pp": [
+            -36.25,
+            -17.5
+          ]
+        },
+        "answerable_flagged": {
+          "first": 421,
+          "second": 195,
+          "first_only": 239,
+          "second_only": 13,
+          "diff_pp": -37.17105263157895,
+          "mcnemar_exact_p": 5.6593362654405676e-55,
+          "bootstrap_ci_pp": [
+            -41.28289473684211,
+            -32.89473684210527
+          ]
+        }
+      }
+    },
+    "v0_vs_4fcf740": {
+      "original": {
+        "unanswerable_abstention": {
+          "first": 27,
+          "second": 44,
+          "first_only": 10,
+          "second_only": 27,
+          "diff_pp": 21.25,
+          "mcnemar_exact_p": 0.007632078602910042,
+          "bootstrap_ci_pp": [
+            6.25,
+            35.0
+          ]
+        },
+        "answerable_flagged": {
+          "first": 151,
+          "second": 137,
+          "first_only": 101,
+          "second_only": 87,
+          "diff_pp": -2.302631578947368,
+          "mcnemar_exact_p": 0.3430902789249583,
+          "bootstrap_ci_pp": [
+            -6.743421052631579,
+            2.138157894736842
+          ]
+        }
+      },
+      "current": {
+        "unanswerable_abstention": {
+          "first": 27,
+          "second": 56,
+          "first_only": 7,
+          "second_only": 36,
+          "diff_pp": 36.25,
+          "mcnemar_exact_p": 8.963039363152348e-06,
+          "bootstrap_ci_pp": [
+            22.5,
+            50.0
+          ]
+        },
+        "answerable_flagged": {
+          "first": 151,
+          "second": 195,
+          "first_only": 79,
+          "second_only": 123,
+          "diff_pp": 7.236842105263158,
+          "mcnemar_exact_p": 0.002398878883734297,
+          "bootstrap_ci_pp": [
+            2.631578947368421,
+            11.842105263157894
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1472,6 +1472,100 @@ def uar_list_counts(run: str, phrase_list: str) -> tuple[int, int]:
     return (row["abstained_unanswerable"], row["abstained_answerable"])
 
 
+UAR_TRAJECTORY = ROOT / "results/audit/uar_trajectory/uar_trajectory.json"
+SYSTEM_E_V0_RAW = "results/v0.1/E_sft_memory/raw.jsonl"
+SYSTEM_E_V1_RAW = "results/v1_scale/E_sft_memory/raw.jsonl"
+
+
+def uar_trajectory_counts(step: str, phrase_list: str) -> tuple[int, int]:
+    """(unanswerable abstained, answerable flagged) for one step, read from the committed
+    trajectory JSON. scripts/uar_trajectory.py needs git history, which CI's shallow checkout
+    lacks, so the file is read here and cross-checked by uar_trajectory_agrees_with_lists()."""
+    row = load_json(UAR_TRAJECTORY)["steps"][step][phrase_list]
+    return (row["abstained_unanswerable"], row["abstained_answerable"])
+
+
+def uar_trajectory_fresh() -> bool:
+    """results/audit/uar_trajectory/uar_trajectory.json equals a fresh run of
+    scripts/uar_trajectory.py. Needs full git history (CI checks out with fetch-depth: 0)."""
+    module = import_script("uar_trajectory", "scripts/uar_trajectory.py")
+    if not UAR_TRAJECTORY.is_file():
+        return False
+    return UAR_TRAJECTORY.read_text(encoding="utf-8") == module.serialise(module.build())
+
+
+def uar_trajectory_max_adjacent_p() -> float:
+    """Largest exact McNemar p on unanswerable-probe abstention over the three adjacent steps
+    (v0 -> e9e5ca8 -> 5a9fe1b -> 4fcf740), under both phrase lists."""
+    comparisons = load_json(UAR_TRAJECTORY)["comparisons"]
+    return max(
+        float(comparisons[c][name]["unanswerable_abstention"]["mcnemar_exact_p"])
+        for c in ("v0_vs_e9e5ca8", "e9e5ca8_vs_5a9fe1b", "5a9fe1b_vs_4fcf740")
+        for name in ("original", "current")
+    )
+
+
+def uar_trajectory_test(comparison: str, phrase_list: str, outcome: str, field: str) -> float:
+    """One paired statistic from the committed trajectory JSON: mcnemar_exact_p, diff_pp,
+    ci_low or ci_high, for outcome unanswerable_abstention or answerable_flagged."""
+    row = load_json(UAR_TRAJECTORY)["comparisons"][comparison][phrase_list][outcome]
+    if field == "ci_low":
+        return float(row["bootstrap_ci_pp"][0])
+    if field == "ci_high":
+        return float(row["bootstrap_ci_pp"][1])
+    return float(row[field])
+
+
+def uar_trajectory_v0_vs_4fcf740_recomputes() -> bool:
+    """comparisons.v0_vs_4fcf740 in the trajectory JSON equals a recomputation from the two
+    working-tree raw.jsonl files (no git history needed), under both lists and both outcomes."""
+    rule = import_script("onebee_rule_by_path", "src/onebee/evaluation/graders/rule.py")
+    tests = _paired_tests()["module"]
+    phrases = list(rule._ABSTENTION_PHRASES)
+    lists = {"original": phrases[:17], "current": phrases}
+    first = {r["probe"]["probe_id"]: r for r in load_jsonl(ROOT / SYSTEM_E_V0_RAW)}
+    second = {r["probe"]["probe_id"]: r for r in load_jsonl(ROOT / SYSTEM_E_V1_RAW)}
+    if set(first) != set(second):
+        return False
+    recorded = load_json(UAR_TRAJECTORY)["comparisons"]["v0_vs_4fcf740"]
+    for name, phrase_list in lists.items():
+        for outcome, answerable in (
+            ("unanswerable_abstention", False),
+            ("answerable_flagged", True),
+        ):
+            ids = sorted(p for p, r in first.items() if r["probe"]["answerable"] is answerable)
+
+            def flags(rows: dict[str, Any], ids: list[str] = ids, pl: list[str] = phrase_list):
+                return [
+                    1 if any(x in str(rows[i]["response"]).lower() for x in pl) else 0 for i in ids
+                ]
+
+            a, b = flags(first), flags(second)
+            first_only = sum(1 for x, y in zip(a, b, strict=True) if x and not y)
+            second_only = sum(1 for x, y in zip(a, b, strict=True) if y and not x)
+            row = recorded[name][outcome]
+            if (row["first"], row["second"]) != (sum(a), sum(b)):
+                return False
+            if (row["first_only"], row["second_only"]) != (first_only, second_only):
+                return False
+            if not close(row["mcnemar_exact_p"], tests.mcnemar_exact(first_only, second_only)):
+                return False
+            if list(row["bootstrap_ci_pp"]) != list(tests.paired_bootstrap_ci_pp(a, b)):
+                return False
+    return True
+
+
+def uar_trajectory_agrees_with_lists() -> bool:
+    """The trajectory's working-tree steps (v0, and 4fcf740, whose raw.jsonl is the current
+    v1 file) equal a fresh re-scoring by scripts/uar_phrase_lists.py under both lists."""
+    pairs = (("v0", "results/v0.1/E_sft_memory"), ("4fcf740", "results/v1_scale/E_sft_memory"))
+    return all(
+        uar_trajectory_counts(step, phrase_list) == uar_list_counts(run, phrase_list)
+        for step, run in pairs
+        for phrase_list in ("original", "current")
+    )
+
+
 _SFT_COUNTS: dict[str, Any] = {}
 
 
@@ -1981,6 +2075,12 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "uar_lists_fresh": uar_lists_fresh,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
+        "uar_trajectory_counts": uar_trajectory_counts,
+        "uar_trajectory_test": uar_trajectory_test,
+        "uar_trajectory_fresh": uar_trajectory_fresh,
+        "uar_trajectory_max_adjacent_p": uar_trajectory_max_adjacent_p,
+        "uar_trajectory_v0_vs_4fcf740_recomputes": uar_trajectory_v0_vs_4fcf740_recomputes,
+        "uar_trajectory_agrees_with_lists": uar_trajectory_agrees_with_lists,
         "sft_kind_counts": sft_kind_counts,
         "guardrail_references_resolve": guardrail_references_resolve,
         "errata_ids_resolve": errata_ids_resolve,
