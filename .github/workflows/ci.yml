@@ -10,7 +10,11 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
+      # Full history: scripts/uar_trajectory.py, run by the validator, reads superseded
+      # results/v1_scale/E_sft_memory responses from commits e9e5ca8 and 5a9fe1b.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: astral-sh/setup-uv@v3
         with:

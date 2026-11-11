@@ -383,5 +383,49 @@
     "category": "UNSUPPORTED_CLAIM",
     "pinned": "",
     "public": "yes"
+  },
+  {
+    "id": 36,
+    "severity": "HIGH",
+    "area": "T",
+    "location": "docs/day4_sft_results.md:32-33; README.md:181",
+    "claim": "H5 (memory-aware SFT beats generic SFT when evaluated with memory): confirmed. D→E: +2.6pp pra_lenient (15.13%→17.76%)",
+    "actual": "H5 was pre-registered as B1 vs B2 (memory-aware vs generic SFT, both with memory) on Memory Utilization Rate, +8 to +15pp (docs/research_questions.md:67). No generic-SFT model exists; the verdict used D (raw + memory) vs E and pra_lenient, and +2.6pp is below the predicted range. mur is 0.0 in every run because benchmark memory IDs never match the store's UUIDs, and its proxy measures retrieval, not the answer. D→E itself: exact McNemar p = 0.014, probe-level 95% CI +0.7 to +4.6pp, persona-level -0.2 to +5.3pp, graded by the model that wrote E's training targets.",
+    "category": "PREREGISTRATION_DEVIATION",
+    "pinned": "",
+    "public": "yes"
+  },
+  {
+    "id": 37,
+    "severity": "MED",
+    "area": "T",
+    "location": "docs/day3_memory_results.md:48-49; README.md:182",
+    "claim": "H10 confirmed closely. Clear inverted-U, peak exactly at k=8, decline at k=16 (README: Peaks at k=8)",
+    "actual": "On the 120-probe k-sweep subsample (105 answerable), k=8 to k=16 is 3 probes lost and 0 gained, exact McNemar p = 0.25; both bootstrap intervals are by-products of one-directional disagreement. The rise k=4 to k=8 is real (p = 0.002). The data cannot be told apart from H10's falsifier, monotonic non-decreasing, and k=12 was never run.",
+    "category": "UNSUPPORTED_CLAIM",
+    "pinned": "",
+    "public": "yes"
+  },
+  {
+    "id": 38,
+    "severity": "MED",
+    "area": "T",
+    "location": "README.md:35-43, 181, 183, 186; src/onebee/evaluation/graders/rule.py:32-46",
+    "claim": "Trained-system gains in the results table and the H5, H6 and H23 rows, with no statement of who scored them",
+    "actual": "Every pra_lenient and pairwise verdict was scored by gpt-5.6-luna, which also wrote every SFT and DPO training target (preference leakage, arXiv 2502.01534). UAR is rule-based, but its phrase list was extended on 2026-08-14 after v1 outputs were seen, to include the SFT templates; under the original 17 phrases the v1 SFT+memory and distilled UAR are 55.0% and 58.75% instead of 70.0% and 71.25%.",
+    "category": "UNDISCLOSED_EVALUATOR_RELATIONSHIP",
+    "pinned": "",
+    "public": "yes"
+  },
+  {
+    "id": 39,
+    "severity": "MED",
+    "area": "D",
+    "location": "README.md:185",
+    "claim": "H16/H17-adjacent | 10x data scale improves calibration (UAR) | Confirmed after fixing 2 real bugs that initially masked the improvement",
+    "actual": "The v0 to v1 System E comparison changed seven things: size, personas, the dedup fix, abstention ratios (actual share 0.4% to about 5%), templates, effective batch and the UAR phrase list. The first v1 run, with size, personas and batch changed but abstention data still collapsed, scored 16.25%, below v0's 33.75%. One training seed per run; no change is isolated. H16/H17 are the unrun crossover hypotheses.",
+    "category": "CONFOUNDED_COMPARISON",
+    "pinned": "",
+    "public": "yes"
   }
 ]

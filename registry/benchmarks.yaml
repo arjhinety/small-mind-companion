@@ -63,7 +63,10 @@ benchmarks:
       pra_lenient: Judge-scored recall on the 608 answerable probes (threshold >= 3/5).
       pra_strict: Exact-match recall on the answerable probes; ~0 by construction here.
       uar: Unanswerable-abstention rate over the 80 unanswerable probes.
-      mur: Misattribution rate; 0.0 in every evaluated run.
+      mur: >-
+        Memory Utilisation Rate, Week-1 proxy (a gold memory among the retrieved IDs); 0.0 in
+        every evaluated run because benchmark memory IDs never match the store's UUIDs
+        (reports/ERRATA.md E36).
     known_gaps:
       - >-
         acceptable_alternatives is present on all 688 probes and populated on 0 of them, which is

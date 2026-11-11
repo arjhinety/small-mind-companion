@@ -1,0 +1,99 @@
+{
+  "artifact_kind": "sft-abstention-example-counts",
+  "generated_by": "scripts/sft_abstention_counts.py",
+  "method": "exact match of each record's assistant turn against generate_sft_data.py's ABSTAIN_RESPONSES and IRRELEVANT_RESPONSES; everything else is memory_relevant",
+  "templates": {
+    "abstention": [
+      "I don't think you've told me that — I don't want to guess.",
+      "I'm not sure you've mentioned that to me — I'd rather not assume.",
+      "That's not something I have on record from our conversations — do you want to tell me?",
+      "I don't recall you sharing that with me, so I don't want to make something up."
+    ],
+    "irrelevant_retrieval": [
+      "I don't have anything about that in what I remember about you — could you tell me more?",
+      "That doesn't ring a bell from what you've shared with me — mind filling me in?",
+      "I'm not seeing anything about that in my memory of our conversations — what's the story?",
+      "Hmm, I don't think you've mentioned that to me before — tell me more?"
+    ]
+  },
+  "inputs": {
+    "data/sft/v0/train.jsonl": "123e950b60710734781aab5584f40b424028d465a8acd570b2947b13672955d7",
+    "data/sft/v0/val.jsonl": "ed728fe22f888a4802dfe7e9a127570dc1b6c6fc39d854f92529ea5ae2e892bf",
+    "data/sft/v1/train.jsonl": "150174de97eb8053acb12bbaf95bf9275bd1e34c9c4f6af5634a76f6cdbeb005",
+    "data/sft/v1/val.jsonl": "41c5ca59d7e2ff5a3a5f5951115056c51ca51c25d9d4a90a60570f77ebf40be7"
+  },
+  "corpora": {
+    "data/sft/v0": {
+      "n_examples": 225,
+      "by_split": {
+        "train": {
+          "abstention": 1,
+          "irrelevant_retrieval": 1,
+          "memory_relevant": 200
+        },
+        "val": {
+          "abstention": 0,
+          "irrelevant_retrieval": 0,
+          "memory_relevant": 23
+        }
+      },
+      "total": {
+        "abstention": 1,
+        "irrelevant_retrieval": 1,
+        "memory_relevant": 223
+      },
+      "share": {
+        "abstention": 0.0044444444444444444,
+        "irrelevant_retrieval": 0.0044444444444444444,
+        "memory_relevant": 0.9911111111111112
+      },
+      "distinct_targets": {
+        "abstention": [
+          "I don't think you've told me that — I don't want to guess."
+        ],
+        "irrelevant_retrieval": [
+          "I don't have anything about that in what I remember about you — could you tell me more?"
+        ]
+      }
+    },
+    "data/sft/v1": {
+      "n_examples": 2480,
+      "by_split": {
+        "train": {
+          "abstention": 89,
+          "irrelevant_retrieval": 125,
+          "memory_relevant": 2018
+        },
+        "val": {
+          "abstention": 16,
+          "irrelevant_retrieval": 11,
+          "memory_relevant": 221
+        }
+      },
+      "total": {
+        "abstention": 105,
+        "irrelevant_retrieval": 136,
+        "memory_relevant": 2239
+      },
+      "share": {
+        "abstention": 0.04233870967741935,
+        "irrelevant_retrieval": 0.054838709677419356,
+        "memory_relevant": 0.9028225806451613
+      },
+      "distinct_targets": {
+        "abstention": [
+          "I don't recall you sharing that with me, so I don't want to make something up.",
+          "I don't think you've told me that — I don't want to guess.",
+          "I'm not sure you've mentioned that to me — I'd rather not assume.",
+          "That's not something I have on record from our conversations — do you want to tell me?"
+        ],
+        "irrelevant_retrieval": [
+          "Hmm, I don't think you've mentioned that to me before — tell me more?",
+          "I don't have anything about that in what I remember about you — could you tell me more?",
+          "I'm not seeing anything about that in my memory of our conversations — what's the story?",
+          "That doesn't ring a bell from what you've shared with me — mind filling me in?"
+        ]
+      }
+    }
+  }
+}

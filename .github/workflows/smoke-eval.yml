@@ -16,8 +16,9 @@ jobs:
       - name: Set up Python 3.11
         run: uv python install 3.11
 
+      # pytest lives in the `dev` extra; a bare `uv sync` does not install it (same as ci.yml).
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --extra dev
 
       # Will start doing real work once tests/integration/test_smoke.py exists
       - name: Run smoke tests

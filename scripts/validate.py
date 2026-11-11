@@ -1396,6 +1396,234 @@ def result_registry_is_fresh() -> bool:
     return RESULT_REGISTRY.read_text(encoding="utf-8") == module.serialise(module.build())
 
 
+_PAIRED_TESTS: dict[str, Any] = {}
+
+
+def _paired_tests() -> dict[str, Any]:
+    """Fresh recomputation from the committed raw.jsonl files, built once per validator run."""
+    if not _PAIRED_TESTS:
+        module = import_script("paired_tests_v0_1", "scripts/paired_tests_v0_1.py")
+        _PAIRED_TESTS["module"] = module
+        _PAIRED_TESTS["build"] = module.build()
+    return _PAIRED_TESTS
+
+
+def paired_tests_fresh() -> bool:
+    """results/v0.1/paired_tests/paired_tests.json equals a recomputation from raw.jsonl."""
+    cache = _paired_tests()
+    path = ROOT / "results/v0.1/paired_tests/paired_tests.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def paired_stat(comparison: str, field: str) -> float:
+    """One recomputed statistic: mcnemar_exact_p, holm_adjusted_p, diff_pp, ci_low, ci_high,
+    persona_ci_low or persona_ci_high.
+
+    Recomputed from raw.jsonl, not read from the committed JSON, so a quoted value is checked
+    against the responses themselves.
+    """
+    row = _paired_tests()["build"]["comparisons"][comparison]
+    if field == "ci_low":
+        return float(row["bootstrap_ci_pp"][0])
+    if field == "ci_high":
+        return float(row["bootstrap_ci_pp"][1])
+    if field == "persona_ci_low":
+        return float(row["persona_bootstrap_ci_pp"][0])
+    if field == "persona_ci_high":
+        return float(row["persona_bootstrap_ci_pp"][1])
+    return float(row[field])
+
+
+def paired_counts(comparison: str) -> tuple[int, int, int, int]:
+    """(first_correct, second_correct, first_only_correct, second_only_correct)."""
+    row = _paired_tests()["build"]["comparisons"][comparison]
+    return (
+        row["first_correct"],
+        row["second_correct"],
+        row["first_only_correct"],
+        row["second_only_correct"],
+    )
+
+
+_UAR_LISTS: dict[str, Any] = {}
+
+
+def _uar_lists() -> dict[str, Any]:
+    """Fresh re-scoring of saved responses under both phrase lists, built once per run."""
+    if not _UAR_LISTS:
+        module = import_script("uar_phrase_lists", "scripts/uar_phrase_lists.py")
+        _UAR_LISTS["module"] = module
+        _UAR_LISTS["build"] = module.build()
+    return _UAR_LISTS
+
+
+def uar_lists_fresh() -> bool:
+    """results/audit/uar_phrase_lists/uar_phrase_lists.json equals a fresh re-scoring."""
+    cache = _uar_lists()
+    path = ROOT / "results/audit/uar_phrase_lists/uar_phrase_lists.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def uar_list_counts(run: str, phrase_list: str) -> tuple[int, int]:
+    """(abstentions on unanswerable probes, answerable probes flagged) for one run and list.
+
+    Recomputed from raw.jsonl with rule.py's own list object, not read from the output JSON.
+    """
+    row = _uar_lists()["build"]["runs"][run][phrase_list]
+    return (row["abstained_unanswerable"], row["abstained_answerable"])
+
+
+UAR_TRAJECTORY = ROOT / "results/audit/uar_trajectory/uar_trajectory.json"
+SYSTEM_E_V0_RAW = "results/v0.1/E_sft_memory/raw.jsonl"
+SYSTEM_E_V1_RAW = "results/v1_scale/E_sft_memory/raw.jsonl"
+
+
+def uar_trajectory_counts(step: str, phrase_list: str) -> tuple[int, int]:
+    """(unanswerable abstained, answerable flagged) for one step, read from the committed
+    trajectory JSON. scripts/uar_trajectory.py needs git history, which CI's shallow checkout
+    lacks, so the file is read here and cross-checked by uar_trajectory_agrees_with_lists()."""
+    row = load_json(UAR_TRAJECTORY)["steps"][step][phrase_list]
+    return (row["abstained_unanswerable"], row["abstained_answerable"])
+
+
+def uar_trajectory_fresh() -> bool:
+    """results/audit/uar_trajectory/uar_trajectory.json equals a fresh run of
+    scripts/uar_trajectory.py. Needs full git history (CI checks out with fetch-depth: 0)."""
+    module = import_script("uar_trajectory", "scripts/uar_trajectory.py")
+    if not UAR_TRAJECTORY.is_file():
+        return False
+    return UAR_TRAJECTORY.read_text(encoding="utf-8") == module.serialise(module.build())
+
+
+def uar_trajectory_max_adjacent_p() -> float:
+    """Largest exact McNemar p on unanswerable-probe abstention over the three adjacent steps
+    (v0 -> e9e5ca8 -> 5a9fe1b -> 4fcf740), under both phrase lists."""
+    comparisons = load_json(UAR_TRAJECTORY)["comparisons"]
+    return max(
+        float(comparisons[c][name]["unanswerable_abstention"]["mcnemar_exact_p"])
+        for c in ("v0_vs_e9e5ca8", "e9e5ca8_vs_5a9fe1b", "5a9fe1b_vs_4fcf740")
+        for name in ("original", "current")
+    )
+
+
+def uar_trajectory_test(comparison: str, phrase_list: str, outcome: str, field: str) -> float:
+    """One paired statistic from the committed trajectory JSON: mcnemar_exact_p, diff_pp,
+    ci_low, ci_high, persona_ci_low or persona_ci_high, for outcome unanswerable_abstention or
+    answerable_flagged."""
+    row = load_json(UAR_TRAJECTORY)["comparisons"][comparison][phrase_list][outcome]
+    if field == "ci_low":
+        return float(row["bootstrap_ci_pp"][0])
+    if field == "ci_high":
+        return float(row["bootstrap_ci_pp"][1])
+    if field == "persona_ci_low":
+        return float(row["persona_bootstrap_ci_pp"][0])
+    if field == "persona_ci_high":
+        return float(row["persona_bootstrap_ci_pp"][1])
+    return float(row[field])
+
+
+def uar_trajectory_v0_vs_4fcf740_recomputes() -> bool:
+    """comparisons.v0_vs_4fcf740 in the trajectory JSON equals a recomputation from the two
+    working-tree raw.jsonl files (no git history needed), under both lists and both outcomes."""
+    rule = import_script("onebee_rule_by_path", "src/onebee/evaluation/graders/rule.py")
+    tests = _paired_tests()["module"]
+    phrases = list(rule._ABSTENTION_PHRASES)
+    lists = {"original": phrases[:17], "current": phrases}
+    first = {r["probe"]["probe_id"]: r for r in load_jsonl(ROOT / SYSTEM_E_V0_RAW)}
+    second = {r["probe"]["probe_id"]: r for r in load_jsonl(ROOT / SYSTEM_E_V1_RAW)}
+    if set(first) != set(second):
+        return False
+    personas = tests.persona_of_probe()
+    recorded = load_json(UAR_TRAJECTORY)["comparisons"]["v0_vs_4fcf740"]
+    for name, phrase_list in lists.items():
+        for outcome, answerable in (
+            ("unanswerable_abstention", False),
+            ("answerable_flagged", True),
+        ):
+            ids = sorted(p for p, r in first.items() if r["probe"]["answerable"] is answerable)
+
+            def flags(rows: dict[str, Any], ids: list[str] = ids, pl: list[str] = phrase_list):
+                return [
+                    1 if any(x in str(rows[i]["response"]).lower() for x in pl) else 0 for i in ids
+                ]
+
+            a, b = flags(first), flags(second)
+            first_only = sum(1 for x, y in zip(a, b, strict=True) if x and not y)
+            second_only = sum(1 for x, y in zip(a, b, strict=True) if y and not x)
+            row = recorded[name][outcome]
+            if (row["first"], row["second"]) != (sum(a), sum(b)):
+                return False
+            if (row["first_only"], row["second_only"]) != (first_only, second_only):
+                return False
+            if not close(row["mcnemar_exact_p"], tests.mcnemar_exact(first_only, second_only)):
+                return False
+            if list(row["bootstrap_ci_pp"]) != list(tests.paired_bootstrap_ci_pp(a, b)):
+                return False
+            groups = [personas[i] for i in ids]
+            persona_ci = list(tests.persona_bootstrap_ci_pp(a, b, groups))
+            if list(row["persona_bootstrap_ci_pp"]) != persona_ci:
+                return False
+    return True
+
+
+def uar_trajectory_adjacent_persona_ci_excludes_zero() -> bool:
+    """Every adjacent step's persona-level interval on unanswerable-probe abstention excludes
+    zero, under both phrase lists (read from the committed trajectory JSON)."""
+    comparisons = load_json(UAR_TRAJECTORY)["comparisons"]
+    for c in ("v0_vs_e9e5ca8", "e9e5ca8_vs_5a9fe1b", "5a9fe1b_vs_4fcf740"):
+        for name in ("original", "current"):
+            lo, hi = comparisons[c][name]["unanswerable_abstention"]["persona_bootstrap_ci_pp"]
+            if lo <= 0.0 <= hi:
+                return False
+    return True
+
+
+def uar_trajectory_agrees_with_lists() -> bool:
+    """The trajectory's working-tree steps (v0, and 4fcf740, whose raw.jsonl is the current
+    v1 file) equal a fresh re-scoring by scripts/uar_phrase_lists.py under both lists."""
+    pairs = (("v0", "results/v0.1/E_sft_memory"), ("4fcf740", "results/v1_scale/E_sft_memory"))
+    return all(
+        uar_trajectory_counts(step, phrase_list) == uar_list_counts(run, phrase_list)
+        for step, run in pairs
+        for phrase_list in ("original", "current")
+    )
+
+
+_SFT_COUNTS: dict[str, Any] = {}
+
+
+def _sft_counts() -> dict[str, Any]:
+    """Fresh template-match count of each SFT corpus, built once per validator run."""
+    if not _SFT_COUNTS:
+        module = import_script("sft_abstention_counts", "scripts/sft_abstention_counts.py")
+        _SFT_COUNTS["module"] = module
+        _SFT_COUNTS["build"] = module.build()
+    return _SFT_COUNTS
+
+
+def sft_counts_fresh() -> bool:
+    """results/audit/sft_abstention_counts/sft_abstention_counts.json equals a fresh count."""
+    cache = _sft_counts()
+    path = ROOT / "results/audit/sft_abstention_counts/sft_abstention_counts.json"
+    if not path.is_file():
+        return False
+    return path.read_text(encoding="utf-8") == cache["module"].serialise(cache["build"])
+
+
+def sft_kind_counts(corpus: str, split: str) -> tuple[int, int, int]:
+    """(abstention, irrelevant_retrieval, memory_relevant) for a corpus split, or 'all'.
+
+    Recomputed from the committed jsonl by exact match against generate_sft_data.py's templates.
+    """
+    row = _sft_counts()["build"]["corpora"][corpus]
+    counts = row["total"] if split == "all" else row["by_split"][split]
+    return (counts["abstention"], counts["irrelevant_retrieval"], counts["memory_relevant"])
+
+
 def result_registry_hashes_match() -> bool:
     for row in result_registry_rows():
         artifacts = row.get("artifacts") or {}
@@ -1868,6 +2096,22 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "studies_registry_matches_config": studies_registry_matches_config,
         "result_registry_is_fresh": result_registry_is_fresh,
         "result_registry_hashes_match": result_registry_hashes_match,
+        "paired_tests_fresh": paired_tests_fresh,
+        "paired_stat": paired_stat,
+        "paired_counts": paired_counts,
+        "uar_lists_fresh": uar_lists_fresh,
+        "uar_list_counts": uar_list_counts,
+        "sft_counts_fresh": sft_counts_fresh,
+        "uar_trajectory_counts": uar_trajectory_counts,
+        "uar_trajectory_test": uar_trajectory_test,
+        "uar_trajectory_fresh": uar_trajectory_fresh,
+        "uar_trajectory_max_adjacent_p": uar_trajectory_max_adjacent_p,
+        "uar_trajectory_adjacent_persona_ci_excludes_zero": (
+            uar_trajectory_adjacent_persona_ci_excludes_zero
+        ),
+        "uar_trajectory_v0_vs_4fcf740_recomputes": uar_trajectory_v0_vs_4fcf740_recomputes,
+        "uar_trajectory_agrees_with_lists": uar_trajectory_agrees_with_lists,
+        "sft_kind_counts": sft_kind_counts,
         "guardrail_references_resolve": guardrail_references_resolve,
         "errata_ids_resolve": errata_ids_resolve,
         "errata_presents_every_finding": errata_presents_every_finding,
@@ -2207,6 +2451,105 @@ def check_registries() -> list[Finding]:
     return findings
 
 
+PAPERS = ROOT / "registry" / "papers.jsonl"
+REQUIRED_PAPER_FIELDS = (
+    "id",
+    "identifier",
+    "title",
+    "authors",
+    "year",
+    "verified",
+    "role",
+    "supports",
+    "does_not_support",
+    "cited_in",
+    "planned_for",
+    "used_by",
+)
+PAPER_ROLES = ("caveat", "method-source", "background")
+# Documents whose arXiv citations must each have a ledger entry.
+PAPER_CITING_GLOBS = ("README.md", "reports/ERRATA.md", "docs/**/*.md", "registry/*.yaml")
+ARXIV_CITATION = re.compile(r"arxiv[\s:]*(?:abs/)?(\d{4}\.\d{4,5})", re.IGNORECASE)
+
+
+def check_papers() -> list[Finding]:
+    """registry/papers.jsonl: every cited arXiv paper has an entry, and every entry's
+    provenance fields are filled and its locations resolve."""
+    findings: list[Finding] = []
+    if not PAPERS.is_file():
+        return [Finding("papers", "ledger", False, f"{PAPERS.relative_to(ROOT)} missing")]
+    entries: list[dict[str, Any]] = []
+    for lineno, line in enumerate(PAPERS.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            entries.append(json.loads(line))
+        except json.JSONDecodeError as exc:
+            findings.append(Finding("papers", f"line-{lineno}", False, f"invalid JSON: {exc}"))
+    seen: set[str] = set()
+    ledger_arxiv: set[str] = set()
+    for entry in entries:
+        pid = str(entry.get("id", "?"))
+        problems: list[str] = []
+        missing = [f for f in REQUIRED_PAPER_FIELDS if f not in entry]
+        if missing:
+            findings.append(Finding("papers", pid, False, f"missing fields: {missing}"))
+            continue
+        if pid in seen:
+            problems.append("duplicate id")
+        seen.add(pid)
+        if entry["role"] not in PAPER_ROLES:
+            problems.append(f"role {entry['role']!r} not in {PAPER_ROLES}")
+        verified = entry["verified"]
+        if not all(verified.get(k) for k in ("how", "on", "read")):
+            problems.append("verified needs non-empty how, on and read")
+        if not str(entry["supports"]).strip() or not str(entry["does_not_support"]).strip():
+            problems.append("supports and does_not_support must both be filled")
+        if not (entry["cited_in"] or entry["planned_for"] or entry["used_by"]):
+            problems.append("no cited_in, planned_for or used_by: the entry is not used")
+        arxiv_id = entry["identifier"].get("arxiv")
+        if arxiv_id:
+            ledger_arxiv.add(arxiv_id)
+        tokens = [str(v) for v in entry["identifier"].values()]
+        for where in entry["cited_in"]:
+            path = ROOT / str(where).split(":", 1)[0]
+            if not path.is_file():
+                problems.append(f"cited_in {where}: no such file")
+            elif not any(t in path.read_text(encoding="utf-8") for t in tokens):
+                problems.append(f"cited_in {where}: the file does not contain {tokens}")
+        if entry["role"] == "method-source" and not entry["used_by"]:
+            problems.append("a method-source entry must name the code that uses it")
+        for use in entry["used_by"]:
+            rel, _, func = str(use).partition("::")
+            path = ROOT / rel
+            if not path.is_file():
+                problems.append(f"used_by {use}: no such file")
+            elif func and not re.search(rf"^def {re.escape(func)}\(", read_text(rel), re.M):
+                problems.append(f"used_by {use}: no `def {func}(` in {rel}")
+        findings.append(
+            Finding("papers", pid, not problems, "; ".join(problems) if problems else "ok")
+        )
+    uncovered: list[str] = []
+    for pattern in PAPER_CITING_GLOBS:
+        for path in sorted(ROOT.glob(pattern)):
+            for match in ARXIV_CITATION.finditer(path.read_text(encoding="utf-8")):
+                if match.group(1) not in ledger_arxiv:
+                    uncovered.append(f"{path.relative_to(ROOT).as_posix()}: arXiv {match.group(1)}")
+    findings.append(
+        Finding(
+            "papers",
+            "every-cited-arxiv-paper-has-an-entry",
+            not uncovered,
+            (
+                f"cited without a ledger entry: {sorted(set(uncovered))}"
+                if uncovered
+                else f"{len(entries)} entries; every arXiv citation in the docs has one"
+            ),
+        )
+    )
+    return findings
+
+
 def check_crossdoc() -> list[Finding]:
     findings: list[Finding] = []
     ok = metric_values_consistent()
@@ -2352,6 +2695,7 @@ def run(
     claim_findings, manual, drift = check_claims(evaluator)
     findings += claim_findings
     findings += check_crossdoc()
+    findings += check_papers()
     hygiene = check_hygiene()
     if include_pollution:
         findings += check_pollution()

@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "78bfd8a0446c24a85ef1b1f12ac1b4483ccdaef9",
+  "git_commit": "0b183e219537ea52ce77c98f52dc41ddad6fb34f",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -302,8 +302,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 18277,
-        "sha256": "6387364fb0bf57afa4cb517e5c439fc7109e93be13bbe8cf4602d481c8514eff"
+        "bytes": 19423,
+        "sha256": "0d0b6e61f34e2487a61cf0ddce789daf8ea54685f16afa4a134094394472e59e"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -367,6 +367,11 @@
       "on": "2026-10-24",
       "artifact": "README.md",
       "reason": "ERRATA E35: the Experiments table marked H6 and H7 'Confirmed'. Split into two rows: H6 'Consistent, not confirmed' (the 24.7pp pairwise gap is unchanged and still checked against its artifact) and H7 'Not tested'; the errata count in the README moved from 34 to 35 to include E35. A correction to a verdict, not to any number, dataset or checkpoint."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
+      "reason": "ERRATA E36, E37 and E39 (E38 is recorded without a README change). The Experiments row 'H1, H4, H5 | ... | Confirmed at v0 scale' became 'H1, H4' plus a separate H5 row, 'Not tested' (E36); H10 'Peaks at k=8' became 'Not confirmed' (E37); the 'H16/H17-adjacent' data-scale row was relabelled '-' and rewritten to report abstention on unanswerable and answerable probes under both UAR phrase lists and to name every change between the two runs (E39). The errata count moved from 35 to 39 and the test count from 508 to 513 (five tests for the paper ledger and the paired statistics). Verdicts and attributions changed; no measured number, dataset or checkpoint changed. New figures quoted in the README are post-hoc reanalyses of frozen responses, each checked by registry/claims.jsonl."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
@@ -376,24 +381,24 @@
       "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
     },
     "docs/STUDIES.md": {
-      "bytes": 9279,
-      "sha256": "311556708f7d17d9bc3a4fe320999abd7c3c0f44eb50922d40926e66045e167c"
+      "bytes": 10140,
+      "sha256": "e617f8f45b5606dbe41d1dd0f1f1f0f51f31f4ebe8c23650e390a841def4484c"
     },
     "reports/ERRATA.md": {
-      "bytes": 29199,
-      "sha256": "a65e531ea26569d9e352b3ff2c9f090eb364fd1562b75034b4d157a6af7a85cf"
+      "bytes": 45113,
+      "sha256": "b7ccaf6ce0d939c8997389df42176b90e62d59cf0b6aea619614121104ad0aed"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "0a6482a07e83bd1faa1c1e9995064bfddf5bd28cd7def587cdd7c13ce2845338"
+      "sha256": "44eeff04dbc3d761575537c3e7271a387d5381db621de7e8242bc57b98b5411d"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 24927,
-      "sha256": "2822f7065d002f31d15d58d4cf77ced11f15470efe50a3739e045e574cc32a28"
+      "bytes": 28087,
+      "sha256": "372665563140117f2c6ac9df10b863bf86c0869cf3c3428945704ab64757be15"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 12182,
-      "sha256": "322f71ead3df4aa39e28fe7df90778855aafbd474ff983ba87dd4382689b0c76"
+      "bytes": 13216,
+      "sha256": "2564656ae891fbc8de410d0dc9c676d29ed2426adcc0a57ec2a3a5badd6efc9b"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",
