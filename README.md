@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 39 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 40 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
@@ -187,7 +187,7 @@ Repo names still carry the project's earlier `onebee-gf` name (predates a repo r
 | H23 | On-policy distillation from a larger teacher improves quality without degrading persona consistency | Confirmed — `pra_lenient` +3.3pp, UAR flat, persona-consistency favored the distilled model | [`docs/distillation_results.md`](docs/distillation_results.md) |
 | — | GGUF quantization preserves generation quality | Confirmed down to Q3_K_S by manual generation checks (Q2_K broken) | [`docs/quantization_results.md`](docs/quantization_results.md) |
 | H22 | Abliteration increases compliance at the cost of judgment quality | Eval harness built, not yet run | [`docs/research_questions.md`](docs/research_questions.md) |
-| — | ORPO as an alternative to DPO | Blocked — not supported by the pinned `trl` version | [`docs/model_quirks.md`](docs/model_quirks.md) #15 |
+| H3.1 | ORPO as an alternative to DPO | Not run — ORPO is available as `trl.experimental.orpo` in the pinned trl 1.10.0; an earlier "not supported" finding was wrong | [`reports/ERRATA.md`](reports/ERRATA.md) E40 |
 
 ## Hardware
 

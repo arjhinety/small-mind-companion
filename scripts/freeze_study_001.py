@@ -236,6 +236,17 @@ REFREEZE_LOG: list[dict[str, str]] = [
             "stores show vector search was loaded when they were built."
         ),
     },
+    {
+        "on": "2026-11-11",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the "
+            "pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as "
+            "trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to "
+            "40. A correction to a claim about a library, not to any number, dataset or "
+            "checkpoint."
+        ),
+    },
 ]
 
 # Process documents that are *expected to keep changing* — errata grows as mistakes are found,

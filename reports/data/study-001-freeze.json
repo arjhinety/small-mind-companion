@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "59ce79cc9aeb7a2fe781e97ee4d735f7b207361e",
+  "git_commit": "7d205ed77bc3a3ecf721e9ef40c8416ff1d33b89",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -302,8 +302,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 19423,
-        "sha256": "01c5240916f55d3dba00b663b6d5f92a2ca89cfceb3123fec8a578314a87b87c"
+        "bytes": 19492,
+        "sha256": "c7510b4f1ff0b53237d83267a99058c9f46b0593b3af7de54454090c84ad2f8d"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -382,6 +382,11 @@
       "on": "2026-11-11",
       "artifact": "README.md",
       "reason": "Test count 524 -> 528 in the badge and the layout block: memory-store tests for loading sqlite-vec with enable_load_extension and for refusing embeddings when vector search is unavailable (the silent keyword-search fallback), and run-wrapper tests that a Modal run is logged inside the Modal container. Nothing else in the README changed. No result, verdict, dataset or checkpoint changed; the committed stores show vector search was loaded when they were built."
+    },
+    {
+      "on": "2026-11-11",
+      "artifact": "README.md",
+      "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
     }
   ],
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
@@ -391,24 +396,24 @@
       "sha256": "cfc53f884cb0151d3a0ac9fbefc8bea5e08cb2cac5a0c31fd51140684a423d99"
     },
     "docs/STUDIES.md": {
-      "bytes": 10140,
-      "sha256": "e617f8f45b5606dbe41d1dd0f1f1f0f51f31f4ebe8c23650e390a841def4484c"
+      "bytes": 10480,
+      "sha256": "fcabf0545ca59cb994b8e1bac4e26992d498e15c3fb4fe89980749ef1d7c99da"
     },
     "reports/ERRATA.md": {
-      "bytes": 45113,
-      "sha256": "b7ccaf6ce0d939c8997389df42176b90e62d59cf0b6aea619614121104ad0aed"
+      "bytes": 46630,
+      "sha256": "8e4b7b038c8f90664453f38b3cd8eafef4c56ff23741af144188352895cc7407"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "44eeff04dbc3d761575537c3e7271a387d5381db621de7e8242bc57b98b5411d"
+      "sha256": "743f69c11186e77efbd9110fc29c1b458fbb6fdb4a58fb00b23cca0fbe13901b"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 28087,
-      "sha256": "372665563140117f2c6ac9df10b863bf86c0869cf3c3428945704ab64757be15"
+      "bytes": 28614,
+      "sha256": "b83a1b6fe5d4a457f24ef293c3cd540e229eb3592e6c2e41c52b576f5911055f"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 13216,
-      "sha256": "2564656ae891fbc8de410d0dc9c676d29ed2426adcc0a57ec2a3a5badd6efc9b"
+      "bytes": 13514,
+      "sha256": "443381462f1e4e28e47c684d67db812a1d186da1363067a503b0c3f98d2e3b55"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",
