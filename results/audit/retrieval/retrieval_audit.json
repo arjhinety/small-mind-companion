@@ -1,0 +1,609 @@
+{
+  "artifact_kind": "retrieval-audit-posthoc",
+  "generated_by": "scripts/retrieval_audit.py",
+  "status": "post-hoc audit of Study 001's frozen retriever; no model run",
+  "clock": "2026-08-13T12:00:00+00:00",
+  "python_hash_seed": "0",
+  "question_embeddings": {
+    "model": "intfloat/multilingual-e5-small",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "library_versions": {
+      "sentence-transformers": "5.7.0",
+      "torch": "2.13.0",
+      "transformers": "5.15.0"
+    },
+    "device": "cpu",
+    "device_differs_from_runs": "likely (cuda vs cpu)",
+    "encoding": "encode([question])[0] per probe; no 'query: ' prefix; not normalised",
+    "sha256": "fd76e2a420bf86c88b9515d5f8091c1aeb769d81b3bd2630b9cd219ba5de5181"
+  },
+  "stores": {
+    "memories": 503,
+    "per_persona": {
+      "p000": 62,
+      "p001": 61,
+      "p002": 68,
+      "p003": 66,
+      "p004": 62,
+      "p005": 55,
+      "p006": 64,
+      "p007": 65
+    },
+    "tiers": {
+      "episodic": 68,
+      "semantic": 421,
+      "short_term": 14
+    }
+  },
+  "answerable_probes": 608,
+  "recency_boosted_memories": {
+    "rule": "event_time is 0 or missing, so fusion.py:70 uses created_at (wall clock)",
+    "count": 6,
+    "per_persona": {
+      "p000": 1,
+      "p001": 1,
+      "p002": 1,
+      "p003": 1,
+      "p004": 1,
+      "p005": 1
+    }
+  },
+  "replay": {
+    "results/v0.1/D_memory": {
+      "probes": 688,
+      "identical_lists": 672,
+      "identical_sets": 684,
+      "mismatched_probe_ids": [
+        "p000_p0025",
+        "p000_p0067",
+        "p000_p0081",
+        "p002_p0010",
+        "p005_p0003",
+        "p005_p0027",
+        "p005_p0044",
+        "p005_p0048",
+        "p005_p0068",
+        "p005_p0071",
+        "p006_p0030",
+        "p006_p0059",
+        "p006_p0061",
+        "p006_p0065",
+        "p006_p0068",
+        "p006_p0075"
+      ],
+      "saved_lists_with_boosted_memory": 385
+    },
+    "results/v0.1/E_sft_memory": {
+      "probes": 688,
+      "identical_lists": 683,
+      "identical_sets": 685,
+      "mismatched_probe_ids": [
+        "p002_p0024",
+        "p002_p0058",
+        "p002_p0081",
+        "p005_p0071",
+        "p006_p0021"
+      ],
+      "saved_lists_with_boosted_memory": 385
+    },
+    "results/v1_scale/E_sft_memory": {
+      "probes": 688,
+      "identical_lists": 681,
+      "identical_sets": 687,
+      "mismatched_probe_ids": [
+        "p000_p0025",
+        "p000_p0067",
+        "p000_p0081",
+        "p002_p0011",
+        "p002_p0055",
+        "p005_p0071",
+        "p007_p0044"
+      ],
+      "saved_lists_with_boosted_memory": 385
+    },
+    "results/v1_scale/E_distill": {
+      "probes": 688,
+      "identical_lists": 670,
+      "identical_sets": 683,
+      "mismatched_probe_ids": [
+        "p000_p0025",
+        "p000_p0081",
+        "p002_p0011",
+        "p002_p0016",
+        "p002_p0024",
+        "p002_p0055",
+        "p002_p0058",
+        "p002_p0081",
+        "p005_p0003",
+        "p005_p0027",
+        "p005_p0044",
+        "p005_p0048",
+        "p005_p0068",
+        "p005_p0071",
+        "p006_p0030",
+        "p006_p0068",
+        "p006_p0075",
+        "p007_p0044"
+      ],
+      "saved_lists_with_boosted_memory": 385
+    }
+  },
+  "d_memory_clock_shift": {
+    "compared_with": "replay at 2026-08-13T12:00:00+00:00, same hash seed",
+    "lists_changed_of_688": {
+      "2026-08-12T12:00:00+00:00": 0,
+      "2026-08-13T00:00:00+00:00": 0,
+      "2026-08-15T12:00:00+00:00": 0,
+      "2026-09-13T12:00:00+00:00": 385
+    }
+  },
+  "composite_term_range_per_query": {
+    "note": "weighted term, max minus min over each answerable query's scored candidate pool (frozen pipeline, quota on); entity is always 0: no query entities are passed",
+    "as_returned": {
+      "similarity": {
+        "median_range": 0.00596,
+        "max_range": 0.00609,
+        "queries_range_exceeds_similarity": 0
+      },
+      "recency": {
+        "median_range": 0.15153,
+        "max_range": 0.15175,
+        "queries_range_exceeds_similarity": 344
+      },
+      "importance": {
+        "median_range": 0.006,
+        "max_range": 0.006,
+        "queries_range_exceeds_similarity": 316
+      },
+      "confidence": {
+        "median_range": 0.0474,
+        "max_range": 0.0742,
+        "queries_range_exceeds_similarity": 608
+      },
+      "entity": {
+        "median_range": 0.0,
+        "max_range": 0.0,
+        "queries_range_exceeds_similarity": 0
+      }
+    },
+    "rank": {
+      "similarity": {
+        "median_range": 0.00676,
+        "max_range": 0.00684,
+        "queries_range_exceeds_similarity": 0
+      },
+      "recency": {
+        "median_range": 0.15153,
+        "max_range": 0.15175,
+        "queries_range_exceeds_similarity": 341
+      },
+      "importance": {
+        "median_range": 0.006,
+        "max_range": 0.006,
+        "queries_range_exceeds_similarity": 24
+      },
+      "confidence": {
+        "median_range": 0.0486,
+        "max_range": 0.0742,
+        "queries_range_exceeds_similarity": 608
+      },
+      "entity": {
+        "median_range": 0.0,
+        "max_range": 0.0,
+        "queries_range_exceeds_similarity": 0
+      }
+    }
+  },
+  "d_memory_gold_retrieved": 186,
+  "d_memory_chance_rate": 0.2156,
+  "halves_gold_hit_at": {
+    "dense_as_returned": {
+      "@1": 0.0049,
+      "@3": 0.051,
+      "@8": 0.1431,
+      "@20": 0.3602
+    },
+    "dense_rank_ordered": {
+      "@1": 0.3964,
+      "@3": 0.6826,
+      "@8": 0.8092,
+      "@20": 0.8898
+    },
+    "keyword_as_returned": {
+      "@1": 0.0625,
+      "@3": 0.2023,
+      "@8": 0.4095,
+      "@20": 0.7007
+    },
+    "keyword_rank_ordered": {
+      "@1": 0.3257,
+      "@3": 0.5312,
+      "@8": 0.6694,
+      "@20": 0.7188
+    }
+  },
+  "pipeline_2x2": {
+    "ordering=as_returned,quota=on": {
+      "gold_retrieved": 186,
+      "rate": 0.3059,
+      "chance_rate": 0.2156,
+      "mean_list_size": 5.992,
+      "lists_with_boosted_memory": 344
+    },
+    "ordering=as_returned,quota=off": {
+      "gold_retrieved": 257,
+      "rate": 0.4227,
+      "chance_rate": 0.2657,
+      "mean_list_size": 8.0,
+      "lists_with_boosted_memory": 344
+    },
+    "ordering=as_returned,quota=off,truncated_to_quota_on_size": {
+      "gold_retrieved": 190,
+      "rate": 0.3125,
+      "chance_rate": 0.2156,
+      "mean_list_size": 5.992,
+      "lists_with_boosted_memory": 344
+    },
+    "ordering=rank,quota=on": {
+      "gold_retrieved": 249,
+      "rate": 0.4095,
+      "chance_rate": 0.2065,
+      "mean_list_size": 5.658,
+      "lists_with_boosted_memory": 341
+    },
+    "ordering=rank,quota=off": {
+      "gold_retrieved": 316,
+      "rate": 0.5197,
+      "chance_rate": 0.2657,
+      "mean_list_size": 8.0,
+      "lists_with_boosted_memory": 341
+    },
+    "ordering=rank,quota=off,truncated_to_quota_on_size": {
+      "gold_retrieved": 257,
+      "rate": 0.4227,
+      "chance_rate": 0.2065,
+      "mean_list_size": 5.658,
+      "lists_with_boosted_memory": 341
+    },
+    "post-hoc diagnostic: ordering=rank,quota=off,w_rec=0": {
+      "gold_retrieved": 337,
+      "rate": 0.5543,
+      "chance_rate": 0.2657,
+      "mean_list_size": 8.0,
+      "lists_with_boosted_memory": 0
+    },
+    "post-hoc diagnostic: ordering=rank,quota=off,w_imp=0,w_conf=0": {
+      "gold_retrieved": 441,
+      "rate": 0.7253,
+      "chance_rate": 0.2657,
+      "mean_list_size": 8.0,
+      "lists_with_boosted_memory": 341
+    }
+  },
+  "ksweep": {
+    "probes": 120,
+    "k8_k16_identical_lists": 118,
+    "k8_list_sizes": {
+      "3": 7,
+      "4": 9,
+      "5": 20,
+      "6": 33,
+      "7": 32,
+      "8": 19
+    },
+    "k16_list_sizes": {
+      "3": 7,
+      "4": 9,
+      "5": 20,
+      "6": 33,
+      "7": 32,
+      "8": 17,
+      "9": 2
+    }
+  },
+  "hash_seed_spread": {
+    "seeds": "PYTHONHASHSEED 0-20",
+    "pipeline_2x2": {
+      "ordering=as_returned,quota=on": {
+        "gold_retrieved": {
+          "min": 186,
+          "median": 186,
+          "max": 186
+        },
+        "rate": {
+          "min": 0.3059,
+          "median": 0.3059,
+          "max": 0.3059
+        },
+        "chance_rate": {
+          "min": 0.2156,
+          "median": 0.2156,
+          "max": 0.2157
+        },
+        "mean_list_size": {
+          "min": 5.99,
+          "median": 5.992,
+          "max": 5.995
+        },
+        "lists_with_boosted_memory": {
+          "min": 344,
+          "median": 344,
+          "max": 344
+        }
+      },
+      "ordering=as_returned,quota=off": {
+        "gold_retrieved": {
+          "min": 257,
+          "median": 258,
+          "max": 259
+        },
+        "rate": {
+          "min": 0.4227,
+          "median": 0.4243,
+          "max": 0.426
+        },
+        "chance_rate": {
+          "min": 0.2657,
+          "median": 0.2657,
+          "max": 0.2657
+        },
+        "mean_list_size": {
+          "min": 8.0,
+          "median": 8.0,
+          "max": 8.0
+        },
+        "lists_with_boosted_memory": {
+          "min": 344,
+          "median": 344,
+          "max": 344
+        }
+      },
+      "ordering=as_returned,quota=off,truncated_to_quota_on_size": {
+        "gold_retrieved": {
+          "min": 190,
+          "median": 190,
+          "max": 190
+        },
+        "rate": {
+          "min": 0.3125,
+          "median": 0.3125,
+          "max": 0.3125
+        },
+        "chance_rate": {
+          "min": 0.2156,
+          "median": 0.2156,
+          "max": 0.2157
+        },
+        "mean_list_size": {
+          "min": 5.99,
+          "median": 5.992,
+          "max": 5.995
+        },
+        "lists_with_boosted_memory": {
+          "min": 344,
+          "median": 344,
+          "max": 344
+        }
+      },
+      "ordering=rank,quota=on": {
+        "gold_retrieved": {
+          "min": 248,
+          "median": 250,
+          "max": 252
+        },
+        "rate": {
+          "min": 0.4079,
+          "median": 0.4112,
+          "max": 0.4145
+        },
+        "chance_rate": {
+          "min": 0.2065,
+          "median": 0.2065,
+          "max": 0.2065
+        },
+        "mean_list_size": {
+          "min": 5.658,
+          "median": 5.658,
+          "max": 5.658
+        },
+        "lists_with_boosted_memory": {
+          "min": 341,
+          "median": 341,
+          "max": 341
+        }
+      },
+      "ordering=rank,quota=off": {
+        "gold_retrieved": {
+          "min": 316,
+          "median": 316,
+          "max": 317
+        },
+        "rate": {
+          "min": 0.5197,
+          "median": 0.5197,
+          "max": 0.5214
+        },
+        "chance_rate": {
+          "min": 0.2657,
+          "median": 0.2657,
+          "max": 0.2657
+        },
+        "mean_list_size": {
+          "min": 8.0,
+          "median": 8.0,
+          "max": 8.0
+        },
+        "lists_with_boosted_memory": {
+          "min": 341,
+          "median": 341,
+          "max": 341
+        }
+      },
+      "ordering=rank,quota=off,truncated_to_quota_on_size": {
+        "gold_retrieved": {
+          "min": 254,
+          "median": 257,
+          "max": 258
+        },
+        "rate": {
+          "min": 0.4178,
+          "median": 0.4227,
+          "max": 0.4243
+        },
+        "chance_rate": {
+          "min": 0.2065,
+          "median": 0.2065,
+          "max": 0.2065
+        },
+        "mean_list_size": {
+          "min": 5.658,
+          "median": 5.658,
+          "max": 5.658
+        },
+        "lists_with_boosted_memory": {
+          "min": 341,
+          "median": 341,
+          "max": 341
+        }
+      },
+      "post-hoc diagnostic: ordering=rank,quota=off,w_rec=0": {
+        "gold_retrieved": {
+          "min": 337,
+          "median": 337,
+          "max": 338
+        },
+        "rate": {
+          "min": 0.5543,
+          "median": 0.5543,
+          "max": 0.5559
+        },
+        "chance_rate": {
+          "min": 0.2657,
+          "median": 0.2657,
+          "max": 0.2657
+        },
+        "mean_list_size": {
+          "min": 8.0,
+          "median": 8.0,
+          "max": 8.0
+        },
+        "lists_with_boosted_memory": {
+          "min": 0,
+          "median": 0,
+          "max": 0
+        }
+      },
+      "post-hoc diagnostic: ordering=rank,quota=off,w_imp=0,w_conf=0": {
+        "gold_retrieved": {
+          "min": 441,
+          "median": 442,
+          "max": 443
+        },
+        "rate": {
+          "min": 0.7253,
+          "median": 0.727,
+          "max": 0.7286
+        },
+        "chance_rate": {
+          "min": 0.2657,
+          "median": 0.2657,
+          "max": 0.2657
+        },
+        "mean_list_size": {
+          "min": 8.0,
+          "median": 8.0,
+          "max": 8.0
+        },
+        "lists_with_boosted_memory": {
+          "min": 341,
+          "median": 341,
+          "max": 341
+        }
+      }
+    },
+    "replay": {
+      "results/v0.1/D_memory": {
+        "identical_lists": {
+          "min": 667,
+          "median": 674,
+          "max": 680
+        },
+        "identical_sets": {
+          "min": 682,
+          "median": 684,
+          "max": 687
+        },
+        "probes_mismatched_under_some_seed": 26,
+        "probes_mismatched_under_every_seed": 0,
+        "best_seed": 17
+      },
+      "results/v0.1/E_sft_memory": {
+        "identical_lists": {
+          "min": 671,
+          "median": 675,
+          "max": 683
+        },
+        "identical_sets": {
+          "min": 682,
+          "median": 685,
+          "max": 687
+        },
+        "probes_mismatched_under_some_seed": 26,
+        "probes_mismatched_under_every_seed": 0,
+        "best_seed": 0
+      },
+      "results/v1_scale/E_sft_memory": {
+        "identical_lists": {
+          "min": 667,
+          "median": 676,
+          "max": 681
+        },
+        "identical_sets": {
+          "min": 682,
+          "median": 685,
+          "max": 687
+        },
+        "probes_mismatched_under_some_seed": 26,
+        "probes_mismatched_under_every_seed": 0,
+        "best_seed": 0
+      },
+      "results/v1_scale/E_distill": {
+        "identical_lists": {
+          "min": 670,
+          "median": 675,
+          "max": 683
+        },
+        "identical_sets": {
+          "min": 681,
+          "median": 685,
+          "max": 686
+        },
+        "probes_mismatched_under_some_seed": 26,
+        "probes_mismatched_under_every_seed": 0,
+        "best_seed": 10
+      }
+    },
+    "d_memory_clock_shift": {
+      "2026-08-12T12:00:00+00:00": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "2026-08-13T00:00:00+00:00": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "2026-08-15T12:00:00+00:00": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "2026-09-13T12:00:00+00:00": {
+        "min": 385,
+        "median": 385,
+        "max": 385
+      }
+    }
+  }
+}
