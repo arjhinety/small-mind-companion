@@ -4,26 +4,6 @@ from onebee.evaluation.graders.nli import NLIChecker
 from onebee.evaluation.metrics.personalized import ProbeResult
 
 
-def mur(results: list[ProbeResult]) -> float:
-    """Memory-Utilisation Rate (Week-1 proxy).
-
-    Of probes where ``gold_supporting_memory_ids`` is non-empty, the fraction for
-    which at least one retrieved memory ID overlaps (set intersection is non-empty).
-
-    This is a simplified proxy for the full Memory-Utilisation Rate definition which
-    (Week 2+) also checks entity/attribute overlap between the response and the
-    cited memory, plus a judge verification step.
-    """
-    candidates = [r for r in results if r.probe.gold_supporting_memory_ids]
-    if not candidates:
-        return 0.0
-    n_utilised = 0
-    for r in candidates:
-        if set(r.retrieved_memory_ids) & set(r.probe.gold_supporting_memory_ids):
-            n_utilised += 1
-    return n_utilised / len(candidates)
-
-
 def fmr(results: list[ProbeResult], nli: NLIChecker, store_context: str) -> float:
     """Fabricated Memory Rate (Week-1 simplification).
 
@@ -38,6 +18,10 @@ def fmr(results: list[ProbeResult], nli: NLIChecker, store_context: str) -> floa
     The ``nli`` and ``store_context`` parameters are accepted to match the
     protocol described in the evaluation design document but are not used in
     the Week-1 implementation.
+
+    Not called anywhere. Its overlap test compares store UUIDs with benchmark turn ids, which never
+    match (the defect that retired ``mur``, ERRATA E36); map ids through ``memory_use.py`` first
+    if this is ever used.
     """
     _ = nli, store_context
     subset = [

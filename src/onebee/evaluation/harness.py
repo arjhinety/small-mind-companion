@@ -9,7 +9,6 @@ from pydantic import BaseModel
 
 from onebee.evaluation.graders.judge import Judge
 from onebee.evaluation.graders.nli import NLIChecker
-from onebee.evaluation.metrics.memory_quality import mur
 from onebee.evaluation.metrics.personalized import (
     Probe,
     ProbeResult,
@@ -62,9 +61,6 @@ def run_harness(
 
     uar_val = uar(results)
     metrics["uar"] = uar_val
-
-    mur_val = mur(results)
-    metrics["mur"] = mur_val
 
     per_probe_strict = [1.0 if r.strict_correct else 0.0 for r in results if r.probe.answerable]
     if per_probe_strict:

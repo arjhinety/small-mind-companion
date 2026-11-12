@@ -1,0 +1,111 @@
+{
+  "artifact_kind": "memory-use-posthoc",
+  "generated_by": "scripts/memory_use.py",
+  "status": "post-hoc: computed after reading Study 001 results; not a reported metric",
+  "stores": {
+    "data/stores/pmb_v0_full/p000.db": "f423188f24c15de3da03e13eaa547406b6a1c4f41826c006ba08716220ef7531",
+    "data/stores/pmb_v0_full/p001.db": "964c6880cafb4ee9707926e3fd34580ba1d62ef7b6772adf7cf74255ae44d4cf",
+    "data/stores/pmb_v0_full/p002.db": "27f4a9f8c505fe2b7b66e5ee1755bec4624c064dc36a7c93548975c9ad509bc1",
+    "data/stores/pmb_v0_full/p003.db": "443be010e15a804bda53789fafacd3a9f363fc8722f4ede1135f0bab13ea873d",
+    "data/stores/pmb_v0_full/p004.db": "e8b27b1efaa7c79288add5eeb46ac4cb456ee8e13f9ceb2ae907ba0c78f0d48c",
+    "data/stores/pmb_v0_full/p005.db": "c5ed453ab290e9e6dfc0ad4eedc7705dca845934d4785b9187074feb67d18c72",
+    "data/stores/pmb_v0_full/p006.db": "34a93fc0659ce2e637a5b1e3d10edda4b238d3640db7d3bb44c80bf08ce6f863",
+    "data/stores/pmb_v0_full/p007.db": "a947c9b19becba73be928e1e2a36a2eabe3e158e35f8858f7a7ea4e823c708b6"
+  },
+  "memories": 503,
+  "answerable_probes": 608,
+  "answerable_gold_turn_extracted": 561,
+  "runs": {
+    "results/v0.1/A_raw": {
+      "answerable": 608,
+      "uses_memory": false,
+      "gold_retrieved": 0,
+      "gold_retrieval_rate": 0.0,
+      "hit_set_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "judge_correct_when_retrieved": 0,
+      "judge_accuracy_when_retrieved": null,
+      "judge_correct_without_retrieval": 1,
+      "contain_correct_when_retrieved": 0,
+      "contain_accuracy_when_retrieved": null,
+      "contain_correct_without_retrieval": 3
+    },
+    "results/v0.1/B_sft": {
+      "answerable": 608,
+      "uses_memory": false,
+      "gold_retrieved": 0,
+      "gold_retrieval_rate": 0.0,
+      "hit_set_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "judge_correct_when_retrieved": 0,
+      "judge_accuracy_when_retrieved": null,
+      "judge_correct_without_retrieval": 1,
+      "contain_correct_when_retrieved": 0,
+      "contain_accuracy_when_retrieved": null,
+      "contain_correct_without_retrieval": 3
+    },
+    "results/v0.1/D_memory": {
+      "answerable": 608,
+      "uses_memory": true,
+      "gold_retrieved": 186,
+      "gold_retrieval_rate": 0.3059,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a",
+      "judge_correct_when_retrieved": 89,
+      "judge_accuracy_when_retrieved": 0.4785,
+      "judge_correct_without_retrieval": 3,
+      "contain_correct_when_retrieved": 96,
+      "contain_accuracy_when_retrieved": 0.5161,
+      "contain_correct_without_retrieval": 4
+    },
+    "results/v0.1/E_sft_memory": {
+      "answerable": 608,
+      "uses_memory": true,
+      "gold_retrieved": 186,
+      "gold_retrieval_rate": 0.3059,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a",
+      "judge_correct_when_retrieved": 98,
+      "judge_accuracy_when_retrieved": 0.5269,
+      "judge_correct_without_retrieval": 10,
+      "contain_correct_when_retrieved": 100,
+      "contain_accuracy_when_retrieved": 0.5376,
+      "contain_correct_without_retrieval": 10
+    },
+    "results/v1_scale/B_sft": {
+      "answerable": 608,
+      "uses_memory": false,
+      "gold_retrieved": 0,
+      "gold_retrieval_rate": 0.0,
+      "hit_set_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "judge_correct_when_retrieved": 0,
+      "judge_accuracy_when_retrieved": null,
+      "judge_correct_without_retrieval": 1,
+      "contain_correct_when_retrieved": 0,
+      "contain_accuracy_when_retrieved": null,
+      "contain_correct_without_retrieval": 4
+    },
+    "results/v1_scale/E_distill": {
+      "answerable": 608,
+      "uses_memory": true,
+      "gold_retrieved": 186,
+      "gold_retrieval_rate": 0.3059,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a",
+      "judge_correct_when_retrieved": 87,
+      "judge_accuracy_when_retrieved": 0.4677,
+      "judge_correct_without_retrieval": 26,
+      "contain_correct_when_retrieved": 87,
+      "contain_accuracy_when_retrieved": 0.4677,
+      "contain_correct_without_retrieval": 28
+    },
+    "results/v1_scale/E_sft_memory": {
+      "answerable": 608,
+      "uses_memory": true,
+      "gold_retrieved": 186,
+      "gold_retrieval_rate": 0.3059,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a",
+      "judge_correct_when_retrieved": 73,
+      "judge_accuracy_when_retrieved": 0.3925,
+      "judge_correct_without_retrieval": 20,
+      "contain_correct_when_retrieved": 74,
+      "contain_accuracy_when_retrieved": 0.3978,
+      "contain_correct_without_retrieval": 22
+    }
+  }
+}

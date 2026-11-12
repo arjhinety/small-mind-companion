@@ -25,7 +25,6 @@ from onebee.evaluation import (
     holm_bonferroni,
     minimum_detectable_effect,
     mrr,
-    mur,
     normalize_text,
     paired_bootstrap_diff,
     pra_lenient,
@@ -524,34 +523,6 @@ class TestScoreProbe:
 # ---------------------------------------------------------------------------
 
 
-class TestMUR:
-    def test_all_utilised(self):
-        results = [
-            _make_result(probe_id="p1", retrieved_ids=["m1", "m2"], gold_mem_ids=["m1"]),
-            _make_result(probe_id="p2", retrieved_ids=["m3"], gold_mem_ids=["m3"]),
-        ]
-        assert mur(results) == 1.0
-
-    def test_none_utilised(self):
-        results = [
-            _make_result(probe_id="p1", retrieved_ids=["m1"], gold_mem_ids=["m2"]),
-        ]
-        assert mur(results) == 0.0
-
-    def test_ignores_empty_gold_ids(self):
-        results = [
-            _make_result(probe_id="p1", retrieved_ids=["m1"], gold_mem_ids=[]),
-        ]
-        assert mur(results) == 0.0
-
-    def test_mixed(self):
-        results = [
-            _make_result(probe_id="p1", retrieved_ids=["m1"], gold_mem_ids=["m1"]),
-            _make_result(probe_id="p2", retrieved_ids=["m2"], gold_mem_ids=["m3"]),
-        ]
-        assert mur(results) == 0.5
-
-
 class TestFMR:
     def test_all_abstained_on_unanswerable_no_memory(self):
         results = [
@@ -835,7 +806,8 @@ class TestRunHarness:
         assert result.metrics["pra_strict"] == 0.0
         assert "unanswerable" in result.per_category
 
-    def test_mur_in_metrics(self):
+    def test_mur_is_retired(self):
+        """mur compared ids that never matched (ERRATA E36); the harness no longer reports it."""
         probes = [
             _make_probe("p1", "factual", answerable=True, gold_mem_ids=["m1"]),
         ]
@@ -844,7 +816,7 @@ class TestRunHarness:
             return "Paris", ["m1"]
 
         result = run_harness(probes, response_fn, system_name="test", seed=42)
-        assert result.metrics["mur"] == pytest.approx(1.0)
+        assert "mur" not in result.metrics
 
 
 class TestSaveHarnessResult:
