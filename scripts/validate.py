@@ -1481,6 +1481,33 @@ def pra_kappa(run: str) -> float | None:
 
 
 RETRIEVAL_AUDIT = ROOT / "results" / "audit" / "retrieval" / "retrieval_audit.json"
+_RETRIEVAL_FACTS: dict[str, Any] = {}
+
+
+def _retrieval_facts() -> dict[str, Any]:
+    """scripts/retrieval_facts.py, loaded by path (standard library only) and built once."""
+    if not _RETRIEVAL_FACTS:
+        module = import_script("retrieval_facts", "scripts/retrieval_facts.py")
+        _RETRIEVAL_FACTS["module"] = module
+        _RETRIEVAL_FACTS["build"] = module.build()
+    return _RETRIEVAL_FACTS
+
+
+def retrieval_facts_fresh() -> bool:
+    """results/audit/retrieval/retrieval_facts.json equals a recomputation from stores and runs."""
+    facts = _retrieval_facts()
+    output = facts["module"].OUTPUT
+    return output.is_file() and output.read_text(encoding="utf-8") == facts["module"].serialise(
+        facts["build"]
+    )
+
+
+def retrieval_fact(*keys: str) -> Any:
+    """A value from a fresh recomputation of scripts/retrieval_facts.py, by key path."""
+    value: Any = _retrieval_facts()["build"]
+    for key in keys:
+        value = value[key]
+    return value
 
 
 def retrieval_audit(*keys: str) -> Any:
@@ -2192,6 +2219,8 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "exact_whole_response_total": exact_whole_response_total,
         "pra_kappa": pra_kappa,
         "retrieval_audit": retrieval_audit,
+        "retrieval_facts_fresh": retrieval_facts_fresh,
+        "retrieval_fact": retrieval_fact,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
         "uar_trajectory_counts": uar_trajectory_counts,

@@ -244,5 +244,11 @@
     "status": "RESOLVED",
     "where": "reports/ERRATA.md E41; docs/STUDIES.md; docs/GUARDRAILS.md G12; scripts/freeze_study_001.py not_claimed; results/audit/pra_containment/",
     "note": "The living copies now give whole-response exact match as the cause; the frozen DATASHEET is corrected by E41, not edited. Study 002 item 10 closed without populating the field."
+  },
+  {
+    "id": 42,
+    "status": "PARTIAL",
+    "where": "reports/ERRATA.md E42; docs/STUDIES.md item 11; results/audit/retrieval/",
+    "note": "The description is corrected by E42 and the frozen documents are not edited. The retriever itself is unchanged; fixing MemoryStore.search ordering is Study 002 work."
   }
 ]
