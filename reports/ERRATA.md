@@ -457,7 +457,7 @@ a random UUID at insert (`src/onebee/memory/store.py:179-180`). Of the 39 gold I
 p000, 0 appear in `data/stores/pmb_v0_full/p000.db`. The implemented proxy also only asks whether a
 gold memory was *retrieved*, which depends on the retriever, not on the answer; two SFT variants
 sharing a retriever score the same by construction. Wiring it up would not test H5; a
-response-level measure is needed.
+response-level measure is needed. E42 measures the retriever itself.
 
 Corrected alongside: `docs/STUDIES.md` Study 002 item 12 ("computed but not called": it is called;
 the IDs never match) and `registry/benchmarks.yaml` (`mur` was described as "Misattribution rate":
@@ -485,7 +485,8 @@ before the peak is real: from k=4 to k=8, 10 probes were gained and 0 lost (8 �
 p = 0.002; 95% interval +4.8 to +15.2pp resampling probes, +4.8 to +14.9pp resampling personas).
 The data cannot be told apart from H10's own falsifier, "monotonic non-decreasing"
 (`docs/research_questions.md:73`), and k=12, where degradation was predicted to begin, was never
-run.
+run. E42 adds that k=16 retrieved the same memories as k=8 for 118 of 120 probes, including all 3
+lost probes, so the decline is not an effect of retrieving more.
 
 Every figure above is recomputed from the committed responses by `scripts/paired_tests_v0_1.py`
 (`results/v0.1/paired_tests/paired_tests.json`) and checked by `registry/claims.jsonl`. The k-sweep
@@ -681,6 +682,98 @@ validates nothing; a judge-free check for Study 002 has to be fixed before its r
 **Why it survived the validator.** The claims checked were true in isolation: the field is empty and
 `pra_strict` is ~0. The causal link between them was never checked.
 
+### E42 — Study 001's memory retrieval did not work as described (HIGH)
+
+**As written:** Systems D, E and E_distill are described as "raw + hybrid retrieval memory (k=8)"
+or "SFT + memory (k=8)" (`README.md:39`, `docs/STUDIES.md:37`, `docs/day3_memory_results.md:17,26`,
+`docs/day4_sft_results.md:24-25`, `docs/proper_scale_results.md:41`), the retriever as "dense
+(e5-small) + BM25, RRF fusion" returning "top-k memories" (`README.md:54-58`), and the SFT data as
+"generated via the real retrieval pipeline (HybridRetriever, k=8)" (`data/sft/v0/DATASHEET.md:4`,
+`data/sft/v1/DATASHEET.md:4`, both frozen). No Study 001 artifact measures retrieval quality: H11's
+retrieval precision@5 comparison (`docs/research_questions.md:74`) was never run, and the
+`precision_at_k`/`recall_at_k` functions are never called.
+
+**Correction:** *(Every figure below is a post-hoc reanalysis of committed stores and responses, not
+a new result.)* `scripts/retrieval_audit.py` replays the frozen retriever from the committed stores
+and question embeddings, with the clock pinned to 2026-08-13T12:00Z and `PYTHONHASHSEED=0`
+(`results/audit/retrieval/retrieval_audit.json`). The replay is close, not exact: it reproduces 672
+of D_memory's 688 saved lists (667–680 over hash seeds 0–20), and it embeds the questions on CPU
+where the runs likely used CUDA. Seed-dependent figures are given at seed 0 with the range over
+seeds 0–20 in brackets. Facts read directly from the stores and saved runs are in
+`results/audit/retrieval/retrieval_facts.json` (`scripts/retrieval_facts.py`).
+
+A memory was extracted from the gold turn for 561 of 608 answerable probes; that is the ceiling for
+any retriever over these stores. In D_memory, one of those memories was retrieved for 186 of 608
+(30.59%), against 21.56% for random picks of the same list sizes, and for the same 186 probes in
+all four memory runs. The audit finds these causes:
+
+1. **The store discarded search ranking.** In `MemoryStore.search`
+   (`src/onebee/memory/store.py:356-392`) the vector half selects the 2k nearest memories in a
+   subquery and returns them through `WHERE … IN (…)` with no outer `ORDER BY`, so in table order.
+   The keyword half orders FTS5 matches by rank in a subquery with no `LIMIT`, then keeps the first
+   2k rows of the outer query in table order, so it can drop the best matches as well as scramble
+   them. At the retriever's `k_candidates` of 20 each half returns up to 40 of a persona's 55 to 68
+   memories, and those table positions are the ranks that reciprocal-rank fusion receives; the
+   final list is then selected by MMR over the composite score and filtered by the tier quota.
+   Measured on each half's full result (`search(k=40)`, a limit of 80, which covers every store, so
+   nothing is dropped): the first 8 rows as returned contain the gold memory for 14.31% of probes
+   for the vector half, which is the store's first 8 rows whatever the question, and 40.95% for
+   the keyword half; the top 8 in rank order, 80.92% and 66.94%. In the full pipeline, rank order
+   raises the gold rate from 30.59% to 40.95% [40.79–41.45] at a similar list size.
+2. **Short lists, not the tier quota as such.** The default quota (episodic 4, semantic 3,
+   short-term 6; `src/onebee/retrieval/fusion.py:126`) meets stores in which 421 of 503 memories are
+   semantic, so every memory run returned 3 to 8 memories (mean 5.99), not 8. At equal list size the
+   quota itself costs about 1 point (30.59% vs 31.25% [31.25–31.25] in store order; 40.95% vs 42.27%
+   [41.78–42.43] in rank order); most of its effect is the shorter list.
+3. **Non-query terms outweigh similarity in the score.** This is a property of the design, not a
+   code defect. In the composite score (`fusion.py:58-88`) the similarity term varies by about
+   0.006 across a query's candidates (median), less than the confidence term (median 0.047) on all
+   608 probes; the entity term is always 0 because the run scripts pass no query entities. As
+   post-hoc diagnostics, not results: with rank order and no quota the gold rate is 51.97%
+   [51.97–52.14]; with the importance and confidence weights also set to 0, 72.53% [72.53–72.86];
+   with only the recency weight set to 0, 55.43% [55.43–55.59].
+4. **Recency depended on the run date.** `fusion.py:70` takes `event_time or created_at`. The
+   stores' `event_time` is a synthetic timeline (0 to 501,620; one session = 100,000) read as epoch
+   milliseconds, so recency is exactly 0 for the 497 memories with a non-zero `event_time`. The 6
+   with `event_time` 0, one per persona p000–p005, fall back to a wall-clock `created_at` of
+   2026-08-13 and received the full recency weight on the run date; 385 of the 688 saved lists in
+   each of the four memory runs contain one of them. Replaying D_memory at a 2026-09-13 clock
+   changes 385 of its 688 lists (same seed); clocks of 2026-08-12 12:00, 2026-08-13 00:00 and
+   2026-08-15 12:00 change none. Recency never separated an old fact from its update.
+5. **Retrieval order depended on tie-breaking.** The MMR step (`fusion.py:91-117`) breaks score ties
+   by iterating a Python `set`, whose order depends on the process's hash seed. Across seeds 0–20,
+   26 D_memory probes are mismatched under some seed and none under all, and no single seed
+   reproduces all 688 lists, which is consistent with tie-breaking explaining the replay's
+   remaining mismatches.
+
+**What this changes.**
+- **No Study 001 metric value changes.** Every `pra_lenient`, UAR and win rate was measured with
+  this retriever and stands as measured. What changes is the description: "hybrid retrieval, k=8"
+  was a retriever that returned 3 to 8 memories, scored mostly by non-query terms from candidates
+  whose search order had been lost, and that retrieved the needed memory for 30.59% of answerable
+  probes. Whether a working retriever changes the memory results needs new answer-level runs
+  (Study 002); this erratum does not say they were understated.
+- **H10 (E37).** At k=16 the k-sweep retrieved the same list as at k=8 for 118 of 120 probes, so its
+  k=16 point is not a larger retrieval. The prompt depends only on the retrieved list
+  (`run_ksweep.py:84-117`) and generation samples (temperature 0.7, no seed;
+  `src/onebee/inference/engine.py:191`). Among the 103 answerable probes with identical lists, 3
+  verdicts changed, all from correct to incorrect: the 3 probes E37 counts as lost. Among the 34
+  answerable probes whose responses are identical, the judge changed 1 verdict. The k=8 → k=16
+  change is therefore not a difference in retrieved memories.
+- **Training data.** The SFT and DPO contexts were built with this retriever
+  (`generate_sft_data.py`, `generate_dpo_data.py`), at an unrecorded clock and seed. A retriever
+  change tested on the Study 001 checkpoints mixes better retrieval with contexts unlike the ones
+  they were trained on.
+- **E36 (`mur`).** Consistent with E36: mapped through provenance, the gold memory is retrieved for
+  the same 186 probes in all four memory runs, so a retrieval-only measure cannot tell the models
+  apart.
+- **Not audited.** The pairwise comparisons (`compare_c*_vs_*.py`) and the SFT/DPO data generation
+  used the same retriever and were not replayed; the training-persona stores
+  (`data/stores/sft_personas_v0/`) were not examined.
+
+**Why it survived the validator.** No claim measured retrieval quality. The store tests check that
+a record is found, never the order results come back in (`tests/unit/test_memory_store.py:329,345`).
+
 ## What was verified correct
 So this file is not read as blanket scepticism:
 
@@ -719,6 +812,8 @@ So this file is not read as blanket scepticism:
   from the repository.
 - Single seed throughout. Every headline number in this project is one run.
 - H5 has no test: no generic-SFT model was trained, and MUR cannot measure it as implemented (E36).
+- Study 001's retriever lost search ranking and retrieved the needed memory for 30.59% of
+  answerable probes (E42). It stays as frozen for Study 001; fixing it is Study 002 work.
 - Every judge-scored training gain is scored by the model that wrote the training targets (E38); re-scoring the saved responses with an unrelated judge is Study 002 item 15.
 
 ## Resolved since the audit

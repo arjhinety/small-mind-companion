@@ -269,6 +269,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
         ),
     },
     {
+        "on": "2026-11-12",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E42: the errata count moved from 41 to 42. E42 corrects the description of "
+            "Study 001's memory retrieval (search ranking lost, short lists, recency and "
+            "tie-breaking dependence). Nothing else in the README changed. No result, verdict, "
+            "dataset or checkpoint changed."
+        ),
+    },
+    {
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (

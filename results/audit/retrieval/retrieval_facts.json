@@ -1,0 +1,104 @@
+{
+  "artifact_kind": "retrieval-facts-posthoc",
+  "generated_by": "scripts/retrieval_facts.py",
+  "status": "post-hoc counts from committed stores and runs; no replay, no model",
+  "stores": {
+    "memories": 503,
+    "event_time_nonzero": 497,
+    "event_time_max": 501620,
+    "recency_fallback_to_created_at": {
+      "72a9d29a-2dda-4167-a26c-d81797adf7c3": "p003 2026-08-13",
+      "8b16fffd-285e-4133-8445-3dab420b67e9": "p002 2026-08-13",
+      "90026684-8e0b-4b57-9bea-29a8a57ed3b2": "p004 2026-08-13",
+      "90daad31-a895-4ac1-84ed-81ab5dc842be": "p001 2026-08-13",
+      "b2617d99-18e3-4370-9c4d-91bae0234a17": "p005 2026-08-13",
+      "ca804998-d812-4277-8c3b-d3ead47ee3ef": "p000 2026-08-13"
+    }
+  },
+  "answerable_probes": 608,
+  "answerable_gold_turn_extracted": 561,
+  "saved_runs": {
+    "results/v0.1/D_memory": {
+      "lists": 688,
+      "list_size_min": 3,
+      "list_size_max": 8,
+      "list_sizes": {
+        "3": 60,
+        "4": 59,
+        "5": 115,
+        "6": 157,
+        "7": 189,
+        "8": 108
+      },
+      "gold_retrieved": 186,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a"
+    },
+    "results/v0.1/E_sft_memory": {
+      "lists": 688,
+      "list_size_min": 3,
+      "list_size_max": 8,
+      "list_sizes": {
+        "3": 60,
+        "4": 59,
+        "5": 116,
+        "6": 157,
+        "7": 187,
+        "8": 109
+      },
+      "gold_retrieved": 186,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a"
+    },
+    "results/v1_scale/E_sft_memory": {
+      "lists": 688,
+      "list_size_min": 3,
+      "list_size_max": 8,
+      "list_sizes": {
+        "3": 60,
+        "4": 59,
+        "5": 115,
+        "6": 157,
+        "7": 189,
+        "8": 108
+      },
+      "gold_retrieved": 186,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a"
+    },
+    "results/v1_scale/E_distill": {
+      "lists": 688,
+      "list_size_min": 3,
+      "list_size_max": 8,
+      "list_sizes": {
+        "3": 60,
+        "4": 59,
+        "5": 116,
+        "6": 157,
+        "7": 188,
+        "8": 108
+      },
+      "gold_retrieved": 186,
+      "hit_set_sha256": "31a4e448e72fcf013d7850d0901d7f9a91ff3cf6c21dc54b089bd41f9bf5692a"
+    }
+  },
+  "saved_runs_identical_hit_sets": true,
+  "ksweep_k8_vs_k16": {
+    "probes": 120,
+    "identical_lists": {
+      "probes": 118,
+      "answerable": 103,
+      "lost": 3,
+      "gained": 0
+    },
+    "identical_responses": {
+      "probes": 36,
+      "answerable": 34,
+      "lost": 1,
+      "gained": 0
+    },
+    "all": {
+      "probes": 120,
+      "answerable": 105,
+      "lost": 3,
+      "gained": 0
+    }
+  }
+}
