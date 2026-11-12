@@ -52,3 +52,9 @@ jobs:
       # offline. Identical to `make validate`. See docs/AUDIT.md.
       - name: Validate (claims matrix, registries, recomputed metrics)
         run: uv run python scripts/validate.py
+
+      # Post-hoc audit of Study 001's retriever (results/audit/retrieval/): replays the frozen
+      # retriever from committed query embeddings and stores, clock and hash seed pinned, and fails
+      # if the committed output is stale. The 21-seed spread is too slow for CI and is not rechecked.
+      - name: Retrieval audit freshness
+        run: uv run python scripts/retrieval_audit.py --check --no-spread

@@ -1480,6 +1480,21 @@ def pra_kappa(run: str) -> float | None:
     return _pra_containment()["build"]["runs"][run]["cohen_kappa"]
 
 
+RETRIEVAL_AUDIT = ROOT / "results" / "audit" / "retrieval" / "retrieval_audit.json"
+
+
+def retrieval_audit(*keys: str) -> Any:
+    """A value from the committed retrieval audit, by key path (keys may contain dots or commas).
+
+    Read, not recomputed: the replay takes minutes, so its freshness is checked by a separate CI
+    step, ``scripts/retrieval_audit.py --check --no-spread``.
+    """
+    value: Any = json.loads(RETRIEVAL_AUDIT.read_text(encoding="utf-8"))
+    for key in keys:
+        value = value[key]
+    return value
+
+
 _UAR_LISTS: dict[str, Any] = {}
 
 
@@ -2176,6 +2191,7 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "pra_containment_fresh": pra_containment_fresh,
         "exact_whole_response_total": exact_whole_response_total,
         "pra_kappa": pra_kappa,
+        "retrieval_audit": retrieval_audit,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
         "uar_trajectory_counts": uar_trajectory_counts,
