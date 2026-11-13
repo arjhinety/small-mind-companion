@@ -1510,6 +1510,35 @@ def retrieval_fact(*keys: str) -> Any:
     return value
 
 
+_MEMORY_USE: dict[str, Any] = {}
+
+
+def _memory_use() -> dict[str, Any]:
+    """scripts/memory_use.py, loaded by path and built once."""
+    if not _MEMORY_USE:
+        module = import_script("memory_use", "scripts/memory_use.py")
+        _MEMORY_USE["module"] = module
+        _MEMORY_USE["build"] = module.build()
+    return _MEMORY_USE
+
+
+def memory_use_fresh() -> bool:
+    """results/audit/memory_use/memory_use.json equals a recomputation from stores and runs."""
+    mu = _memory_use()
+    output = mu["module"].OUTPUT
+    return output.is_file() and output.read_text(encoding="utf-8") == mu["module"].serialise(
+        mu["build"]
+    )
+
+
+def memory_use(*keys: str) -> Any:
+    """A value from a fresh recomputation of scripts/memory_use.py, by key path."""
+    value: Any = _memory_use()["build"]
+    for key in keys:
+        value = value[key]
+    return value
+
+
 def retrieval_audit(*keys: str) -> Any:
     """A value from the committed retrieval audit, by key path (keys may contain dots or commas).
 
@@ -2221,6 +2250,8 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "retrieval_audit": retrieval_audit,
         "retrieval_facts_fresh": retrieval_facts_fresh,
         "retrieval_fact": retrieval_fact,
+        "memory_use_fresh": memory_use_fresh,
+        "memory_use": memory_use,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
         "uar_trajectory_counts": uar_trajectory_counts,

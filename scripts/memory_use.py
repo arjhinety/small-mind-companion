@@ -54,6 +54,52 @@ def _rows(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
+def _builder_drops(run: str, rows: list[dict[str, Any]]) -> int:
+    """Memories the Study 001 context builder would drop from this run's saved lists.
+
+    Rebuilds each prompt with ``ContextBuilder`` and the run script's persona, reading memory rows
+    from the committed stores read-only. 0 means what reached the prompt is the retriever's list.
+    """
+    import sqlite3
+
+    from onebee.context.builder import ContextBuilder
+
+    script = (ROOT / "run_system_d.py").read_text(encoding="utf-8")
+    start = script.index("COMPANION_PERSONA = {")
+    namespace: dict[str, Any] = {}
+    end = script.index("\n}\n", start) + 3
+    exec(script[start:end], namespace)  # noqa: S102 - a literal from our own run script
+    persona = namespace["COMPANION_PERSONA"]
+    records: dict[str, dict[str, Any]] = {}
+    for db in sorted(STORES.glob("p*.db")):
+        uri = f"file:{db.resolve().as_posix()}?mode=ro&immutable=1"
+        conn = sqlite3.connect(uri, uri=True)
+        conn.row_factory = sqlite3.Row
+        try:
+            records.update({row["id"]: dict(row) for row in conn.execute("SELECT * FROM memory")})
+        finally:
+            conn.close()
+    builder = ContextBuilder()
+    dropped = 0
+    for r in rows:
+        ids = r["retrieved_memory_ids"]
+        if not ids:
+            continue
+        _, trace = builder.build(
+            turn_id=r["probe"]["probe_id"],
+            persona=persona,
+            profile={},
+            boundaries=[],
+            retrieved_memories=[records[i] for i in ids],
+            recent_turns=[],
+            user_turn="",
+        )
+        dropped += len(trace.dropped_memory_ids) + (
+            trace.kept_memory_ids != ids[: len(trace.kept_memory_ids)]
+        )
+    return dropped
+
+
 def build() -> dict[str, Any]:
     mu = _load("onebee_memory_use_by_path", "src/onebee/evaluation/metrics/memory_use.py")
     rule = _load("onebee_rule_by_path", "src/onebee/evaluation/graders/rule.py")
@@ -66,13 +112,26 @@ def build() -> dict[str, Any]:
     runs: dict[str, Any] = {}
     for meta in runs_meta:
         run = meta["run_path"]
-        rows = [r for r in _rows(ROOT / run / "raw.jsonl") if r["probe"]["answerable"]]
-        hits = [
-            mu.gold_retrieved(
-                r["retrieved_memory_ids"], r["probe"]["gold_supporting_memory_ids"], turn_map
-            )
+        all_rows = _rows(ROOT / run / "raw.jsonl")
+        rows = [r for r in all_rows if r["probe"]["answerable"]]
+
+        def gold(r: dict[str, Any]) -> list[str]:
+            return list(r["probe"]["gold_supporting_memory_ids"])
+
+        def needed(r: dict[str, Any]) -> frozenset[str]:
+            return frozenset(mu.needed_turns(gold(r), r["probe"]["category"]))
+
+        hits = [mu.gold_retrieved(r["retrieved_memory_ids"], needed(r), turn_map) for r in rows]
+        any_gold = [mu.gold_retrieved(r["retrieved_memory_ids"], gold(r), turn_map) for r in rows]
+        all_gold = [
+            mu.all_gold_retrieved(r["retrieved_memory_ids"], gold(r), turn_map) for r in rows
+        ]
+        stale = [
+            mu.stale_fact_only(r["retrieved_memory_ids"], gold(r), r["probe"]["category"], turn_map)
             for r in rows
         ]
+        ranks = [mu.gold_rank(r["retrieved_memory_ids"], needed(r), turn_map) for r in rows]
+        found = [k for k in ranks if k is not None]
         judge = [bool(r["lenient_correct"]) for r in rows]
         contain = [rule.contains_answer(r["response"], r["probe"]["gold_answer"]) for r in rows]
         j_ok, retrieved, j_share = mu.accuracy_when_retrieved(hits, judge)
@@ -84,6 +143,11 @@ def build() -> dict[str, Any]:
             "gold_retrieved": retrieved,
             "gold_retrieval_rate": None if not rows else round(retrieved / len(rows), 4),
             "hit_set_sha256": hashlib.sha256("\n".join(hit_ids).encode()).hexdigest(),
+            "prompt_builder_dropped_or_reordered": _builder_drops(run, all_rows),
+            "any_gold_turn_retrieved": sum(any_gold),
+            "all_gold_retrieved": sum(all_gold),
+            "stale_fact_only": sum(stale),
+            "gold_rank_counts": {str(k): found.count(k) for k in sorted(set(found))},
             "judge_correct_when_retrieved": j_ok,
             "judge_accuracy_when_retrieved": None if j_share is None else round(j_share, 4),
             "judge_correct_without_retrieval": sum(
@@ -106,6 +170,11 @@ def build() -> dict[str, Any]:
         "memories": len(turn_map),
         "answerable_probes": len(answerable),
         "answerable_gold_turn_extracted": sum(
+            1
+            for p in answerable
+            if mu.needed_turns(p["gold_supporting_memory_ids"], p["category"]) & extracted
+        ),
+        "answerable_any_gold_turn_extracted": sum(
             1 for p in answerable if set(p["gold_supporting_memory_ids"]) & extracted
         ),
         "runs": runs,
