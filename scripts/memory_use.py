@@ -9,8 +9,11 @@ UUIDs (ERRATA E36). Each stored memory records its source turns (``provenance.tu
 script maps every retrieved memory in each full-harness run's ``raw.jsonl`` back to its turns
 through the committed stores in ``data/stores/pmb_v0_full/``, then reports per run:
 
-* **gold retrieval** -- answerable probes where a retrieved memory came from a gold supporting turn.
+* **gold retrieval** -- counted probes where a retrieved memory came from a gold supporting turn.
   The retriever decides this, not the model; ``hit_set_sha256`` shows whether runs share the set.
+  Counted probes are those whose answer key ``scripts/pmb_answer_key_audit.py`` finds sound
+  (ERRATA E43; amendment 1 of the pre-registration). ``original_rule`` keeps the figures the
+  pre-registration was first written with, and ``any_gold_turn_all_answerable`` the E42 count.
 * **accuracy when retrieved** -- of those probes, how many the judge (``lenient_correct``) and
   ``contains_answer`` mark correct; and how many are correct *without* the gold memory retrieved.
 
@@ -31,6 +34,7 @@ import importlib.util
 import json
 import sys
 import types
+from math import comb
 from pathlib import Path
 from typing import Any
 
@@ -100,53 +104,104 @@ def _builder_drops(run: str, rows: list[dict[str, Any]]) -> int:
     return dropped
 
 
+def _original_rule(mu: Any, rows: list[dict[str, Any]], turn_map: dict[str, Any]) -> dict[str, Any]:
+    """The rule as first registered (PR #18): for outdated_fact the needed turn is the latest gold
+    turn, which on PMB is the shared update id (E43). Kept so the registration's original figures
+    stay checkable; superseded by its 2026-11-13 amendment."""
+
+    def order(turn_id: str) -> tuple[int, int]:
+        session, turn = turn_id.rsplit("_s", 1)[1].split("_t")
+        return int(session), int(turn)
+
+    hits, stale, judge = [], [], []
+    for r in rows:
+        gold = list(r["probe"]["gold_supporting_memory_ids"])
+        latest = [max(gold, key=order)] if r["probe"]["category"] == "outdated_fact" else gold
+        need = mu.memories_from_turns(latest, turn_map)
+        ids = r["retrieved_memory_ids"]
+        hit = mu.gold_retrieved(ids, need, turn_map)
+        old = mu.memories_from_turns([g for g in gold if g not in latest], turn_map)
+        hits.append(hit)
+        stale.append(bool(set(ids) & old) and not hit)
+        judge.append(bool(r["lenient_correct"]))
+    ok, retrieved, share = mu.accuracy_when_retrieved(hits, judge)
+    return {
+        "gold_retrieved": retrieved,
+        "stale_fact_only": sum(stale),
+        "judge_accuracy_when_retrieved": None if share is None else round(share, 4),
+        "judge_correct_without_retrieval": sum(1 for h, j in zip(hits, judge) if j and not h),
+    }
+
+
 def build() -> dict[str, Any]:
     mu = _load("onebee_memory_use_by_path", "src/onebee/evaluation/metrics/memory_use.py")
     rule = _load("onebee_rule_by_path", "src/onebee/evaluation/graders/rule.py")
+    audit = _load("pmb_answer_key_audit_by_path", "scripts/pmb_answer_key_audit.py").build()
+    sound = {pid for pid, s in audit["probes"].items() if s["sound"]}
     dbs = sorted(STORES.glob("p*.db"))
     turn_map = mu.source_turn_map(dbs)
-    extracted = set().union(*turn_map.values())
+    persona_of = {mid: db.stem for db in dbs for mid in mu.source_turn_map([db])}
+    store_size = {db.stem: sum(1 for p in persona_of.values() if p == db.stem) for db in dbs}
     answerable = [p for p in _rows(PROBES) if p["answerable"]]
-    runs_meta = [r for r in _rows(REGISTRY) if r.get("run_kind") == "pmb_full_harness"]
 
+    sets: dict[str, dict[str, Any]] = {}
+    for p in answerable:
+        gold = list(p["gold_supporting_memory_ids"])
+        sets[p["probe_id"]] = {
+            "needed": mu.memories_from_turns(gold, turn_map),
+            "groups": [mu.memories_from_turns([g], turn_map) for g in gold],
+            "counted": p["probe_id"] in sound,
+        }
+
+    def chance(lists: dict[str, list[str]], key: str, only_counted: bool) -> float:
+        """Mean P(a random pick of the run's list size from the persona's store hits ``key``)."""
+        probes = [p for p in answerable if sets[p["probe_id"]]["counted"] or not only_counted]
+        total = 0.0
+        for p in probes:
+            n, k = store_size[p["persona_id"]], len(lists[p["probe_id"]])
+            g = len(sets[p["probe_id"]][key])
+            total += 0.0 if g == 0 else 1 - comb(n - g, k) / comb(n, k)
+        return round(total / len(probes), 4)
+
+    runs_meta = [r for r in _rows(REGISTRY) if r.get("run_kind") == "pmb_full_harness"]
     runs: dict[str, Any] = {}
     for meta in runs_meta:
         run = meta["run_path"]
         all_rows = _rows(ROOT / run / "raw.jsonl")
-        rows = [r for r in all_rows if r["probe"]["answerable"]]
+        every = [r for r in all_rows if r["probe"]["answerable"]]
+        rows = [r for r in every if sets[r["probe"]["probe_id"]]["counted"]]
+        out = [r for r in every if not sets[r["probe"]["probe_id"]]["counted"]]
 
-        def gold(r: dict[str, Any]) -> list[str]:
-            return list(r["probe"]["gold_supporting_memory_ids"])
+        def s(r: dict[str, Any]) -> dict[str, Any]:
+            return sets[r["probe"]["probe_id"]]
 
-        def needed(r: dict[str, Any]) -> frozenset[str]:
-            return frozenset(mu.needed_turns(gold(r), r["probe"]["category"]))
-
-        hits = [mu.gold_retrieved(r["retrieved_memory_ids"], needed(r), turn_map) for r in rows]
-        any_gold = [mu.gold_retrieved(r["retrieved_memory_ids"], gold(r), turn_map) for r in rows]
+        ret = [r["retrieved_memory_ids"] for r in rows]
+        hits = [mu.gold_retrieved(ids, s(r)["needed"], turn_map) for r, ids in zip(rows, ret)]
+        ranks = [mu.gold_rank(ids, s(r)["needed"], turn_map) for r, ids in zip(rows, ret)]
         all_gold = [
-            mu.all_gold_retrieved(r["retrieved_memory_ids"], gold(r), turn_map) for r in rows
+            mu.all_gold_retrieved(ids, s(r)["groups"], turn_map) for r, ids in zip(rows, ret)
         ]
-        stale = [
-            mu.stale_fact_only(r["retrieved_memory_ids"], gold(r), r["probe"]["category"], turn_map)
-            for r in rows
+        any_gold = [
+            mu.gold_retrieved(r["retrieved_memory_ids"], s(r)["needed"], turn_map) for r in every
         ]
-        ranks = [mu.gold_rank(r["retrieved_memory_ids"], needed(r), turn_map) for r in rows]
         found = [k for k in ranks if k is not None]
         judge = [bool(r["lenient_correct"]) for r in rows]
         contain = [rule.contains_answer(r["response"], r["probe"]["gold_answer"]) for r in rows]
         j_ok, retrieved, j_share = mu.accuracy_when_retrieved(hits, judge)
         c_ok, _, c_share = mu.accuracy_when_retrieved(hits, contain)
         hit_ids = sorted(r["probe"]["probe_id"] for r, h in zip(rows, hits, strict=True) if h)
+        uses_memory = any(r["retrieved_memory_ids"] for r in all_rows)
+        lists = {r["probe"]["probe_id"]: r["retrieved_memory_ids"] for r in every}
         runs[run] = {
-            "answerable": len(rows),
-            "uses_memory": any(r["retrieved_memory_ids"] for r in rows),
+            "answerable": len(every),
+            "counted": len(rows),
+            "uses_memory": uses_memory,
             "gold_retrieved": retrieved,
             "gold_retrieval_rate": None if not rows else round(retrieved / len(rows), 4),
-            "hit_set_sha256": hashlib.sha256("\n".join(hit_ids).encode()).hexdigest(),
+            "chance_rate": chance(lists, "needed", True) if uses_memory else None,
+            "hit_set_sha256": hashlib.sha256(chr(10).join(hit_ids).encode()).hexdigest(),
             "prompt_builder_dropped_or_reordered": _builder_drops(run, all_rows),
-            "any_gold_turn_retrieved": sum(any_gold),
             "all_gold_retrieved": sum(all_gold),
-            "stale_fact_only": sum(stale),
             "gold_rank_counts": {str(k): found.count(k) for k in sorted(set(found))},
             "judge_correct_when_retrieved": j_ok,
             "judge_accuracy_when_retrieved": None if j_share is None else round(j_share, 4),
@@ -158,8 +213,15 @@ def build() -> dict[str, Any]:
             "contain_correct_without_retrieval": sum(
                 1 for h, ok in zip(hits, contain, strict=True) if ok and not h
             ),
+            "excluded_judge_correct": sum(bool(r["lenient_correct"]) for r in out),
+            "original_rule": _original_rule(mu, every, turn_map),
+            "any_gold_turn_all_answerable": {
+                "retrieved": sum(any_gold),
+                "chance_rate": chance(lists, "needed", False) if uses_memory else None,
+            },
         }
 
+    counted = [p for p in answerable if sets[p["probe_id"]]["counted"]]
     return {
         "artifact_kind": "memory-use-posthoc",
         "generated_by": "scripts/memory_use.py",
@@ -169,13 +231,13 @@ def build() -> dict[str, Any]:
         },
         "memories": len(turn_map),
         "answerable_probes": len(answerable),
-        "answerable_gold_turn_extracted": sum(
-            1
-            for p in answerable
-            if mu.needed_turns(p["gold_supporting_memory_ids"], p["category"]) & extracted
+        "counted_probes": len(counted),
+        "excluded_probes": len(answerable) - len(counted),
+        "counted_with_needed_memory_extracted": sum(
+            1 for p in counted if sets[p["probe_id"]]["needed"]
         ),
-        "answerable_any_gold_turn_extracted": sum(
-            1 for p in answerable if set(p["gold_supporting_memory_ids"]) & extracted
+        "answerable_with_any_gold_turn_extracted": sum(
+            1 for p in answerable if sets[p["probe_id"]]["needed"]
         ),
         "runs": runs,
     }

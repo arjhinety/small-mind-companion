@@ -206,19 +206,19 @@
   {
     "id": 35,
     "status": "RESOLVED",
-    "where": "README.md:183-184",
+    "where": "README.md:187-188",
     "note": "Row split in two: H6 \"Consistent, not confirmed — 24.7pp pairwise win-rate gap at proper scale, single seed\"; H7 \"Not tested — no general-capability benchmark was run\". The validator pattern and the claims registry entry follow the H6 row; the 24.7pp figure is still checked against its artifact."
   },
   {
     "id": 36,
     "status": "RESOLVED",
-    "where": "README.md:182; docs/STUDIES.md (Study 002 item 12); registry/benchmarks.yaml (mur)",
+    "where": "README.md:186; docs/STUDIES.md (Study 002 item 12); registry/benchmarks.yaml (mur)",
     "note": "H5 row now reads \"Not tested\"; the D→E gap is reported as SFT+memory vs raw+memory. Corrections to the frozen write-up are in ERRATA E36."
   },
   {
     "id": 37,
     "status": "RESOLVED",
-    "where": "README.md:183",
+    "where": "README.md:187",
     "note": "H10 row now reads \"Not confirmed\"; every quoted figure is a claim recomputed from raw.jsonl."
   },
   {
@@ -230,13 +230,13 @@
   {
     "id": 39,
     "status": "RESOLVED",
-    "where": "README.md:186",
+    "where": "README.md:190",
     "note": "Row relabelled \"—\" and rewritten to report abstention on unanswerable and answerable probes under both phrase lists and to name every change between the runs."
   },
   {
     "id": 40,
     "status": "RESOLVED",
-    "where": "README.md:190; docs/STUDIES.md (Study 002 item 16); registry/upstream.jsonl",
+    "where": "README.md:194; docs/STUDIES.md (Study 002 item 16); registry/upstream.jsonl",
     "note": "README row now reads \"Not run\" with the experimental import path; H3.1 is back on the Study 002 list; the upstream-ledger entry was removed."
   },
   {
@@ -250,5 +250,11 @@
     "status": "RESOLVED",
     "where": "reports/ERRATA.md E42 (amended 2026-11-13); docs/STUDIES.md item 11; results/audit/retrieval/; src/onebee/memory/store.py legacy_table_order",
     "note": "The description is corrected by E42 and the frozen documents are not edited. MemoryStore.search now returns rank order by default; Study 001's scripts opt into the old order with legacy_table_order=True. The quota, score weights and recency are Study 002 design questions, not defects of the description."
+  },
+  {
+    "id": 43,
+    "status": "PARTIAL",
+    "where": "reports/ERRATA.md E43; docs/preregistrations/study002-memory-use.md amendment 1; results/audit/pmb_answer_key/; results/audit/pmb_updates/",
+    "note": "The frozen benchmark is not edited. Item 12's memory-use metrics count PMB's 198 sound probes as post-hoc description. Open: the training personas are rebuilt with the generator fixed before Study 002 retrains."
   }
 ]

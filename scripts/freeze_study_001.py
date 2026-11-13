@@ -300,6 +300,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
     },
     {
         "on": "2026-11-13",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E43 (PMB's answer key): a one-paragraph caveat after the results table links "
+            "E43; the errata count moved from 42 to 43; the test count moved from 543 to 542 "
+            "(tests/unit/test_memory_use.py restated for amendment 1 of the memory-use "
+            "pre-registration). No result, verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-13",
         "artifact": "docs/reproduction.md",
         "reason": (
             "Added a subsection recording the Python/SQLite builds on which the retrieval audit "

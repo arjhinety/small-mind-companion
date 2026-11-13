@@ -116,6 +116,12 @@ why `pra_strict` is ~0; it is not. Whole-response exact match is, see ERRATA E41
 *Check:* every documented schema field is either populated or documented as unpopulated with the
 consequence spelled out.
 
+**G13. A benchmark's answer key is checked against the data it is asked about.** Finding #43: PMB's
+probes are asked after the whole conversation, but 254 of 608 gold answers are values a later turn
+replaced, and every correction in a persona shares one turn id.
+*Check:* ids that gold answers cite are unique, and each gold answer is the last value its source
+states for that attribute.
+
 ## Before writing up results
 
 1. For each number: which script produced it, and which checkpoint did that script load?
