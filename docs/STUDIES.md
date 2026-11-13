@@ -141,7 +141,7 @@ finding it came from.
     as an inverted U peaking at k=8. At n=120 the curve's shoulders are not distinguishable from
     noise; a full-688 run costs inference, not training. Widening k alone will not help: with the
     default tier quota the k=16 run retrieved the same list as k=8 for 118 of 120 probes (E42), so
-    the search ordering and the quota have to be fixed first.
+    the quota has to change first; the search ordering is fixed (E42, amended).
 12. **Replace `mur`** (E36). The harness calls it, and it is **0.0 in every saved run** because the
     IDs it compares never match: probes cite benchmark-authored memory IDs, while the store assigns a
     random UUID at insert. Its Week-1 proxy also measures retrieval, not the answer, so even with the

@@ -441,8 +441,8 @@ interval, over only 8 personas, does not exclude zero, so the gap may depend on 
 benchmark contains. With 8 personas any interval is coarse; error bars on small evaluation sets are
 easily too narrow, as Bowyer et al. (arXiv 2503.01747) show for CLT-based intervals. The D→E gap is
 graded by the model that wrote E's training answers, so it may partly reflect the judge favouring
-its own style: `run_system_d.py:38` and `run_system_e.py:38` request `gpt-5.6-luna` as judge, and
-`generate_sft_data.py:55` requested SFT v0's targets from the same model, a relationship Li et al.
+its own style: `run_system_d.py:39` and `run_system_e.py:39` request `gpt-5.6-luna` as judge, and
+`generate_sft_data.py:58` requested SFT v0's targets from the same model, a relationship Li et al.
 (arXiv 2502.01534) call preference leakage and report biases judges toward the related student
 model. The same caveat applies to every judge-scored training gain in this repository; see E38.
 Neither `pra_strict` (near 0 by construction) nor UAR (scored on the 80 unanswerable probes, not
@@ -453,7 +453,7 @@ the 608 behind the gap) can confirm or refute it. Figures recomputed by
 (`src/onebee/evaluation/metrics/memory_quality.py:7`) is called by the harness
 (`src/onebee/evaluation/harness.py:66`) and is 0.0 in every saved run because the IDs it compares
 never match: probes cite benchmark-authored IDs (`p000_s003_t008`), while the memory store assigns
-a random UUID at insert (`src/onebee/memory/store.py:179-180`). Of the 39 gold IDs for persona
+a random UUID at insert (`src/onebee/memory/store.py:253-254`). Of the 39 gold IDs for persona
 p000, 0 appear in `data/stores/pmb_v0_full/p000.db`. The implemented proxy also only asks whether a
 gold memory was *retrieved*, which depends on the retriever, not on the answer; two SFT variants
 sharing a retriever score the same by construction. Wiring it up would not test H5; a
@@ -504,9 +504,9 @@ less-trained ones, measured by `pra_lenient` or by a pairwise judge. None says w
 
 **Correction:** no figure changes, but each of these comparisons is graded by the model that wrote
 the training data it rewards. Every evaluation and comparison script constructs
-`OpenAIJudge(model="gpt-5.6-luna")`, for example `run_system_e_v1.py:38` and
-`compare_c_vs_e_v1_scale.py:47`. The same model wrote the targets for every SFT and DPO corpus
-(`generate_sft_data.py:55`, `generate_dpo_data.py:55`; the `sft/v0`, `sft/v1`, `dpo/v0` and
+`OpenAIJudge(model="gpt-5.6-luna")`, for example `run_system_e_v1.py:39` and
+`compare_c_vs_e_v1_scale.py:48`. The same model wrote the targets for every SFT and DPO corpus
+(`generate_sft_data.py:58`, `generate_dpo_data.py:55`; the `sft/v0`, `sft/v1`, `dpo/v0` and
 `dpo/v1_scale` datasheets). The distillation teacher is different (`google/gemma-4-E4B-it`,
 `configs/training/distill_v1.yaml:9`), but the distilled model starts from the DPO checkpoint. Li et
 al. (arXiv 2502.01534) call this relationship between generator and judge preference leakage and
@@ -762,7 +762,7 @@ all four memory runs. The audit finds these causes:
   (Study 002); this erratum does not say they were understated.
 - **H10 (E37).** At k=16 the k-sweep retrieved the same list as at k=8 for 118 of 120 probes, so its
   k=16 point is not a larger retrieval. The prompt depends only on the retrieved list
-  (`run_ksweep.py:84-117`) and generation samples (temperature 0.7, no seed;
+  (`run_ksweep.py:85-118`) and generation samples (temperature 0.7, no seed;
   `src/onebee/inference/engine.py:191`). Among the 103 answerable probes with identical lists, 3
   verdicts changed, all from correct to incorrect: the 3 probes E37 counts as lost. Among the 34
   answerable probes whose responses are identical, the judge changed 1 verdict. The k=8 → k=16
@@ -785,7 +785,8 @@ that cut, which follows the method's existing contract and was set before the fi
 measured; its figures above come from the post-hoc `fixed store` arms of
 `results/audit/retrieval/retrieval_audit.json`. The top-40 figures are kept as labelled
 diagnostics. The pre-fix code is commit `f0d23f8`; the Study 001 scripts that search stores open
-them with `legacy_table_order=True`.
+them with `legacy_table_order=True`, and `TestSearchOrder` in `tests/unit/test_memory_store.py` now
+checks the result order in both modes.
 
 **Why it survived the validator.** No claim measured retrieval quality. The store tests check that
 a record is found, never the order results come back in (`tests/unit/test_memory_store.py:329,345`).
