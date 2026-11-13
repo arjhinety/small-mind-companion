@@ -422,7 +422,7 @@ E2: the measurement was real, and the claim built on it was stronger than the me
 
 **As written:** `docs/day4_sft_results.md:32-33`: "H5 (memory-aware SFT beats generic SFT when
 evaluated with memory): **confirmed.** D→E: +2.6pp `pra_lenient` (15.13%→17.76%)." The README row
-`H1, H4, H5 | … | Confirmed at v0 scale` (`README.md:181`) carried the same verdict.
+`H1, H4, H5 | … | Confirmed at v0 scale` (`README.md:185`) carried the same verdict.
 
 **Correction:** H5 is **not tested**. `docs/research_questions.md:67` pre-registered it as Exp B1 vs
 B2 (memory-aware SFT against generic SFT, both evaluated with memory), predicting +8 to +15pp on
@@ -470,7 +470,7 @@ H1/H4/H5 row. Same shape as E35: the verdict column was unchecked.
 
 **As written:** `docs/day3_memory_results.md:48-49`: "H10 … **confirmed closely.** Clear
 inverted-U, peak exactly at k=8, decline at k=16." README: `H10 | … | Peaks at k=8`
-(`README.md:182`).
+(`README.md:186`).
 
 **Correction:** H10 is **not confirmed**. *(The figures below are a post-hoc reanalysis of the
 frozen responses, not a new result.)* The k-sweep ran on a 120-probe stratified subsample (105
@@ -499,7 +499,7 @@ the verdict built on them.
 ### E38 — Every judge-scored training gain is graded by the model that wrote the training targets (MED)
 
 **As written:** the README's results table (`README.md:35-43`) and its Experiments rows for H5, H6
-and H23 (`README.md:181`, `:183`, `:186`) report gains of trained systems over untrained or
+and H23 (`README.md:185`, `:187`, `:190`) report gains of trained systems over untrained or
 less-trained ones, measured by `pra_lenient` or by a pairwise judge. None says who scored them.
 
 **Correction:** no figure changes, but each of these comparisons is graded by the model that wrote
@@ -637,7 +637,7 @@ was not.
 
 ### E40 — ORPO was recorded as removed from the pinned trl; it had moved to `trl.experimental` (MED)
 
-**As written:** `README.md:190`: `— | ORPO as an alternative to DPO | Blocked — not supported by the
+**As written:** `README.md:194`: `— | ORPO as an alternative to DPO | Blocked — not supported by the
 pinned trl version`. `docs/model_quirks.md` #15: "`trl.ORPOTrainer`/`ORPOConfig` do not exist in this
 environment's trl (1.10.0) at all … ORPO support was dropped entirely". `docs/research_questions.md:116-121`
 moved H3.1 to Week 3 on that basis.
@@ -687,7 +687,7 @@ validates nothing; a judge-free check for Study 002 has to be fixed before its r
 **As written:** Systems D, E and E_distill are described as "raw + hybrid retrieval memory (k=8)"
 or "SFT + memory (k=8)" (`README.md:39`, `docs/STUDIES.md:37`, `docs/day3_memory_results.md:17,26`,
 `docs/day4_sft_results.md:24-25`, `docs/proper_scale_results.md:41`), the retriever as "dense
-(e5-small) + BM25, RRF fusion" returning "top-k memories" (`README.md:54-58`), and the SFT data as
+(e5-small) + BM25, RRF fusion" returning "top-k memories" (`README.md:58-62`), and the SFT data as
 "generated via the real retrieval pipeline (HybridRetriever, k=8)" (`data/sft/v0/DATASHEET.md:4`,
 `data/sft/v1/DATASHEET.md:4`, both frozen). No Study 001 artifact measures retrieval quality: H11's
 retrieval precision@5 comparison (`docs/research_questions.md:74`) was never run, and the
@@ -809,7 +809,7 @@ a record is found, never the order results come back in (`tests/unit/test_memory
 ### E43 — PMB's answer key is not always the value the conversation ends with (HIGH)
 
 **As written:** PMB (`data/benchmarks/pmb_v0_full`) gives each probe "a gold answer and
-supporting-memory IDs" (`README.md:98`), and this file's "What was verified correct" called its
+supporting-memory IDs" (`README.md:102`), and this file's "What was verified correct" called its
 design sound. Every probe is asked after the whole conversation. Each of the 96 `outdated_fact`
 probes cites two gold turns, a fact and the correction that updates it.
 
