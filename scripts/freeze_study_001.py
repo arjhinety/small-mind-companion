@@ -269,6 +269,45 @@ REFREEZE_LOG: list[dict[str, str]] = [
         ),
     },
     {
+        "on": "2026-11-12",
+        "artifact": "README.md",
+        "reason": (
+            "ERRATA E42: the errata count moved from 41 to 42. E42 corrects the description of "
+            "Study 001's memory retrieval (search ranking lost, short lists, recency and "
+            "tie-breaking dependence). Nothing else in the README changed. No result, verdict, "
+            "dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-13",
+        "artifact": "README.md",
+        "reason": (
+            "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test "
+            "functions (TestSearchOrder) pinning MemoryStore.search's rank order and the "
+            "legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). "
+            "Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-13",
+        "artifact": "docs/reproduction.md",
+        "reason": (
+            "Added a subsection recording the Python/SQLite builds on which the retrieval audit "
+            "reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's "
+            "system SQLite. Documentation only: no result, dataset, metric or limitation changed."
+        ),
+    },
+    {
+        "on": "2026-11-13",
+        "artifact": "docs/reproduction.md",
+        "reason": (
+            "Corrected the sentence on the failing interpreter: it was measured as Python 3.11.12 "
+            "with SQLite 3.40.1 in Modal's default debian_slim image (a python.org build on Debian "
+            "12 linking the system SQLite), not 'Debian's system Python'. Documentation only: no "
+            "result, dataset, metric or limitation changed."
+        ),
+    },
+    {
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (

@@ -5,7 +5,7 @@
     "area": "T",
     "location": "docs/distillation_results.md:66-67; hf_readmes/README_sft-v1.md:93-94; hf_readmes/README_dpo-v1-scale.md:58,93; hf_readmes/README_distill-v1.md:123; hf_readmes/generate_cards.py:80,143,147; README.md:21",
     "claim": "UAR 70.0% and pra_lenient 15.30% are results of the DPO checkpoint (`dpo-v1-scale`), described as \"SFT+DPO+memory\".",
-    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:35, which loads HFEngine(\"outputs/sft/v1/merged\") \u2014 the SFT-only checkpoint, no DPO \u2014 and names the system E_sft_memory_v1 (line 95). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
+    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:36, which loads HFEngine(\"outputs/sft/v1/merged\") \u2014 the SFT-only checkpoint, no DPO \u2014 and names the system E_sft_memory_v1 (line 96). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
     "category": "MISATTRIBUTION",
     "pinned": "",
     "public": "yes"
@@ -447,6 +447,17 @@
     "claim": "The acceptable_alternatives field is empty in 688/688, which is why pra_strict is ~0; populating it makes pra_strict meaningful.",
     "actual": "pra_strict uses exact_match, which compares the whole normalised response with the gold answer; it matches 3 of 4816 responses across all 7 full-harness runs. Alternatives are compared the same way, so populating them would leave pra_strict ~0, and would change pra_lenient because they are appended to the judge rubric.",
     "category": "WRONG_CAUSAL_CLAIM",
+    "pinned": "",
+    "public": "yes"
+  },
+  {
+    "id": 42,
+    "severity": "HIGH",
+    "area": "T",
+    "location": "README.md:39,54-58; docs/STUDIES.md:37; docs/day3_memory_results.md:17,26; docs/day4_sft_results.md:24-25; docs/proper_scale_results.md:41; data/sft/v0/DATASHEET.md:4; data/sft/v1/DATASHEET.md:4",
+    "claim": "Memory systems use hybrid retrieval (dense + BM25, RRF fusion) returning k=8 memories.",
+    "actual": "MemoryStore.search returns vector and keyword matches in table order, so fusion ranks table positions; the tier quota leaves 3 to 8 memories; non-query terms outweigh similarity; recency depends on the run date; MMR ties depend on the hash seed. The needed memory was retrieved for 186 of 608 answerable probes (30.6%) against 21.6% at random. No metric value changes.",
+    "category": "UNSUPPORTED_CAPABILITY",
     "pinned": "",
     "public": "yes"
   }

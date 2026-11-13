@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-536%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-540%20passing-brightgreen)
 
 ## Overview
 
@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 41 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 42 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
@@ -211,7 +211,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   536 unit tests, run in CI
+tests/                   540 unit tests, run in CI
 ```
 
 ## Results & Analysis

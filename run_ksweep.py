@@ -41,7 +41,8 @@ print(
 stores_dir = Path("data/stores/pmb_v0_full")
 retrievers: dict[str, HybridRetriever] = {}
 for db_path in stores_dir.glob("*.db"):
-    store = MemoryStore(str(db_path))
+    # Study 001 ran with search results in table order (ERRATA E42); keep that to reproduce it.
+    store = MemoryStore(str(db_path), legacy_table_order=True)
     retrievers[db_path.stem] = HybridRetriever(store)
 
 embedder = SentenceTransformer("intfloat/multilingual-e5-small")

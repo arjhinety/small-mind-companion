@@ -244,5 +244,11 @@
     "status": "RESOLVED",
     "where": "reports/ERRATA.md E41; docs/STUDIES.md; docs/GUARDRAILS.md G12; scripts/freeze_study_001.py not_claimed; results/audit/pra_containment/",
     "note": "The living copies now give whole-response exact match as the cause; the frozen DATASHEET is corrected by E41, not edited. Study 002 item 10 closed without populating the field."
+  },
+  {
+    "id": 42,
+    "status": "RESOLVED",
+    "where": "reports/ERRATA.md E42 (amended 2026-11-13); docs/STUDIES.md item 11; results/audit/retrieval/; src/onebee/memory/store.py legacy_table_order",
+    "note": "The description is corrected by E42 and the frozen documents are not edited. MemoryStore.search now returns rank order by default; Study 001's scripts opt into the old order with legacy_table_order=True. The quota, score weights and recency are Study 002 design questions, not defects of the description."
   }
 ]

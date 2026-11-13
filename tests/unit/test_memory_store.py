@@ -570,3 +570,56 @@ class TestProtocolConformance:
         assert hasattr(store, "write_session")
         assert hasattr(store, "get_by_id")
         assert hasattr(store, "list_by_tier")
+
+
+class TestSearchOrder:
+    """Results come back in rank order, not table order (ERRATA E42). Every case inserts the best
+    match last, so table order and rank order disagree; ``legacy_table_order=True`` must keep the
+    table-order behaviour Study 001 ran with, including the final cut to k."""
+
+    def _vector_store(self, tmp_path, legacy: bool) -> tuple[MemoryStore, list[str]]:
+        store = MemoryStore(str(tmp_path / "v.db"), embedding_dim=4, legacy_table_order=legacy)
+        ids = []
+        for offset in (0.6, 0.5, 0.4, 0.3, 0.2, 0.1):  # nearest to [1, 0, 0, 0] inserted last
+            ids.append(
+                store.write(_make_record(content=f"v {offset}", embedding=[1, offset, 0, 0]))
+            )
+        return store, ids
+
+    def test_vector_results_nearest_first(self, tmp_path):
+        if not _HAS_SQLITE_VEC:
+            pytest.skip("sqlite-vec not available")
+        store, ids = self._vector_store(tmp_path, legacy=False)
+        results = store.search(query_embedding=[1, 0, 0, 0], k=2)
+        assert [r.id for r in results] == [ids[5], ids[4]]
+
+    def test_vector_legacy_keeps_table_order_and_cut(self, tmp_path):
+        if not _HAS_SQLITE_VEC:
+            pytest.skip("sqlite-vec not available")
+        store, ids = self._vector_store(tmp_path, legacy=True)
+        results = store.search(query_embedding=[1, 0, 0, 0], k=2)
+        # the 4 (= 2k) nearest are ids[2:6]; table order, then cut to k = 2
+        assert [r.id for r in results] == [ids[2], ids[3]]
+
+    def _keyword_store(self, tmp_path, legacy: bool) -> tuple[MemoryStore, list[str]]:
+        store = MemoryStore(
+            str(tmp_path / "k.db"), allow_keyword_fallback=True, legacy_table_order=legacy
+        )
+        ids = [
+            store.write(_make_record(content=f"kiwi with a long tail of filler words number {i}"))
+            for i in range(5)
+        ]
+        ids.append(store.write(_make_record(content="kiwi kiwi kiwi kiwi")))  # best, inserted last
+        return store, ids
+
+    def test_keyword_best_match_first(self, tmp_path):
+        store, ids = self._keyword_store(tmp_path, legacy=False)
+        results = store.search(query="kiwi", k=2)
+        assert len(results) == 2
+        assert results[0].id == ids[5]
+
+    def test_keyword_legacy_drops_best_match_beyond_limit(self, tmp_path):
+        store, ids = self._keyword_store(tmp_path, legacy=True)
+        results = store.search(query="kiwi", k=2)
+        # the outer LIMIT 2k = 4 keeps the first 4 matches in table order, then the cut to k = 2
+        assert [r.id for r in results] == [ids[0], ids[1]]

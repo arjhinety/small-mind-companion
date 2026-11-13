@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "3ee680edfd1d21b3a004267018df21ad4a3e6fea",
+  "git_commit": "2d769cea4b9bd8a996fd44ea7c7760f695c9b7d0",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -262,8 +262,8 @@
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 3372,
-        "sha256": "bb3e341352b571a6db7556e4c7d8f3e6ca12f05db968e05f00f75535fd09344a"
+        "bytes": 4163,
+        "sha256": "c40c39785617948e503ec0274a71c3dffca28305d09df1e2a15fc891404d0923"
       },
       "docs/research_questions.md": {
         "bytes": 25894,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "66cadc2fcdee0044922fa0df5f7575d55c0a56986f657a80e4bb1728d312f28d"
+        "sha256": "2cdcf764a33ee2b691bbda4d740178b8a743c9a06dbaf4f8ecb24facc9378c4b"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -399,6 +399,26 @@
       "reason": "Test count moved from 531 to 536: tests/unit/test_pra_contain.py adds five test functions pinning the pre-registered Study 002 pra_contain rule (docs/preregistrations/study002-answer-containment.md). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
     },
     {
+      "on": "2026-11-12",
+      "artifact": "README.md",
+      "reason": "ERRATA E42: the errata count moved from 41 to 42. E42 corrects the description of Study 001's memory retrieval (search ranking lost, short lists, recency and tie-breaking dependence). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "README.md",
+      "reason": "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test functions (TestSearchOrder) pinning MemoryStore.search's rank order and the legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "docs/reproduction.md",
+      "reason": "Added a subsection recording the Python/SQLite builds on which the retrieval audit reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's system SQLite. Documentation only: no result, dataset, metric or limitation changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "docs/reproduction.md",
+      "reason": "Corrected the sentence on the failing interpreter: it was measured as Python 3.11.12 with SQLite 3.40.1 in Modal's default debian_slim image (a python.org build on Debian 12 linking the system SQLite), not 'Debian's system Python'. Documentation only: no result, dataset, metric or limitation changed."
+    },
+    {
       "on": "2026-11-11",
       "artifact": "README.md",
       "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
@@ -408,27 +428,27 @@
   "living_documents": {
     "docs/GUARDRAILS.md": {
       "bytes": 9241,
-      "sha256": "7f279bfa978e3dcc5d3ab3ae91265e48932f15afd966dfad75e73adf09878699"
+      "sha256": "1f34b249c7feeae6484c785c1292c9391235cf74c8e189ce0260e8431065077b"
     },
     "docs/STUDIES.md": {
-      "bytes": 13185,
-      "sha256": "e834733ddfdabdf7ec929023f9b63e76889827bd51ec66aa31079a59da82bb74"
+      "bytes": 13405,
+      "sha256": "30cf027cbb9e8911a8216e1e215f595769a26e01d6694464871284e0e47b4b5d"
     },
     "reports/ERRATA.md": {
-      "bytes": 49255,
-      "sha256": "9deb93871ccc28afd2b689e50bc7ea49c969bc800b474754ff8049aa9433db17"
+      "bytes": 59556,
+      "sha256": "5512bb6cd7a9d1ee807629a9553778dfffe4ac7cd6c3532bb8263b17dd0dfca8"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "5e3beb7adc0876d23a5551febf93ae37fb30f48dac9ebe99ccc4cf6e25436318"
+      "sha256": "2468cf29438bd24505d46f0a6203cf5f94cd0414be71459b5038b3114ff8cf25"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 29452,
-      "sha256": "5ed47c09eb4b4563b9deedabb1e026cf56b4a41aa59265dbba4d9e5e136b6a33"
+      "bytes": 30299,
+      "sha256": "7cfdf2eec9292e740bcdcd6597a4435f7fbcd811b566fe2910571d24697c9292"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 13906,
-      "sha256": "95de64fe08ef3ec616731b3f9e5bc251e80ad450236aae741ebea0a882482fdf"
+      "bytes": 14431,
+      "sha256": "07fc37a356b9d0ff878e356001b59391d53157669de05385b5e7861df52cfe4c"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

@@ -1,0 +1,151 @@
+{
+  "artifact_kind": "retrieval_audit_platforms",
+  "note": "Where scripts/retrieval_audit.py was run and how each run compared with the committed retrieval_audit.json. Environment fields are recorded by hand from each run's own output, not recomputed; CI recomputes only the committed file's seed-0 values (--check --no-spread).",
+  "commit": "31e2686a793e0c16bf3dd7571be43588d381e1db",
+  "runs": {
+    "windows": {
+      "role": "generated the committed retrieval_audit.json, including hash_seed_spread",
+      "os": "Windows 11",
+      "python": "3.11.15",
+      "sqlite": "3.53.1",
+      "sqlite_vec": "0.1.9"
+    },
+    "linux_py3_11_18": {
+      "role": "full --check (21 hash seeds) of the committed file",
+      "result": "passed",
+      "os": "Linux (Modal)",
+      "python": "3.11.18",
+      "sqlite": "3.53.1",
+      "sqlite_vec": "0.1.9",
+      "cpus": 4,
+      "seconds": 5711,
+      "modal_call": "fc-01M7A4GZ9S1HM4HBAZAHGV86ZP"
+    },
+    "linux_py3_11_13": {
+      "role": "full --check failed; regenerated in the container for comparison",
+      "result": "differs",
+      "os": "Linux (Modal)",
+      "python": "3.11.13",
+      "sqlite": "3.50.4",
+      "sqlite_vec": "0.1.9",
+      "cpus": 4,
+      "modal_call_check": "fc-01M79YQ75YW2266A13CA7K8N2F",
+      "modal_call_generate": "fc-01M7A1Z0WE2ESM5294XWHZ3TG7",
+      "output": "results/audit/retrieval/retrieval_audit.linux-py3.11.13-sqlite3.50.4.json"
+    },
+    "modal_debian_slim_default": {
+      "role": "checked 2026-11-13 which interpreter and SQLite Modal's default image has, and whether the Study 001 (legacy_table_order=True) vec0 subquery runs; not an audit run",
+      "os": "Debian GNU/Linux 12 (bookworm) (Modal)",
+      "executable": "/usr/local/bin/python",
+      "python": "3.11.12",
+      "sqlite": "3.40.1",
+      "sqlite_vec": "0.1.9",
+      "legacy_vec_query": "fails",
+      "error": "OperationalError: A LIMIT or 'k = ?' constraint is required on vec0 knn queries."
+    }
+  },
+  "linux_py3_11_13_vs_committed": {
+    "differing_fields": 16,
+    "max_gold_shift": 3,
+    "min_gold_shift": 1,
+    "max_rate_shift_points": 0.49,
+    "differences": [
+      {
+        "field": "pipeline_2x2/ordering=rank,quota=off/gold_retrieved",
+        "windows": 316,
+        "linux_py3_11_13": 317,
+        "difference": 1
+      },
+      {
+        "field": "pipeline_2x2/ordering=rank,quota=off/rate",
+        "windows": 0.5197,
+        "linux_py3_11_13": 0.5214,
+        "difference": 0.0017
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/gold_retrieved/min",
+        "windows": 316,
+        "linux_py3_11_13": 317,
+        "difference": 1
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/gold_retrieved/median",
+        "windows": 316,
+        "linux_py3_11_13": 317,
+        "difference": 1
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/gold_retrieved/max",
+        "windows": 317,
+        "linux_py3_11_13": 318,
+        "difference": 1
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/rate/min",
+        "windows": 0.5197,
+        "linux_py3_11_13": 0.5214,
+        "difference": 0.0017
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/rate/median",
+        "windows": 0.5197,
+        "linux_py3_11_13": 0.5214,
+        "difference": 0.0017
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off/rate/max",
+        "windows": 0.5214,
+        "linux_py3_11_13": 0.523,
+        "difference": 0.0016
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off,truncated_to_quota_on_size/gold_retrieved/min",
+        "windows": 254,
+        "linux_py3_11_13": 257,
+        "difference": 3
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/ordering=rank,quota=off,truncated_to_quota_on_size/rate/min",
+        "windows": 0.4178,
+        "linux_py3_11_13": 0.4227,
+        "difference": 0.0049
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=on/gold_retrieved/min",
+        "windows": 268,
+        "linux_py3_11_13": 270,
+        "difference": 2
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=on/rate/min",
+        "windows": 0.4408,
+        "linux_py3_11_13": 0.4441,
+        "difference": 0.0033
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=off,truncated_to_quota_on_size/gold_retrieved/min",
+        "windows": 275,
+        "linux_py3_11_13": 276,
+        "difference": 1
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=off,truncated_to_quota_on_size/gold_retrieved/median",
+        "windows": 276,
+        "linux_py3_11_13": 277,
+        "difference": 1
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=off,truncated_to_quota_on_size/rate/min",
+        "windows": 0.4523,
+        "linux_py3_11_13": 0.4539,
+        "difference": 0.0016
+      },
+      {
+        "field": "hash_seed_spread/pipeline_2x2/post-hoc fixed store: quota=off,truncated_to_quota_on_size/rate/median",
+        "windows": 0.4539,
+        "linux_py3_11_13": 0.4556,
+        "difference": 0.0017
+      }
+    ]
+  }
+}
