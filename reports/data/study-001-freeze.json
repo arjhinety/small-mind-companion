@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "6776051068d04a4cf062df7bc1732ba4fc5fb8dd",
+  "git_commit": "2d769cea4b9bd8a996fd44ea7c7760f695c9b7d0",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -262,8 +262,8 @@
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 4078,
-        "sha256": "ca12cc1dcfe1680a3193a5f5f13d5cee01cd4d2c1f59187372abc8a818da1d80"
+        "bytes": 4163,
+        "sha256": "c40c39785617948e503ec0274a71c3dffca28305d09df1e2a15fc891404d0923"
       },
       "docs/research_questions.md": {
         "bytes": 25894,
@@ -412,6 +412,11 @@
       "on": "2026-11-13",
       "artifact": "docs/reproduction.md",
       "reason": "Added a subsection recording the Python/SQLite builds on which the retrieval audit reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's system SQLite. Documentation only: no result, dataset, metric or limitation changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "docs/reproduction.md",
+      "reason": "Corrected the sentence on the failing interpreter: it was measured as Python 3.11.12 with SQLite 3.40.1 in Modal's default debian_slim image (a python.org build on Debian 12 linking the system SQLite), not 'Debian's system Python'. Documentation only: no result, dataset, metric or limitation changed."
     },
     {
       "on": "2026-11-11",

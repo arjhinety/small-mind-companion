@@ -298,6 +298,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
         ),
     },
     {
+        "on": "2026-11-13",
+        "artifact": "docs/reproduction.md",
+        "reason": (
+            "Corrected the sentence on the failing interpreter: it was measured as Python 3.11.12 "
+            "with SQLite 3.40.1 in Modal's default debian_slim image (a python.org build on Debian "
+            "12 linking the system SQLite), not 'Debian's system Python'. Documentation only: no "
+            "result, dataset, metric or limitation changed."
+        ),
+    },
+    {
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (

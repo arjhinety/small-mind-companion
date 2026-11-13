@@ -13,10 +13,10 @@ uv sync --extra gpu     # + torch/transformers/vllm/trl/peft/etc. for training a
 exactly with Python 3.11.15 and SQLite 3.53.1 on Windows, where it was generated, and with Python
 3.11.18 and SQLite 3.53.1 on Linux, the interpreter CI pins. With Python 3.11.13 and SQLite 3.50.4,
 16 values come out 1 to 3 of 608 probes higher (ERRATA E42;
-`results/audit/retrieval/retrieval_audit.platforms.json`). Debian's system Python links an older
-SQLite on which the Study 001 vector query (`legacy_table_order=True`) fails with "A LIMIT or
-'k = ?' constraint is required on vec0 knn queries"; use a uv-managed Python
-(`uv python install 3.11.18`).
+`results/audit/retrieval/retrieval_audit.platforms.json`). With Python 3.11.12 and SQLite 3.40.1
+(Modal's default `debian_slim` image: a python.org build on Debian 12 that links the system SQLite),
+the Study 001 vector query (`legacy_table_order=True`) fails with "A LIMIT or 'k = ?' constraint is
+required on vec0 knn queries"; use a uv-managed Python (`uv python install 3.11.18`).
 
 ## Run the test suite
 
