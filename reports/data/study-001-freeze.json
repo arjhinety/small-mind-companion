@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "913d771bfab966d9625d850f257d008ccb76ebf3",
+  "git_commit": "f0d23f894dc20425c5de360acf5c08e04a1371fa",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "4650ddd73a949eeac16cdab53c76759fa947a4acf676b36113944301ffd4b8a2"
+        "sha256": "2cdcf764a33ee2b691bbda4d740178b8a743c9a06dbaf4f8ecb24facc9378c4b"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -404,6 +404,11 @@
       "reason": "ERRATA E42: the errata count moved from 41 to 42. E42 corrects the description of Study 001's memory retrieval (search ranking lost, short lists, recency and tie-breaking dependence). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
     },
     {
+      "on": "2026-11-13",
+      "artifact": "README.md",
+      "reason": "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test functions (TestSearchOrder) pinning MemoryStore.search's rank order and the legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
       "on": "2026-11-11",
       "artifact": "README.md",
       "reason": "ERRATA E40: the row 'ORPO as an alternative to DPO | Blocked - not supported by the pinned trl version' became 'H3.1 | ... | Not run - ORPO is available as trl.experimental.orpo in the pinned trl 1.10.0'; the errata count moved from 39 to 40. A correction to a claim about a library, not to any number, dataset or checkpoint."
@@ -420,8 +425,8 @@
       "sha256": "6300e02da54c85a23c04e5fe7e8de541fd0d45eaef0d5e46981d406a9fa1e556"
     },
     "reports/ERRATA.md": {
-      "bytes": 57181,
-      "sha256": "7cbcde40ac05493514920d2e3b65732ba635f4f3642955a3f03f5655be110dd1"
+      "bytes": 58445,
+      "sha256": "d04383f20b85aec0bb5435c12c992d4d41019260f244f1f2e407eb44c5355ca6"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
@@ -432,8 +437,8 @@
       "sha256": "bd4b178d5ae81f43dda5e30c4cb96f985ad5dab1bab6be6a24bf6c9723a26373"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 14223,
-      "sha256": "d9638f3c6ebe8af45528f0970bf800be7a22206e27709346bc20829f3ad2312b"
+      "bytes": 14431,
+      "sha256": "07fc37a356b9d0ff878e356001b59391d53157669de05385b5e7861df52cfe4c"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

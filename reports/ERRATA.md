@@ -708,28 +708,34 @@ any retriever over these stores. In D_memory, one of those memories was retrieve
 all four memory runs. The audit finds these causes:
 
 1. **The store discarded search ranking.** In `MemoryStore.search`
-   (`src/onebee/memory/store.py:356-392`) the vector half selects the 2k nearest memories in a
-   subquery and returns them through `WHERE … IN (…)` with no outer `ORDER BY`, so in table order.
-   The keyword half orders FTS5 matches by rank in a subquery with no `LIMIT`, then keeps the first
-   2k rows of the outer query in table order, so it can drop the best matches as well as scramble
-   them. At the retriever's `k_candidates` of 20 each half returns up to 40 of a persona's 55 to 68
-   memories, and those table positions are the ranks that reciprocal-rank fusion receives; the
-   final list is then selected by MMR over the composite score and filtered by the tier quota.
-   Measured on each half's full result (`search(k=40)`, a limit of 80, which covers every store, so
-   nothing is dropped): the first 8 rows as returned contain the gold memory for 14.31% of probes
-   for the vector half, which is the store's first 8 rows whatever the question, and 40.95% for
-   the keyword half; the top 8 in rank order, 80.92% and 66.94%. In the full pipeline, rank order
-   raises the gold rate from 30.59% to 40.95% [40.79–41.45] at a similar list size.
+   (`src/onebee/memory/store.py:356-392` at commit `f0d23f8`, before the fix) the vector half
+   selects the 2k nearest memories in a subquery and returns them through `WHERE … IN (…)` with no
+   outer `ORDER BY`, so in table order. The keyword half orders FTS5 matches by rank in a subquery
+   with no `LIMIT`, then keeps the first 2k rows of the outer query in table order, so it can drop
+   the best matches as well as scramble them. At the retriever's `k_candidates` of 20 each half
+   selects up to 40 of a persona's 55 to 68 memories and returns the first 20 of them in table
+   order, because `search` cuts every result to k, so both halves can drop their best matches;
+   those table positions are the ranks that reciprocal-rank fusion receives; the final list is then
+   selected by MMR over the composite score and filtered by the tier quota. Measured with
+   `search(k=40)` (a limit of 80, which covers every store, then the first 40 rows): the first 8
+   rows as returned contain the gold memory for 14.31% of probes for the vector half, which is the
+   store's first 8 rows whatever the question, and 40.95% for the keyword half; the top 8 in rank
+   order, 80.92% and 66.94%. In the full pipeline, the fix as shipped (rank order, each half's top
+   20; post-hoc) raises the gold rate from 30.59% to 44.57% [44.08–44.90] at a similar list size.
+   Passing each half's top 40 instead, the variant this entry first quoted as rank order, gives
+   40.95% [40.79–41.45].
 2. **Short lists, not the tier quota as such.** The default quota (episodic 4, semantic 3,
    short-term 6; `src/onebee/retrieval/fusion.py:126`) meets stores in which 421 of 503 memories are
    semantic, so every memory run returned 3 to 8 memories (mean 5.99), not 8. At equal list size the
-   quota itself costs about 1 point (30.59% vs 31.25% [31.25–31.25] in store order; 40.95% vs 42.27%
-   [41.78–42.43] in rank order); most of its effect is the shorter list.
+   quota itself costs about 1 point (30.59% vs 31.25% [31.25–31.25] in store order; 44.57% vs 45.39%
+   [45.23–45.72] with the fix; 40.95% vs 42.27% [41.78–42.43] in the top-40 variant); most of its
+   effect is the shorter list.
 3. **Non-query terms outweigh similarity in the score.** This is a property of the design, not a
    code defect. In the composite score (`fusion.py:58-88`) the similarity term varies by about
    0.006 across a query's candidates (median), less than the confidence term (median 0.047) on all
    608 probes; the entity term is always 0 because the run scripts pass no query entities. As
-   post-hoc diagnostics, not results: with rank order and no quota the gold rate is 51.97%
+   post-hoc diagnostics, not results: with the fix and no quota the gold rate is 61.35%
+   [61.35–61.51]. The weight diagnostics use the top-40 variant: with no quota, 51.97%
    [51.97–52.14]; with the importance and confidence weights also set to 0, 72.53% [72.53–72.86];
    with only the recency weight set to 0, 55.43% [55.43–55.59].
 4. **Recency depended on the run date.** `fusion.py:70` takes `event_time or created_at`. The
@@ -770,6 +776,15 @@ all four memory runs. The audit finds these causes:
 - **Not audited.** The pairwise comparisons (`compare_c*_vs_*.py`) and the SFT/DPO data generation
   used the same retriever and were not replayed; the training-persona stores
   (`data/stores/sft_personas_v0/`) were not examined.
+
+**Amended 2026-11-13.** As first merged, item 1 said each half returns up to 40 memories and
+quoted a top-40-per-half variant as rank order. `MemoryStore.search` cuts every result to k, so at
+`k_candidates` 20 each half returns 20. The fix (`legacy_table_order=False`, now the default) keeps
+that cut, which follows the method's existing contract and was set before the fixed store was
+measured; its figures above come from the post-hoc `fixed store` arms of
+`results/audit/retrieval/retrieval_audit.json`. The top-40 figures are kept as labelled
+diagnostics. The pre-fix code is commit `f0d23f8`; the Study 001 scripts that search stores open
+them with `legacy_table_order=True`.
 
 **Why it survived the validator.** No claim measured retrieval quality. The store tests check that
 a record is found, never the order results come back in (`tests/unit/test_memory_store.py:329,345`).
@@ -813,7 +828,9 @@ So this file is not read as blanket scepticism:
 - Single seed throughout. Every headline number in this project is one run.
 - H5 has no test: no generic-SFT model was trained, and MUR cannot measure it as implemented (E36).
 - Study 001's retriever lost search ranking and retrieved the needed memory for 30.59% of
-  answerable probes (E42). It stays as frozen for Study 001; fixing it is Study 002 work.
+  answerable probes (E42). The search ordering is fixed (default since this amendment); Study
+  001's scripts keep the old order, and the quota, score weights and recency are Study 002 design
+  questions.
 - Every judge-scored training gain is scored by the model that wrote the training targets (E38); re-scoring the saved responses with an unrelated judge is Study 002 item 15.
 
 ## Resolved since the audit

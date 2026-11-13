@@ -165,7 +165,11 @@ class MemoryStoreProtocol(Protocol):
 
 class MemoryStore:
     def __init__(
-        self, db_path: str, embedding_dim: int = 384, allow_keyword_fallback: bool = False
+        self,
+        db_path: str,
+        embedding_dim: int = 384,
+        allow_keyword_fallback: bool = False,
+        legacy_table_order: bool = False,
     ) -> None:
         """Open (or create) a memory store.
 
@@ -174,8 +178,15 @@ class MemoryStore:
         set, in which case embeddings are ignored and search is keyword-only. Silent degradation
         to keyword search is how vector search could be off without anyone knowing; the mode in
         use is exposed as ``search_mode``.
+
+        ``search`` returns keyword matches in FTS5 rank order and vector matches in distance order.
+        ``legacy_table_order=True`` restores the behaviour Study 001 ran with (commit ``f0d23f8``
+        and earlier): matches selected by rank but returned in table order, with the keyword row
+        limit applied after that reordering (``reports/ERRATA.md`` E42). Use it only to reproduce
+        Study 001.
         """
         self.db_path = db_path
+        self.legacy_table_order = legacy_table_order
         self.embedding_dim = embedding_dim
         self.allow_keyword_fallback = allow_keyword_fallback
         parent = Path(db_path).parent
@@ -355,16 +366,22 @@ class MemoryStore:
 
         fts_query = _sanitize_fts_query(query) if query else ""
         if fts_query:
-            fts_where = (
-                f"{base_where} AND m.rowid IN "
-                f"(SELECT rowid FROM memory_fts WHERE memory_fts MATCH ? ORDER BY rank)"
-            )
-            fts_params = base_params + [fts_query]
             fts_limit = k * 2
-            rows = self._conn.execute(
-                f"SELECT m.* FROM memory m {fts_where} LIMIT {fts_limit}",
-                fts_params,
-            ).fetchall()
+            if self.legacy_table_order:
+                fts_where = (
+                    f"{base_where} AND m.rowid IN "
+                    f"(SELECT rowid FROM memory_fts WHERE memory_fts MATCH ? ORDER BY rank)"
+                )
+                rows = self._conn.execute(
+                    f"SELECT m.* FROM memory m {fts_where} LIMIT {fts_limit}",
+                    base_params + [fts_query],
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    f"SELECT m.* FROM memory_fts f JOIN memory m ON m.rowid = f.rowid "
+                    f"{base_where} AND memory_fts MATCH ? ORDER BY f.rank LIMIT {fts_limit}",
+                    base_params + [fts_query],
+                ).fetchall()
             for r in rows:
                 rid = r["id"]
                 if rid not in seen_ids:
@@ -375,16 +392,25 @@ class MemoryStore:
             self._ensure_vec_table()
             # No try/except: a failing vector query (wrong dimension, corrupt table) used to be
             # swallowed here, which silently turned hybrid search into keyword search.
-            vec_where = (
-                f"{base_where} AND m.embedding_id IN "
-                f"(SELECT embedding_id FROM memory_vec "
-                f"WHERE embedding MATCH ? ORDER BY distance LIMIT ?)"
-            )
-            vec_params = base_params + [json.dumps(query_embedding), k * 2]
-            rows = self._conn.execute(
-                f"SELECT m.* FROM memory m {vec_where}",
-                vec_params,
-            ).fetchall()
+            if self.legacy_table_order:
+                vec_where = (
+                    f"{base_where} AND m.embedding_id IN "
+                    f"(SELECT embedding_id FROM memory_vec "
+                    f"WHERE embedding MATCH ? ORDER BY distance LIMIT ?)"
+                )
+                rows = self._conn.execute(
+                    f"SELECT m.* FROM memory m {vec_where}",
+                    base_params + [json.dumps(query_embedding), k * 2],
+                ).fetchall()
+            else:
+                # sqlite-vec's KNN selects the k*2 nearest first; the filters then apply to those,
+                # as in the legacy subquery, so both paths draw from the same candidate set.
+                rows = self._conn.execute(
+                    f"SELECT m.* FROM memory_vec v JOIN memory m "
+                    f"ON m.embedding_id = v.embedding_id {base_where} "
+                    f"AND v.embedding MATCH ? AND k = ? ORDER BY v.distance",
+                    base_params + [json.dumps(query_embedding), k * 2],
+                ).fetchall()
             for r in rows:
                 rid = r["id"]
                 if rid not in seen_ids:
