@@ -93,6 +93,11 @@ rule-based abstention detector.
 | SFT v1 + memory | 15.30% | 70.0% |
 | + DPO (dpo-v1-scale) | — | — (evaluated pairwise only: 45.7% vs 21.0%, 24.7pp gap) |
 
+> **PMB answer-key caveat ([ERRATA E43](https://github.com/arjhinety/small-mind-companion/blob/main/reports/ERRATA.md)):**
+> for up to 285 of PMB's 608 answerable probes the gold answer is out of date (a later turn states a
+> different value), ambiguous, or not tied to one fact. `pra_lenient` above is scored against the key
+> as written. UAR uses only the 80 unanswerable probes and is unaffected.
+
 Full methodology, all numbers, and honest limitations:
 [`docs/proper_scale_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/proper_scale_results.md).
 

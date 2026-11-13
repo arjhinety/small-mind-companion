@@ -117,6 +117,16 @@ GROUPS: dict[str, list[str]] = {
 # a freeze that means something and one that gets quietly refreshed whenever a check fails.
 REFREEZE_LOG: list[dict[str, str]] = [
     {
+        "on": "2026-11-13",
+        "artifact": "hf_readmes/ (4 files: README_distill-v1.md, README_sft-v0.md, "
+        "README_sft-v1.md, README_dpo-v1-scale.md)",
+        "reason": "ERRATA E43: a PMB answer-key caveat under the PMB table of the three cards that "
+        "show pra_lenient, and a pointer to it on distill-v1's capability line. The dpo-v1-scale "
+        "table's UAR cell still read 70.0%, which the 2026-09-13 re-push meant to remove (E1); it "
+        "now reads '— (no full-PMB measurement)'. Only README_distill-v1.md is hash-pinned. No "
+        "result, metric, dataset or checkpoint changed.",
+    },
+    {
         "on": "2026-09-13",
         "artifact": "hf_readmes/generate_cards.py",
         "reason": "Formatting only (one long line wrapped by black to satisfy E501; no values "

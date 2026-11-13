@@ -93,6 +93,11 @@ rule-based abstention detector.
 | B (SFT v0, no memory) | 0.16% | 16.25% |
 | E (SFT v0 + memory) | 17.76% | 33.75% |
 
+> **PMB answer-key caveat ([ERRATA E43](https://github.com/arjhinety/small-mind-companion/blob/main/reports/ERRATA.md)):**
+> for up to 285 of PMB's 608 answerable probes the gold answer is out of date (a later turn states a
+> different value), ambiguous, or not tied to one fact. `pra_lenient` above is scored against the key
+> as written. UAR uses only the 80 unanswerable probes and is unaffected.
+
 Full methodology, all numbers, and honest limitations:
 [`docs/day4_sft_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/day4_sft_results.md).
 
