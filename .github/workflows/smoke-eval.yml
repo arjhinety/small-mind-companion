@@ -6,6 +6,8 @@ on:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.11.18"  # same interpreter as ci.yml
     steps:
       - uses: actions/checkout@v4
 
@@ -13,8 +15,8 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Set up Python 3.11
-        run: uv python install 3.11
+      - name: Set up Python 3.11.18
+        run: uv python install 3.11.18
 
       # pytest lives in the `dev` extra; a bare `uv sync` does not install it (same as ci.yml).
       - name: Install dependencies
