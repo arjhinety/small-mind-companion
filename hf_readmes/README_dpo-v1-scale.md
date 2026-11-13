@@ -94,7 +94,7 @@ rule-based abstention detector.
 
 | System | pairwise win-rate | UAR |
 |---|---|---|
-| dpo-v1-scale | 45.7% vs 21.0% (24.7pp gap) | 70.0% |
+| dpo-v1-scale | 45.7% vs 21.0% (24.7pp gap) | — (no full-PMB measurement) |
 
 Full methodology, all numbers, and honest limitations:
 [`docs/proper_scale_results.md`](https://github.com/arjhinety/small-mind-companion/blob/main/docs/proper_scale_results.md).

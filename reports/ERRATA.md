@@ -50,6 +50,13 @@ and the corrected ones present.
 The cards still restate quantization figures that no committed artifact backs (E6); each GGUF card
 now says so explicitly rather than presenting them as independently checkable.
 
+**Amended 2026-11-13.** The `onebee-gf-dpo-v1-scale` re-push above removed the 70.0% UAR from the
+card's capability line but not from its evaluation table, whose UAR cell still read 70.0%; the
+fetch-back check did not catch it. The cell now reads "— (no full-PMB measurement)". The same
+re-push adds the E43 answer-key caveat under the PMB table of `onebee-gf-sft-v0`,
+`onebee-gf-sft-v1` and `onebee-gf-distill-v1`, the three cards that show a `pra_lenient` figure.
+Until the Hub commits are recorded here, the live cards are the earlier versions.
+
 ## Corrections by finding
 
 ### E1 — UAR 70.0% and pra_lenient 15.30% were attributed to the DPO checkpoint (HIGH)

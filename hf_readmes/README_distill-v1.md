@@ -82,7 +82,8 @@ framing before using it in any production context.
 - Companion-persona conversational responses conditioned on retrieved memories
 - Strongest measured calibration in this project: UAR 71.25% (correctly abstains on
   unanswerable questions without over-hedging on answerable ones)
-- Best measured answer accuracy: `pra_lenient` 18.59%
+- Best measured answer accuracy: `pra_lenient` 18.59% (see the PMB answer-key caveat under
+  Evaluation)
 - Persona consistency held or improved post-distillation, by both an LLM-judge pairwise
   comparison (+7.6pp favoring this checkpoint) and an independent no-API stylometric
   self-consistency measure (0.524 vs 0.509 pre-distillation)
@@ -122,6 +123,11 @@ rule-based abstention detector.
 |---|---|---|
 | SFT + memory (pre-distillation) | 15.30% | 70.0% |
 | **distill-v1 (this checkpoint)** | **18.59%** | **71.25%** |
+
+> **PMB answer-key caveat ([ERRATA E43](https://github.com/arjhinety/small-mind-companion/blob/main/reports/ERRATA.md)):**
+> for up to 285 of PMB's 608 answerable probes the gold answer is out of date (a later turn states a
+> different value), ambiguous, or not tied to one fact. `pra_lenient` above is scored against the key
+> as written. UAR uses only the 80 unanswerable probes and is unaffected.
 
 > This table spans two changes, not one: `distill-v1` was trained *from the DPO output*, so the
 > +3.3pp `pra_lenient` gap includes the DPO stage as well as distillation. The distillation-specific
