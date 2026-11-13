@@ -23,7 +23,6 @@ from onebee.evaluation.metrics.memory_quality import (
     contradiction_rate,
     fmr,
     mrr,
-    mur,
     precision_at_k,
     recall_at_k,
 )
@@ -63,7 +62,6 @@ __all__ = [
     "mean_quality",
     "mean_register_match",
     "mrr",
-    "mur",
     "pcs",
     "pcs_judge_score",
     "pcs_stylometric",

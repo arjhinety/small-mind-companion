@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-540%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-543%20passing-brightgreen)
 
 ## Overview
 
@@ -211,7 +211,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   540 unit tests, run in CI
+tests/                   543 unit tests, run in CI
 ```
 
 ## Results & Analysis

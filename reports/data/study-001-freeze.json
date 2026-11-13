@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "2d769cea4b9bd8a996fd44ea7c7760f695c9b7d0",
+  "git_commit": "57f620313784f8a83af5f74ec47b2339b92a86d7",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -303,7 +303,7 @@
       },
       "README.md": {
         "bytes": 19492,
-        "sha256": "2cdcf764a33ee2b691bbda4d740178b8a743c9a06dbaf4f8ecb24facc9378c4b"
+        "sha256": "d9bd6919c50574cb1d6d8f9b320d263cf41368328a27df2090b7496fba452def"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -407,6 +407,11 @@
       "on": "2026-11-13",
       "artifact": "README.md",
       "reason": "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test functions (TestSearchOrder) pinning MemoryStore.search's rank order and the legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "README.md",
+      "reason": "Test count moved from 540 to 543: Study 002 item 12 retires mur; tests/unit/test_memory_use.py pins the pre-registered memory-use metrics (docs/preregistrations/study002-memory-use.md) and the mur tests are removed. Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
     },
     {
       "on": "2026-11-13",

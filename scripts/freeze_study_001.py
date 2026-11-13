@@ -290,6 +290,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
     },
     {
         "on": "2026-11-13",
+        "artifact": "README.md",
+        "reason": (
+            "Test count moved from 540 to 543: Study 002 item 12 retires mur; "
+            "tests/unit/test_memory_use.py pins the pre-registered memory-use metrics "
+            "(docs/preregistrations/study002-memory-use.md) and the mur tests are removed. Nothing "
+            "else in the README changed. No result, verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
+        "on": "2026-11-13",
         "artifact": "docs/reproduction.md",
         "reason": (
             "Added a subsection recording the Python/SQLite builds on which the retrieval audit "
