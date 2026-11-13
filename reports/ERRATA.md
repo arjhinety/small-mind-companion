@@ -699,7 +699,16 @@ and question embeddings, with the clock pinned to 2026-08-13T12:00Z and `PYTHONH
 (`results/audit/retrieval/retrieval_audit.json`). The replay is close, not exact: it reproduces 672
 of D_memory's 688 saved lists (667–680 over hash seeds 0–20), and it embeds the questions on CPU
 where the runs likely used CUDA. Seed-dependent figures are given at seed 0 with the range over
-seeds 0–20 in brackets. Facts read directly from the stores and saved runs are in
+seeds 0–20 in brackets. The ranges cover hash seeds 0–20 only, and they depend slightly on the
+Python and SQLite build: the committed audit, generated on Windows (Python 3.11.15, SQLite
+3.53.1), reproduces exactly on Linux with Python 3.11.18 and SQLite 3.53.1, but with Python
+3.11.13 and SQLite 3.50.4 (`results/audit/retrieval/retrieval_audit.linux-py3.11.13-sqlite3.50.4.json`)
+16 values come out 1 to 3 of 608 probes higher, by at most 0.49 points: the gold count and rate
+of the top-40 variant without the quota at seed 0 and at the minimum, median and maximum over
+seeds (51.97% becomes 52.14% at seed 0), the minimum over seeds of the top-40 variant cut to the
+quota-on size (41.78% becomes 42.27%), of the fixed store with the quota (44.08% becomes 44.41%)
+and of the fixed store cut to the quota-on size (45.23% becomes 45.39%), and that arm's median
+(45.39% becomes 45.56%). Facts read directly from the stores and saved runs are in
 `results/audit/retrieval/retrieval_facts.json` (`scripts/retrieval_facts.py`).
 
 A memory was extracted from the gold turn for 561 of 608 answerable probes; that is the ceiling for
