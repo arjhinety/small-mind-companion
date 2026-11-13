@@ -714,7 +714,10 @@ and of the fixed store cut to the quota-on size (45.23% becomes 45.39%), and tha
 A memory was extracted from the gold turn for 561 of 608 answerable probes; that is the ceiling for
 any retriever over these stores. In D_memory, one of those memories was retrieved for 186 of 608
 (30.59%), against 21.56% for random picks of the same list sizes, and for the same 186 probes in
-all four memory runs. The audit finds these causes:
+all four memory runs. These counts, and every gold rate in this entry, credit a memory from any gold
+turn on all 608 answerable probes; on PMB that credits an update probe with a different correction
+and includes probes whose answer key is out of date (E43). They were not recomputed on E43's subset.
+The audit finds these causes:
 
 1. **The store discarded search ranking.** In `MemoryStore.search`
    (`src/onebee/memory/store.py:356-392` at commit `f0d23f8`, before the fix) the vector half
@@ -766,9 +769,9 @@ all four memory runs. The audit finds these causes:
 - **No Study 001 metric value changes.** Every `pra_lenient`, UAR and win rate was measured with
   this retriever and stands as measured. What changes is the description: "hybrid retrieval, k=8"
   was a retriever that returned 3 to 8 memories, scored mostly by non-query terms from candidates
-  whose search order had been lost, and that retrieved the needed memory for 30.59% of answerable
-  probes. Whether a working retriever changes the memory results needs new answer-level runs
-  (Study 002); this erratum does not say they were understated.
+  whose search order had been lost, and that retrieved a memory from a gold turn for 30.59% of
+  answerable probes. Whether a working retriever changes the memory results needs new answer-level
+  runs (Study 002); this erratum does not say they were understated.
 - **H10 (E37).** At k=16 the k-sweep retrieved the same list as at k=8 for 118 of 120 probes, so its
   k=16 point is not a larger retrieval. The prompt depends only on the retrieved list
   (`run_ksweep.py:85-118`) and generation samples (temperature 0.7, no seed;
@@ -780,9 +783,9 @@ all four memory runs. The audit finds these causes:
   (`generate_sft_data.py`, `generate_dpo_data.py`), at an unrecorded clock and seed. A retriever
   change tested on the Study 001 checkpoints mixes better retrieval with contexts unlike the ones
   they were trained on.
-- **E36 (`mur`).** Consistent with E36: mapped through provenance, the gold memory is retrieved for
-  the same 186 probes in all four memory runs, so a retrieval-only measure cannot tell the models
-  apart.
+- **E36 (`mur`).** Consistent with E36: mapped through provenance, a memory from a gold turn is
+  retrieved for the same 186 probes in all four memory runs, so a retrieval-only measure cannot tell
+  the models apart.
 - **Not audited.** The pairwise comparisons (`compare_c*_vs_*.py`) and the SFT/DPO data generation
   used the same retriever and were not replayed; the training-persona stores
   (`data/stores/sft_personas_v0/`) were not examined.
@@ -797,8 +800,91 @@ diagnostics. The pre-fix code is commit `f0d23f8`; the Study 001 scripts that se
 them with `legacy_table_order=True`, and `TestSearchOrder` in `tests/unit/test_memory_store.py` now
 checks the result order in both modes.
 
+**Amended again 2026-11-13.** This entry called a memory from any gold turn "the needed memory". On
+PMB the two differ (E43), so the wording now says what was counted. No figure changed.
+
 **Why it survived the validator.** No claim measured retrieval quality. The store tests check that
 a record is found, never the order results come back in (`tests/unit/test_memory_store.py:329,345`).
+
+### E43 — PMB's answer key is not always the value the conversation ends with (HIGH)
+
+**As written:** PMB (`data/benchmarks/pmb_v0_full`) gives each probe "a gold answer and
+supporting-memory IDs" (`README.md:98`), and this file's "What was verified correct" called its
+design sound. Every probe is asked after the whole conversation. Each of the 96 `outdated_fact`
+probes cites two gold turns, a fact and the correction that updates it.
+
+**Actually:** *(post-hoc; read from the frozen benchmark files, no run involved.)* The version of
+`scripts/build_pmb.py` that built PMB has four defects
+(`results/audit/pmb_updates/pmb_update_pairing.json`, `scripts/pmb_update_pairing.py`):
+
+1. **One turn id for every correction.** In all 8 personas the 12 corrections share one id,
+   `pXXX_s5_t099` (the session's own turns are `pXXX_s005_tNNN`), so an update probe's gold turn ids
+   do not say which correction it means. The generator writes one correction and one
+   `outdated_fact` probe per step, so the k-th probe belongs to the k-th correction; the pairing
+   script checks that each paired correction reveals the probe's fact and contains its gold answer.
+2. **Facts to correct are drawn with replacement.** 33 of the 96 update probes are about a fact
+   corrected more than once: 11 to the same value each time, 22 to different values. 36 corrections
+   repeat the fact's original value.
+3. **Corrections are not propagated.** Other probes about a corrected fact keep its original value
+   as their gold answer.
+4. **The same attribute twice.** Each persona has 40 facts drawn from 24 attribute templates, so 16
+   attributes appear twice, under a suffixed name (`favorite color` and `favorite color_37`), and
+   both values are stated in the conversation. Persona p001 says its favorite color is red and
+   later navy; `p001_p0076` asks "What's my favorite color?" with gold "red". 471 of the 603
+   probes tied to a fact (below) are about such an attribute. All 36 repeat corrections (item 2) are
+   on suffixed facts.
+
+`scripts/pmb_answer_key_audit.py` ties each answerable probe to the fact its gold answer names and
+compares the gold answer with the value of the **last turn stating that attribute** (a correction
+states its paired probe's gold answer) (`results/audit/pmb_answer_key/pmb_answer_key_audit.json`).
+Of the 608 answerable probes:
+
+| key status | probes |
+|---|---|
+| current: the gold answer is the last value stated | 323 |
+| stale: a later turn states a different value | 254 |
+| — the fact's own correction (71 other probes, 3 update probes) | 74 |
+| — a twin attribute stated later | 180 |
+| ambiguous question: another update probe of the persona asks the same question about a different fact | 24 |
+| ambiguous final value: the last turn states two values | 2 |
+| untied: the gold answer names no single fact | 5 |
+
+Separately, 221 of the 608 ask the same question as another probe of the persona with a different
+gold answer. The 80 unanswerable probes are unaffected. **These are structural candidates, not
+confirmed errors**: some attributes add rather than replace (`visited recently`, `attended a
+conference`, `adopted a pet`), so a later value need not retract an earlier one. The audit applies
+one rule, that the answer is the value the conversation ends with, and does not read meaning.
+
+**What the saved runs show** (description, no score changes). On the 254 stale-key probes the four
+memory runs were judged correct for 43 to 48, and the last-stated value appears in 29 to 42 of
+their responses, of which 0 to 4 were judged correct; in the no-memory runs, 1 and 2 to 3. A response
+that contains a value has not necessarily answered with it, and the two counts are not netted. On
+the 198 probes whose key the audit finds sound (current, not an update probe, question not shared
+with a probe of a different answer; defined after seeing these results), the three no-memory runs
+are judged correct for 0 and the memory runs for 34 (v1 E) to 45 (v0.1 E).
+
+**What this changes.**
+- **No Study 001 metric value changes.** Every probe was scored as written and every `pra_lenient`
+  stands as measured. What it measures is agreement with this key, which for up to 285 of the 608
+  answerable probes is out of date, ambiguous or untied. The no-memory versus memory contrast holds
+  on the 198 sound probes; differences between memory systems are not re-examined here, and this
+  entry does not say they change.
+- **Retrieval figures.** E42 counts a memory from any gold turn on all 608 answerable probes; its
+  wording is amended below. The item 12 pre-registration
+  (`docs/preregistrations/study002-memory-use.md`) is amended to count only the 198 on PMB, as
+  post-hoc description.
+- **PMB in Study 002.** `pmb_v0_full` stays frozen. Study 002 reports PMB for comparability with
+  Study 001, on the full set and on the 198, and confirms on HaluMem.
+- **Training personas.** The same generator built `data/benchmarks/sft_personas_v1`: all 40
+  personas share one update id, 54 facts are corrected more than once, and every persona has 16
+  attributes twice (the current generator repeats the predicate unsuffixed). The SFT and DPO data
+  built from them were not examined. Before Study 002 regenerates training data or retrains, the
+  training personas are checked and rebuilt with the generator fixed.
+
+**Why it survived the validator.** No check compared turn ids for uniqueness, or a gold answer with
+the later turns of its conversation. The PMB check in "What was verified correct" counted the probe
+grid, not the answer key. The generator's own comment says "nothing downstream actually depends on
+predicate uniqueness" (`scripts/build_pmb.py:471-472`); the answer key does.
 
 ## What was verified correct
 So this file is not read as blanket scepticism:
@@ -815,9 +901,9 @@ So this file is not read as blanket scepticism:
   3437 training-persona probes; `By kind` balances re-derived by template matching; 40 facts per
   persona everywhere; the DPO rejected pool is exactly 5 distinct sentences; `distill/v1` is a
   genuine strict subset of `sft/v1/train.jsonl`.
-- **PMB's design is sound**: 86 probes per persona × 8 personas × 8 categories = a fully populated
+- **PMB's probe grid is complete**: 86 probes per persona × 8 personas × 8 categories = a fully populated
   64/64 cell grid, 608 answerable / 80 unanswerable, and all 80 unanswerable correctly carry no
-  gold answer.
+  gold answer. Its answer key is not (E43).
 - The v0 result rows (0.16%/13.75%, **15.13%**/8.75%, 17.76%/33.75%), the 24.7pp C-vs-E gap, the
   38.1%/30.5% distillation win rates, the 0.524/0.509 stylometric figures, and the Q2_K-breakage
   narrative (which matches git history) all reconcile with committed artifacts.
@@ -838,10 +924,13 @@ So this file is not read as blanket scepticism:
   from the repository.
 - Single seed throughout. Every headline number in this project is one run.
 - H5 has no test: no generic-SFT model was trained, and MUR cannot measure it as implemented (E36).
-- Study 001's retriever lost search ranking and retrieved the needed memory for 30.59% of
-  answerable probes (E42). The search ordering is fixed (default since this amendment); Study
+- Study 001's retriever lost search ranking and retrieved a memory from a gold turn for 30.59%
+  of answerable probes (E42). The search ordering is fixed (default since this amendment); Study
   001's scripts keep the old order, and the quota, score weights and recency are Study 002 design
   questions.
+- PMB's gold answer is out of date, ambiguous or untied for up to 285 of 608 answerable probes
+  (E43). `pmb_v0_full` stays frozen; Study 002 reports it on the full set and on 198 sound probes,
+  and the training personas, which share the defects, are rebuilt before any retraining.
 - Every judge-scored training gain is scored by the model that wrote the training targets (E38); re-scoring the saved responses with an unrelated judge is Study 002 item 15.
 
 ## Resolved since the audit

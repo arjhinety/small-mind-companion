@@ -1539,6 +1539,51 @@ def memory_use(*keys: str) -> Any:
     return value
 
 
+_PMB_AUDITS: dict[str, dict[str, Any]] = {}
+
+
+def _pmb_audit(name: str) -> dict[str, Any]:
+    """scripts/<name>.py (PMB answer-key audits, ERRATA E43), loaded by path and built once."""
+    if name not in _PMB_AUDITS:
+        module = import_script(name, f"scripts/{name}.py")
+        _PMB_AUDITS[name] = {"module": module, "build": module.build()}
+    return _PMB_AUDITS[name]
+
+
+def _pmb_audit_fresh(name: str) -> bool:
+    audit = _pmb_audit(name)
+    output = audit["module"].OUTPUT
+    return output.is_file() and output.read_text(encoding="utf-8") == audit["module"].serialise(
+        audit["build"]
+    )
+
+
+def pmb_update_pairing_fresh() -> bool:
+    """results/audit/pmb_updates/pmb_update_pairing.json equals a recomputation from PMB."""
+    return _pmb_audit_fresh("pmb_update_pairing")
+
+
+def pmb_answer_key_fresh() -> bool:
+    """results/audit/pmb_answer_key/pmb_answer_key_audit.json equals a recomputation."""
+    return _pmb_audit_fresh("pmb_answer_key_audit")
+
+
+def pmb_update_pairing(*keys: str) -> Any:
+    """A value from a fresh recomputation of scripts/pmb_update_pairing.py, by key path."""
+    value: Any = _pmb_audit("pmb_update_pairing")["build"]
+    for key in keys:
+        value = value[key]
+    return value
+
+
+def pmb_answer_key(*keys: str) -> Any:
+    """A value from a fresh recomputation of scripts/pmb_answer_key_audit.py, by key path."""
+    value: Any = _pmb_audit("pmb_answer_key_audit")["build"]
+    for key in keys:
+        value = value[key]
+    return value
+
+
 def retrieval_audit(*keys: str) -> Any:
     """A value from the committed retrieval audit, by key path (keys may contain dots or commas).
 
@@ -2252,6 +2297,10 @@ def _computed_functions() -> dict[str, Callable[..., Any]]:
         "retrieval_fact": retrieval_fact,
         "memory_use_fresh": memory_use_fresh,
         "memory_use": memory_use,
+        "pmb_update_pairing_fresh": pmb_update_pairing_fresh,
+        "pmb_update_pairing": pmb_update_pairing,
+        "pmb_answer_key_fresh": pmb_answer_key_fresh,
+        "pmb_answer_key": pmb_answer_key,
         "uar_list_counts": uar_list_counts,
         "sft_counts_fresh": sft_counts_fresh,
         "uar_trajectory_counts": uar_trajectory_counts,

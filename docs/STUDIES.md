@@ -93,6 +93,11 @@ finding it came from.
 
 ### Needs a GPU
 
+**Gate (E43).** Before any item here regenerates training data or retrains, the training
+personas (`data/benchmarks/sft_personas_v1`) are checked and rebuilt with `scripts/build_pmb.py`
+fixed: all 40 share one update id, 54 facts are corrected more than once, and each states 16
+attributes twice.
+
 1. **The crossover experiment (H16/H17).** `run_crossover_baseline.py` is written and unrun: 2B +
    scaffold vs the 8B `gemma-4-E4B-it` with no memory. This is Study 001's own thesis question and
    the one experiment that answers it.
@@ -147,6 +152,10 @@ finding it came from.
     random UUID at insert. Its Week-1 proxy also measures retrieval, not the answer, so even with the
     IDs reconciled it could not test H5. A response-level memory-utilisation measure is needed, or
     the metric should be dropped from the reported set.
+
+    **Pre-registered 2026-11-13** (`docs/preregistrations/study002-memory-use.md`, amended the
+    same day for E43). `mur` is retired; gold retrieval and accuracy-when-retrieved replace it, as
+    diagnostics. They do not test H5.
 13. **Pin `base_model_revision` in the DPO and distillation configs** (E4). `distill_v1.yaml`
     (base and teacher), `dpo.yaml`, `dpo_v1_more_epochs.yaml` and `dpo_v1_scale.yaml` all reference
     `"main"`. Until they pin a SHA, no run launched from them can be called reproducible.

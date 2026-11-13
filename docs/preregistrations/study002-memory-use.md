@@ -152,4 +152,33 @@ not evidence for these metrics. They are fixed here before Study 002.
 
 ## Amendments
 
-None.
+**2026-11-13 (amendment 1).** The needed-turn rule above cannot be applied to PMB, and some of
+PMB's gold answers are not the value the conversation ends with (`reports/ERRATA.md` E43). From this
+amendment:
+
+- **Counted probes.** On PMB only the probes whose answer key `scripts/pmb_answer_key_audit.py`
+  finds sound are counted: the gold answer is the last value the conversation states for its
+  attribute, the probe is not an `outdated_fact` probe, and no other probe of the persona asks the
+  same question with a different answer. That is 198 of the 608 answerable probes (`sound_subset`
+  in `results/audit/pmb_answer_key/pmb_answer_key_audit.json`). The definition was chosen after
+  seeing Study 001's results, so PMB figures under it are description, not confirmation. Other
+  benchmarks count every answerable probe unless their pre-registration says otherwise.
+- **Needed memories.** For a counted probe, every memory extracted from one of its gold turns. The
+  latest-gold-turn rule for `outdated_fact` probes is withdrawn: PMB gives all of a persona's
+  corrections one turn id. `stale_fact_only` keeps its definition for benchmarks whose updates are
+  identifiable and is not reported on PMB.
+- **Worked example.** The functions now take memory sets. The example adds `u6`→`p_s5_t8`, an
+  unrelated correction, and the fourth probe retrieves `u4, u6`: still a miss with only the stale
+  fact. Every value in the table is unchanged, and `tests/unit/test_memory_use.py` asserts them.
+- **Implementation.** `needed_turns` is replaced by `memories_from_turns`.
+- **Study 001 under this amendment** (post-hoc, `results/audit/memory_use/memory_use.json`): the
+  needed memory was retrieved for 56 of the 198 counted probes (28.28%) in every memory run, against
+  11.52% to 11.53% for random picks of the same list sizes, and a needed memory was extracted for 183
+  of them. Each counted probe has one gold turn, so `all_gold_retrieval_rate` equals
+  `gold_retrieval_rate` there. Judge accuracy when retrieved was 58.93% (v0.1 D), 71.43% (v0.1 E),
+  44.64% (v1 E), 57.14% (v1 E_distill); 3 to 10 counted probes were judge-correct without the needed
+  memory. The body's figures (156, 186, 30, 51.92% and the rest) were computed with the original rule
+  on all 608 and are kept, as registered, in the artifact's `original_rule` and
+  `any_gold_turn_all_answerable` fields.
+- Study 002's main pre-registration reports PMB's headline metrics on the full set and on these
+  198, for comparability with Study 001; confirmation is on HaluMem.

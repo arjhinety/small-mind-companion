@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "57f620313784f8a83af5f74ec47b2339b92a86d7",
+  "git_commit": "c084e7a23a8d7d3a54cb5a035b8dd47a5d1ce359",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -302,8 +302,8 @@
         "sha256": "b45e1a22b187c4f2c4b3af054f14dd67bc6ff4eb8bdbd2a9b82448fc3c79211b"
       },
       "README.md": {
-        "bytes": 19492,
-        "sha256": "d9bd6919c50574cb1d6d8f9b320d263cf41368328a27df2090b7496fba452def"
+        "bytes": 19719,
+        "sha256": "d6f81d109a922a199caa0115df3660d9f6902c336ecb68100d5cd294b26d93bb"
       },
       "hf_readmes/README_distill-v1-gguf.md": {
         "bytes": 7490,
@@ -415,6 +415,11 @@
     },
     {
       "on": "2026-11-13",
+      "artifact": "README.md",
+      "reason": "ERRATA E43 (PMB's answer key): a one-paragraph caveat after the results table links E43; the errata count moved from 42 to 43; the test count moved from 543 to 542 (tests/unit/test_memory_use.py restated for amendment 1 of the memory-use pre-registration). No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-13",
       "artifact": "docs/reproduction.md",
       "reason": "Added a subsection recording the Python/SQLite builds on which the retrieval audit reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's system SQLite. Documentation only: no result, dataset, metric or limitation changed."
     },
@@ -432,28 +437,28 @@
   "refreeze_log_note": "The freeze was re-taken. Each entry records what moved and why it did not change a Study 001 finding. An unrecorded re-freeze makes the manifest meaningless, so this list is part of the artifact.",
   "living_documents": {
     "docs/GUARDRAILS.md": {
-      "bytes": 9241,
-      "sha256": "1f34b249c7feeae6484c785c1292c9391235cf74c8e189ce0260e8431065077b"
+      "bytes": 9630,
+      "sha256": "86cd2af15453066de0b74b4474080773d07dd23fa4807385f0c0a909e3390bdb"
     },
     "docs/STUDIES.md": {
-      "bytes": 13405,
-      "sha256": "30cf027cbb9e8911a8216e1e215f595769a26e01d6694464871284e0e47b4b5d"
+      "bytes": 13936,
+      "sha256": "dcd354488b5eeb9da92f6de3928d5b278f7958e436b616ba3448f8314fa137f0"
     },
     "reports/ERRATA.md": {
-      "bytes": 59556,
-      "sha256": "5512bb6cd7a9d1ee807629a9553778dfffe4ac7cd6c3532bb8263b17dd0dfca8"
+      "bytes": 66084,
+      "sha256": "d27fc9bbb8cb89fcfdbc243a23972362315f3dc797a6c47bbe043efc25b9860a"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
-      "sha256": "2468cf29438bd24505d46f0a6203cf5f94cd0414be71459b5038b3114ff8cf25"
+      "sha256": "e72be6757cfb99edcb81f4118538aa90da4b0fc3ac700a8b972c5c5afbe59f3c"
     },
     "reports/audits/001-claim-audit/findings.json": {
-      "bytes": 30299,
-      "sha256": "7cfdf2eec9292e740bcdcd6597a4435f7fbcd811b566fe2910571d24697c9292"
+      "bytes": 31069,
+      "sha256": "223bb1f8ee1bd6f615ee0eadff999801f714720d9b6505c2196037a22f8611be"
     },
     "reports/audits/001-claim-audit/resolutions.json": {
-      "bytes": 14431,
-      "sha256": "07fc37a356b9d0ff878e356001b59391d53157669de05385b5e7861df52cfe4c"
+      "bytes": 14859,
+      "sha256": "bad178799e9c0ede5bd4e167628088baa7e78cff87babbecbc81b2d6171f7800"
     }
   },
   "living_documents_note": "Recorded for provenance only; excluded from --check. These documents are expected to keep changing as mistakes are found and rules are added.",

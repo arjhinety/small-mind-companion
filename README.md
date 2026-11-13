@@ -2,7 +2,7 @@
 
 Post-training and cognitive-architecture research on a small (~2B effective-parameter) multimodal LLM, evaluated on adversarial long-horizon personalized memory.
 
-![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-543%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![Tests](https://img.shields.io/badge/tests-542%20passing-brightgreen)
 
 ## Overview
 
@@ -20,7 +20,7 @@ charts, and limitations.
 
 - [`docs/STUDIES.md`](docs/STUDIES.md) — what Study 001 asked, what it found, and what Study 002 covers
 - [`reports/data/study-001-freeze.json`](reports/data/study-001-freeze.json) — every artifact the findings rest on, pinned by SHA-256
-- [`reports/ERRATA.md`](reports/ERRATA.md) — 42 claims the committed artifacts did not support, and their corrections
+- [`reports/ERRATA.md`](reports/ERRATA.md) — 43 claims the committed artifacts did not support, and their corrections
 - [`docs/GUARDRAILS.md`](docs/GUARDRAILS.md) — the rules derived from those mistakes
 - [`docs/AUDIT.md`](docs/AUDIT.md) — how the freeze, the claims matrix (`registry/claims.jsonl`) and `scripts/validate.py` fit together
 
@@ -43,6 +43,10 @@ uv run python scripts/recompute_hashes.py   # re-checks all 11 dataset hashes
 | `gemma-4-E2B-it` | + distill v1 (2008 prompts) | + on-policy distillation from `gemma-4-E4B-it` | 18.59% | 71.25% |
 
 `pra_lenient` and UAR are measured against **PMB** (Personalized Memory Benchmark), 688 adversarial probes across 8 categories (factual, episodic, temporal, preference, continuity, outdated-fact, distractor, unanswerable). Full writeups: [`docs/proper_scale_results.md`](docs/proper_scale_results.md) (its headline table predates the bug fixes below — see its "Rebalancing fix" section for the final numbers), [`docs/day3_memory_results.md`](docs/day3_memory_results.md), [`docs/day4_sft_results.md`](docs/day4_sft_results.md), [`docs/dpo_results.md`](docs/dpo_results.md), [`docs/distillation_results.md`](docs/distillation_results.md).
+
+**Caveat ([`reports/ERRATA.md`](reports/ERRATA.md) E43):** for up to 285 of PMB's 608 answerable
+probes the gold answer is out of date, ambiguous or untied to one fact. The figures above are scored
+against the key as written.
 
 ## Architecture
 
@@ -211,7 +215,7 @@ data/                    versioned benchmarks + SFT/DPO/distillation datasets, e
 results/                 canonical numbers, versioned by pass (results/v0/, results/v1_scale/, ...)
 mobile/                  on-device runtime build/convert scripts (llama.cpp/MLC/ExecuTorch)
 docs/                    ADRs, results writeups, and the full environment/bug log
-tests/                   543 unit tests, run in CI
+tests/                   542 unit tests, run in CI
 ```
 
 ## Results & Analysis
