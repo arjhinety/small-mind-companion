@@ -182,3 +182,9 @@ amendment:
   `any_gold_turn_all_answerable` fields.
 - Study 002's main pre-registration reports PMB's headline metrics on the full set and on these
   198, for comparability with Study 001; confirmation is on HaluMem.
+
+**2026-11-13 (amendment 2).** A disclosure; no definition changes. For 100 of the 198 counted PMB
+probes an earlier turn states a different value for the same attribute
+(`sound_subset.with_earlier_different_value` in
+`results/audit/pmb_answer_key/pmb_answer_key_audit.json`). Their key is the last value stated, but a
+memory of the earlier value can also reach the prompt.
