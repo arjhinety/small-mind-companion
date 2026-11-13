@@ -721,9 +721,10 @@ all four memory runs. The audit finds these causes:
    rows as returned contain the gold memory for 14.31% of probes for the vector half, which is the
    store's first 8 rows whatever the question, and 40.95% for the keyword half; the top 8 in rank
    order, 80.92% and 66.94%. In the full pipeline, the fix as shipped (rank order, each half's top
-   20; post-hoc) raises the gold rate from 30.59% to 44.57% [44.08–44.90] at a similar list size.
-   Passing each half's top 40 instead, the variant this entry first quoted as rank order, gives
-   40.95% [40.79–41.45].
+   20; post-hoc) raises the gold rate from 30.59% to 44.57% [44.08–44.90] with shorter lists: a
+   mean of 5.19 memories against 5.99, where random picks of the same sizes give 19.36% against
+   21.56%. Passing each half's top 40 instead, the variant this entry first quoted as rank order,
+   gives 40.95% [40.79–41.45] at a mean of 5.66 memories (random 20.65%).
 2. **Short lists, not the tier quota as such.** The default quota (episodic 4, semantic 3,
    short-term 6; `src/onebee/retrieval/fusion.py:126`) meets stores in which 421 of 503 memories are
    semantic, so every memory run returned 3 to 8 memories (mean 5.99), not 8. At equal list size the
