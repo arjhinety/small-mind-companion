@@ -278,6 +278,27 @@
       "chance_rate": 0.2657,
       "mean_list_size": 8.0,
       "lists_with_boosted_memory": 341
+    },
+    "post-hoc fixed store: quota=on": {
+      "gold_retrieved": 271,
+      "rate": 0.4457,
+      "chance_rate": 0.1936,
+      "mean_list_size": 5.191,
+      "lists_with_boosted_memory": 173
+    },
+    "post-hoc fixed store: quota=off": {
+      "gold_retrieved": 373,
+      "rate": 0.6135,
+      "chance_rate": 0.2657,
+      "mean_list_size": 8.0,
+      "lists_with_boosted_memory": 173
+    },
+    "post-hoc fixed store: quota=off,truncated_to_quota_on_size": {
+      "gold_retrieved": 276,
+      "rate": 0.4539,
+      "chance_rate": 0.1936,
+      "mean_list_size": 5.191,
+      "lists_with_boosted_memory": 173
     }
   },
   "ksweep": {
@@ -518,6 +539,87 @@
           "min": 341,
           "median": 341,
           "max": 341
+        }
+      },
+      "post-hoc fixed store: quota=on": {
+        "gold_retrieved": {
+          "min": 268,
+          "median": 271,
+          "max": 273
+        },
+        "rate": {
+          "min": 0.4408,
+          "median": 0.4457,
+          "max": 0.449
+        },
+        "chance_rate": {
+          "min": 0.1935,
+          "median": 0.1936,
+          "max": 0.1936
+        },
+        "mean_list_size": {
+          "min": 5.191,
+          "median": 5.192,
+          "max": 5.196
+        },
+        "lists_with_boosted_memory": {
+          "min": 173,
+          "median": 173,
+          "max": 173
+        }
+      },
+      "post-hoc fixed store: quota=off": {
+        "gold_retrieved": {
+          "min": 373,
+          "median": 373,
+          "max": 374
+        },
+        "rate": {
+          "min": 0.6135,
+          "median": 0.6135,
+          "max": 0.6151
+        },
+        "chance_rate": {
+          "min": 0.2657,
+          "median": 0.2657,
+          "max": 0.2657
+        },
+        "mean_list_size": {
+          "min": 8.0,
+          "median": 8.0,
+          "max": 8.0
+        },
+        "lists_with_boosted_memory": {
+          "min": 173,
+          "median": 173,
+          "max": 173
+        }
+      },
+      "post-hoc fixed store: quota=off,truncated_to_quota_on_size": {
+        "gold_retrieved": {
+          "min": 275,
+          "median": 276,
+          "max": 278
+        },
+        "rate": {
+          "min": 0.4523,
+          "median": 0.4539,
+          "max": 0.4572
+        },
+        "chance_rate": {
+          "min": 0.1935,
+          "median": 0.1936,
+          "max": 0.1936
+        },
+        "mean_list_size": {
+          "min": 5.191,
+          "median": 5.192,
+          "max": 5.196
+        },
+        "lists_with_boosted_memory": {
+          "min": 173,
+          "median": 173,
+          "max": 173
         }
       }
     },

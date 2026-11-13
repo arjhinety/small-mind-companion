@@ -13,7 +13,7 @@ of the process: one before results are written up, one before anything is publis
 **G1. A result's label comes from the script that produced it, never from the write-up.** Findings
 #1 and #2 — the highest-severity items in the audit — both came from trusting prose over code. The
 70.0% UAR was credited to the DPO checkpoint for months because a table said "SFT+DPO+memory",
-while `run_system_e_v1.py:35` loaded `outputs/sft/v1/merged` and named the system
+while `run_system_e_v1.py:36` loaded `outputs/sft/v1/merged` and named the system
 `E_sft_memory_v1`. The one-line check that would have caught it is reading `HFEngine(...)` in the
 generating script.
 *Check:* for every number in a write-up, name the script and the checkpoint path that produced it.

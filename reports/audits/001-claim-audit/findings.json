@@ -5,7 +5,7 @@
     "area": "T",
     "location": "docs/distillation_results.md:66-67; hf_readmes/README_sft-v1.md:93-94; hf_readmes/README_dpo-v1-scale.md:58,93; hf_readmes/README_distill-v1.md:123; hf_readmes/generate_cards.py:80,143,147; README.md:21",
     "claim": "UAR 70.0% and pra_lenient 15.30% are results of the DPO checkpoint (`dpo-v1-scale`), described as \"SFT+DPO+memory\".",
-    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:35, which loads HFEngine(\"outputs/sft/v1/merged\") \u2014 the SFT-only checkpoint, no DPO \u2014 and names the system E_sft_memory_v1 (line 95). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
+    "actual": "The tracked artifact results/v1_scale/E_sft_memory/metrics.json was produced by run_system_e_v1.py:36, which loads HFEngine(\"outputs/sft/v1/merged\") \u2014 the SFT-only checkpoint, no DPO \u2014 and names the system E_sft_memory_v1 (line 96). docs/proper_scale_results.md:27 defines E as \"SFT v1 + memory\". No artifact in results/ measures any DPO checkpoint's pra_lenient or UAR; dpo-v1-scale appears only in the pairwise C-vs-E comparison.",
     "category": "MISATTRIBUTION",
     "pinned": "",
     "public": "yes"

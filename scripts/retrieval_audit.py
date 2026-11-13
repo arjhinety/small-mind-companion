@@ -53,7 +53,7 @@ import sys
 import tempfile
 import warnings
 from collections import Counter
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from math import comb
 from pathlib import Path
@@ -145,7 +145,10 @@ def _as_candidates(store: MemoryStore, ids: list[str], source: str) -> list[Retr
 
 
 class _RankOrdered:
-    """Swap in rank-ordered dense and sparse strategies, keeping the store's candidate count."""
+    """Swap in rank-ordered dense and sparse strategies that pass each half's top ``k * 2``
+    candidates (40 at the retriever's default) to fusion. ``MemoryStore.search`` returns at most
+    ``k`` (20), so this is a top-40-per-half variant, not the fixed store; the fixed store is
+    measured separately (``post-hoc fixed store`` arms, ERRATA E42 as amended)."""
 
     def __init__(self, retriever: HybridRetriever) -> None:
         store = retriever.store
@@ -175,7 +178,8 @@ def build() -> dict[str, Any]:
     router_mod.time = _PinnedClock(CLOCK)  # type: ignore[assignment]
     with tempfile.TemporaryDirectory() as tmp, warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        stores: dict[str, MemoryStore] = {}
+        stores: dict[str, MemoryStore] = {}  # Study 001's search order (legacy)
+        fixed_stores: dict[str, MemoryStore] = {}  # the shipped fix: rank order, at most k
         turns: dict[str, set[str]] = {}
         persona_of: dict[str, str] = {}
         tiers: Counter[str] = Counter()
@@ -186,7 +190,8 @@ def build() -> dict[str, Any]:
         for db in sorted(STORES.glob("p*.db")):
             copy = Path(tmp) / db.name
             shutil.copyfile(db, copy)
-            stores[db.stem] = MemoryStore(str(copy))
+            stores[db.stem] = MemoryStore(str(copy), legacy_table_order=True)
+            fixed_stores[db.stem] = MemoryStore(str(copy))
             rows = stores[db.stem]._conn.execute(
                 "SELECT id, provenance, tier, event_time FROM memory"
             )
@@ -210,8 +215,10 @@ def build() -> dict[str, Any]:
             ordered: bool,
             quota: bool,
             weights: FusionWeights | None = None,
+            fixed: bool = False,
         ) -> list[str]:
-            retriever = HybridRetriever(stores[probe["persona_id"]], weights=weights)
+            store = (fixed_stores if fixed else stores)[probe["persona_id"]]
+            retriever = HybridRetriever(store, weights=weights)
             if ordered:
                 _RankOrdered(retriever)
             found = retriever.retrieve(
@@ -372,7 +379,15 @@ def build() -> dict[str, Any]:
         grid["post-hoc diagnostic: ordering=rank,quota=off,w_imp=0,w_conf=0"] = arm(
             [retrieve(p, True, False, FusionWeights(w_imp=0.0, w_conf=0.0)) for p in answerable]
         )
-        for store in stores.values():
+        # POST-HOC: the shipped fix (rank order, each half's top k_candidates = 20), new keys only
+        fixed_on = [retrieve(p, False, True, fixed=True) for p in answerable]
+        fixed_off = [retrieve(p, False, False, fixed=True) for p in answerable]
+        grid["post-hoc fixed store: quota=on"] = arm(fixed_on)
+        grid["post-hoc fixed store: quota=off"] = arm(fixed_off)
+        grid["post-hoc fixed store: quota=off,truncated_to_quota_on_size"] = arm(
+            [o[: len(q)] for o, q in zip(fixed_off, fixed_on, strict=True)]
+        )
+        for store in [*stores.values(), *fixed_stores.values()]:
             store._conn.close()
 
     # 5. k-sweep: did k=16 retrieve anything k=8 did not?
@@ -471,8 +486,17 @@ def _spread(values: list[float]) -> dict[str, float]:
 
 def hash_seed_spread() -> dict[str, Any]:
     """Re-run the seed-dependent figures under every seed in SPREAD_SEEDS, in subprocesses."""
+    results: dict[int, dict[str, Any]] = {}
     with ThreadPoolExecutor(max_workers=2) as pool:
-        docs = list(pool.map(_worker_doc, SPREAD_SEEDS))
+        futures = {pool.submit(_worker_doc, seed): seed for seed in SPREAD_SEEDS}
+        for future in as_completed(futures):
+            results[futures[future]] = future.result()
+            print(
+                f"seed {futures[future]} done ({len(results)}/{len(SPREAD_SEEDS)})",
+                file=sys.stderr,
+                flush=True,
+            )
+    docs = [results[seed] for seed in SPREAD_SEEDS]
     cells = docs[0]["pipeline_2x2"]
     return {
         "seeds": f"PYTHONHASHSEED {SPREAD_SEEDS.start}-{SPREAD_SEEDS.stop - 1}",

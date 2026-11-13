@@ -279,6 +279,16 @@ REFREEZE_LOG: list[dict[str, str]] = [
         ),
     },
     {
+        "on": "2026-11-13",
+        "artifact": "README.md",
+        "reason": (
+            "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test "
+            "functions (TestSearchOrder) pinning MemoryStore.search's rank order and the "
+            "legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). "
+            "Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+        ),
+    },
+    {
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (

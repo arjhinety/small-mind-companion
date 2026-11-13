@@ -41,7 +41,10 @@ for pf in sorted(personas_dir.glob("*.json")):
 
 retrievers = {}
 for db_path in stores_dir.glob("*.db"):
-    store = MemoryStore(str(db_path))
+    # Study 001 ran with search results in table order (ERRATA E42); keep that to reproduce it.
+    # Do NOT reuse this for new (Study 002) training data: that must use the fixed rank order
+    # (drop legacy_table_order) and record the choice in the pre-registration.
+    store = MemoryStore(str(db_path), legacy_table_order=True)
     retrievers[db_path.stem] = HybridRetriever(store)
 
 print(f"Loaded {len(corpora)} SFT personas, {len(retrievers)} stores", file=sys.stderr)

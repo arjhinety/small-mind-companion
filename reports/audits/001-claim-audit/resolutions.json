@@ -247,8 +247,8 @@
   },
   {
     "id": 42,
-    "status": "PARTIAL",
-    "where": "reports/ERRATA.md E42; docs/STUDIES.md item 11; results/audit/retrieval/",
-    "note": "The description is corrected by E42 and the frozen documents are not edited. The retriever itself is unchanged; fixing MemoryStore.search ordering is Study 002 work."
+    "status": "RESOLVED",
+    "where": "reports/ERRATA.md E42 (amended 2026-11-13); docs/STUDIES.md item 11; results/audit/retrieval/; src/onebee/memory/store.py legacy_table_order",
+    "note": "The description is corrected by E42 and the frozen documents are not edited. MemoryStore.search now returns rank order by default; Study 001's scripts opt into the old order with legacy_table_order=True. The quota, score weights and recency are Study 002 design questions, not defects of the description."
   }
 ]
