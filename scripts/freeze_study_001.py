@@ -289,6 +289,15 @@ REFREEZE_LOG: list[dict[str, str]] = [
         ),
     },
     {
+        "on": "2026-11-13",
+        "artifact": "docs/reproduction.md",
+        "reason": (
+            "Added a subsection recording the Python/SQLite builds on which the retrieval audit "
+            "reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's "
+            "system SQLite. Documentation only: no result, dataset, metric or limitation changed."
+        ),
+    },
+    {
         "on": "2026-11-11",
         "artifact": "README.md",
         "reason": (

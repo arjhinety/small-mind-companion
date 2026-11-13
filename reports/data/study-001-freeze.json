@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "31e2686a793e0c16bf3dd7571be43588d381e1db",
+  "git_commit": "6776051068d04a4cf062df7bc1732ba4fc5fb8dd",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -262,8 +262,8 @@
         "sha256": "6f23e07fd8dfb2b1d8f2d4760d7b2618c2ec823077ce2b53e901e0484d7a28d0"
       },
       "docs/reproduction.md": {
-        "bytes": 3372,
-        "sha256": "bb3e341352b571a6db7556e4c7d8f3e6ca12f05db968e05f00f75535fd09344a"
+        "bytes": 4078,
+        "sha256": "ca12cc1dcfe1680a3193a5f5f13d5cee01cd4d2c1f59187372abc8a818da1d80"
       },
       "docs/research_questions.md": {
         "bytes": 25894,
@@ -407,6 +407,11 @@
       "on": "2026-11-13",
       "artifact": "README.md",
       "reason": "Test count moved from 536 to 540: tests/unit/test_memory_store.py adds four test functions (TestSearchOrder) pinning MemoryStore.search's rank order and the legacy_table_order switch that keeps Study 001's table order (ERRATA E42, amended). Nothing else in the README changed. No result, verdict, dataset or checkpoint changed."
+    },
+    {
+      "on": "2026-11-13",
+      "artifact": "docs/reproduction.md",
+      "reason": "Added a subsection recording the Python/SQLite builds on which the retrieval audit reproduces (ERRATA E42) and the error the Study 001 vector query raises on Debian's system SQLite. Documentation only: no result, dataset, metric or limitation changed."
     },
     {
       "on": "2026-11-11",

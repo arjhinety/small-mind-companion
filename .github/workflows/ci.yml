@@ -9,6 +9,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      # Pinned, not "newest 3.11": the retrieval audit's seed-0 check matches the committed audit
+      # only with this build's SQLite (3.53.1); an older SQLite shifts some values (ERRATA E42).
+      UV_PYTHON: "3.11.18"
     steps:
       # Full history: scripts/uar_trajectory.py, run by the validator, reads superseded
       # results/v1_scale/E_sft_memory responses from commits e9e5ca8 and 5a9fe1b.
@@ -20,8 +24,8 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Set up Python 3.11
-        run: uv python install 3.11
+      - name: Set up Python 3.11.18
+        run: uv python install 3.11.18
 
       - name: Install dependencies
         # ruff, black, mypy and pytest live in the `dev` extra; a bare `uv sync` does not install
