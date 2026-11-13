@@ -3,7 +3,7 @@
   "study_id": "001",
   "evidence_tag": "study-001",
   "frozen_on": "2026-09-13",
-  "git_commit": "b4a183901bab10c38417422ff1160a6e54215d86",
+  "git_commit": "65571feda76e736ae39f7ba8879d1b6d30cf5612",
   "git_commit_note": "The HEAD revision at the moment this manifest was generated. Because the manifest is written before it is committed, this is the PARENT of the commit that contains it -- not that commit. Resolve the manifest's own commit with `git rev-list -n1 <tag>` rather than reading this field, which is why the Study 001 page shows both.",
   "hash_method": "sha256 over LF-normalised bytes",
   "file_count": 76,
@@ -450,8 +450,8 @@
       "sha256": "dcd354488b5eeb9da92f6de3928d5b278f7958e436b616ba3448f8314fa137f0"
     },
     "reports/ERRATA.md": {
-      "bytes": 66636,
-      "sha256": "1bde250546f3038a6d45f7d951ac51556b31203ad9625d8d553ac84c72fd188e"
+      "bytes": 66773,
+      "sha256": "b41c6be32f7e4031840684e30e709cffc6b6da6cc002b0534290212a7be35bc8"
     },
     "reports/audits/001-claim-audit/README.md": {
       "bytes": 4222,
