@@ -870,7 +870,9 @@ their responses, of which 0 to 4 were judged correct; in the no-memory runs, 1 a
 that contains a value has not necessarily answered with it, and the two counts are not netted. On
 the 198 probes whose key the audit finds sound (current, not an update probe, question not shared
 with a probe of a different answer; defined after seeing these results), the three no-memory runs
-are judged correct for 0 and the memory runs for 34 (v1 E) to 45 (v0.1 E).
+are judged correct for 0 and the memory runs for 34 (v1 E) to 45 (v0.1 E). For 100 of the 198 an
+earlier turn states a different value for the same attribute: their key is the last value stated,
+but a memory of the earlier value can also reach the prompt.
 
 **What this changes.**
 - **No Study 001 metric value changes.** Every probe was scored as written and every `pra_lenient`

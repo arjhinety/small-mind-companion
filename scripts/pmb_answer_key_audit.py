@@ -107,6 +107,7 @@ def build() -> dict[str, Any]:
         # The last turn stating each attribute (base predicate), in conversation order, as the
         # (fact id, value) pairs it states. An update turn states its paired probe's gold answer.
         last: dict[str, list[tuple[str, str]]] = {}
+        every_value: dict[str, set[str]] = defaultdict(set)  # base -> every value any turn states
         uid = pairing_module._shared_update_id(pid, persona["sessions"])
         k = 0
         for s in persona["sessions"]:
@@ -117,6 +118,8 @@ def build() -> dict[str, Any]:
                     value = update_values[k] if is_update else str(sheet[f]["object"])
                     stated[_base(str(sheet[f]["predicate"]))].append((f, value))
                 last.update(stated)
+                for base, pairs_stated in stated.items():
+                    every_value[base].update(value.lower() for _, value in pairs_stated)
                 k += is_update
         for p in mine:
             gold = p["gold_answer"]
@@ -169,6 +172,10 @@ def build() -> dict[str, Any]:
                 and gold.lower() == str(sheet[fact]["object"]).lower(),
                 "suffixed_predicate": _base(predicate) != predicate,
                 "sound": key == "current" and row is None and not shared,
+                # A current key whose attribute was stated with another value earlier on: the
+                # answer is the last value, but a memory of the earlier one can reach the prompt.
+                "earlier_different_value": key == "current"
+                and bool(every_value[_base(predicate)] - {gold.lower()}),
             }
 
     by_cat: dict[str, Counter[str]] = defaultdict(Counter)
@@ -245,6 +252,9 @@ def build() -> dict[str, Any]:
             "value), not an outdated_fact probe, question not shared with a probe of a different "
             "gold answer",
             "probes": sum(1 for s in status.values() if s["sound"]),
+            "with_earlier_different_value": sum(
+                1 for s in status.values() if s["sound"] and s["earlier_different_value"]
+            ),
         },
         "status_by_category": {c: dict(sorted(v.items())) for c, v in sorted(by_cat.items())},
         "runs": runs,

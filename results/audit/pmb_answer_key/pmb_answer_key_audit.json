@@ -52,7 +52,8 @@
   },
   "sound_subset": {
     "definition": "status current (the gold answer is the attribute's last-stated value), not an outdated_fact probe, question not shared with a probe of a different gold answer",
-    "probes": 198
+    "probes": 198,
+    "with_earlier_different_value": 100
   },
   "status_by_category": {
     "continuity": {
@@ -1187,7 +1188,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0002": {
       "status": "stale",
@@ -1199,7 +1201,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0003": {
       "status": "stale",
@@ -1211,7 +1214,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0004": {
       "status": "current",
@@ -1223,7 +1227,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0005": {
       "status": "stale",
@@ -1235,7 +1240,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0006": {
       "status": "stale",
@@ -1247,7 +1253,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0007": {
       "status": "stale",
@@ -1259,7 +1266,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0008": {
       "status": "stale",
@@ -1271,7 +1279,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0009": {
       "status": "stale",
@@ -1283,7 +1292,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0010": {
       "status": "stale",
@@ -1295,7 +1305,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0011": {
       "status": "current",
@@ -1307,7 +1318,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0012": {
       "status": "stale",
@@ -1319,7 +1331,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0013": {
       "status": "stale",
@@ -1331,7 +1344,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0014": {
       "status": "stale",
@@ -1343,7 +1357,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0015": {
       "status": "current",
@@ -1355,7 +1370,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0016": {
       "status": "current",
@@ -1367,7 +1383,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0017": {
       "status": "current",
@@ -1379,7 +1396,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0018": {
       "status": "stale",
@@ -1391,7 +1409,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0019": {
       "status": "current",
@@ -1403,7 +1422,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0020": {
       "status": "current",
@@ -1415,7 +1435,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0021": {
       "status": "current",
@@ -1427,7 +1448,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0022": {
       "status": "stale",
@@ -1439,7 +1461,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0023": {
       "status": "current",
@@ -1451,7 +1474,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0024": {
       "status": "stale",
@@ -1463,7 +1487,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0025": {
       "status": "current",
@@ -1475,7 +1500,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0026": {
       "status": "current",
@@ -1487,7 +1513,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0027": {
       "status": "current",
@@ -1499,7 +1526,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0028": {
       "status": "current",
@@ -1511,7 +1539,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0029": {
       "status": "current",
@@ -1523,7 +1552,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0030": {
       "status": "current",
@@ -1535,7 +1565,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0031": {
       "status": "current",
@@ -1547,7 +1578,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0032": {
       "status": "current",
@@ -1559,7 +1591,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0033": {
       "status": "current",
@@ -1571,7 +1604,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0034": {
       "status": "current",
@@ -1583,7 +1617,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0035": {
       "status": "stale",
@@ -1595,7 +1630,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0036": {
       "status": "stale",
@@ -1607,7 +1643,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0037": {
       "status": "current",
@@ -1619,7 +1656,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0038": {
       "status": "stale",
@@ -1631,7 +1669,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0039": {
       "status": "stale",
@@ -1643,7 +1682,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0040": {
       "status": "stale",
@@ -1655,7 +1695,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0051": {
       "status": "ambiguous_question",
@@ -1667,7 +1708,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0052": {
       "status": "ambiguous_question",
@@ -1679,7 +1721,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0053": {
       "status": "current",
@@ -1691,7 +1734,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0054": {
       "status": "current",
@@ -1703,7 +1747,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0055": {
       "status": "ambiguous_question",
@@ -1715,7 +1760,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0056": {
       "status": "current",
@@ -1727,7 +1773,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0057": {
       "status": "current",
@@ -1739,7 +1786,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0058": {
       "status": "ambiguous_question",
@@ -1751,7 +1799,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0059": {
       "status": "current",
@@ -1763,7 +1812,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0060": {
       "status": "current",
@@ -1775,7 +1825,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0061": {
       "status": "current",
@@ -1787,7 +1838,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0062": {
       "status": "current",
@@ -1799,7 +1851,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0063": {
       "status": "stale",
@@ -1811,7 +1864,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0064": {
       "status": "current",
@@ -1823,7 +1877,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0065": {
       "status": "stale",
@@ -1835,7 +1890,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0066": {
       "status": "current",
@@ -1847,7 +1903,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0067": {
       "status": "current",
@@ -1859,7 +1916,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0068": {
       "status": "stale",
@@ -1871,7 +1929,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0069": {
       "status": "stale",
@@ -1883,7 +1942,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0070": {
       "status": "stale",
@@ -1895,7 +1955,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0071": {
       "status": "current",
@@ -1907,7 +1968,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0072": {
       "status": "current",
@@ -1919,7 +1981,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p000_p0073": {
       "status": "current",
@@ -1931,7 +1994,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0074": {
       "status": "current",
@@ -1943,7 +2007,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0075": {
       "status": "stale",
@@ -1955,7 +2020,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0076": {
       "status": "stale",
@@ -1967,7 +2033,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0077": {
       "status": "current",
@@ -1979,7 +2046,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0078": {
       "status": "current",
@@ -1991,7 +2059,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0079": {
       "status": "stale",
@@ -2003,7 +2072,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0080": {
       "status": "current",
@@ -2015,7 +2085,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0081": {
       "status": "current",
@@ -2027,7 +2098,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0082": {
       "status": "stale",
@@ -2039,7 +2111,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p000_p0083": {
       "status": "current",
@@ -2051,7 +2124,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p000_p0084": {
       "status": "current",
@@ -2063,7 +2137,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0085": {
       "status": "current",
@@ -2075,7 +2150,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p000_p0086": {
       "status": "current",
@@ -2087,7 +2163,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0001": {
       "status": "current",
@@ -2099,7 +2176,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0002": {
       "status": "current",
@@ -2111,7 +2189,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0003": {
       "status": "stale",
@@ -2123,7 +2202,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0004": {
       "status": "stale",
@@ -2135,7 +2215,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0005": {
       "status": "stale",
@@ -2147,7 +2228,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0006": {
       "status": "stale",
@@ -2159,7 +2241,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0007": {
       "status": "current",
@@ -2171,7 +2254,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0008": {
       "status": "stale",
@@ -2183,7 +2267,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0009": {
       "status": "stale",
@@ -2195,7 +2280,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0010": {
       "status": "stale",
@@ -2207,7 +2293,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0011": {
       "status": "stale",
@@ -2219,7 +2306,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0012": {
       "status": "current",
@@ -2231,7 +2319,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0013": {
       "status": "stale",
@@ -2243,7 +2332,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0014": {
       "status": "stale",
@@ -2255,7 +2345,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0015": {
       "status": "stale",
@@ -2267,7 +2358,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0016": {
       "status": "current",
@@ -2279,7 +2371,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0017": {
       "status": "current",
@@ -2291,7 +2384,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0018": {
       "status": "current",
@@ -2303,7 +2397,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0019": {
       "status": "current",
@@ -2315,7 +2410,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0020": {
       "status": "current",
@@ -2327,7 +2423,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0021": {
       "status": "current",
@@ -2339,7 +2436,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0022": {
       "status": "current",
@@ -2351,7 +2449,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0023": {
       "status": "stale",
@@ -2363,7 +2462,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0024": {
       "status": "stale",
@@ -2375,7 +2475,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0025": {
       "status": "current",
@@ -2387,7 +2488,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0026": {
       "status": "stale",
@@ -2399,7 +2501,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0027": {
       "status": "current",
@@ -2411,7 +2514,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0028": {
       "status": "current",
@@ -2423,7 +2527,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0029": {
       "status": "current",
@@ -2435,7 +2540,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0030": {
       "status": "current",
@@ -2447,7 +2553,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0031": {
       "status": "stale",
@@ -2459,7 +2566,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0032": {
       "status": "stale",
@@ -2471,7 +2579,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0033": {
       "status": "current",
@@ -2483,7 +2592,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0034": {
       "status": "current",
@@ -2495,7 +2605,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0035": {
       "status": "current",
@@ -2507,7 +2618,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0036": {
       "status": "current",
@@ -2519,7 +2631,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0037": {
       "status": "stale",
@@ -2531,7 +2644,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0038": {
       "status": "current",
@@ -2543,7 +2657,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0039": {
       "status": "stale",
@@ -2555,7 +2670,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0040": {
       "status": "stale",
@@ -2567,7 +2683,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0051": {
       "status": "current",
@@ -2579,7 +2696,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0052": {
       "status": "current",
@@ -2591,7 +2709,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0053": {
       "status": "current",
@@ -2603,7 +2722,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0054": {
       "status": "ambiguous_question",
@@ -2615,7 +2735,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0055": {
       "status": "current",
@@ -2627,7 +2748,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0056": {
       "status": "ambiguous_question",
@@ -2639,7 +2761,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0057": {
       "status": "current",
@@ -2651,7 +2774,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0058": {
       "status": "ambiguous_question",
@@ -2663,7 +2787,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0059": {
       "status": "current",
@@ -2675,7 +2800,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0060": {
       "status": "current",
@@ -2687,7 +2813,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0061": {
       "status": "ambiguous_question",
@@ -2699,7 +2826,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0062": {
       "status": "current",
@@ -2711,7 +2839,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0063": {
       "status": "current",
@@ -2723,7 +2852,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0064": {
       "status": "current",
@@ -2735,7 +2865,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0065": {
       "status": "stale",
@@ -2747,7 +2878,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0066": {
       "status": "current",
@@ -2759,7 +2891,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0067": {
       "status": "stale",
@@ -2771,7 +2904,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0068": {
       "status": "stale",
@@ -2783,7 +2917,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0069": {
       "status": "current",
@@ -2795,7 +2930,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0070": {
       "status": "current",
@@ -2807,7 +2943,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0071": {
       "status": "current",
@@ -2819,7 +2956,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0072": {
       "status": "current",
@@ -2831,7 +2969,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0073": {
       "status": "stale",
@@ -2843,7 +2982,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0074": {
       "status": "stale",
@@ -2855,7 +2995,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0075": {
       "status": "stale",
@@ -2867,7 +3008,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0076": {
       "status": "stale",
@@ -2879,7 +3021,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0077": {
       "status": "current",
@@ -2891,7 +3034,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0078": {
       "status": "current",
@@ -2903,7 +3047,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0079": {
       "status": "stale",
@@ -2915,7 +3060,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0080": {
       "status": "current",
@@ -2927,7 +3073,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0081": {
       "status": "current",
@@ -2939,7 +3086,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0082": {
       "status": "current",
@@ -2951,7 +3099,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p001_p0083": {
       "status": "current",
@@ -2963,7 +3112,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p001_p0084": {
       "status": "stale",
@@ -2975,7 +3125,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p001_p0085": {
       "status": "current",
@@ -2987,7 +3138,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p001_p0086": {
       "status": "stale",
@@ -2999,7 +3151,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0001": {
       "status": "current",
@@ -3011,7 +3164,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0002": {
       "status": "current",
@@ -3023,7 +3177,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0003": {
       "status": "current",
@@ -3035,7 +3190,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0004": {
       "status": "stale",
@@ -3047,7 +3203,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0005": {
       "status": "current",
@@ -3059,7 +3216,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0006": {
       "status": "stale",
@@ -3071,7 +3229,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0007": {
       "status": "stale",
@@ -3083,7 +3242,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0008": {
       "status": "current",
@@ -3095,7 +3255,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0009": {
       "status": "stale",
@@ -3107,7 +3268,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0010": {
       "status": "stale",
@@ -3119,7 +3281,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0011": {
       "status": "stale",
@@ -3131,7 +3294,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0012": {
       "status": "stale",
@@ -3143,7 +3307,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0013": {
       "status": "stale",
@@ -3155,7 +3320,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0014": {
       "status": "current",
@@ -3167,7 +3333,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0015": {
       "status": "stale",
@@ -3179,7 +3346,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0016": {
       "status": "current",
@@ -3191,7 +3359,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0017": {
       "status": "stale",
@@ -3203,7 +3372,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0018": {
       "status": "current",
@@ -3215,7 +3385,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0019": {
       "status": "current",
@@ -3227,7 +3398,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0020": {
       "status": "current",
@@ -3239,7 +3411,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0021": {
       "status": "stale",
@@ -3251,7 +3424,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0022": {
       "status": "stale",
@@ -3263,7 +3437,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0023": {
       "status": "current",
@@ -3275,7 +3450,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0024": {
       "status": "stale",
@@ -3287,7 +3463,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0025": {
       "status": "stale",
@@ -3299,7 +3476,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0026": {
       "status": "current",
@@ -3311,7 +3489,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0027": {
       "status": "stale",
@@ -3323,7 +3502,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0028": {
       "status": "current",
@@ -3335,7 +3515,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0029": {
       "status": "stale",
@@ -3347,7 +3528,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0030": {
       "status": "current",
@@ -3359,7 +3541,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0031": {
       "status": "current",
@@ -3371,7 +3554,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0032": {
       "status": "stale",
@@ -3383,7 +3567,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0033": {
       "status": "current",
@@ -3395,7 +3580,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0034": {
       "status": "current",
@@ -3407,7 +3593,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0035": {
       "status": "stale",
@@ -3419,7 +3606,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0036": {
       "status": "stale",
@@ -3431,7 +3619,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0037": {
       "status": "current",
@@ -3443,7 +3632,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0038": {
       "status": "stale",
@@ -3455,7 +3645,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0039": {
       "status": "current",
@@ -3467,7 +3658,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0040": {
       "status": "stale",
@@ -3479,7 +3671,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0051": {
       "status": "current",
@@ -3491,7 +3684,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0052": {
       "status": "current",
@@ -3503,7 +3697,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0053": {
       "status": "current",
@@ -3515,7 +3710,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0054": {
       "status": "current",
@@ -3527,7 +3723,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0055": {
       "status": "stale",
@@ -3539,7 +3736,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0056": {
       "status": "current",
@@ -3551,7 +3749,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0057": {
       "status": "current",
@@ -3563,7 +3762,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0058": {
       "status": "current",
@@ -3575,7 +3775,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0059": {
       "status": "current",
@@ -3587,7 +3788,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0060": {
       "status": "current",
@@ -3599,7 +3801,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0061": {
       "status": "current",
@@ -3611,7 +3814,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0062": {
       "status": "current",
@@ -3623,7 +3827,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0063": {
       "status": "stale",
@@ -3635,7 +3840,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0064": {
       "status": "stale",
@@ -3647,7 +3853,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0065": {
       "status": "current",
@@ -3659,7 +3866,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0066": {
       "status": "stale",
@@ -3671,7 +3879,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0067": {
       "status": "current",
@@ -3683,7 +3892,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0068": {
       "status": "current",
@@ -3695,7 +3905,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0069": {
       "status": "current",
@@ -3707,7 +3918,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0070": {
       "status": "current",
@@ -3719,7 +3931,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0071": {
       "status": "stale",
@@ -3731,7 +3944,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0072": {
       "status": "current",
@@ -3743,7 +3957,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0073": {
       "status": "current",
@@ -3755,7 +3970,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0074": {
       "status": "current",
@@ -3767,7 +3983,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0075": {
       "status": "current",
@@ -3779,7 +3996,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0076": {
       "status": "current",
@@ -3791,7 +4009,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0077": {
       "status": "current",
@@ -3803,7 +4022,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p002_p0078": {
       "status": "current",
@@ -3815,7 +4035,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0079": {
       "status": "current",
@@ -3827,7 +4048,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0080": {
       "status": "stale",
@@ -3839,7 +4061,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0081": {
       "status": "current",
@@ -3851,7 +4074,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0082": {
       "status": "current",
@@ -3863,7 +4087,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0083": {
       "status": "current",
@@ -3875,7 +4100,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p002_p0084": {
       "status": "current",
@@ -3887,7 +4113,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p002_p0085": {
       "status": "stale",
@@ -3899,7 +4126,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p002_p0086": {
       "status": "stale",
@@ -3911,7 +4139,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0001": {
       "status": "current",
@@ -3923,7 +4152,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0002": {
       "status": "stale",
@@ -3935,7 +4165,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0003": {
       "status": "current",
@@ -3947,7 +4178,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0004": {
       "status": "stale",
@@ -3959,7 +4191,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0005": {
       "status": "stale",
@@ -3971,7 +4204,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0006": {
       "status": "stale",
@@ -3983,7 +4217,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0007": {
       "status": "current",
@@ -3995,7 +4230,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0008": {
       "status": "current",
@@ -4007,7 +4243,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0009": {
       "status": "current",
@@ -4019,7 +4256,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0010": {
       "status": "current",
@@ -4031,7 +4269,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0011": {
       "status": "current",
@@ -4043,7 +4282,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0012": {
       "status": "stale",
@@ -4055,7 +4295,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0013": {
       "status": "stale",
@@ -4067,7 +4308,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0014": {
       "status": "stale",
@@ -4079,7 +4321,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0015": {
       "status": "current",
@@ -4091,7 +4334,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0016": {
       "status": "stale",
@@ -4103,7 +4347,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0017": {
       "status": "stale",
@@ -4115,7 +4360,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0018": {
       "status": "current",
@@ -4127,7 +4373,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0019": {
       "status": "stale",
@@ -4139,7 +4386,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0020": {
       "status": "stale",
@@ -4151,7 +4399,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0021": {
       "status": "stale",
@@ -4163,7 +4412,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0022": {
       "status": "current",
@@ -4175,7 +4425,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0023": {
       "status": "stale",
@@ -4187,7 +4438,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0024": {
       "status": "current",
@@ -4199,7 +4451,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0025": {
       "status": "stale",
@@ -4211,7 +4464,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0026": {
       "status": "current",
@@ -4223,7 +4477,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0027": {
       "status": "stale",
@@ -4235,7 +4490,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0028": {
       "status": "current",
@@ -4247,7 +4503,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0029": {
       "status": "stale",
@@ -4259,7 +4516,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0030": {
       "status": "current",
@@ -4271,7 +4529,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0031": {
       "status": "stale",
@@ -4283,7 +4542,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0032": {
       "status": "stale",
@@ -4295,7 +4555,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0033": {
       "status": "stale",
@@ -4307,7 +4568,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0034": {
       "status": "stale",
@@ -4319,7 +4581,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0035": {
       "status": "stale",
@@ -4331,7 +4594,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0036": {
       "status": "stale",
@@ -4343,7 +4607,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0037": {
       "status": "stale",
@@ -4355,7 +4620,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0038": {
       "status": "current",
@@ -4367,7 +4633,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0039": {
       "status": "stale",
@@ -4379,7 +4646,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0040": {
       "status": "current",
@@ -4391,7 +4659,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0051": {
       "status": "ambiguous_question",
@@ -4403,7 +4672,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0052": {
       "status": "current",
@@ -4415,7 +4685,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0053": {
       "status": "current",
@@ -4427,7 +4698,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0054": {
       "status": "current",
@@ -4439,7 +4711,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0055": {
       "status": "current",
@@ -4451,7 +4724,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0056": {
       "status": "current",
@@ -4463,7 +4737,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0057": {
       "status": "ambiguous_question",
@@ -4475,7 +4750,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0058": {
       "status": "current",
@@ -4487,7 +4763,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0059": {
       "status": "current",
@@ -4499,7 +4776,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0060": {
       "status": "stale",
@@ -4511,7 +4789,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0061": {
       "status": "current",
@@ -4523,7 +4802,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0062": {
       "status": "current",
@@ -4535,7 +4815,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p003_p0063": {
       "status": "stale",
@@ -4547,7 +4828,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0064": {
       "status": "current",
@@ -4559,7 +4841,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0065": {
       "status": "stale",
@@ -4571,7 +4854,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0066": {
       "status": "stale",
@@ -4583,7 +4867,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0067": {
       "status": "current",
@@ -4595,7 +4880,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0068": {
       "status": "current",
@@ -4607,7 +4893,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0069": {
       "status": "stale",
@@ -4619,7 +4906,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0070": {
       "status": "stale",
@@ -4631,7 +4919,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0071": {
       "status": "stale",
@@ -4643,7 +4932,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0072": {
       "status": "current",
@@ -4655,7 +4945,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0073": {
       "status": "current",
@@ -4667,7 +4958,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0074": {
       "status": "stale",
@@ -4679,7 +4971,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0075": {
       "status": "stale",
@@ -4691,7 +4984,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0076": {
       "status": "stale",
@@ -4703,7 +4997,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0077": {
       "status": "current",
@@ -4715,7 +5010,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0078": {
       "status": "stale",
@@ -4727,7 +5023,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0079": {
       "status": "stale",
@@ -4739,7 +5036,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0080": {
       "status": "stale",
@@ -4751,7 +5049,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0081": {
       "status": "stale",
@@ -4763,7 +5062,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0082": {
       "status": "current",
@@ -4775,7 +5075,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p003_p0083": {
       "status": "stale",
@@ -4787,7 +5088,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0084": {
       "status": "current",
@@ -4799,7 +5101,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p003_p0085": {
       "status": "stale",
@@ -4811,7 +5114,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p003_p0086": {
       "status": "current",
@@ -4823,7 +5127,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0001": {
       "status": "stale",
@@ -4835,7 +5140,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0002": {
       "status": "current",
@@ -4847,7 +5153,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0003": {
       "status": "current",
@@ -4859,7 +5166,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0004": {
       "status": "stale",
@@ -4871,7 +5179,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0005": {
       "status": "current",
@@ -4883,7 +5192,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0006": {
       "status": "stale",
@@ -4895,7 +5205,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0007": {
       "status": "stale",
@@ -4907,7 +5218,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0008": {
       "status": "stale",
@@ -4919,7 +5231,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0009": {
       "status": "stale",
@@ -4931,7 +5244,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0010": {
       "status": "stale",
@@ -4943,7 +5257,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0011": {
       "status": "stale",
@@ -4955,7 +5270,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0012": {
       "status": "stale",
@@ -4967,7 +5283,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0013": {
       "status": "stale",
@@ -4979,7 +5296,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0014": {
       "status": "stale",
@@ -4991,7 +5309,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0015": {
       "status": "current",
@@ -5003,7 +5322,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0016": {
       "status": "stale",
@@ -5015,7 +5335,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0017": {
       "status": "current",
@@ -5027,7 +5348,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0018": {
       "status": "current",
@@ -5039,7 +5361,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0019": {
       "status": "current",
@@ -5051,7 +5374,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0020": {
       "status": "current",
@@ -5063,7 +5387,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0021": {
       "status": "current",
@@ -5075,7 +5400,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0022": {
       "status": "current",
@@ -5087,7 +5413,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0023": {
       "status": "current",
@@ -5099,7 +5426,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0024": {
       "status": "stale",
@@ -5111,7 +5439,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0025": {
       "status": "current",
@@ -5123,7 +5452,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0026": {
       "status": "stale",
@@ -5135,7 +5465,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0027": {
       "status": "stale",
@@ -5147,7 +5478,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0028": {
       "status": "current",
@@ -5159,7 +5491,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0029": {
       "status": "stale",
@@ -5171,7 +5504,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0030": {
       "status": "current",
@@ -5183,7 +5517,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0031": {
       "status": "current",
@@ -5195,7 +5530,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0032": {
       "status": "stale",
@@ -5207,7 +5543,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0033": {
       "status": "stale",
@@ -5219,7 +5556,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0034": {
       "status": "current",
@@ -5231,7 +5569,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0035": {
       "status": "current",
@@ -5243,7 +5582,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0036": {
       "status": "stale",
@@ -5255,7 +5595,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0037": {
       "status": "current",
@@ -5267,7 +5608,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0038": {
       "status": "current",
@@ -5279,7 +5621,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0039": {
       "status": "stale",
@@ -5291,7 +5634,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0040": {
       "status": "stale",
@@ -5303,7 +5647,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0051": {
       "status": "stale",
@@ -5315,7 +5660,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0052": {
       "status": "ambiguous_question",
@@ -5327,7 +5673,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0053": {
       "status": "current",
@@ -5339,7 +5686,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0054": {
       "status": "current",
@@ -5351,7 +5699,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0055": {
       "status": "current",
@@ -5363,7 +5712,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0056": {
       "status": "current",
@@ -5375,7 +5725,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0057": {
       "status": "current",
@@ -5387,7 +5738,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0058": {
       "status": "current",
@@ -5399,7 +5751,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0059": {
       "status": "current",
@@ -5411,7 +5764,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0060": {
       "status": "current",
@@ -5423,7 +5777,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0061": {
       "status": "ambiguous_question",
@@ -5435,7 +5790,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0062": {
       "status": "current",
@@ -5447,7 +5803,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0063": {
       "status": "current",
@@ -5459,7 +5816,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0064": {
       "status": "current",
@@ -5471,7 +5829,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0065": {
       "status": "current",
@@ -5483,7 +5842,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0066": {
       "status": "current",
@@ -5495,7 +5855,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0067": {
       "status": "stale",
@@ -5507,7 +5868,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0068": {
       "status": "current",
@@ -5519,7 +5881,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0069": {
       "status": "stale",
@@ -5531,7 +5894,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0070": {
       "status": "stale",
@@ -5543,7 +5907,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0071": {
       "status": "current",
@@ -5555,7 +5920,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0072": {
       "status": "stale",
@@ -5567,7 +5933,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0073": {
       "status": "current",
@@ -5579,7 +5946,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0074": {
       "status": "current",
@@ -5591,7 +5959,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0075": {
       "status": "stale",
@@ -5603,7 +5972,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0076": {
       "status": "stale",
@@ -5615,7 +5985,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0077": {
       "status": "current",
@@ -5627,7 +5998,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0078": {
       "status": "stale",
@@ -5639,7 +6011,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0079": {
       "status": "stale",
@@ -5651,7 +6024,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0080": {
       "status": "current",
@@ -5663,7 +6037,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0081": {
       "status": "stale",
@@ -5675,7 +6050,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p004_p0082": {
       "status": "current",
@@ -5687,7 +6063,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0083": {
       "status": "current",
@@ -5699,7 +6076,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p004_p0084": {
       "status": "current",
@@ -5711,7 +6089,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p004_p0085": {
       "status": "current",
@@ -5723,7 +6102,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p004_p0086": {
       "status": "stale",
@@ -5735,7 +6115,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0001": {
       "status": "stale",
@@ -5747,7 +6128,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0002": {
       "status": "current",
@@ -5759,7 +6141,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0003": {
       "status": "stale",
@@ -5771,7 +6154,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0004": {
       "status": "stale",
@@ -5783,7 +6167,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0005": {
       "status": "stale",
@@ -5795,7 +6180,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0006": {
       "status": "current",
@@ -5807,7 +6193,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0007": {
       "status": "current",
@@ -5819,7 +6206,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0008": {
       "status": "current",
@@ -5831,7 +6219,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0009": {
       "status": "current",
@@ -5843,7 +6232,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0010": {
       "status": "stale",
@@ -5855,7 +6245,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0011": {
       "status": "stale",
@@ -5867,7 +6258,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0012": {
       "status": "stale",
@@ -5879,7 +6271,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0013": {
       "status": "stale",
@@ -5891,7 +6284,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0014": {
       "status": "current",
@@ -5903,7 +6297,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0015": {
       "status": "current",
@@ -5915,7 +6310,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0016": {
       "status": "stale",
@@ -5927,7 +6323,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0017": {
       "status": "current",
@@ -5939,7 +6336,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0018": {
       "status": "current",
@@ -5951,7 +6349,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0019": {
       "status": "stale",
@@ -5963,7 +6362,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0020": {
       "status": "stale",
@@ -5975,7 +6375,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0021": {
       "status": "current",
@@ -5987,7 +6388,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0022": {
       "status": "current",
@@ -5999,7 +6401,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0023": {
       "status": "current",
@@ -6011,7 +6414,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0024": {
       "status": "current",
@@ -6023,7 +6427,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0025": {
       "status": "stale",
@@ -6035,7 +6440,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0026": {
       "status": "stale",
@@ -6047,7 +6453,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0027": {
       "status": "current",
@@ -6059,7 +6466,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0028": {
       "status": "current",
@@ -6071,7 +6479,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0029": {
       "status": "current",
@@ -6083,7 +6492,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0030": {
       "status": "current",
@@ -6095,7 +6505,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0031": {
       "status": "stale",
@@ -6107,7 +6518,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0032": {
       "status": "current",
@@ -6119,7 +6531,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0033": {
       "status": "stale",
@@ -6131,7 +6544,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0034": {
       "status": "stale",
@@ -6143,7 +6557,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0035": {
       "status": "current",
@@ -6155,7 +6570,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0036": {
       "status": "current",
@@ -6167,7 +6583,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0037": {
       "status": "current",
@@ -6179,7 +6596,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0038": {
       "status": "stale",
@@ -6191,7 +6609,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0039": {
       "status": "stale",
@@ -6203,7 +6622,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0040": {
       "status": "current",
@@ -6215,7 +6635,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0051": {
       "status": "current",
@@ -6227,7 +6648,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0052": {
       "status": "ambiguous_question",
@@ -6239,7 +6661,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0053": {
       "status": "ambiguous_question",
@@ -6251,7 +6674,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0054": {
       "status": "ambiguous_question",
@@ -6263,7 +6687,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0055": {
       "status": "current",
@@ -6275,7 +6700,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0056": {
       "status": "current",
@@ -6287,7 +6713,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0057": {
       "status": "ambiguous_question",
@@ -6299,7 +6726,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0058": {
       "status": "ambiguous_question",
@@ -6311,7 +6739,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0059": {
       "status": "ambiguous_question",
@@ -6323,7 +6752,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0060": {
       "status": "current",
@@ -6335,7 +6765,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0061": {
       "status": "current",
@@ -6347,7 +6778,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0062": {
       "status": "current",
@@ -6359,7 +6791,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0063": {
       "status": "current",
@@ -6371,7 +6804,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0064": {
       "status": "stale",
@@ -6383,7 +6817,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0065": {
       "status": "current",
@@ -6395,7 +6830,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0066": {
       "status": "stale",
@@ -6407,7 +6843,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0067": {
       "status": "current",
@@ -6419,7 +6856,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0068": {
       "status": "current",
@@ -6431,7 +6869,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0069": {
       "status": "stale",
@@ -6443,7 +6882,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0070": {
       "status": "stale",
@@ -6455,7 +6895,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0071": {
       "status": "stale",
@@ -6467,7 +6908,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0072": {
       "status": "stale",
@@ -6479,7 +6921,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0073": {
       "status": "current",
@@ -6491,7 +6934,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p005_p0074": {
       "status": "stale",
@@ -6503,7 +6947,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0075": {
       "status": "current",
@@ -6515,7 +6960,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0076": {
       "status": "current",
@@ -6527,7 +6973,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0077": {
       "status": "stale",
@@ -6539,7 +6986,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0078": {
       "status": "stale",
@@ -6551,7 +6999,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0079": {
       "status": "stale",
@@ -6563,7 +7012,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0080": {
       "status": "current",
@@ -6575,7 +7025,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0081": {
       "status": "stale",
@@ -6587,7 +7038,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0082": {
       "status": "current",
@@ -6599,7 +7051,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p005_p0083": {
       "status": "current",
@@ -6611,7 +7064,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p005_p0084": {
       "status": "stale",
@@ -6623,7 +7077,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0085": {
       "status": "stale",
@@ -6635,7 +7090,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p005_p0086": {
       "status": "stale",
@@ -6647,7 +7103,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0001": {
       "status": "untied",
@@ -6665,7 +7122,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0003": {
       "status": "current",
@@ -6677,7 +7135,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0004": {
       "status": "stale",
@@ -6689,7 +7148,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0005": {
       "status": "stale",
@@ -6701,7 +7161,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0006": {
       "status": "current",
@@ -6713,7 +7174,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0007": {
       "status": "stale",
@@ -6725,7 +7187,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0008": {
       "status": "stale",
@@ -6737,7 +7200,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0009": {
       "status": "stale",
@@ -6749,7 +7213,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0010": {
       "status": "stale",
@@ -6761,7 +7226,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0011": {
       "status": "untied",
@@ -6779,7 +7245,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0013": {
       "status": "current",
@@ -6791,7 +7258,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0014": {
       "status": "stale",
@@ -6803,7 +7271,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0015": {
       "status": "current",
@@ -6815,7 +7284,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0016": {
       "status": "current",
@@ -6827,7 +7297,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0017": {
       "status": "current",
@@ -6839,7 +7310,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0018": {
       "status": "current",
@@ -6851,7 +7323,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0019": {
       "status": "current",
@@ -6863,7 +7336,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0020": {
       "status": "current",
@@ -6875,7 +7349,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0021": {
       "status": "current",
@@ -6887,7 +7362,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0022": {
       "status": "current",
@@ -6899,7 +7375,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0023": {
       "status": "stale",
@@ -6911,7 +7388,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0024": {
       "status": "stale",
@@ -6923,7 +7401,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0025": {
       "status": "untied",
@@ -6941,7 +7420,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0027": {
       "status": "current",
@@ -6953,7 +7433,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0028": {
       "status": "current",
@@ -6965,7 +7446,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0029": {
       "status": "stale",
@@ -6977,7 +7459,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0030": {
       "status": "stale",
@@ -6989,7 +7472,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0031": {
       "status": "current",
@@ -7001,7 +7485,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0032": {
       "status": "current",
@@ -7013,7 +7498,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0033": {
       "status": "current",
@@ -7025,7 +7511,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0034": {
       "status": "current",
@@ -7037,7 +7524,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0035": {
       "status": "untied",
@@ -7055,7 +7543,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0037": {
       "status": "stale",
@@ -7067,7 +7556,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0038": {
       "status": "current",
@@ -7079,7 +7569,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0039": {
       "status": "current",
@@ -7091,7 +7582,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0040": {
       "status": "stale",
@@ -7103,7 +7595,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0051": {
       "status": "current",
@@ -7115,7 +7608,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0052": {
       "status": "ambiguous_question",
@@ -7127,7 +7621,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0053": {
       "status": "ambiguous_question",
@@ -7139,7 +7634,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0054": {
       "status": "current",
@@ -7151,7 +7647,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0055": {
       "status": "ambiguous_question",
@@ -7163,7 +7660,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0056": {
       "status": "ambiguous_question",
@@ -7175,7 +7673,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0057": {
       "status": "ambiguous_question",
@@ -7187,7 +7686,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0058": {
       "status": "current",
@@ -7199,7 +7699,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0059": {
       "status": "current",
@@ -7211,7 +7712,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0060": {
       "status": "ambiguous_question",
@@ -7223,7 +7725,8 @@
       "shared_question_different_gold": true,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0061": {
       "status": "current",
@@ -7235,7 +7738,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0062": {
       "status": "current",
@@ -7247,7 +7751,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0063": {
       "status": "current",
@@ -7259,7 +7764,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0064": {
       "status": "stale",
@@ -7271,7 +7777,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0065": {
       "status": "stale",
@@ -7283,7 +7790,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0066": {
       "status": "stale",
@@ -7295,7 +7803,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0067": {
       "status": "stale",
@@ -7307,7 +7816,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0068": {
       "status": "stale",
@@ -7319,7 +7829,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0069": {
       "status": "current",
@@ -7331,7 +7842,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p006_p0070": {
       "status": "current",
@@ -7343,7 +7855,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0071": {
       "status": "current",
@@ -7355,7 +7868,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0072": {
       "status": "untied",
@@ -7373,7 +7887,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0074": {
       "status": "stale",
@@ -7385,7 +7900,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0075": {
       "status": "current",
@@ -7397,7 +7913,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0076": {
       "status": "stale",
@@ -7409,7 +7926,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0077": {
       "status": "stale",
@@ -7421,7 +7939,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0078": {
       "status": "stale",
@@ -7433,7 +7952,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0079": {
       "status": "stale",
@@ -7445,7 +7965,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0080": {
       "status": "stale",
@@ -7457,7 +7978,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0081": {
       "status": "stale",
@@ -7469,7 +7991,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0082": {
       "status": "stale",
@@ -7481,7 +8004,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0083": {
       "status": "current",
@@ -7493,7 +8017,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p006_p0084": {
       "status": "stale",
@@ -7505,7 +8030,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p006_p0085": {
       "status": "current",
@@ -7517,7 +8043,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p006_p0086": {
       "status": "stale",
@@ -7529,7 +8056,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0001": {
       "status": "current",
@@ -7541,7 +8069,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0002": {
       "status": "stale",
@@ -7553,7 +8082,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0003": {
       "status": "stale",
@@ -7565,7 +8095,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0004": {
       "status": "stale",
@@ -7577,7 +8108,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0005": {
       "status": "stale",
@@ -7589,7 +8121,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0006": {
       "status": "stale",
@@ -7601,7 +8134,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0007": {
       "status": "stale",
@@ -7613,7 +8147,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0008": {
       "status": "stale",
@@ -7625,7 +8160,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0009": {
       "status": "stale",
@@ -7637,7 +8173,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0010": {
       "status": "stale",
@@ -7649,7 +8186,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0011": {
       "status": "stale",
@@ -7661,7 +8199,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0012": {
       "status": "ambiguous_final",
@@ -7673,7 +8212,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0013": {
       "status": "stale",
@@ -7685,7 +8225,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0014": {
       "status": "stale",
@@ -7697,7 +8238,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0015": {
       "status": "current",
@@ -7709,7 +8251,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0016": {
       "status": "stale",
@@ -7721,7 +8264,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0017": {
       "status": "stale",
@@ -7733,7 +8277,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0018": {
       "status": "current",
@@ -7745,7 +8290,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0019": {
       "status": "current",
@@ -7757,7 +8303,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0020": {
       "status": "stale",
@@ -7769,7 +8316,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0021": {
       "status": "current",
@@ -7781,7 +8329,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0022": {
       "status": "current",
@@ -7793,7 +8342,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0023": {
       "status": "current",
@@ -7805,7 +8355,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0024": {
       "status": "stale",
@@ -7817,7 +8368,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0025": {
       "status": "stale",
@@ -7829,7 +8381,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0026": {
       "status": "current",
@@ -7841,7 +8394,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0027": {
       "status": "current",
@@ -7853,7 +8407,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0028": {
       "status": "current",
@@ -7865,7 +8420,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0029": {
       "status": "stale",
@@ -7877,7 +8433,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0030": {
       "status": "current",
@@ -7889,7 +8446,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0031": {
       "status": "current",
@@ -7901,7 +8459,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0032": {
       "status": "current",
@@ -7913,7 +8472,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0033": {
       "status": "current",
@@ -7925,7 +8485,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0034": {
       "status": "current",
@@ -7937,7 +8498,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0035": {
       "status": "current",
@@ -7949,7 +8511,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0036": {
       "status": "ambiguous_final",
@@ -7961,7 +8524,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0037": {
       "status": "current",
@@ -7973,7 +8537,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0038": {
       "status": "stale",
@@ -7985,7 +8550,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0039": {
       "status": "current",
@@ -7997,7 +8563,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0040": {
       "status": "stale",
@@ -8009,7 +8576,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0051": {
       "status": "current",
@@ -8021,7 +8589,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0052": {
       "status": "current",
@@ -8033,7 +8602,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0053": {
       "status": "current",
@@ -8045,7 +8615,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0054": {
       "status": "current",
@@ -8057,7 +8628,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0055": {
       "status": "current",
@@ -8069,7 +8641,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0056": {
       "status": "current",
@@ -8081,7 +8654,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0057": {
       "status": "current",
@@ -8093,7 +8667,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0058": {
       "status": "current",
@@ -8105,7 +8680,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0059": {
       "status": "current",
@@ -8117,7 +8693,8 @@
       "shared_question_different_gold": false,
       "noop_correction": true,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0060": {
       "status": "current",
@@ -8129,7 +8706,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0061": {
       "status": "current",
@@ -8141,7 +8719,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0062": {
       "status": "current",
@@ -8153,7 +8732,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0063": {
       "status": "current",
@@ -8165,7 +8745,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0064": {
       "status": "stale",
@@ -8177,7 +8758,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0065": {
       "status": "stale",
@@ -8189,7 +8771,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0066": {
       "status": "current",
@@ -8201,7 +8784,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0067": {
       "status": "current",
@@ -8213,7 +8797,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0068": {
       "status": "stale",
@@ -8225,7 +8810,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0069": {
       "status": "current",
@@ -8237,7 +8823,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0070": {
       "status": "current",
@@ -8249,7 +8836,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0071": {
       "status": "current",
@@ -8261,7 +8849,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0072": {
       "status": "stale",
@@ -8273,7 +8862,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0073": {
       "status": "current",
@@ -8285,7 +8875,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0074": {
       "status": "stale",
@@ -8297,7 +8888,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0075": {
       "status": "current",
@@ -8309,7 +8901,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0076": {
       "status": "current",
@@ -8321,7 +8914,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0077": {
       "status": "current",
@@ -8333,7 +8927,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": false
     },
     "p007_p0078": {
       "status": "stale",
@@ -8345,7 +8940,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0079": {
       "status": "current",
@@ -8357,7 +8953,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": true
+      "sound": true,
+      "earlier_different_value": true
     },
     "p007_p0080": {
       "status": "stale",
@@ -8369,7 +8966,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0081": {
       "status": "stale",
@@ -8381,7 +8979,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0082": {
       "status": "stale",
@@ -8393,7 +8992,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": false,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0083": {
       "status": "stale",
@@ -8405,7 +9005,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0084": {
       "status": "current",
@@ -8417,7 +9018,8 @@
       "shared_question_different_gold": true,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": true
     },
     "p007_p0085": {
       "status": "stale",
@@ -8429,7 +9031,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     },
     "p007_p0086": {
       "status": "stale",
@@ -8441,7 +9044,8 @@
       "shared_question_different_gold": false,
       "noop_correction": false,
       "suffixed_predicate": true,
-      "sound": false
+      "sound": false,
+      "earlier_different_value": false
     }
   }
 }
