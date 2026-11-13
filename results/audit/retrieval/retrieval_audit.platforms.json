@@ -32,6 +32,16 @@
       "modal_call_check": "fc-01M79YQ75YW2266A13CA7K8N2F",
       "modal_call_generate": "fc-01M7A1Z0WE2ESM5294XWHZ3TG7",
       "output": "results/audit/retrieval/retrieval_audit.linux-py3.11.13-sqlite3.50.4.json"
+    },
+    "modal_debian_slim_default": {
+      "role": "checked 2026-11-13 which interpreter and SQLite Modal's default image has, and whether the Study 001 (legacy_table_order=True) vec0 subquery runs; not an audit run",
+      "os": "Debian GNU/Linux 12 (bookworm) (Modal)",
+      "executable": "/usr/local/bin/python",
+      "python": "3.11.12",
+      "sqlite": "3.40.1",
+      "sqlite_vec": "0.1.9",
+      "legacy_vec_query": "fails",
+      "error": "OperationalError: A LIMIT or 'k = ?' constraint is required on vec0 knn queries."
     }
   },
   "linux_py3_11_13_vs_committed": {
