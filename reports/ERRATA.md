@@ -55,7 +55,9 @@ card's capability line but not from its evaluation table, whose UAR cell still r
 fetch-back check did not catch it. The cell now reads "— (no full-PMB measurement)". The same
 re-push adds the E43 answer-key caveat under the PMB table of `onebee-gf-sft-v0`,
 `onebee-gf-sft-v1` and `onebee-gf-distill-v1`, the three cards that show a `pra_lenient` figure.
-Until the Hub commits are recorded here, the live cards are the earlier versions.
+Re-pushed 2026-11-13: `onebee-gf-sft-v0` `6c9f648`, `onebee-gf-sft-v1` `ab9d9fd`,
+`onebee-gf-distill-v1` `5e89040`, `onebee-gf-dpo-v1-scale` `3643ce5`; each card was fetched back
+and matched `hf_readmes/` at `65571fe`.
 
 ## Corrections by finding
 
